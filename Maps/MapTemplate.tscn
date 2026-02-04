@@ -1,0 +1,466 @@
+[gd_scene format=3 uid="uid://dcln4npgljx4k"]
+
+[ext_resource type="Script" uid="uid://dckc7xo8kwuc5" path="res://Maps/MapTools/Map.cs" id="1_nxmd1"]
+[ext_resource type="Texture2D" uid="uid://bh42upheoaqhe" path="res://Maps/MapAssets/Background/SpaceBackground.png" id="2_htrdx"]
+[ext_resource type="Script" uid="uid://45hks3jabd4y" path="res://Maps/MapTools/SpawnPoints.cs" id="3_s2jln"]
+[ext_resource type="PackedScene" uid="uid://cbmq3xh2bcijs" path="res://Actors/Player/Player.tscn" id="4_oh5b6"]
+[ext_resource type="TileSet" uid="uid://cu072ug2gfowi" path="res://Maps/MapAssets/TileMaps/BaseMapTileSet.tres" id="5_88fpq"]
+[ext_resource type="Script" uid="uid://b8o7wgtj5j14f" path="res://Maps/MapTools/PilotArea.cs" id="6_mbfa0"]
+[ext_resource type="Script" uid="uid://bpqw0biwsduf2" path="res://Maps/MapTools/MapCamera.cs" id="7_nxmd1"]
+[ext_resource type="Script" uid="uid://6gitervwywjh" path="res://Maps/MapTools/InteractableTiles.cs" id="7_qtnlg"]
+[ext_resource type="Script" uid="uid://ckgsusvcdqof8" path="res://Maps/MapTools/MapBorders.cs" id="8_8m8bc"]
+[ext_resource type="PackedScene" uid="uid://drd2rgglnakvn" path="res://Maps/PlayableMaps/HomemadeParallax.tscn" id="8_oh5b6"]
+[ext_resource type="PackedScene" uid="uid://sq6e0stnk1ls" path="res://Maps/MapTools/collision_replicator.tscn" id="9_60shi"]
+[ext_resource type="Shader" uid="uid://cx67s33dt1lle" path="res://Maps/MapAssets/Background/Parallax/HomemadeParallax.gdshader" id="9_88fpq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oh5b6"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0.195)
+shader_parameter/scrollSpeed = 0.04
+shader_parameter/parallaxMultiplier = 0.005
+shader_parameter/repeats = false
+shader_parameter/textureRegion = Vector4(0, 0, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtnlg"]
+atlas = ExtResource("2_htrdx")
+region = Rect2(0, 0, 640, 360)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_88fpq"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 1.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.01
+shader_parameter/repeats = false
+shader_parameter/textureRegion = Vector4(0, 360, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60shi"]
+atlas = ExtResource("2_htrdx")
+region = Rect2(0, 360, 640, 360)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mbfa0"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, -2)
+shader_parameter/scrollSpeed = 0.135
+shader_parameter/parallaxMultiplier = 0.03
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 2520, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2f37w"]
+atlas = ExtResource("2_htrdx")
+region = Rect2(0, 2520, 640, 360)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qtnlg"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.04
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ylxqw"]
+atlas = ExtResource("2_htrdx")
+region = Rect2(0, 1080, 640, 360)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8m8bc"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.04
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 720, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnt1q"]
+atlas = ExtResource("2_htrdx")
+region = Rect2(0, 720, 640, 360)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_60shi"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.04
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6ldd"]
+atlas = ExtResource("2_htrdx")
+region = Rect2(0, 1440, 640, 360)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_buqrq"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.05
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 720, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2f37w"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.05
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pmkk0"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.05
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ylxqw"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.05
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5n701"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 720, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pnt1q"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gn5sw"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a6ldd"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cwq6q"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0rudt"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 1.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.07
+shader_parameter/repeats = false
+shader_parameter/textureRegion = Vector4(0, 1800, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6ayi"]
+atlas = ExtResource("2_htrdx")
+region = Rect2(0, 1800, 640, 360)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1s6hr"]
+shader = ExtResource("9_88fpq")
+shader_parameter/sideLength = 1.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.07
+shader_parameter/repeats = false
+shader_parameter/textureRegion = Vector4(0, 2160, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lb578"]
+atlas = ExtResource("2_htrdx")
+region = Rect2(0, 2160, 640, 360)
+
+[sub_resource type="Animation" id="Animation_ba2kr"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("IslandShrappnel:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_3c23f"]
+resource_name = "upanddown"
+length = 20.0
+loop_mode = 1
+step = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("IslandShrappnel:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.24999551, -0.14999731, 0.8333333, 0.5, 20.76, -0.8666667, -0.26000023, 0.76666754, 0.23000047, 20.76, -0.8666667, -0.26000023, 0.76666754, 0.23000047, 0, -0.8000002, 0.5, 0.25, 0),
+"times": PackedFloat32Array(0, 9.432444, 10.5, 19)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Island:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(-4.3, -0.24999551, -0.14999731, 0.8333333, 0.5, 6.465, -0.8666667, -0.26000023, 0.76666754, 0.23000047, 6.465, -0.8666667, -0.26000023, 0.76666754, 0.23000047, -4.3, -0.8000002, 0.5, 0.25, 0),
+"times": PackedFloat32Array(0, 9.432444, 10.5, 19)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mn67o"]
+_data = {
+&"RESET": SubResource("Animation_ba2kr"),
+&"upanddown": SubResource("Animation_3c23f")
+}
+
+[node name="Map" type="Node2D" unique_id=564809975 node_paths=PackedStringArray("weaponPickups", "MapBordersNode", "pilotArea", "camera")]
+script = ExtResource("1_nxmd1")
+weaponPickups = NodePath("WeaponPickups")
+MapBordersNode = NodePath("MapBorders")
+pilotArea = NodePath("PilotArea")
+camera = NodePath("Camera2D")
+
+[node name="SpawnPoints" type="Node" parent="." unique_id=1437720429]
+script = ExtResource("3_s2jln")
+playerScene = ExtResource("4_oh5b6")
+
+[node name="BackgroundTiles" type="TileMapLayer" parent="." unique_id=617801030]
+self_modulate = Color(0.65834, 0.65834, 0.6583398, 1)
+tile_set = ExtResource("5_88fpq")
+collision_enabled = false
+
+[node name="PilotArea" type="Node2D" parent="." unique_id=35701636]
+script = ExtResource("6_mbfa0")
+
+[node name="Polygon2D" type="Polygon2D" parent="PilotArea" unique_id=2107914680]
+visible = false
+color = Color(0.47058824, 0, 1, 0.25490198)
+polygon = PackedVector2Array(85, 76, 81, -54, -87, -54, -89, 80)
+
+[node name="InteractableTiles" type="TileMapLayer" parent="." unique_id=327176720]
+tile_set = ExtResource("5_88fpq")
+script = ExtResource("7_qtnlg")
+
+[node name="DestructibleTiles" type="TileMapLayer" parent="InteractableTiles" unique_id=114903116]
+tile_set = ExtResource("5_88fpq")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=970432431]
+process_mode = 3
+zoom = Vector2(2.105, 2.105)
+process_callback = 0
+limit_enabled = false
+script = ExtResource("7_nxmd1")
+
+[node name="ParallaxBackgroundLayers" type="Node2D" parent="Camera2D" unique_id=2053798988]
+z_index = -1025
+
+[node name="Space" parent="Camera2D/ParallaxBackgroundLayers" unique_id=840806891 instance=ExtResource("8_oh5b6")]
+ScrollDir = Vector2(1, 0.195)
+ScrollSpeed = 0.04
+ParallaxMultiplier = 0.005
+Repeats = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/Space" unique_id=74671967]
+material = SubResource("ShaderMaterial_oh5b6")
+texture = SubResource("AtlasTexture_qtnlg")
+
+[node name="Planet" parent="Camera2D/ParallaxBackgroundLayers" unique_id=2048111600 instance=ExtResource("8_oh5b6")]
+scale = Vector2(1, 1)
+Size = 1.0
+ParallaxMultiplier = 0.01
+Repeats = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/Planet" unique_id=2037910259]
+light_mask = 0
+material = SubResource("ShaderMaterial_88fpq")
+position = Vector2(229, 56)
+texture = SubResource("AtlasTexture_60shi")
+
+[node name="Meteorites" parent="Camera2D/ParallaxBackgroundLayers" unique_id=905640544 instance=ExtResource("8_oh5b6")]
+ScrollDir = Vector2(1, -2)
+ScrollSpeed = 0.135
+ParallaxMultiplier = 0.03
+
+[node name="Sprite2D7" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/Meteorites" unique_id=1469063880]
+light_mask = 0
+material = SubResource("ShaderMaterial_mbfa0")
+texture = SubResource("AtlasTexture_2f37w")
+
+[node name="AsteroidsFar" parent="Camera2D/ParallaxBackgroundLayers" unique_id=467722908 instance=ExtResource("8_oh5b6")]
+ParallaxMultiplier = 0.04
+
+[node name="AsteroidSmall" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/AsteroidsFar" unique_id=967766746]
+light_mask = 0
+material = SubResource("ShaderMaterial_qtnlg")
+position = Vector2(162, -38.5)
+texture = SubResource("AtlasTexture_ylxqw")
+
+[node name="AsteroidBIG" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/AsteroidsFar" unique_id=1473926917]
+light_mask = 0
+material = SubResource("ShaderMaterial_8m8bc")
+position = Vector2(199.5, -161.5)
+texture = SubResource("AtlasTexture_pnt1q")
+
+[node name="AsteroidMedium2" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/AsteroidsFar" unique_id=564974613]
+light_mask = 0
+material = SubResource("ShaderMaterial_60shi")
+position = Vector2(71, -250)
+texture = SubResource("AtlasTexture_a6ldd")
+
+[node name="AsteroidsMid" parent="Camera2D/ParallaxBackgroundLayers" unique_id=1020513574 instance=ExtResource("8_oh5b6")]
+ParallaxMultiplier = 0.05
+
+[node name="AsteroidBIG2" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/AsteroidsMid" unique_id=1847958434]
+light_mask = 0
+material = SubResource("ShaderMaterial_buqrq")
+position = Vector2(-220, 84.5)
+texture = SubResource("AtlasTexture_pnt1q")
+
+[node name="AsteroidSmall2" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/AsteroidsMid" unique_id=1273127809]
+light_mask = 0
+material = SubResource("ShaderMaterial_2f37w")
+position = Vector2(241, -148)
+texture = SubResource("AtlasTexture_ylxqw")
+
+[node name="AsteroidSmall3" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/AsteroidsMid" unique_id=1027037825]
+light_mask = 0
+material = SubResource("ShaderMaterial_pmkk0")
+position = Vector2(-2.5, -80)
+texture = SubResource("AtlasTexture_ylxqw")
+
+[node name="AsteroidMedium3" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/AsteroidsMid" unique_id=1295237990]
+light_mask = 0
+material = SubResource("ShaderMaterial_ylxqw")
+position = Vector2(22, 20.5)
+texture = SubResource("AtlasTexture_a6ldd")
+
+[node name="AsteroidsClose" parent="Camera2D/ParallaxBackgroundLayers" unique_id=2108666439 instance=ExtResource("8_oh5b6")]
+ParallaxMultiplier = 0.06
+
+[node name="AsteroidBIG3" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/AsteroidsClose" unique_id=2074627775]
+light_mask = 0
+material = SubResource("ShaderMaterial_5n701")
+position = Vector2(292.5, -71.5)
+texture = SubResource("AtlasTexture_pnt1q")
+
+[node name="AsteroidMedium" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/AsteroidsClose" unique_id=553051039]
+light_mask = 0
+material = SubResource("ShaderMaterial_pnt1q")
+position = Vector2(-157.5, -93.5)
+texture = SubResource("AtlasTexture_a6ldd")
+
+[node name="AsteroidSmall4" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/AsteroidsClose" unique_id=1022579566]
+light_mask = 0
+material = SubResource("ShaderMaterial_gn5sw")
+position = Vector2(134.5, 65.5)
+texture = SubResource("AtlasTexture_ylxqw")
+
+[node name="AsteroidMedium4" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/AsteroidsClose" unique_id=1333100854]
+light_mask = 0
+material = SubResource("ShaderMaterial_a6ldd")
+position = Vector2(121.73999, -132)
+texture = SubResource("AtlasTexture_a6ldd")
+
+[node name="AsteroidSmall5" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/AsteroidsClose" unique_id=1652891497]
+light_mask = 0
+material = SubResource("ShaderMaterial_cwq6q")
+position = Vector2(46.5, -81.5)
+texture = SubResource("AtlasTexture_ylxqw")
+
+[node name="MageTower" parent="Camera2D/ParallaxBackgroundLayers" unique_id=395567531 instance=ExtResource("8_oh5b6")]
+scale = Vector2(1, 1)
+Size = 1.0
+ParallaxMultiplier = 0.07
+Repeats = false
+
+[node name="Island" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/MageTower" unique_id=2081006270]
+light_mask = 0
+material = SubResource("ShaderMaterial_0rudt")
+position = Vector2(222.5, -4.3)
+texture = SubResource("AtlasTexture_k6ayi")
+
+[node name="IslandShrappnel" type="Sprite2D" parent="Camera2D/ParallaxBackgroundLayers/MageTower" unique_id=1009107596]
+light_mask = 0
+material = SubResource("ShaderMaterial_1s6hr")
+position = Vector2(225.73999, 0)
+texture = SubResource("AtlasTexture_lb578")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/ParallaxBackgroundLayers/MageTower" unique_id=1501167269]
+libraries/ = SubResource("AnimationLibrary_mn67o")
+autoplay = &"upanddown"
+
+[node name="MapBorders" type="Node2D" parent="." unique_id=247059389]
+script = ExtResource("8_8m8bc")
+collisionReplicatorScene = ExtResource("9_60shi")
+DrawBorders = true
+
+[node name="WeaponPickups" type="Node" parent="." unique_id=1916535538]
+
+[node name="SuddenDeathBeams" type="Node2D" parent="." unique_id=201400201]

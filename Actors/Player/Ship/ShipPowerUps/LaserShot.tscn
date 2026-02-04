@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cqctdrg66rvsc"]
+
+[ext_resource type="Script" uid="uid://7jbqmg3f02ag" path="res://Actors/Player/Ship/ShipPowerUps/LaserShot.cs" id="1_gskru"]
+
+[node name="LaserShot" type="RayCast2D" unique_id=691979677]
+script = ExtResource("1_gskru")

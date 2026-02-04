@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://bgvvii5wegfxh"]
+
+[ext_resource type="Script" uid="uid://ch0hf7spp6o0x" path="res://Maps/MapAssets/Pickups/ShipPowerUpPickup.cs" id="1_tqqha"]
+[ext_resource type="Texture2D" uid="uid://dureyr2uy7yyw" path="res://Actors/Player/Ship/Sprites/ShipPowerUpPickups.png" id="2_m3ypj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m3ypj"]
+radius = 9.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m3ypj"]
+atlas = ExtResource("2_m3ypj")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61qc5"]
+atlas = ExtResource("2_m3ypj")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtafp"]
+atlas = ExtResource("2_m3ypj")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7k4oo"]
+atlas = ExtResource("2_m3ypj")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_25whq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m3ypj")
+}],
+"loop": true,
+"name": &"DrillShot",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61qc5")
+}],
+"loop": true,
+"name": &"DualGuns",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtafp")
+}],
+"loop": true,
+"name": &"Laser",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7k4oo")
+}],
+"loop": true,
+"name": &"SpeedUp",
+"speed": 5.0
+}]
+
+[node name="ShipPowerUpPickup" type="Area2D" unique_id=644448315]
+script = ExtResource("1_tqqha")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1108446863]
+visible = false
+shape = SubResource("CircleShape2D_m3ypj")
+
+[node name="PowerUpSprite" type="AnimatedSprite2D" parent="." unique_id=1715042645]
+sprite_frames = SubResource("SpriteFrames_25whq")
+animation = &"DualGuns"

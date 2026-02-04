@@ -1,0 +1,22 @@
+[gd_scene load_steps=7 format=3 uid="uid://bvv0r0rral008"]
+
+[ext_resource type="PackedScene" uid="uid://bnj055xj8cr1x" path="res://Tomes/Base/weapon_template.tscn" id="1_mrbom"]
+[ext_resource type="Script" uid="uid://1lt1nr45wgo7" path="res://Tomes/Ice/IceTome.cs" id="2_vcxt1"]
+[ext_resource type="PackedScene" uid="uid://dlbbif2cwel8d" path="res://Tomes/Ice/IceRay.tscn" id="3_4squt"]
+[ext_resource type="Texture2D" uid="uid://daawcol3kgydg" path="res://Tomes/TomeAssets/Weapons.png" id="4_4squt"]
+[ext_resource type="AudioStream" uid="uid://dpll71wetcp4e" path="res://Tomes/Ice/Audio/IceRay3.wav" id="4_vcxt1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4squt"]
+resource_local_to_scene = true
+atlas = ExtResource("4_4squt")
+region = Rect2(0, 0, 16, 16)
+
+[node name="IceTome" instance=ExtResource("1_mrbom")]
+script = ExtResource("2_vcxt1")
+bullet = ExtResource("3_4squt")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("AtlasTexture_4squt")
+
+[node name="AudioStreamPlayer2D" parent="." index="1"]
+stream = ExtResource("4_vcxt1")

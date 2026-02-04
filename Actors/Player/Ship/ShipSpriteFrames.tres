@@ -1,0 +1,18 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://m61ey6b20dbl"]
+
+[ext_resource type="Texture2D" uid="uid://kayfo7ufdpc2" path="res://Actors/Player/Ship/Sprites/spaceships.png" id="1_ibqhx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r23vv"]
+atlas = ExtResource("1_ibqhx")
+region = Rect2(0, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r23vv")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]

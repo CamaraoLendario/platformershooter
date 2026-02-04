@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmaxkdjuwddcp"]
+
+[ext_resource type="PackedScene" uid="uid://fi88ocyqxvqn" path="res://Tomes/Base/LinearProjectileTemplate.tscn" id="1_tfv7m"]
+[ext_resource type="Script" uid="uid://bsocmx3cm36me" path="res://Tomes/Poison/PoisonMinePlacer.cs" id="2_fufhb"]
+[ext_resource type="PackedScene" uid="uid://cw1x6mgwv0ove" path="res://Tomes/Poison/PoisonMine.tscn" id="3_opn24"]
+
+[node name="LinearProjectile" instance=ExtResource("1_tfv7m")]
+collision_mask = 2
+script = ExtResource("2_fufhb")
+PoisonMineScene = ExtResource("3_opn24")
+
+[node name="wallDetectorsNode" type="Node2D" parent="." index="2"]
+
+[node name="RayCast2D" type="RayCast2D" parent="wallDetectorsNode" index="0"]
+position = Vector2(0, 2)
+target_position = Vector2(0, 8)
+collision_mask = 2
+hit_from_inside = true
+
+[node name="RayCast2D2" type="RayCast2D" parent="wallDetectorsNode" index="1"]
+position = Vector2(2, 0)
+target_position = Vector2(8, 0)
+collision_mask = 2
+hit_from_inside = true
+
+[node name="RayCast2D3" type="RayCast2D" parent="wallDetectorsNode" index="2"]
+position = Vector2(0, -2)
+target_position = Vector2(0, -8)
+collision_mask = 2
+hit_from_inside = true
+
+[node name="RayCast2D4" type="RayCast2D" parent="wallDetectorsNode" index="3"]
+position = Vector2(-2, 0)
+target_position = Vector2(-8, 0)
+collision_mask = 2
+hit_from_inside = true

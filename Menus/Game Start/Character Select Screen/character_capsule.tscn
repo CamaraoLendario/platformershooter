@@ -1,0 +1,392 @@
+[gd_scene load_steps=12 format=3 uid="uid://b7npu7lra7rke"]
+
+[ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_bynxu"]
+[ext_resource type="Script" uid="uid://c27p6psygv5sf" path="res://Menus/Game Start/Character Select Screen/CharacterCapsule.cs" id="1_h7gxc"]
+[ext_resource type="Script" uid="uid://ds6x8fuu45m0w" path="res://Menus/Game Start/Character Select Screen/PlayerNameKeyboard.cs" id="4_02ewk"]
+[ext_resource type="Texture2D" uid="uid://b1y4dm1w0puo2" path="res://Actors/Player/Pilot/Sprites/pilot_1_animations.png" id="4_ljorx"]
+[ext_resource type="Texture2D" uid="uid://blnpob3tmnu3n" path="res://Assets/temp/PlayerNameKeyboard.png" id="5_bynxu"]
+[ext_resource type="Script" uid="uid://dmwbtwi6t4nnp" path="res://Menus/Game Start/Character Select Screen/PlayerMenuInput.cs" id="30_ljorx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sfclw"]
+bg_color = Color(0.11764706, 0.11764706, 0.11764706, 0.5686275)
+corner_radius_top_left = 35
+corner_radius_top_right = 35
+corner_radius_bottom_right = 35
+corner_radius_bottom_left = 35
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52xkb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xga1x"]
+atlas = ExtResource("4_ljorx")
+region = Rect2(0, 0, 16, 17)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_52xkb"]
+bg_color = Color(0.11764706, 0.11764706, 0.11764706, 0.5686275)
+skew = Vector2(0.2, 0)
+border_color = Color(0.65834004, 0.6583399, 0.6583399, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8exbf"]
+bg_color = Color(0.11764706, 0.11764706, 0.11764706, 0.5686275)
+draw_center = false
+skew = Vector2(0.2, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.65834004, 0.6583399, 0.6583399, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="Control" type="Control" node_paths=PackedStringArray("inputNode", "PlayerNameDisplay", "colorChoice", "changeName", "readyButton", "playerSprite", "selectedButtonIndicator", "buttonsContainer", "hasPlayerCapsule", "playerlessCapsule", "playerNameKeyboard")]
+custom_minimum_size = Vector2(400, 800)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -174.0
+offset_top = -450.0
+offset_right = 226.0
+offset_bottom = 350.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_bynxu")
+script = ExtResource("1_h7gxc")
+inputNode = NodePath("PlayerMenuInput")
+PlayerNameDisplay = NodePath("Character Capsule/PlayerConnected/HBoxContainer/PlayerName")
+colorChoice = NodePath("Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect")
+changeName = NodePath("Character Capsule/PlayerConnected/ButtonsContainer/Rename")
+readyButton = NodePath("Character Capsule/PlayerConnected/ButtonsContainer/ReadyButton")
+playerSprite = NodePath("Character Capsule/PlayerConnected/PlayerSprite")
+selectedButtonIndicator = NodePath("Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect/SelectedButton")
+buttonsContainer = NodePath("Character Capsule/PlayerConnected/ButtonsContainer")
+hasPlayerCapsule = NodePath("Character Capsule/PlayerConnected")
+playerlessCapsule = NodePath("Character Capsule/NoPlayerConnected")
+playerNameKeyboard = NodePath("Character Capsule/PlayerNameKeyboard")
+
+[node name="Character Capsule" type="Panel" parent="."]
+custom_minimum_size = Vector2(400, 850)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -515.0
+offset_right = 200.0
+offset_bottom = 554.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sfclw")
+
+[node name="PlayerConnected" type="VBoxContainer" parent="Character Capsule"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -187.0
+offset_top = -507.0
+offset_right = 187.0
+offset_bottom = 507.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 174
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Character Capsule/PlayerConnected"]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayerName" type="Label" parent="Character Capsule/PlayerConnected/HBoxContainer"]
+custom_minimum_size = Vector2(315, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "P1"
+horizontal_alignment = 1
+
+[node name="InputDeviceIcon" type="TextureRect" parent="Character Capsule/PlayerConnected/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_52xkb")
+
+[node name="PlayerSprite" type="TextureRect" parent="Character Capsule/PlayerConnected"]
+custom_minimum_size = Vector2(300, 306)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_xga1x")
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="Character Capsule/PlayerConnected"]
+layout_mode = 2
+
+[node name="ColorSelect" type="Panel" parent="Character Capsule/PlayerConnected/ButtonsContainer"]
+custom_minimum_size = Vector2(374, 88)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_52xkb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect"]
+layout_mode = 0
+offset_left = 12.0
+offset_right = 362.0
+offset_bottom = 88.0
+
+[node name="LeftArrow" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "<"
+horizontal_alignment = 1
+
+[node name="ColorName" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect/HBoxContainer"]
+custom_minimum_size = Vector2(268.94, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Red"
+horizontal_alignment = 1
+
+[node name="RightArrow" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = ">"
+horizontal_alignment = 1
+
+[node name="SelectedButton" type="Panel" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect"]
+custom_minimum_size = Vector2(374, 88)
+layout_mode = 0
+offset_top = 0.5
+offset_right = 374.0
+offset_bottom = 88.50006
+theme_override_styles/panel = SubResource("StyleBoxFlat_8exbf")
+
+[node name="Rename" type="Panel" parent="Character Capsule/PlayerConnected/ButtonsContainer"]
+custom_minimum_size = Vector2(374, 88)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_52xkb")
+
+[node name="ColorName" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/Rename"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 11.0
+offset_right = 361.0
+offset_bottom = 76.0
+theme_override_font_sizes/font_size = 64
+text = "Rename"
+horizontal_alignment = 1
+
+[node name="ReadyButton" type="Panel" parent="Character Capsule/PlayerConnected/ButtonsContainer"]
+custom_minimum_size = Vector2(374, 88)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_52xkb")
+
+[node name="ColorName" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/ReadyButton"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 11.0
+offset_right = 361.0
+offset_bottom = 76.0
+theme_override_font_sizes/font_size = 64
+text = "Ready"
+horizontal_alignment = 1
+
+[node name="NoPlayerConnected" type="VBoxContainer" parent="Character Capsule"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.5
+offset_top = -30.5
+offset_right = 125.5
+offset_bottom = 30.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Character Capsule/NoPlayerConnected"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 29
+text = "Press Any Key.."
+horizontal_alignment = 1
+
+[node name="PlayerNameKeyboard" type="VBoxContainer" parent="Character Capsule" node_paths=PackedStringArray("menuInput", "nameDisplay")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.221
+anchor_right = 0.8
+anchor_bottom = 0.523
+offset_left = -14.0
+offset_top = -22.718002
+offset_right = 14.0
+offset_bottom = 159.966
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.235, 1.235)
+pivot_offset = Vector2(134, 236)
+script = ExtResource("4_02ewk")
+menuInput = NodePath("../../PlayerMenuInput")
+nameDisplay = NodePath("../PlayerConnected/HBoxContainer/PlayerName")
+
+[node name="HTextBox" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="HTextBox2" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="HTextBox3" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox3"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox3"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox3"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox3"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="HTextBox4" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox4"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox4"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox4"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox4"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="HTextBox5" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox5"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox5"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox5"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox5"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="HTextBox6" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox6"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox6"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox6"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox6"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="HTextBox7" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox7"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox7"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("5_bynxu")
+
+[node name="PlayerMenuInput" type="Node" parent="."]
+script = ExtResource("30_ljorx")

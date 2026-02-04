@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://c3shcbl7mtyrs"]
+
+[ext_resource type="Script" uid="uid://btdfejokflcs0" path="res://Actors/Player/Ship/ShipPowerUps/ShipPowerUpDrillShot.cs" id="1_a6iv8"]
+[ext_resource type="PackedScene" uid="uid://c37sjvwwqk0hl" path="res://Actors/Player/Ship/ShipPowerUps/DrillShot.tscn" id="2_kadju"]
+
+[node name="ShipPowerUpDrillShot" type="Node2D" unique_id=221329560]
+script = ExtResource("1_a6iv8")
+NewAmmo = ExtResource("2_kadju")

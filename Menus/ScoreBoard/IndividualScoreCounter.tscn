@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2q477nhb4j0p"]
+
+[ext_resource type="Script" uid="uid://cw8w6rias5p3w" path="res://Menus/ScoreBoard/IndividualScoreCounter.cs" id="1_6iebm"]
+[ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_c015y"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6iebm"]
+
+[node name="IndividualScoreCounter" type="Control" node_paths=PackedStringArray("name", "scoreCount", "addedScore")]
+custom_minimum_size = Vector2(140, 70)
+layout_mode = 3
+anchor_left = 0.44400004
+anchor_top = 0.44900003
+anchor_right = 0.55600005
+anchor_bottom = 0.551
+offset_left = -0.4880371
+offset_top = 0.047973633
+offset_right = 0.48791504
+offset_bottom = -0.04800415
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_c015y")
+script = ExtResource("1_6iebm")
+name = NodePath("Panel/VBoxContainer/PlayerName")
+scoreCount = NodePath("Panel/VBoxContainer/Score")
+addedScore = NodePath("Panel/addedScore")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="PlayerName" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "PlayerName"
+label_settings = SubResource("LabelSettings_6iebm")
+horizontal_alignment = 1
+
+[node name="Score" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_6iebm")
+horizontal_alignment = 1
+
+[node name="addedScore" type="Label" parent="Panel"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(69, 17)
+layout_mode = 0
+offset_left = 35.5
+offset_top = 37.0
+offset_right = 104.5
+offset_bottom = 60.0
+text = "+1"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://bvm8sifpder5k"]
+
+[ext_resource type="PackedScene" uid="uid://bnj055xj8cr1x" path="res://Tomes/Base/weapon_template.tscn" id="1_yesuk"]
+[ext_resource type="Script" uid="uid://dwtbqao5yu8i1" path="res://Tomes/Wind/WindTome.cs" id="2_86360"]
+[ext_resource type="PackedScene" uid="uid://fwcn3c2pvun" path="res://Tomes/Wind/WindProjectile.tscn" id="3_vkqiy"]
+[ext_resource type="AudioStream" uid="uid://jejf8xrc8wvt" path="res://Tomes/Wind/Audio/AirShoot.wav" id="4_1dloi"]
+[ext_resource type="Texture2D" uid="uid://daawcol3kgydg" path="res://Tomes/TomeAssets/Weapons.png" id="4_86360"]
+[ext_resource type="Script" uid="uid://mky5rwfixdbm" path="res://Tomes/Wind/WindBulletsAnimator.cs" id="6_1dloi"]
+[ext_resource type="Texture2D" uid="uid://du22f6c8i3wdm" path="res://Tomes/Wind/WindAmmo.png" id="6_vkqiy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21d0j"]
+resource_local_to_scene = true
+atlas = ExtResource("4_86360")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1dloi"]
+atlas = ExtResource("6_vkqiy")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtd4i"]
+atlas = ExtResource("6_vkqiy")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6g3r"]
+atlas = ExtResource("6_vkqiy")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gemw"]
+atlas = ExtResource("6_vkqiy")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m0e00"]
+atlas = ExtResource("6_vkqiy")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_21d0j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dloi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xtd4i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y6g3r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5gemw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m0e00")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="WindTome" unique_id=600856010 instance=ExtResource("1_yesuk")]
+script = ExtResource("2_86360")
+flips = false
+rotates = false
+bullet = ExtResource("3_vkqiy")
+maxAmmo = 3
+
+[node name="Sprite2D" parent="." index="0"]
+visible = false
+texture = SubResource("AtlasTexture_21d0j")
+
+[node name="AudioStreamPlayer2D" parent="." index="1"]
+stream = ExtResource("4_1dloi")
+
+[node name="Bullets Animator" type="Node2D" parent="." index="2" unique_id=944670557]
+script = ExtResource("6_1dloi")
+
+[node name="Ammo1" type="AnimatedSprite2D" parent="Bullets Animator" index="0" unique_id=117210492]
+z_index = -1
+position = Vector2(2.2873883, -6.7170663)
+sprite_frames = SubResource("SpriteFrames_21d0j")
+autoplay = "default"
+frame_progress = 0.050360505
+flip_h = true
+
+[node name="Ammo2" type="AnimatedSprite2D" parent="Bullets Animator" index="1" unique_id=975340370]
+z_index = 1
+position = Vector2(7.28636, 4.725818)
+sprite_frames = SubResource("SpriteFrames_21d0j")
+autoplay = "default"
+frame_progress = 0.4319231
+
+[node name="Ammo3" type="AnimatedSprite2D" parent="Bullets Animator" index="2" unique_id=1334674990]
+z_index = 1
+position = Vector2(-9.574498, 1.9913397)
+sprite_frames = SubResource("SpriteFrames_21d0j")
+autoplay = "default"
+frame_progress = 0.36732295

@@ -1,0 +1,126 @@
+[gd_scene format=3 uid="uid://ceiwo7xx53l5y"]
+
+[ext_resource type="PackedScene" uid="uid://fi88ocyqxvqn" path="res://Tomes/Base/LinearProjectileTemplate.tscn" id="1_5mcne"]
+[ext_resource type="Texture2D" uid="uid://fr4ig4ir7mcu" path="res://Actors/Player/Ship/Sprites/ShipBullet.png" id="2_5cqit"]
+[ext_resource type="Script" uid="uid://c3t42tugelp5u" path="res://Actors/Player/Ship/ShipProjectile.cs" id="2_a567x"]
+[ext_resource type="Texture2D" uid="uid://ccrdfxkd7uemu" path="res://Assets/LightingBrushes/LightBrush.png" id="2_xcja3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5cqit"]
+radius = 4.5
+
+[sub_resource type="Gradient" id="Gradient_xcja3"]
+offsets = PackedFloat32Array(0, 0.512987, 0.78571427, 1)
+colors = PackedColorArray(0.56078434, 0.2509804, 0.70980394, 1, 0.6313726, 0.28235295, 0.7372549, 1, 0.68587893, 0.30814135, 0.7625778, 1, 0.70185494, 0.31570002, 0.77, 0.078431375)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_a567x"]
+gradient = SubResource("Gradient_xcja3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xcja3"]
+lifetime_randomness = 1.0
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 4.34
+direction = Vector3(-1, 0, 0)
+spread = 5.0
+initial_velocity_max = 9.17
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_a567x")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a567x"]
+lifetime_randomness = 1.0
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 4.34
+direction = Vector3(-1, 0, 0)
+spread = 180.0
+initial_velocity_min = 21.01
+initial_velocity_max = 41.16
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -4.530002
+linear_accel_max = -4.530002
+color_ramp = SubResource("GradientTexture1D_a567x")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcja3"]
+atlas = ExtResource("2_5cqit")
+region = Rect2(0, 0, 16, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a567x"]
+atlas = ExtResource("2_5cqit")
+region = Rect2(16, 0, 16, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0lmx"]
+atlas = ExtResource("2_5cqit")
+region = Rect2(32, 0, 16, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h2hpt"]
+atlas = ExtResource("2_5cqit")
+region = Rect2(48, 0, 16, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7rbf6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcja3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a567x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0lmx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h2hpt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="ShipProjectile" unique_id=669512879 node_paths=PackedStringArray("particlesTrail", "explosionParticles", "sprite") instance=ExtResource("1_5mcne")]
+script = ExtResource("2_a567x")
+particlesTrail = NodePath("TrailParticles")
+explosionParticles = NodePath("EplosionParticles")
+sprite = NodePath("AnimatedSprite2D")
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("CircleShape2D_5cqit")
+
+[node name="Sprite2D" parent="." index="1"]
+visible = false
+z_index = 1
+texture = null
+offset = Vector2(-1.5, 0)
+
+[node name="TrailParticles" type="GPUParticles2D" parent="." index="2" unique_id=637129686]
+light_mask = 0
+amount = 393
+sub_emitter = NodePath(".")
+fixed_fps = 1000
+visibility_rect = Rect2(-1000, -1000, 2000, 2000)
+process_material = SubResource("ParticleProcessMaterial_xcja3")
+
+[node name="EplosionParticles" type="GPUParticles2D" parent="." index="3" unique_id=632793105]
+light_mask = 0
+z_index = 1
+emitting = false
+amount = 62
+sub_emitter = NodePath(".")
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 1000
+process_material = SubResource("ParticleProcessMaterial_a567x")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="4" unique_id=405515676]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_7rbf6")
+autoplay = "default"
+frame_progress = 0.85612386
+
+[node name="PointLight2D" type="PointLight2D" parent="AnimatedSprite2D" index="0" unique_id=341726334]
+position = Vector2(3.5, 0)
+color = Color(0.72, 0.44, 1, 1)
+range_z_max = 0
+texture = ExtResource("2_xcja3")
+texture_scale = 2.0

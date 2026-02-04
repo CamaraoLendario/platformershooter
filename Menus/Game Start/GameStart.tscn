@@ -1,0 +1,261 @@
+[gd_scene format=3 uid="uid://gclokew2nun0"]
+
+[ext_resource type="Script" uid="uid://bsjkxeovrpjgv" path="res://Menus/Game Start/Character Select Screen/CharacterSelectScreen.cs" id="1_1bqk7"]
+[ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_8m61k"]
+[ext_resource type="PackedScene" uid="uid://b7npu7lra7rke" path="res://Menus/Game Start/Character Select Screen/character_capsule.tscn" id="2_xghcv"]
+[ext_resource type="Texture2D" uid="uid://eu7loh1c4upq" path="res://Banner.png" id="3_kperk"]
+[ext_resource type="Script" uid="uid://bh7su0cpcmxck" path="res://Menus/Game Start/Character Select Screen/WinningScoreSelector.cs" id="4_kperk"]
+[ext_resource type="Script" uid="uid://duglw13cthfre" path="res://Menus/Game Start/Map Select Screen/MapSelector.cs" id="5_8m61k"]
+[ext_resource type="FontFile" uid="uid://c5a2sdgkmsblj" path="res://Fonts/SpaceMagesFontOutlined.png" id="5_ueajk"]
+[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Sprites/PilotStill.png" id="6_ueajk"]
+[ext_resource type="PackedScene" uid="uid://coklf46qo3sam" path="res://Maps/PlayableMaps/PilotOnlyMap.tscn" id="7_540kp"]
+[ext_resource type="PackedScene" uid="uid://cck3f1axqqkvm" path="res://Maps/PlayableMaps/BaseMap.tscn" id="8_48hed"]
+[ext_resource type="PackedScene" uid="uid://tw7pvvfcnrf1" path="res://Maps/PlayableMaps/TallPilotZone.tscn" id="9_2ujp5"]
+[ext_resource type="Script" uid="uid://cy6c3nppft3ww" path="res://Menus/Game Start/Map Select Screen/MapPreviewsContainer.cs" id="10_4newu"]
+[ext_resource type="PackedScene" uid="uid://ckjbxccmrmhmb" path="res://Maps/PlayableMaps/PilotOnlySmall.tscn" id="10_xghcv"]
+[ext_resource type="AudioStream" uid="uid://bw61s6dcjwa4o" path="res://Assets/Audio/Menuing/menubeep.wav" id="11_7gepq"]
+[ext_resource type="PackedScene" uid="uid://cjg0yfrc2mlc0" path="res://Maps/PlayableMaps/PoisonRiddenMap.tscn" id="11_nj5r4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dq7fd"]
+font = ExtResource("5_ueajk")
+font_size = 106
+outline_size = 585
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 0.30980393)
+shadow_offset = Vector2(18, 9)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2obu8"]
+font_size = 66
+outline_size = 30
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0.1, 0.1, 0.1, 0.08235294)
+shadow_offset = Vector2(38.33, 34)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ka12w"]
+bg_color = Color(0, 0, 0, 0.32941177)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_nj5r4"]
+font_size = 141
+outline_size = 25
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0.1, 0.1, 0.1, 0.41960785)
+shadow_offset = Vector2(10.775, 14.965)
+
+[sub_resource type="Animation" id="Animation_8m61k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["3"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(858, -364)]
+}
+
+[sub_resource type="Animation" id="Animation_kperk"]
+resource_name = "mapSelectTimer"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": ["3", "2", "1"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(858, -50)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ueajk"]
+_data = {
+&"RESET": SubResource("Animation_8m61k"),
+&"mapSelectTimer": SubResource("Animation_kperk")
+}
+
+[node name="GameStart" type="CanvasLayer" unique_id=1509971223]
+
+[node name="characterSelectScreen" type="Control" parent="." unique_id=1468191518 node_paths=PackedStringArray("capsulesContainer", "gameStartAvaliable", "mapSelector")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_8m61k")
+script = ExtResource("1_1bqk7")
+CharacterCapsuleScene = ExtResource("2_xghcv")
+capsulesContainer = NodePath("VBoxContainer/capsulesContainer")
+gameStartAvaliable = NodePath("VBoxContainer/Press Start")
+mapSelector = NodePath("../Map selector")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="characterSelectScreen" unique_id=2058781130]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1210.0
+offset_top = -400.0
+offset_right = 1210.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -21
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="characterSelectScreen/VBoxContainer" unique_id=1586755735]
+custom_minimum_size = Vector2(1526.95, 648.89)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_kperk")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="capsulesContainer" type="HBoxContainer" parent="characterSelectScreen/VBoxContainer" unique_id=413634875]
+layout_mode = 2
+alignment = 1
+
+[node name="Press Start" type="Label" parent="characterSelectScreen/VBoxContainer" unique_id=614593015]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+text = "Press Start"
+label_settings = SubResource("LabelSettings_dq7fd")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="characterSelectScreen" unique_id=1633448050]
+layout_mode = 0
+offset_left = 1047.9999
+offset_top = -952.0
+offset_right = 1819.2349
+offset_bottom = -652.0
+alignment = 1
+
+[node name="Label" type="Label" parent="characterSelectScreen/VBoxContainer2" unique_id=416861520]
+layout_mode = 2
+text = "MATCH LENGTH"
+label_settings = SubResource("LabelSettings_2obu8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuButton2" type="Button" parent="characterSelectScreen/VBoxContainer2" unique_id=1228635693]
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 61
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Medium (12)"
+script = ExtResource("4_kperk")
+
+[node name="Map selector" type="Control" parent="." unique_id=482220271 node_paths=PackedStringArray("mapPreviewsContainer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = -1079.0
+offset_right = 1.0
+offset_bottom = -1079.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_8m61k")
+script = ExtResource("5_8m61k")
+mapPreviewsContainer = NodePath("MarginContainer/Panel/MapPreviewsContainer")
+pilotTexture = ExtResource("6_ueajk")
+mapscenes = Array[PackedScene]([ExtResource("8_48hed"), ExtResource("7_540kp"), ExtResource("10_xghcv"), ExtResource("11_nj5r4"), ExtResource("9_2ujp5")])
+
+[node name="MarginContainer" type="MarginContainer" parent="Map selector" unique_id=1523777735]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 150
+
+[node name="Panel" type="Panel" parent="Map selector/MarginContainer" unique_id=659141580]
+layout_direction = 2
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ka12w")
+
+[node name="MapPreviewsContainer" type="Control" parent="Map selector/MarginContainer/Panel" unique_id=1069101090 node_paths=PackedStringArray("characterSelectScreen", "unavaliableMapsNode", "menuBeepPlayer", "selectMapTimer")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_4newu")
+characterSelectScreen = NodePath("../../../../characterSelectScreen")
+unavaliableMapsNode = NodePath("../../../UnavaliableMaps")
+menuBeepPlayer = NodePath("../../../AudioStreamPlayer")
+selectMapTimer = NodePath("../../../Label/mapSelectTimerAnimator")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Map selector" unique_id=1185412501]
+stream = ExtResource("11_7gepq")
+
+[node name="Label" type="Label" parent="Map selector" unique_id=1827728498]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -102.0
+offset_top = -364.0
+offset_right = 96.0
+offset_bottom = -77.0
+grow_horizontal = 2
+text = "3"
+label_settings = SubResource("LabelSettings_nj5r4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="mapSelectTimerAnimator" type="AnimationPlayer" parent="Map selector/Label" unique_id=1241315014]
+libraries/ = SubResource("AnimationLibrary_ueajk")
+
+[node name="UnavaliableMaps" type="Control" parent="Map selector" unique_id=2061794782]
+visible = false
+anchors_preset = 0

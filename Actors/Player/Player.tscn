@@ -1,0 +1,593 @@
+[gd_scene format=3 uid="uid://cbmq3xh2bcijs"]
+
+[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutine.gdshader" id="1_gh11b"]
+[ext_resource type="Script" uid="uid://dfc37w7c5df0r" path="res://Actors/Player/Player.cs" id="2_30khc"]
+[ext_resource type="PackedScene" uid="uid://by5s8sc2bwo1o" path="res://Actors/Player/Pilot/pilot_ragdol.tscn" id="3_fllei"]
+[ext_resource type="Script" uid="uid://dpajyn7twtmqh" path="res://Actors/Player/Pilot/PilotAttack.cs" id="3_iwrur"]
+[ext_resource type="FontFile" uid="uid://c5a2sdgkmsblj" path="res://Fonts/SpaceMagesFontOutlined.png" id="4_jiph2"]
+[ext_resource type="Script" uid="uid://btwuke1gfr05i" path="res://Actors/Player/Ship/ShipAttack.cs" id="5_fllei"]
+[ext_resource type="PackedScene" uid="uid://ceiwo7xx53l5y" path="res://Actors/Player/Ship/ShipProjectile.tscn" id="5_gsc2s"]
+[ext_resource type="SpriteFrames" uid="uid://bcbvwjw2kxhut" path="res://Actors/Player/Pilot/PilotSpriteFrames.tres" id="6_alwmy"]
+[ext_resource type="Script" uid="uid://ccqskcvjhmhsp" path="res://Actors/Player/Pilot/PilotSprite.cs" id="7_tko72"]
+[ext_resource type="SpriteFrames" uid="uid://m61ey6b20dbl" path="res://Actors/Player/Ship/ShipSpriteFrames.tres" id="8_2i0nn"]
+[ext_resource type="Script" uid="uid://iv6540036kov" path="res://Actors/Player/Ship/ShipSprite.cs" id="9_74l4w"]
+[ext_resource type="Script" uid="uid://qdxgmtuu50ff" path="res://Actors/Player/Pilot/PilotWeaponHolder.cs" id="10_a5pbq"]
+[ext_resource type="Script" uid="uid://hs076ncgtutx" path="res://Actors/Player/Pilot/MeleeAttack.cs" id="11_gffum"]
+[ext_resource type="Texture2D" uid="uid://c5440b3wlhm0" path="res://Actors/Player/Pilot/Sprites/pilotShieldParticles.png" id="11_j53hc"]
+[ext_resource type="Texture2D" uid="uid://ddymh4fx17tto" path="res://Actors/Player/Pilot/Sprites/PilotShield.png" id="12_g6ejb"]
+[ext_resource type="Texture2D" uid="uid://cogxnc4ocl7vq" path="res://Actors/Player/Pilot/Sprites/MeleeEffect.png" id="12_ujyek"]
+[ext_resource type="Script" uid="uid://8cm6grcsm8l3" path="res://Actors/Player/PlayerParticleEmitters.cs" id="12_upr3p"]
+[ext_resource type="Texture2D" uid="uid://hlhysuf1ahja" path="res://Actors/Player/Ship/Sprites/ShipShield.png" id="13_r3pko"]
+[ext_resource type="Texture2D" uid="uid://ca2jhf1dvchi5" path="res://Actors/Player/Ship/Sprites/shipShieldParticles.png" id="15_jiph2"]
+[ext_resource type="Script" uid="uid://c1vl7s8234f5g" path="res://Actors/Player/PlayerInput.cs" id="15_n45d6"]
+[ext_resource type="Script" uid="uid://cugp6ewji0rnl" path="res://Actors/Player/PlayerEffectHandler.cs" id="16_8np4b"]
+[ext_resource type="Texture2D" uid="uid://b8idoo2np415a" path="res://Tomes/TomeAssets/Ice/FrozenCharacterSprite.png" id="17_lxc4y"]
+[ext_resource type="AudioStream" uid="uid://gkcajckfe2c0" path="res://Actors/Player/Pilot/Audio/PilotDash.wav" id="18_iwmb3"]
+[ext_resource type="AudioStream" uid="uid://b7ytipig3ka0c" path="res://Actors/Player/Pilot/Audio/Jump.wav" id="20_704ek"]
+[ext_resource type="AudioStream" uid="uid://uitr02mt5aa6" path="res://Actors/Player/Ship/Audio/ShipShoot.wav" id="20_s8ljq"]
+[ext_resource type="Script" uid="uid://cm35ummf61a2h" path="res://Actors/Player/Ship/ShipPowerUps/ShipPowerUpsHolder.cs" id="21_87ye5"]
+[ext_resource type="AudioStream" uid="uid://df3887uxi4rdk" path="res://Actors/Player/Ship/Audio/ShipDash.wav" id="21_k8e2g"]
+[ext_resource type="AudioStream" uid="uid://dme50v05dt1qp" path="res://Actors/Player/Ship/Audio/ShipDestroyed.wav" id="22_7m1i7"]
+[ext_resource type="AudioStream" uid="uid://c861r8jtk0so" path="res://Assets/Audio/Ilikeit.wav" id="23_k8e2g"]
+[ext_resource type="Shader" uid="uid://djdkl0hm4q5m6" path="res://Maps/MapTools/BorderShader.gdshader" id="24_yw7as"]
+[ext_resource type="Script" uid="uid://bcqb1wp85nt01" path="res://Maps/MapTools/BorderShower.cs" id="25_hdio0"]
+[ext_resource type="Script" uid="uid://lcfkknp3vonf" path="res://Actors/Player/PlayeronPlayerCollision.cs" id="32_aao0a"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jkixf"]
+resource_local_to_scene = true
+shader = ExtResource("1_gh11b")
+shader_parameter/PoisonBuildup = 0.0
+shader_parameter/Color = Color(1, 1, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_g6ejb"]
+font = ExtResource("4_jiph2")
+font_size = 6
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0jobf"]
+size = Vector2(12, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3pko"]
+atlas = ExtResource("12_g6ejb")
+region = Rect2(0, 0, 18, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j53hc"]
+atlas = ExtResource("12_g6ejb")
+region = Rect2(18, 0, 18, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jiph2"]
+atlas = ExtResource("12_g6ejb")
+region = Rect2(36, 0, 18, 17)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aao0a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r3pko")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j53hc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jiph2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_87ye5"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_87ye5"]
+offsets = PackedFloat32Array(0.8040541, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_aao0a"]
+gradient = SubResource("Gradient_87ye5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_87ye5"]
+lifetime_randomness = 0.62
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(1, 0.675, 1)
+emission_shape = 1
+emission_sphere_radius = 17.25
+angle_min = -183.4
+angle_max = 183.40001
+inherit_velocity_ratio = 1.0
+direction = Vector3(0, -1, 0)
+spread = 51.176
+initial_velocity_min = 23.59
+initial_velocity_max = 42.46
+angular_velocity_min = -196.98001
+angular_velocity_max = 183.39998
+gravity = Vector3(0, 98, 0)
+color_ramp = SubResource("GradientTexture1D_aao0a")
+anim_offset_max = 1.0
+
+[sub_resource type="Animation" id="Animation_87ye5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pilotShield:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jiph2"]
+resource_name = "shieldRegeneration"
+length = 0.74
+step = 0.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pilotShield:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.000983566, 0.05498357, 0.2572093, 0.2582093, 0.31219548, 0.35023642, 0.35123646, 0.40522265, 0.5683718, 0.5693718, 0.623358, 0.65442204, 0.655422, 0.70940816, 0.7381464, 0.74),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aao0a"]
+_data = {
+&"RESET": SubResource("Animation_87ye5"),
+&"shieldRegeneration": SubResource("Animation_jiph2")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cksok"]
+size = Vector2(29, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fllei"]
+atlas = ExtResource("12_ujyek")
+region = Rect2(0, 0, 32, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n45d6"]
+atlas = ExtResource("12_ujyek")
+region = Rect2(32, 0, 32, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8np4b"]
+atlas = ExtResource("12_ujyek")
+region = Rect2(64, 0, 32, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxc4y"]
+atlas = ExtResource("12_ujyek")
+region = Rect2(96, 0, 32, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1t7r"]
+atlas = ExtResource("12_ujyek")
+region = Rect2(128, 0, 32, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rr627"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fllei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n45d6")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_8np4b")
+}, {
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_lxc4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m1t7r")
+}],
+"loop": false,
+"name": &"Attack1",
+"speed": 20.0
+}]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lxc4y"]
+lifetime_randomness = 0.57
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 12.06
+inherit_velocity_ratio = 1.0
+direction = Vector3(-1, 0, 0)
+spread = 10.0
+initial_velocity_min = 35.29
+initial_velocity_max = 76.47
+gravity = Vector3(0, 0, 0)
+tangential_accel_min = -35.31
+tangential_accel_max = 35.309998
+turbulence_noise_speed_random = 4.0
+turbulence_influence_min = 0.39100003
+turbulence_influence_max = 0.76500005
+turbulence_initial_displacement_min = -100.0
+turbulence_initial_displacement_max = 84.600006
+
+[sub_resource type="Gradient" id="Gradient_upr3p"]
+offsets = PackedFloat32Array(0.6886792, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ujyek"]
+gradient = SubResource("Gradient_upr3p")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gh11b"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+velocity_pivot = Vector3(0, 1, 0)
+direction = Vector3(1, -0.5, 0)
+spread = 15.0
+flatness = 1.0
+initial_velocity_min = 35.29
+initial_velocity_max = 64.71
+gravity = Vector3(0, 200, 0)
+color_ramp = SubResource("GradientTexture1D_ujyek")
+collision_mode = 2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o4arb"]
+radius = 13.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aao0a"]
+atlas = ExtResource("13_r3pko")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rda0l"]
+atlas = ExtResource("13_r3pko")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sg1wo"]
+atlas = ExtResource("13_r3pko")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l7nff"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aao0a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rda0l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sg1wo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jiph2"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rda0l"]
+lifetime_randomness = 0.62
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(1, 0.5, 1)
+emission_shape = 1
+emission_sphere_radius = 30.12
+angle_min = -169.79999
+angle_max = 142.70001
+inherit_velocity_ratio = 1.0
+spread = 180.0
+initial_velocity_min = 23.59
+initial_velocity_max = 61.329998
+angular_velocity_min = -183.40001
+angular_velocity_max = 176.59998
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_aao0a")
+anim_offset_max = 1.0
+
+[sub_resource type="Animation" id="Animation_rda0l"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_aao0a"]
+resource_name = "shieldRegeneration"
+length = 0.74
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("shipShield:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.054000005, 0.25622573, 0.25722572, 0.3112119, 0.34925285, 0.3502529, 0.4042391, 0.5673882, 0.5683882, 0.6223744, 0.65343845, 0.6544384, 0.70842457, 0.7371628, 0.7390164),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.74),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"ForceRecoverShield"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rda0l"]
+_data = {
+&"RESET": SubResource("Animation_rda0l"),
+&"shieldRegeneration": SubResource("Animation_aao0a")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g6ejb"]
+shader = ExtResource("24_yw7as")
+shader_parameter/borderSize = Vector2(832, 480)
+shader_parameter/rectSize = Vector2(129, 115)
+shader_parameter/position = Vector2(-64, -57)
+shader_parameter/showRadius = 32.0
+
+[node name="Player" type="CharacterBody2D" unique_id=2096548899 node_paths=PackedStringArray("effectHandler", "pilot", "ship", "playerInput", "NameLabel", "pilotWeaponHolder", "pilotMeleeAttack", "shipDeadAudio", "pilotDeadAudio", "pilotShield", "shipShield", "pilotShieldFlickerer", "shipShieldFlickerer")]
+material = SubResource("ShaderMaterial_jkixf")
+collision_mask = 2
+script = ExtResource("2_30khc")
+HasShield = false
+pilotRagdol = ExtResource("3_fllei")
+effectHandler = NodePath("EffectHandler")
+pilot = NodePath("Pilot Controller")
+ship = NodePath("Ship Controller")
+playerInput = NodePath("PlayerInput")
+NameLabel = NodePath("NameLabel")
+pilotWeaponHolder = NodePath("pilotWeaponHolder")
+pilotMeleeAttack = NodePath("MeleeAttack")
+shipDeadAudio = NodePath("Sound/ShipDestroyed")
+pilotDeadAudio = NodePath("Sound/PilotDead")
+pilotShield = NodePath("PilotSprite/pilotShield")
+shipShield = NodePath("ShipSprite/shipShield")
+pilotShieldFlickerer = NodePath("PilotSprite/AnimationPlayer")
+shipShieldFlickerer = NodePath("ShipSprite/AnimationPlayer")
+
+[node name="NameLabel" type="Label" parent="." unique_id=2017447394]
+offset_left = -48.0
+offset_top = -23.0
+offset_right = 49.0
+offset_bottom = -15.75
+text = "test"
+label_settings = SubResource("LabelSettings_g6ejb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pilot Controller" type="Node" parent="." unique_id=1255384266 node_paths=PackedStringArray("weaponHolder", "Melee", "rightWallCheck", "leftWallCheck", "particlesNodes", "jumpAudioPlayer", "sprite", "collision", "playerInput")]
+script = ExtResource("3_iwrur")
+weaponHolder = NodePath("../pilotWeaponHolder")
+Melee = NodePath("../MeleeAttack")
+rightWallCheck = NodePath("../WallSideGetters/Right")
+leftWallCheck = NodePath("../WallSideGetters/Left")
+particlesNodes = NodePath("../LandingParticleEmitters")
+jumpAudioPlayer = NodePath("../Sound/JumpSound")
+sprite = NodePath("../PilotSprite")
+collision = NodePath("../PilotCollision")
+playerInput = NodePath("../PlayerInput")
+
+[node name="PilotCollision" type="CollisionShape2D" parent="." unique_id=1663037647]
+visible = false
+shape = SubResource("RectangleShape2D_0jobf")
+
+[node name="PilotSprite" type="AnimatedSprite2D" parent="." unique_id=1745249850 node_paths=PackedStringArray("controller", "Main")]
+visible = false
+z_index = 1
+use_parent_material = true
+sprite_frames = ExtResource("6_alwmy")
+animation = &"Running"
+script = ExtResource("7_tko72")
+controller = NodePath("../Pilot Controller")
+Main = NodePath("..")
+
+[node name="pilotShield" type="AnimatedSprite2D" parent="PilotSprite" unique_id=423941914]
+self_modulate = Color(1, 1, 1, 0)
+z_index = 1
+position = Vector2(0, -0.5)
+sprite_frames = SubResource("SpriteFrames_aao0a")
+autoplay = "default"
+frame_progress = 0.37089354
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="PilotSprite/pilotShield" unique_id=2015931778]
+material = SubResource("CanvasItemMaterial_87ye5")
+position = Vector2(0, 0.5)
+emitting = false
+sub_emitter = NodePath(".")
+texture = ExtResource("11_j53hc")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_87ye5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PilotSprite" unique_id=862347567]
+libraries/ = SubResource("AnimationLibrary_aao0a")
+
+[node name="pilotWeaponHolder" type="Node2D" parent="." unique_id=1996847872 node_paths=PackedStringArray("Pilot")]
+script = ExtResource("10_a5pbq")
+Pilot = NodePath("../Pilot Controller")
+
+[node name="WallSideGetters" type="Node2D" parent="." unique_id=1324378572]
+visible = false
+
+[node name="Right" type="RayCast2D" parent="WallSideGetters" unique_id=1681196812]
+target_position = Vector2(20, 0)
+collision_mask = 2
+
+[node name="Left" type="RayCast2D" parent="WallSideGetters" unique_id=978288997]
+target_position = Vector2(-20, 0)
+collision_mask = 2
+
+[node name="MeleeAttack" type="Area2D" parent="." unique_id=546809376 node_paths=PackedStringArray("meleeAudioPlayer", "sprite", "collisionShape", "dashParticles", "Main")]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("11_gffum")
+meleeAudioPlayer = NodePath("MeleeSound")
+sprite = NodePath("AnimatedSprite2D")
+collisionShape = NodePath("CollisionShape2D")
+dashParticles = NodePath("DashparticleEmitter")
+Main = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeAttack" unique_id=807326470]
+visible = false
+position = Vector2(14.5, 0)
+shape = SubResource("RectangleShape2D_cksok")
+disabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MeleeAttack" unique_id=336848069]
+position = Vector2(16, -1)
+sprite_frames = SubResource("SpriteFrames_rr627")
+animation = &"Attack1"
+frame = 4
+offset = Vector2(0, 4)
+
+[node name="DashparticleEmitter" type="Node2D" parent="MeleeAttack" unique_id=1317478179]
+script = ExtResource("12_upr3p")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="MeleeAttack/DashparticleEmitter" unique_id=1599359695]
+emitting = false
+amount = 93
+sub_emitter = NodePath(".")
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_lxc4y")
+
+[node name="MeleeSound" type="AudioStreamPlayer2D" parent="MeleeAttack" unique_id=1016438432]
+process_mode = 3
+stream = ExtResource("18_iwmb3")
+
+[node name="LandingParticleEmitters" type="Node2D" parent="." unique_id=1927271241]
+script = ExtResource("12_upr3p")
+
+[node name="Right" type="GPUParticles2D" parent="LandingParticleEmitters" unique_id=1390350739]
+position = Vector2(0, 8)
+emitting = false
+amount = 13
+sub_emitter = NodePath(".")
+lifetime = 0.48
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_gh11b")
+
+[node name="Left" type="GPUParticles2D" parent="LandingParticleEmitters" unique_id=1297629819]
+position = Vector2(0, 8)
+rotation = 3.1415927
+scale = Vector2(1, -1)
+emitting = false
+amount = 13
+sub_emitter = NodePath(".")
+lifetime = 0.48
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_gh11b")
+
+[node name="Ship Controller" type="Node" parent="." unique_id=534347838 node_paths=PackedStringArray("ShootAudio", "powerUpsHolder", "DashAudio", "sprite", "collision", "playerInput")]
+script = ExtResource("5_fllei")
+bullet = ExtResource("5_gsc2s")
+ShootAudio = NodePath("../Sound/ShipAttack")
+powerUpsHolder = NodePath("../ShipPowerUpsHolder")
+DashAudio = NodePath("../Sound/ShipDash")
+sprite = NodePath("../ShipSprite")
+collision = NodePath("../ShipCollision")
+playerInput = NodePath("../PlayerInput")
+
+[node name="ShipCollision" type="CollisionShape2D" parent="." unique_id=398740990]
+visible = false
+shape = SubResource("CircleShape2D_o4arb")
+disabled = true
+
+[node name="ShipSprite" type="AnimatedSprite2D" parent="." unique_id=675688146 node_paths=PackedStringArray("controller", "Main")]
+z_index = 1
+use_parent_material = true
+sprite_frames = ExtResource("8_2i0nn")
+animation = &"Idle"
+script = ExtResource("9_74l4w")
+controller = NodePath("../Ship Controller")
+Main = NodePath("..")
+
+[node name="shipShield" type="AnimatedSprite2D" parent="ShipSprite" unique_id=1713597204]
+self_modulate = Color(1, 1, 1, 0.5411765)
+sprite_frames = SubResource("SpriteFrames_l7nff")
+autoplay = "default"
+frame_progress = 0.9349899
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="ShipSprite/shipShield" unique_id=1177343099]
+material = SubResource("CanvasItemMaterial_jiph2")
+emitting = false
+sub_emitter = NodePath(".")
+texture = ExtResource("15_jiph2")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_rda0l")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ShipSprite" unique_id=589171231]
+libraries/ = SubResource("AnimationLibrary_rda0l")
+
+[node name="ShipPowerUpsHolder" type="Node2D" parent="." unique_id=261392534 node_paths=PackedStringArray("controller")]
+script = ExtResource("21_87ye5")
+controller = NodePath("../Ship Controller")
+
+[node name="PlayerInput" type="Node" parent="." unique_id=181455471 node_paths=PackedStringArray("Main")]
+script = ExtResource("15_n45d6")
+Main = NodePath("..")
+
+[node name="EffectHandler" type="Node" parent="." unique_id=611864569]
+script = ExtResource("16_8np4b")
+iceTexture = ExtResource("17_lxc4y")
+
+[node name="Sound" type="Node2D" parent="." unique_id=1989464264]
+process_mode = 3
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="Sound" unique_id=1615038726]
+process_mode = 3
+stream = ExtResource("20_704ek")
+
+[node name="ShipAttack" type="AudioStreamPlayer2D" parent="Sound" unique_id=1841865435]
+process_mode = 3
+stream = ExtResource("20_s8ljq")
+
+[node name="ShipDash" type="AudioStreamPlayer2D" parent="Sound" unique_id=141250322]
+process_mode = 3
+stream = ExtResource("21_k8e2g")
+
+[node name="ShipDestroyed" type="AudioStreamPlayer2D" parent="Sound" unique_id=1197217660]
+process_mode = 3
+stream = ExtResource("22_7m1i7")
+
+[node name="PilotDead" type="AudioStreamPlayer2D" parent="Sound" unique_id=348718477]
+process_mode = 3
+stream = ExtResource("23_k8e2g")
+
+[node name="BorderShower" type="ColorRect" parent="." unique_id=10641576]
+visible = false
+material = SubResource("ShaderMaterial_g6ejb")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -57.0
+offset_right = 65.0
+offset_bottom = 58.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("25_hdio0")
+metadata/_edit_use_anchors_ = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1636300373]
+script = ExtResource("32_aao0a")
+
+[node name="PilotCollision" type="CollisionShape2D" parent="Area2D" unique_id=572772313]
+visible = false
+shape = SubResource("RectangleShape2D_0jobf")

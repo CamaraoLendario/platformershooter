@@ -1,0 +1,199 @@
+[gd_scene load_steps=11 format=3 uid="uid://i7qqi76sh82u"]
+
+[ext_resource type="Script" uid="uid://dh07w0wpm3dxe" path="res://InGameMenu.cs" id="1_ioadw"]
+[ext_resource type="Script" uid="uid://jwlbi557e3mo" path="res://InGameMenuInput.cs" id="2_722th"]
+[ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="2_ax1mr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_okm3a"]
+bg_color = Color(0.22, 0.22, 0.22, 0.84313726)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.14, 0.14, 0.14, 0)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 10.0
+expand_margin_right = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ax1mr"]
+bg_color = Color(0.22, 0.22, 0.22, 0.84313726)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 15.0
+expand_margin_right = 15.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_mq2yj"]
+outline_size = 85
+outline_color = Color(1, 0.17000002, 0.17000002, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_62ga0"]
+font_size = 141
+outline_size = 25
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0.1, 0.1, 0.1, 0.41960785)
+shadow_offset = Vector2(10.775, 14.965)
+
+[sub_resource type="Animation" id="Animation_i1lgf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["3"]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-168.5, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_mq2yj"]
+resource_name = "resumeGameCountdown"
+length = 3.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": ["3", "2", "1", "GO!"]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.5, -0.25, 0, 0.492, 0, -168.5, 0, 0, 0.25, 0),
+"times": PackedFloat32Array(3, 3.8)
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"UnPause"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lt75h"]
+_data = {
+&"RESET": SubResource("Animation_i1lgf"),
+&"resumeGameCountdown": SubResource("Animation_mq2yj")
+}
+
+[node name="InGameMenu" type="CanvasLayer" node_paths=PackedStringArray("gamePausedBy", "inputNode", "buttonsContainer", "animationPlayer")]
+process_mode = 3
+script = ExtResource("1_ioadw")
+gamePausedBy = NodePath("ButtonsContainer/gamePausedBy")
+inputNode = NodePath("InputNode")
+buttonsContainer = NodePath("ButtonsContainer")
+animationPlayer = NodePath("Label/AnimationPlayer")
+notHoveredStyleBox = SubResource("StyleBoxFlat_okm3a")
+hoveredStyleBox = SubResource("StyleBoxFlat_ax1mr")
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(266, 156)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ax1mr")
+alignment = 1
+
+[node name="gamePausedBy" type="Label" parent="ButtonsContainer"]
+layout_mode = 2
+text = "GAME PAUSED by P1"
+label_settings = SubResource("LabelSettings_mq2yj")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Resume" type="Button" parent="ButtonsContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ax1mr")
+button_mask = 0
+text = "Resume"
+
+[node name="BackToCharacterSelectScreen" type="Button" parent="ButtonsContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_okm3a")
+button_mask = 0
+text = "Back To Character Select Screen"
+
+[node name="Quit" type="Button" parent="ButtonsContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_okm3a")
+button_mask = 0
+text = "Alt+f4"
+
+[node name="InputNode" type="Node" parent="."]
+script = ExtResource("2_722th")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -102.0
+offset_top = -168.5
+offset_right = 96.0
+offset_bottom = -26.5
+grow_horizontal = 2
+theme = ExtResource("2_ax1mr")
+text = "3"
+label_settings = SubResource("LabelSettings_62ga0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Label"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_lt75h")
+}
+
+[connection signal="pressed" from="ButtonsContainer/Resume" to="." method="OnResumePressed"]
+[connection signal="pressed" from="ButtonsContainer/BackToCharacterSelectScreen" to="." method="OnBackToCharacterSelectScreenPressed"]
+[connection signal="pressed" from="ButtonsContainer/Quit" to="." method="OnQuitPressed"]

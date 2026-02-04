@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bp3y44lrfkx80"]
+
+[ext_resource type="FontFile" uid="uid://c5a2sdgkmsblj" path="res://Fonts/SpaceMagesFontOutlined.png" id="1_hs4fc"]
+
+[resource]
+default_font = ExtResource("1_hs4fc")

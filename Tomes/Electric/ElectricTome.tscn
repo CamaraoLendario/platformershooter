@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqonk3h5mq20v"]
+
+[ext_resource type="Script" uid="uid://cqwhrvqwvt46i" path="res://Deprecated/ShotgunTome.cs" id="1_0okfx"]
+[ext_resource type="PackedScene" uid="uid://feg8bm5rac4x" path="res://Tomes/Poison/PoisonProjectile.tscn" id="2_jvu2o"]
+[ext_resource type="Texture2D" path="res://Assets/temp/testWeapon.png" id="3_nj72c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ul1sp"]
+atlas = ExtResource("3_nj72c")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jo3uf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ul1sp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="PoisonTome" type="Node2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_0okfx")
+bulletCount = 120
+sprite = NodePath("Sprite2D")
+bullet = ExtResource("2_jvu2o")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(16, 0)
+sprite_frames = SubResource("SpriteFrames_jo3uf")

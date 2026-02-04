@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cky1cq885j8hp"]
+
+[ext_resource type="Shader" uid="uid://6nmca66ty4kg" path="res://worms3d.gdshader" id="1_rb486"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rb486"]
+render_priority = 0
+shader = ExtResource("1_rb486")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qab8x"]
+lightmap_size_hint = Vector2i(12, 12)
+material = SubResource("ShaderMaterial_rb486")
+size = Vector2(40, 40)
+subdivide_width = 300
+subdivide_depth = 300
+
+[node name="Node2D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_qab8x")

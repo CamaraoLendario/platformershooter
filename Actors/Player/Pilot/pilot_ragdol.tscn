@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=3 uid="uid://by5s8sc2bwo1o"]
+
+[ext_resource type="Texture2D" uid="uid://b1y4dm1w0puo2" path="res://Actors/Player/Pilot/Sprites/pilot_1_animations.png" id="1_hb14o"]
+[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutine.gdshader" id="1_vnasi"]
+[ext_resource type="Script" uid="uid://ot7ac8l2popk" path="res://Actors/Player/Pilot/PilotRagdol.cs" id="2_cxnmj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cxnmj"]
+resource_local_to_scene = true
+shader = ExtResource("1_vnasi")
+shader_parameter/PoisonBuildup = 0.0
+shader_parameter/Color = Color(1, 1, 0, 1)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hb14o"]
+friction = 0.5
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vnasi"]
+atlas = ExtResource("1_hb14o")
+region = Rect2(80, 0, 16, 17)
+margin = Rect2(-0.5, -1, 0, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vnasi"]
+radius = 5.0
+
+[node name="PilotRagdol" type="RigidBody2D"]
+material = SubResource("ShaderMaterial_cxnmj")
+collision_layer = 0
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_hb14o")
+script = ExtResource("2_cxnmj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+use_parent_material = true
+texture = SubResource("AtlasTexture_vnasi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vnasi")

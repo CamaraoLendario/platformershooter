@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://5c4yyxfl8m1b"]
+
+[ext_resource type="Script" uid="uid://23p6qld6oor4" path="res://Actors/Player/Ship/ShipPowerUps/ShipPowerUpSpeedUp.cs" id="1_4mpm0"]
+
+[node name="ShipPowerUpSpeedUp" type="Node2D" unique_id=281180339]
+script = ExtResource("1_4mpm0")

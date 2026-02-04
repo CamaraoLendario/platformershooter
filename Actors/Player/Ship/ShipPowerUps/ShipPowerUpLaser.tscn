@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b4uo2lmmg5ov1"]
+
+[ext_resource type="Script" uid="uid://diy4qasvkymug" path="res://Actors/Player/Ship/ShipPowerUps/ShipPowerUpLaser.cs" id="1_gurfv"]
+
+[node name="ShipPowerUpLaser" type="Node2D" unique_id=2017497534]
+script = ExtResource("1_gurfv")

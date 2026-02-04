@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://cyhc0waevvoee"]
+
+[ext_resource type="Script" uid="uid://qpmiptfy64qi" path="res://Maps/MapTools/DestructibleBlockFlag.cs" id="1_lrm18"]
+[ext_resource type="Texture2D" uid="uid://c5tqs6m8jjsim" path="res://Maps/MapAssets/TileMaps/Textures/ParticleFromTileGeneratorTexture.png" id="3_m6vex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n13dd"]
+size = Vector2(16, 16)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_b3ir4"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_oiawm"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.777027, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8j5pn"]
+gradient = SubResource("Gradient_oiawm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fynmt"]
+lifetime_randomness = 0.89
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 10.51
+angle_min = -81.49999
+angle_max = 67.90001
+spread = 180.0
+initial_velocity_min = 33.02
+initial_velocity_max = 70.76
+angular_velocity_min = -91.69002
+angular_velocity_max = 91.68998
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -28.310001
+linear_accel_max = -21.700003
+color_ramp = SubResource("GradientTexture1D_8j5pn")
+anim_offset_max = 1.0
+
+[node name="DestructibleBlockFlag" type="Area2D"]
+collision_mask = 0
+script = ExtResource("1_lrm18")
+particleCutterTexture = ExtResource("3_m6vex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_n13dd")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_b3ir4")
+position = Vector2(8, 8)
+emitting = false
+sub_emitter = NodePath(".")
+texture = ExtResource("3_m6vex")
+lifetime = 0.72
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_fynmt")

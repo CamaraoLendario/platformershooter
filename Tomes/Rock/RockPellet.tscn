@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://cb8rndkouptad"]
+
+[ext_resource type="PackedScene" uid="uid://fi88ocyqxvqn" path="res://Tomes/Base/LinearProjectileTemplate.tscn" id="1_t5g3k"]
+[ext_resource type="Script" uid="uid://ck3ysp6xdjgsf" path="res://Tomes/Rock/RockPellet.cs" id="2_abt40"]
+[ext_resource type="Texture2D" uid="uid://c87ayt52xqkv6" path="res://Tomes/Rock/RockPellets.png" id="3_5ixgj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ixgj"]
+atlas = ExtResource("3_5ixgj")
+region = Rect2(0, 0, 16, 16)
+
+[node name="RockPellet" instance=ExtResource("1_t5g3k")]
+script = ExtResource("2_abt40")
+rotPerSec = 3.0
+speed = 250.0
+
+[node name="Sprite2D" parent="." index="1"]
+texture = SubResource("AtlasTexture_5ixgj")

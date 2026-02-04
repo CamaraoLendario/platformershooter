@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://ipywrag2isoj"]
+
+[ext_resource type="Shader" uid="uid://f4gbtvnx6kjb" path="res://ShaderLearning.gdshader" id="1_t56q1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t56q1"]
+shader = ExtResource("1_t56q1")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_t56q1"]
+
+[node name="Control" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_t56q1")
+scale = Vector2(88.62, 88.62)
+texture = SubResource("CanvasTexture_t56q1")
+region_enabled = true
+region_rect = Rect2(0, 0, 1, 1)

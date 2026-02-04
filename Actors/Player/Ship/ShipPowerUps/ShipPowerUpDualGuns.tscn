@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b7rfhvwq15fsc"]
+
+[ext_resource type="Script" uid="uid://bxgtsqkda82me" path="res://Actors/Player/Ship/ShipPowerUps/ShipPowerUpDualGuns.cs" id="1_x4hl6"]
+
+[node name="ShipUpgradeDualGuns" type="Node2D" unique_id=334741787]
+script = ExtResource("1_x4hl6")
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1776992502]
+position = Vector2(0, 7)
+gizmo_extents = 25.4
+
+[node name="Marker2D2" type="Marker2D" parent="." unique_id=909161158]
+position = Vector2(0, -7)
+gizmo_extents = 25.4

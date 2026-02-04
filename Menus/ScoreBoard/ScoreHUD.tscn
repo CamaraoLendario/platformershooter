@@ -1,0 +1,340 @@
+[gd_scene format=3 uid="uid://be0bay5c30jmy"]
+
+[ext_resource type="Script" uid="uid://107i6dmx81bu" path="res://Menus/ScoreBoard/ScoreBoard.cs" id="1_7cg30"]
+[ext_resource type="PackedScene" uid="uid://c2q477nhb4j0p" path="res://Menus/ScoreBoard/IndividualScoreCounter.tscn" id="1_8o2op"]
+[ext_resource type="Script" uid="uid://bwh5qxwryxau6" path="res://Menus/ScoreBoard/ScoreHUD.cs" id="1_d47xt"]
+[ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="2_un3ay"]
+[ext_resource type="Script" uid="uid://bm7eaxcx3wkcr" path="res://Menus/ScoreBoard/RoundStartAnnouncer.cs" id="4_6wo6e"]
+[ext_resource type="AudioStream" uid="uid://dibbos5harqhb" path="res://Assets/Audio/READY!.wav" id="6_q0m6a"]
+[ext_resource type="FontFile" uid="uid://c5a2sdgkmsblj" path="res://Fonts/SpaceMagesFontOutlined.png" id="6_w8ut1"]
+[ext_resource type="AudioStream" uid="uid://cig1jhkfbumhs" path="res://Assets/Audio/GO!.wav" id="7_ww1s6"]
+[ext_resource type="Script" uid="uid://cxjncdus4t5b2" path="res://Menus/ScoreBoard/AndTheWinnerIs.cs" id="8_vdi58"]
+[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutine.gdshader" id="8_wgo8s"]
+[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Sprites/PilotStill.png" id="9_ef8pb"]
+[ext_resource type="AudioStream" uid="uid://cgac2tx4ihctk" path="res://Assets/Audio/AndTheWinnerIs/AndTheWinnerIs.ogg" id="10_ef8pb"]
+[ext_resource type="AudioStream" uid="uid://dxche3ctkq2gg" path="res://Assets/Audio/AndTheWinnerIs/RED.ogg" id="12_vdi58"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ux58e"]
+font = ExtResource("6_w8ut1")
+font_size = 106
+outline_size = 585
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 0.30980393)
+shadow_offset = Vector2(18, 9)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3npgx"]
+shader = ExtResource("8_wgo8s")
+shader_parameter/PoisonBuildup = 0.0
+shader_parameter/Color = Color(0.8, 0.8, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8boj2"]
+font = ExtResource("6_w8ut1")
+font_size = 106
+outline_size = 585
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 0.30980393)
+shadow_offset = Vector2(18, 9)
+
+[sub_resource type="Animation" id="Animation_vdi58"]
+resource_name = "Base"
+length = 3.136
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2, 0, 0),
+"points": PackedFloat32Array(700, -0.24999973, 1.2259377, 0.65053463, -3.1900635, -138.335, -0.733, -240.88, 0, 0, -138.335, 0, 0, 0.6417891, 1.553299, 700, -0.24999973, 1.2259377, 0.65053463, -3.1900635),
+"times": PackedFloat32Array(0, 1, 1.8666667, 2.5666666)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("winnerSprite:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(450.86, -0.25, 0, 0.25, 0, -242, 0, 0, 0, 0),
+"times": PackedFloat32Array(1.8333333, 2.7911234)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("winnerSprite:scale:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.5, -0.12812299, 0.15072845, 0.92688227, -1.0904174, 1, -0.017289877, 0.00070011616, 0, 0),
+"times": PackedFloat32Array(1.8333333, 2.7911234)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("winnerSprite:scale:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.5, -0.11568605, 0.13503397, 0.92688227, -1.0818987, 1, -0.017289877, -0.01338017, 0, 0),
+"times": PackedFloat32Array(1.8333333, 2.7911234)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("winnerSprite:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-23.55, -0.25, 0, 0.25, 0, 0, -0.006974697, -0.06947458, 0, 0),
+"times": PackedFloat32Array(1.8333333, 2.7911396)
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AndTheWinnerIs:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.26666668),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ColorAnnouncer:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(2.7333333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_tuduv"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(700, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("winnerSprite:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(700, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("winnerSprite:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("winnerSprite:scale:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("winnerSprite:scale:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AndTheWinnerIs:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ColorAnnouncer:playing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8lsr1"]
+_data = {
+&"Base": SubResource("Animation_vdi58"),
+&"RESET": SubResource("Animation_tuduv")
+}
+
+[node name="ScoreHUD" type="CanvasLayer" unique_id=1643182607 node_paths=PackedStringArray("scoreBoard")]
+script = ExtResource("1_d47xt")
+scoreBoard = NodePath("ScoreBoard")
+
+[node name="ScoreBoard" type="Control" parent="." unique_id=461983097 node_paths=PackedStringArray("scoreCountersContainer")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1000.0
+offset_bottom = 1000.00024
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("2_un3ay")
+script = ExtResource("1_7cg30")
+individualScoreCounterScene = ExtResource("1_8o2op")
+scoreCountersContainer = NodePath("HBoxContainer")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScoreBoard" unique_id=1423391292]
+custom_minimum_size = Vector2(1018.22, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -509.11
+offset_top = -35.0
+offset_right = 509.11
+offset_bottom = 34.999878
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="READY GO" type="Control" parent="." unique_id=1508956759 node_paths=PackedStringArray("readyGoLabel", "READY", "GO")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_un3ay")
+script = ExtResource("4_6wo6e")
+readyGoLabel = NodePath("Label")
+READY = NodePath("READY")
+GO = NodePath("GO")
+
+[node name="Label" type="Label" parent="READY GO" unique_id=964125853]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -352.5
+offset_top = -840.0
+offset_right = 352.5
+offset_bottom = -597.99976
+grow_horizontal = 2
+grow_vertical = 2
+text = "READY!!"
+label_settings = SubResource("LabelSettings_ux58e")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="READY" type="AudioStreamPlayer" parent="READY GO" unique_id=1455629447]
+stream = ExtResource("6_q0m6a")
+
+[node name="GO" type="AudioStreamPlayer" parent="READY GO" unique_id=448458955]
+stream = ExtResource("7_ww1s6")
+volume_db = -10.0
+
+[node name="AndTheWinnerIs" type="Control" parent="." unique_id=1185322526 node_paths=PackedStringArray("announcingAnimation", "colorAnnouncer")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_un3ay")
+script = ExtResource("8_vdi58")
+announcingAnimation = NodePath("WinnerDecider")
+colorAnnouncer = NodePath("ColorAnnouncer")
+
+[node name="winnerSprite" type="TextureRect" parent="AndTheWinnerIs" unique_id=1319127156]
+material = SubResource("ShaderMaterial_3npgx")
+custom_minimum_size = Vector2(425, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -212.5
+offset_top = 700.0
+offset_right = 212.5
+offset_bottom = 1100.0004
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(212, 200)
+texture = ExtResource("9_ef8pb")
+
+[node name="Label" type="Label" parent="AndTheWinnerIs" unique_id=895305648]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1093.0
+offset_top = 700.0
+offset_right = 1093.0
+offset_bottom = 941.99976
+grow_horizontal = 2
+grow_vertical = 2
+text = "And the winner is..."
+label_settings = SubResource("LabelSettings_8boj2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AndTheWinnerIs" type="AudioStreamPlayer" parent="AndTheWinnerIs" unique_id=1967129571]
+stream = ExtResource("10_ef8pb")
+
+[node name="ColorAnnouncer" type="AudioStreamPlayer" parent="AndTheWinnerIs" unique_id=1288229189]
+stream = ExtResource("12_vdi58")
+
+[node name="WinnerDecider" type="AnimationPlayer" parent="AndTheWinnerIs" unique_id=352300474]
+libraries/ = SubResource("AnimationLibrary_8lsr1")

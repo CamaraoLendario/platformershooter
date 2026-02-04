@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://drd2rgglnakvn"]
+
+[ext_resource type="Script" uid="uid://dicyxrvitplp4" path="res://Maps/MapAssets/Background/Parallax/HomemadeParallax.cs" id="1_oyyen"]
+[ext_resource type="Shader" uid="uid://cx67s33dt1lle" path="res://Maps/MapAssets/Background/Parallax/HomemadeParallax.gdshader" id="2_crcqs"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oauj1"]
+shader = ExtResource("2_crcqs")
+shader_parameter/sideLength = 2.0
+shader_parameter/parallaxMultiplier = 1.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/textureRegion = Vector4(0, 0, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+
+[node name="Space" type="Node2D"]
+z_index = -1
+scale = Vector2(2, 2)
+script = ExtResource("1_oyyen")
+currentShaderMaterial = SubResource("ShaderMaterial_oauj1")
+Size = 2.0
