@@ -8,8 +8,8 @@ public partial class ParallaxBackgroundLayers : Node2D
 	{
 		CallDeferred(MethodName.SetCamera);
 	}
-	
-	void SetCamera()
+
+    void SetCamera()
 	{
         currentCamera = GetParent<Map>().camera;
 		foreach(HomemadeParallax child in GetChildren())
@@ -21,6 +21,6 @@ public partial class ParallaxBackgroundLayers : Node2D
 	public override void _Process(double delta)
 	{
 		if (!Engine.IsEditorHint())
-			Position =	currentCamera.Position;
-	}
+			Position = currentCamera.Position;
+	}	
 }

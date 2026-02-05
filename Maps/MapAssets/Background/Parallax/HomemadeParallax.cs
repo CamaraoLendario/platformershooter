@@ -79,6 +79,7 @@ public partial class HomemadeParallax : Node2D
 
     public override void _Ready()
     {
+        currentCamera = GetViewport().GetCamera2D();
         foreach(Node child in GetChildren()){
             if (child is not Sprite2D sprite) continue;
             Sprite2D backgroundSprite = sprite;

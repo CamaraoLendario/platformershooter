@@ -1,6 +1,13 @@
 [gd_scene format=3 uid="uid://dlbbif2cwel8d"]
 
 [ext_resource type="Script" uid="uid://cxpas5nanqttn" path="res://Tomes/Ice/IceRay.cs" id="1_65ofw"]
+[ext_resource type="Texture2D" uid="uid://dddru485lah7v" path="res://Tomes/Ice/IceParticlesSpriteSheet.png" id="2_l8rrr"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_l8rrr"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = true
 
 [sub_resource type="Gradient" id="Gradient_l8rrr"]
 offsets = PackedFloat32Array(0.77272725, 1)
@@ -12,30 +19,15 @@ gradient = SubResource("Gradient_l8rrr")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hqm10"]
 lifetime_randomness = 1.0
 particle_flag_disable_z = true
+emission_shape_offset = Vector3(-4.5, 0, 0)
 emission_shape = 3
-emission_box_extents = Vector3(100, 2, 1)
+emission_box_extents = Vector3(4.5, 1, 1)
 gravity = Vector3(0, 0, 0)
 attractor_interaction_enabled = false
-color = Color(0.28235295, 0.83137256, 0.87058824, 1)
+color = Color(0.8277, 0.92318, 0.93, 1)
 color_ramp = SubResource("GradientTexture1D_if510")
-
-[sub_resource type="Gradient" id="Gradient_hqm10"]
-offsets = PackedFloat32Array(0.3445946, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_l8rrr"]
-gradient = SubResource("Gradient_hqm10")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2ghp0"]
-lifetime_randomness = 0.47
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 4.76
-direction = Vector3(-1, 0, 0)
-spread = 41.47
-initial_velocity_max = 28.3
-gravity = Vector3(0, 0, 0)
-color_ramp = SubResource("GradientTexture1D_l8rrr")
+anim_speed_min = 0.88
+anim_speed_max = 0.97999996
 
 [sub_resource type="Gradient" id="Gradient_if510"]
 offsets = PackedFloat32Array(0.77272725, 1)
@@ -46,6 +38,8 @@ gradient = SubResource("Gradient_if510")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_thlil"]
 lifetime_randomness = 1.0
+particle_flag_align_y = true
+particle_flag_rotate_y = true
 particle_flag_disable_z = true
 emission_shape_scale = Vector3(0.495, 1, 1)
 emission_shape = 6
@@ -60,39 +54,67 @@ orbit_velocity_max = -0.36699992
 gravity = Vector3(0, 0, 0)
 radial_accel_min = 9.179997
 radial_accel_max = 17.439997
-color = Color(0.06666667, 0.7137255, 0.7607843, 1)
+color = Color(0.65320003, 0.8844267, 0.92, 1)
 color_ramp = SubResource("GradientTexture1D_2ghp0")
+
+[sub_resource type="Gradient" id="Gradient_hqm10"]
+offsets = PackedFloat32Array(0.3445946, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_l8rrr"]
+gradient = SubResource("Gradient_hqm10")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2ghp0"]
+lifetime_randomness = 0.47
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 4.76
+direction = Vector3(-1, 0, 0)
+spread = 25.23
+initial_velocity_min = 8.75
+initial_velocity_max = 16.64
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_l8rrr")
+anim_speed_min = 0.02
+anim_speed_max = 0.24
+anim_offset_max = 1.0
 
 [node name="IceRay" type="RayCast2D" unique_id=393689571 node_paths=PackedStringArray("iceParticlesEmitter", "hitEmitter", "rayRing")]
 collision_mask = 3
 script = ExtResource("1_65ofw")
+animationSpeed = 4
 iceParticlesEmitter = NodePath("IceDropplets")
 hitEmitter = NodePath("HitEmitter")
 rayRing = NodePath("RayRing")
 lifeTime = 2.0
 
 [node name="IceDropplets" type="GPUParticles2D" parent="." unique_id=1452876736]
-amount = 129
+material = SubResource("CanvasItemMaterial_l8rrr")
+position = Vector2(9, 0)
+amount = 1
 sub_emitter = NodePath(".")
+texture = ExtResource("2_l8rrr")
 lifetime = 2.0
 explosiveness = 1.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_hqm10")
 
-[node name="HitEmitter" type="GPUParticles2D" parent="." unique_id=819659837]
-position = Vector2(200, 0)
-emitting = false
-amount = 38
-lifetime = 0.75
-explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_2ghp0")
-
 [node name="RayRing" type="GPUParticles2D" parent="." unique_id=1956163433]
-position = Vector2(6, 0)
-amount = 15
+position = Vector2(9, 0)
+amount = 16
 sub_emitter = NodePath(".")
 speed_scale = 2.0
 explosiveness = 1.0
 fixed_fps = 60
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_thlil")
+
+[node name="HitEmitter" type="GPUParticles2D" parent="." unique_id=819659837]
+material = SubResource("CanvasItemMaterial_l8rrr")
+position = Vector2(200, 0)
+emitting = false
+amount = 7
+texture = ExtResource("2_l8rrr")
+lifetime = 0.75
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_2ghp0")
