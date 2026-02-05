@@ -30,7 +30,6 @@ public partial class IceRay : HitscanBullet
 		checkHit();
 		SpawnParticleEmitters();
  	}
-
 	void AddParticleParents()
 	{
 		AddChild(iceDroppletsParent);
