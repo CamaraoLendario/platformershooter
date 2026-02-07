@@ -15,13 +15,6 @@ public partial class InputGenerator : Node
     public override void _Ready()
     {
 		Instance = this;
-		GD.Print("------------------------------------------------");
-		GD.Print(GetLastNumOnString("literallyjust93"));
-		GD.Print(GetLastNumOnString("literallyjust0"));
-		GD.Print(GetLastNumOnString("literallyjust-1"));
-		GD.Print(GetLastNumOnString("literallyjust-3"));
-		GD.Print(GetLastNumOnString("literallyjust-19"));
-		GD.Print("------------------------------------------------");
 	}
 
 	public void GeneratePlayersInput(List<int> inputIdxs)

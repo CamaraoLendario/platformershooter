@@ -19,6 +19,7 @@ public partial class PlayerInput : Node
 	[Signal] public delegate void DropEndEventHandler();
 	[Signal] public delegate void GrapplingHookStartEventHandler();
 	[Signal] public delegate void GrapplingHookEndEventHandler(); 
+	[Signal] public delegate void SpecialStartEventHandler(); 
 	[Signal] public delegate void PauseRequestEventHandler(Player player, bool pausedByDisconnect);
 	[Export] Player Main;
 	public string keyboardKeyword = "";
@@ -111,6 +112,11 @@ public partial class PlayerInput : Node
 		if (Input.IsActionJustReleased("GrapplingHook" + keyboardKeyword + inputIndex))
 		{
 			EmitSignal(SignalName.GrapplingHookEnd);
+		}
+
+		if (Input.IsActionJustReleased("Special" + keyboardKeyword + inputIndex))
+		{
+			EmitSignal(SignalName.SpecialStart, Main, false);
 		}
 
 		if (Input.IsActionJustReleased("Pause" + keyboardKeyword + inputIndex))

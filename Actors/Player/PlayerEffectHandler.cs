@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 public partial class PlayerEffectHandler : Node
 {
-	[Export] CompressedTexture2D iceTexture;
+	[Export] private PackedScene iceDDRScene;
 	public float PoisonBuildup
     {
         get
@@ -23,11 +23,10 @@ public partial class PlayerEffectHandler : Node
 	public bool isPoisoned = false;
 	public bool isFrozen = false;
 	private float timeToPoison = 5;
-	Timer freezeTimer = new();
 	private Player Main;
 	private PilotAttack pilot;
 	private ShipAttack ship;
-	private Sprite2D iceSprite;
+	private FrozenDDR currentIceDDR;
 	private List<PoisonProjectile> poisonBlobs = [];
 	
     public override void _Ready()
@@ -35,13 +34,10 @@ public partial class PlayerEffectHandler : Node
 		Main = GetParent() as Player;
 		pilot = Main.pilot;
 		ship = Main.ship;
-		freezeTimer.OneShot = true;
-		AddChild(freezeTimer);
 		
 		Main.reseting += OnReset;
 		pilot.Melee.meleed += OnMeleed;
 		ship.dashed += OnShipDashed;
-		freezeTimer.Timeout += UnFreeze;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -60,28 +56,24 @@ public partial class PlayerEffectHandler : Node
 		if (PoisonBuildup < 0) PoisonBuildup = 0;
 	}
 
-	public void Freeze(float freezeTime)
+	public void Freeze()
 	{
 		if (!isFrozen)
 		{
-            iceSprite = new Sprite2D
-            {
-                Texture = iceTexture,
-                ZIndex = 1
-            };
+            currentIceDDR = iceDDRScene.Instantiate<FrozenDDR>();
+			
 			pilot.inputVector *= 0;
 			ship.inputVector *= 0;
-            Main.CallDeferred(MethodName.AddChild, iceSprite);
+            Main.CallDeferred(MethodName.AddChild, currentIceDDR);
 		}
 
 		isFrozen = true;
-		freezeTimer.Start(freezeTime);
 	}
 	
-	void UnFreeze()
+	public void UnFreeze()
 	{
 		isFrozen = false;
-		iceSprite.QueueFree();
+		currentIceDDR.QueueFree();
     }
 	
 	public void AddPoisonBlob(PoisonProjectile blob)

@@ -6,15 +6,14 @@ public partial class DestructibleBlockFlag : Area2D
 {
     [Export] Texture2D particleCutterTexture;
     public TileMapLayer tileMapLayer;
+    public Vector2I tilePos;
     GpuParticles2D newParticlesNode;
     const int TILETEXTURESIZE = 20;
-    Vector2I tilePos;
 
     public override void _Ready()
     {
         newParticlesNode = GetNode("GPUParticles2D").Duplicate() as GpuParticles2D;
         tilePos = new Vector2I((int) Position.X/16, (int) Position.Y/16);
-
     }
 
     public void Destroy()

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://diosn7qu6kfh6"]
+
+[ext_resource type="Script" uid="uid://15ac2tx8x5lw" path="res://Actors/Player/FrozenDDR.cs" id="1_5hxyl"]
+[ext_resource type="Texture2D" uid="uid://b8idoo2np415a" path="res://Tomes/TomeAssets/Ice/FrozenCharacterSprite.png" id="1_7vw5j"]
+[ext_resource type="Texture2D" uid="uid://dv2s24wker1p3" path="res://Actors/Player/DDRArrow.png" id="1_l6xsd"]
+[ext_resource type="Script" uid="uid://tjeauhrn2wha" path="res://Actors/Player/DDRInputsParent.cs" id="3_k16qw"]
+
+[node name="FrozenDDR" type="Node2D" unique_id=1256611054 node_paths=PackedStringArray("DDRparent")]
+script = ExtResource("1_5hxyl")
+DDRparent = NodePath("DDRInputsParent")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=101390810]
+z_index = 1
+texture = ExtResource("1_7vw5j")
+
+[node name="DDRInputsParent" type="Node2D" parent="." unique_id=1195743199]
+position = Vector2(0, -16)
+script = ExtResource("3_k16qw")
+DDRLength = 20
+InputButtonTexture = ExtResource("1_l6xsd")

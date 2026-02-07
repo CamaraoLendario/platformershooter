@@ -8,9 +8,10 @@ public partial class InteractableTiles : TileMapLayer
 {
 	Map mapNode;
 	PackedScene destructibleBlockFlagScene = GD.Load<PackedScene>("uid://cyhc0waevvoee");
-	TileMapLayer destructibleBlockFlags;
+	TileMapLayer desctructibleTilesContainer;
 	List<(Vector2I coord, int sourceId, Vector2I atlasCoords)> tileMapData =[];
 	Vector2I checkArea;
+	public Dictionary<Vector2I, DestructibleBlockFlag> destructibleBlockFlags = new();
 	public override void _Ready()
 	{
 		mapNode = GetParent<Map>();
@@ -44,8 +45,8 @@ public partial class InteractableTiles : TileMapLayer
 
 	void ResetDestructibleBlocksChecks()
 	{
-		destructibleBlockFlags = GetNode<TileMapLayer>("DestructibleTiles");
-		foreach (DestructibleBlockFlag oldFlag in destructibleBlockFlags.GetChildren())
+		desctructibleTilesContainer = GetNode<TileMapLayer>("DestructibleTiles");
+		foreach (DestructibleBlockFlag oldFlag in desctructibleTilesContainer.GetChildren())
 		{
 			oldFlag.QueueFree();
 		}
@@ -61,12 +62,13 @@ public partial class InteractableTiles : TileMapLayer
 
 				if ((bool) currentTileData.GetCustomData("Destructible"))
 				{
-					destructibleBlockFlags.SetCell(currentCoord, GetCellSourceId(currentCoord), GetCellAtlasCoords(currentCoord));
+					desctructibleTilesContainer.SetCell(currentCoord, GetCellSourceId(currentCoord), GetCellAtlasCoords(currentCoord));
 					SetCell(currentCoord, -1);
 					DestructibleBlockFlag destructibleBlockFlag = destructibleBlockFlagScene.Instantiate<DestructibleBlockFlag>();
 					destructibleBlockFlag.Position = currentCoord * 16;
-					destructibleBlockFlag.tileMapLayer = destructibleBlockFlags;
-					destructibleBlockFlags.AddChild(destructibleBlockFlag);
+					destructibleBlockFlag.tileMapLayer = desctructibleTilesContainer;
+					destructibleBlockFlags.Add(currentCoord, destructibleBlockFlag);
+					desctructibleTilesContainer.AddChild(destructibleBlockFlag);
 				}
 			}
 		}

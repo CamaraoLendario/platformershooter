@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.IO.Pipes;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.AccessControl;
+using System.Text;
 using System.Threading.Tasks;
 
 public partial class IceRay : HitscanBullet
@@ -76,10 +77,8 @@ public partial class IceRay : HitscanBullet
 	{
 		if (iceParticlesQueue.Count <= 0)
 		{
-			GD.Print("finished felling ice particles");	
 			return;
 		}
-		GD.Print("felling Ice particles");	
 		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
 		ParticleProcessMaterial iceParticlesMaterial = iceParticlesQueue[0].ProcessMaterial.Duplicate() as ParticleProcessMaterial;
 		iceParticlesMaterial.Gravity = new Vector3(gravity2D.X, gravity2D.Y, 0);
@@ -100,7 +99,6 @@ public partial class IceRay : HitscanBullet
 	{
 		if (separation * current > distance)
 		{
-			GD.Print("ended");
 			return;
 		}
 		if (animationStep <= animationSpeed)
@@ -113,7 +111,6 @@ public partial class IceRay : HitscanBullet
 			await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
 		}
 		
-		GD.Print("summoned ring " + current);
 		GpuParticles2D newRayRing = rayRing.Duplicate() as GpuParticles2D;
 		GpuParticles2D newIceParticles = iceParticlesEmitter.Duplicate() as GpuParticles2D;
 		
@@ -161,6 +158,10 @@ public partial class IceRay : HitscanBullet
             }
 			else Hit(player);
 		}
+		else if (collider is TileMapLayer)
+		{
+			Hit(collider as TileMapLayer);
+		}
 		else if (collider is StaticBody2D)
 		{
 			Hit(collider as StaticBody2D);
@@ -173,11 +174,35 @@ public partial class IceRay : HitscanBullet
 		if(player.HasShield)
 			player.TakeDamage(owner);
 		else
-			player.effectHandler.Freeze(freezeTime);
+			player.effectHandler.Freeze();
 	}
     protected override void Hit(StaticBody2D body)
     {
 		base.Hit(body);
-		GD.Print(body);
     }
+	
+	void Hit(TileMapLayer mapLayer)
+	{
+		if (mapLayer.GetParent() is not InteractableTiles parentLayer) return;
+		
+		Vector2I tilePos = GetTilePos(GetCollisionPoint(), mapLayer.TileSet.TileSize);
+		parentLayer.destructibleBlockFlags[tilePos].Destroy();
+	}
+
+	Vector2I GetTilePos(Vector2 pos, Vector2 tileSize)
+	{
+		pos -= GetCollisionNormal();
+		pos /= (int)tileSize.X;
+		if (pos.X < 0) pos.X --;
+		if (pos.Y < 0) pos.Y --;
+		Vector2I tilePos = ToIntVec(pos);
+		return tilePos;
+	}	
+	Vector2I ToIntVec(Vector2 vec)
+	{
+		return new Vector2I(
+			(int) vec.X,
+			(int) vec.Y
+		);
+	}
 }

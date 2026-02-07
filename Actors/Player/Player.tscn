@@ -21,7 +21,6 @@
 [ext_resource type="Texture2D" uid="uid://ca2jhf1dvchi5" path="res://Actors/Player/Ship/Sprites/shipShieldParticles.png" id="15_jiph2"]
 [ext_resource type="Script" uid="uid://c1vl7s8234f5g" path="res://Actors/Player/PlayerInput.cs" id="15_n45d6"]
 [ext_resource type="Script" uid="uid://cugp6ewji0rnl" path="res://Actors/Player/PlayerEffectHandler.cs" id="16_8np4b"]
-[ext_resource type="Texture2D" uid="uid://b8idoo2np415a" path="res://Tomes/TomeAssets/Ice/FrozenCharacterSprite.png" id="17_lxc4y"]
 [ext_resource type="AudioStream" uid="uid://gkcajckfe2c0" path="res://Actors/Player/Pilot/Audio/PilotDash.wav" id="18_iwmb3"]
 [ext_resource type="AudioStream" uid="uid://b7ytipig3ka0c" path="res://Actors/Player/Pilot/Audio/Jump.wav" id="20_704ek"]
 [ext_resource type="AudioStream" uid="uid://uitr02mt5aa6" path="res://Actors/Player/Ship/Audio/ShipShoot.wav" id="20_s8ljq"]
@@ -29,6 +28,7 @@
 [ext_resource type="AudioStream" uid="uid://df3887uxi4rdk" path="res://Actors/Player/Ship/Audio/ShipDash.wav" id="21_k8e2g"]
 [ext_resource type="AudioStream" uid="uid://dme50v05dt1qp" path="res://Actors/Player/Ship/Audio/ShipDestroyed.wav" id="22_7m1i7"]
 [ext_resource type="AudioStream" uid="uid://c861r8jtk0so" path="res://Assets/Audio/Ilikeit.wav" id="23_k8e2g"]
+[ext_resource type="PackedScene" uid="uid://diosn7qu6kfh6" path="res://Actors/Player/frozen_ddr.tscn" id="24_aao0a"]
 [ext_resource type="Shader" uid="uid://djdkl0hm4q5m6" path="res://Maps/MapTools/BorderShader.gdshader" id="24_yw7as"]
 [ext_resource type="Script" uid="uid://bcqb1wp85nt01" path="res://Maps/MapTools/BorderShower.cs" id="25_hdio0"]
 [ext_resource type="Script" uid="uid://lcfkknp3vonf" path="res://Actors/Player/PlayeronPlayerCollision.cs" id="32_aao0a"]
@@ -354,9 +354,9 @@ shipShieldFlickerer = NodePath("ShipSprite/AnimationPlayer")
 
 [node name="NameLabel" type="Label" parent="." unique_id=2017447394]
 offset_left = -48.0
-offset_top = -23.0
+offset_top = -30.0
 offset_right = 49.0
-offset_bottom = -15.75
+offset_bottom = -18.0
 text = "test"
 label_settings = SubResource("LabelSettings_g6ejb")
 horizontal_alignment = 1
@@ -543,7 +543,7 @@ Main = NodePath("..")
 
 [node name="EffectHandler" type="Node" parent="." unique_id=611864569]
 script = ExtResource("16_8np4b")
-iceTexture = ExtResource("17_lxc4y")
+iceDDRScene = ExtResource("24_aao0a")
 
 [node name="Sound" type="Node2D" parent="." unique_id=1989464264]
 process_mode = 3

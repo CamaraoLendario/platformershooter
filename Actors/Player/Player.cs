@@ -70,6 +70,7 @@ public partial class Player : CharacterBody2D
 	const float SHIELDCOOLDOWNTIME = 15f;
 	Timer shipPardonTimer = new();
 	const float SHIPPARDONTIME = 0.2f;
+	const float NAMEHIDETIME = 2f;
 	List<Timer> timers = [];
 	#endregion
 	bool isInvulnerable = false;
@@ -310,6 +311,12 @@ public partial class Player : CharacterBody2D
 	public void Reset()
 	{
 		EmitSignal(SignalName.reseting);
+		
+		Tween tween = CreateTween();
+		tween.SetTrans(Tween.TransitionType.Quint);
+		tween.SetEase(Tween.EaseType.In);
+		tween.TweenProperty(NameLabel, "modulate:a", 0, NAMEHIDETIME);
+		
 		pilot.Reset();
 		ship.Reset();
 		HasShield = true;
