@@ -15,6 +15,8 @@ public partial class GODMODEPlayerInput : PlayerInput
 	[Signal] public delegate void CHANGEPILOTSHIPSTATEEndEventHandler();		
 	#endregion
 
+	Godmodeplayer godMain;	
+
 	List<string> debugInputs = new List<string>()
 	{
 		"DEBUGMENU",
@@ -25,11 +27,11 @@ public partial class GODMODEPlayerInput : PlayerInput
     public override void _Input(InputEvent @event)
     {
 		if (@event is InputEventMouseMotion) return;
-        base._Input(@event);
+        //base._Input(@event);
 
 		foreach(string input in debugInputs)
 		{
-			int inputIndex = Main.inputIdx;
+			int inputIndex = GetParent<Godmodeplayer>().inputIdx;
 			if (Input.IsActionJustPressed(input + keyboardKeyword + inputIndex))
 			{
 				EmitSignal(input + "Start");

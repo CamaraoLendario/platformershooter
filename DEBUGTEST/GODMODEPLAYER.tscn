@@ -3,20 +3,20 @@
 [ext_resource type="PackedScene" uid="uid://cbmq3xh2bcijs" path="res://Actors/Player/Player.tscn" id="1_i5oh1"]
 [ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="2_liqnt"]
 [ext_resource type="Shader" uid="uid://c5of2yh1koxya" path="res://Actors/Player/ShieldColorer.gdshader" id="3_0hj0u"]
-[ext_resource type="Script" uid="uid://mpnoseptms1m" path="res://Actors/Player/Godmodeplayer.cs" id="3_liqnt"]
+[ext_resource type="Script" uid="uid://mpnoseptms1m" path="res://DEBUGTEST/Godmodeplayer.cs" id="3_liqnt"]
 [ext_resource type="Shader" uid="uid://cnr3u2i0u1fwl" path="res://Actors/Player/Pilot/PilotExplosion.gdshader" id="4_m3o7f"]
 [ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Sprites/PilotStill.png" id="5_hffpr"]
 [ext_resource type="Shader" uid="uid://dxivkxlfvph5y" path="res://Actors/Player/Ship/ShipPowerUps/ShipFormingParticles.gdshader" id="6_tcke3"]
 [ext_resource type="Texture2D" uid="uid://kayfo7ufdpc2" path="res://Actors/Player/Ship/Sprites/spaceships.png" id="7_gck5q"]
-[ext_resource type="Script" uid="uid://mngn1sccvdul" path="res://Actors/Player/GODMODEPlayerInput.cs" id="9_0hj0u"]
+[ext_resource type="Script" uid="uid://mngn1sccvdul" path="res://DEBUGTEST/GODMODEPlayerInput.cs" id="9_0hj0u"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_p0yau"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pwlej"]
 resource_local_to_scene = true
 shader = ExtResource("2_liqnt")
 shader_parameter/PoisonBuildup = 0.0
 shader_parameter/Color = Color(0.9019608, 0, 0, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nx5tv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tccac"]
 resource_local_to_scene = true
 shader = ExtResource("3_0hj0u")
 shader_parameter/Color = Color(0.9, 0, 0, 1)
@@ -28,7 +28,7 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_aao0a"]
 gradient = SubResource("Gradient_87ye5")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6uvcf"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ofrj0"]
 resource_local_to_scene = true
 lifetime_randomness = 0.62
 particle_flag_disable_z = true
@@ -48,7 +48,7 @@ gravity = Vector3(0, 98, 0)
 color_ramp = SubResource("GradientTexture1D_aao0a")
 anim_offset_max = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vatla"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vq12o"]
 resource_local_to_scene = true
 shader = ExtResource("4_m3o7f")
 shader_parameter/initialDir = Vector2(1, 0)
@@ -56,7 +56,7 @@ shader_parameter/mainTexture = ExtResource("5_hffpr")
 shader_parameter/outlineColor = Color(1, 0, 0, 1)
 shader_parameter/rotation = 90.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d0kvm"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gue05"]
 resource_local_to_scene = true
 shader = ExtResource("3_0hj0u")
 shader_parameter/Color = Color(1, 1, 1, 1)
@@ -91,7 +91,7 @@ void fragment() {
 	COLOR.a = a;
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0j0yy"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3c0v3"]
 resource_local_to_scene = true
 shader = SubResource("Shader_l7nff")
 shader_parameter/particles_anim_h_frames = 4
@@ -106,7 +106,7 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_3m56x"]
 gradient = SubResource("Gradient_bm4xa")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qvrkt"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ovdkc"]
 resource_local_to_scene = true
 lifetime_randomness = 0.62
 particle_flag_disable_z = true
@@ -125,7 +125,7 @@ gravity = Vector3(0, 0, 0)
 color_ramp = SubResource("GradientTexture1D_3m56x")
 anim_offset_max = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4lv8w"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_206po"]
 resource_local_to_scene = true
 shader = ExtResource("6_tcke3")
 shader_parameter/mainTexture = ExtResource("7_gck5q")
@@ -135,27 +135,27 @@ shader_parameter/newPos = Vector2(0, 0)
 shader_parameter/rotation = 90.0
 
 [node name="Player" unique_id=2096548899 instance=ExtResource("1_i5oh1")]
-material = SubResource("ShaderMaterial_p0yau")
+material = SubResource("ShaderMaterial_pwlej")
 script = ExtResource("3_liqnt")
 
 [node name="pilotShield" parent="PilotSprite" parent_id_path=PackedInt32Array(1745249850) index="0" unique_id=423941914]
-material = SubResource("ShaderMaterial_nx5tv")
+material = SubResource("ShaderMaterial_tccac")
 
 [node name="PilotShieldDestructionParticles" parent="PilotSprite/pilotShield" index="0" unique_id=2015931778]
-process_material = SubResource("ParticleProcessMaterial_6uvcf")
+process_material = SubResource("ParticleProcessMaterial_ofrj0")
 
 [node name="PilotDeathParticles" parent="PilotSprite" parent_id_path=PackedInt32Array(1745249850) index="2" unique_id=888372523]
-process_material = SubResource("ShaderMaterial_vatla")
+process_material = SubResource("ShaderMaterial_vq12o")
 
 [node name="shipShield" parent="ShipSprite" parent_id_path=PackedInt32Array(675688146) index="0" unique_id=1713597204]
-material = SubResource("ShaderMaterial_d0kvm")
+material = SubResource("ShaderMaterial_gue05")
 
 [node name="ShipShieldDestructionParticles" parent="ShipSprite/shipShield" index="0" unique_id=1177343099]
-material = SubResource("ShaderMaterial_0j0yy")
-process_material = SubResource("ParticleProcessMaterial_qvrkt")
+material = SubResource("ShaderMaterial_3c0v3")
+process_material = SubResource("ParticleProcessMaterial_ovdkc")
 
 [node name="ShipReconstructionParticles" parent="ShipSprite" parent_id_path=PackedInt32Array(675688146) index="3" unique_id=713480820]
-process_material = SubResource("ShaderMaterial_4lv8w")
+process_material = SubResource("ShaderMaterial_206po")
 
 [node name="PlayerInput" parent="." index="11" unique_id=181455471]
 script = ExtResource("9_0hj0u")

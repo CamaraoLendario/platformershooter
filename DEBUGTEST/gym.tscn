@@ -1,0 +1,180 @@
+[gd_scene format=4 uid="uid://ccvgxcfiu5bob"]
+
+[ext_resource type="Script" uid="uid://dvx3nqegjh5o8" path="res://DEBUGTEST/Gym.cs" id="1_lf0e5"]
+[ext_resource type="TileSet" uid="uid://cu072ug2gfowi" path="res://Maps/MapAssets/TileMaps/BaseMapTileSet.tres" id="2_oy6df"]
+[ext_resource type="Script" uid="uid://6gitervwywjh" path="res://Maps/MapTools/InteractableTiles.cs" id="3_m1owi"]
+[ext_resource type="Script" uid="uid://b8o7wgtj5j14f" path="res://Maps/MapTools/PilotArea.cs" id="4_u3exd"]
+[ext_resource type="Script" uid="uid://bpqw0biwsduf2" path="res://Maps/MapTools/MapCamera.cs" id="5_gbevh"]
+[ext_resource type="Script" uid="uid://ckgsusvcdqof8" path="res://Maps/MapTools/MapBorders.cs" id="6_j1m6l"]
+[ext_resource type="PackedScene" uid="uid://bw7vmyeb1ymu6" path="res://Maps/MapAssets/Pickups/WeaponPickups/weapon_pickup.tscn" id="7_jm6sq"]
+[ext_resource type="PackedScene" uid="uid://deavbdxssxkrb" path="res://Maps/MapAssets/Pickups/ShipPowerUpChestSpawner.tscn" id="8_ifviu"]
+[ext_resource type="PackedScene" uid="uid://d2381diivxfax" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/ShipPowerUpChest.tscn" id="9_obpc4"]
+[ext_resource type="Script" uid="uid://x4dnw7pvkhwb" path="res://Maps/MapAssets/SuddenDeath/BeamsOfDeath.cs" id="10_h2xtr"]
+[ext_resource type="Texture2D" uid="uid://dd6up0jcu0f6j" path="res://Maps/MapAssets/SuddenDeath/BeamOfDeath.png" id="11_l6qgj"]
+[ext_resource type="PackedScene" uid="uid://jar7cmpp4gky" path="res://DEBUGTEST/GODMODEPLAYER.tscn" id="12_jm6sq"]
+[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="13_ifviu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ar61a"]
+size = Vector2(177, 288)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_86et4"]
+size = Vector2(354, 176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m5v7h"]
+size = Vector2(273, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5mx3f"]
+atlas = ExtResource("11_l6qgj")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxf63"]
+atlas = ExtResource("11_l6qgj")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_clq0o"]
+atlas = ExtResource("11_l6qgj")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iju5t"]
+atlas = ExtResource("11_l6qgj")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6ntql"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5mx3f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxf63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_clq0o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iju5t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4c8ex"]
+normal = Vector2(-1, 0)
+distance = 6.5
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_vsa67"]
+normal = Vector2(1, 0)
+distance = 6.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jm6sq"]
+resource_local_to_scene = true
+shader = ExtResource("13_ifviu")
+shader_parameter/PoisonBuildup = 0.0
+shader_parameter/Color = Color(0.9019608, 0, 0, 1)
+
+[node name="GYM" type="Node2D" unique_id=1442766345 node_paths=PackedStringArray("Pickups", "MapBordersNode", "pilotArea", "camera")]
+script = ExtResource("1_lf0e5")
+Pickups = NodePath("Pickups")
+MapBordersNode = NodePath("MapBorders")
+pilotArea = NodePath("PilotArea")
+camera = NodePath("Camera2D")
+
+[node name="InteractableTiles" type="TileMapLayer" parent="." unique_id=1024449621]
+tile_map_data = PackedByteArray("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AADx/wcAAQABAAAAAADx/wgAAQAEAAEAAADx/wkAAQAEAAEAAADx/woAAQAEAAEAAADy/wgAAQADAAAAAADy/wkAAQAEAAEAAADy/woAAQAEAAEAAADz/wgAAQABAAAAAADz/wkAAQAEAAEAAADz/woAAQAEAAEAAADz/wsAAQAEAAEAAAD0/wkAAQABAAAAAAD0/woAAQADAAEAAAD0/wsAAQABAAIAAADu/wgAAQABAAMAAADu/wkAAQADAAMAAADu/woAAQABAAEAAADv/wcAAQABAAMAAADv/wgAAQAEAAEAAADv/wkAAQAEAAEAAADv/woAAQAEAAEAAADv/wsAAQABAAEAAADw/woAAQAEAAEAAADw/wsAAQADAAIAAADx/wsAAQAEAAEAAADx/wwAAQABAAEAAADy/wsAAQAEAAEAAADy/wwAAQADAAIAAADz/wwAAQABAAIAAAANAAcAAQABAAMAAAANAAgAAQADAAMAAAAOAAYAAQABAAMAAAAOAAcAAQAEAAEAAAAOAAgAAQAEAAEAAAAPAAYAAQADAAAAAAAPAAcAAQAEAAEAAAAQAAYAAQADAAAAAAANAAkAAQABAAEAAAAOAAkAAQAEAAEAAAAOAAoAAQABAAEAAAAPAAgAAQAEAAEAAAAPAAkAAQAEAAEAAAAPAAoAAQADAAIAAAAQAAcAAQAEAAEAAAAQAAgAAQAEAAEAAAAQAAkAAQAEAAEAAAAQAAoAAQAEAAEAAAAQAAsAAQABAAEAAAARAAYAAQADAAAAAAARAAcAAQAEAAEAAAARAAgAAQAEAAEAAAARAAkAAQAEAAEAAAARAAoAAQAEAAEAAAARAAsAAQADAAIAAAASAAYAAQADAAAAAAASAAcAAQAEAAEAAAASAAgAAQAEAAEAAAASAAkAAQAEAAEAAAASAAoAAQAEAAEAAAASAAsAAQABAAIAAAATAAYAAQABAAAAAAATAAcAAQAEAAEAAAATAAgAAQAEAAEAAAATAAkAAQAEAAEAAAATAAoAAQABAAIAAAAUAAcAAQABAAAAAAAUAAgAAQADAAEAAAAUAAkAAQABAAIAAAD6//b/AQAFAAcAAAD6//n/AQAFAAUAAAD6//j/AQAHAAUAAADx////AQAFAAQAAADy////AQAHAAQAAADz////AQAHAAQAAAD0////AQAFAAYAAAAJAP7/AQAJAAkAAAAJAP//AQAJAAkAAAAJAAEAAQAJAAkAAAAJAAAAAQAJAAkAAAAJAP3/AQAJAAkAAAAIAP7/AQAIAAkAAAAIAP//AQAIAAkAAAAIAAAAAQAIAAkAAAAHAAAAAQAIAAkAAAAIAP3/AQAJAAkAAAAIAPz/AQAJAAkAAAAHAP7/AQAIAAkAAAAHAP//AQAIAAkAAAAHAAEAAQAIAAkAAAAIAAEAAQAIAAkAAAAHAP3/AQAIAAkAAAAGAP//AQAIAAkAAAAFAP//AQAIAAkAAAAFAAAAAQAIAAkAAAAFAAEAAQAIAAkAAAAGAAIAAQAIAAkAAAAHAAIAAQAIAAkAAAAIAAIAAQAJAAkAAAAGAAAAAQAIAAkAAAAEAAAAAQAIAAkAAAAEAAEAAQAIAAkAAAADAAIAAQAJAAkAAAAGAAMAAQAJAAkAAAAHAAMAAQAJAAkAAAADAAAAAQAIAAkAAAADAAEAAQAIAAkAAAAEAAMAAQAJAAkAAAAEAP//AQAIAAkAAAAFAAIAAQAIAAkAAAAEAAIAAQAIAAkAAAAFAAMAAQAJAAkAAAAGAAEAAQAIAAkAAAAGAP7/AQAIAAkAAAAGAP3/AQAIAAkAAAAFAP3/AQAIAAkAAAAFAP7/AQAIAAkAAAADAAMAAQAJAAkAAAACAAEAAQAJAAkAAAACAAIAAQAJAAkAAAAFAPz/AQAJAAkAAAAGAPz/AQAJAAkAAAAHAPz/AQAJAAkAAAAEAPz/AQAJAAkAAAADAP3/AQAJAAkAAAADAP7/AQAJAAkAAAAEAP3/AQAJAAkAAAAEAP7/AQAIAAkAAAADAP//AQAIAAkAAAACAP//AQAJAAkAAAACAP7/AQAJAAkAAAACAAAAAQAJAAkAAAAIAAMAAQAJAAkAAAAJAAIAAQAJAAkAAAA=")
+tile_set = ExtResource("2_oy6df")
+script = ExtResource("3_m1owi")
+
+[node name="DestructibleTiles" type="TileMapLayer" parent="InteractableTiles" unique_id=391910331]
+tile_set = ExtResource("2_oy6df")
+
+[node name="PilotArea" type="Node2D" parent="." unique_id=575764384]
+script = ExtResource("4_u3exd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PilotArea" unique_id=875022928]
+visible = false
+position = Vector2(-345.5, -112)
+shape = SubResource("RectangleShape2D_ar61a")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="PilotArea" unique_id=1074408600]
+visible = false
+position = Vector2(-257, -168)
+shape = SubResource("RectangleShape2D_86et4")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="PilotArea" unique_id=7628362]
+visible = false
+position = Vector2(-296.5, -128)
+shape = SubResource("RectangleShape2D_m5v7h")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1813357736]
+process_mode = 3
+position = Vector2(1, 0)
+zoom = Vector2(2.155, 2.155)
+process_callback = 0
+limit_enabled = false
+editor_draw_limits = true
+script = ExtResource("5_gbevh")
+
+[node name="MapBorders" type="Node2D" parent="." unique_id=1959935501]
+script = ExtResource("6_j1m6l")
+DrawBorders = true
+CameraEdgeLeway = 32
+
+[node name="Pickups" type="Node" parent="." unique_id=2063268674]
+
+[node name="WeaponPickup" parent="Pickups" unique_id=791413923 instance=ExtResource("7_jm6sq")]
+position = Vector2(-133, -96)
+
+[node name="WeaponPickup2" parent="Pickups" unique_id=1775888019 instance=ExtResource("7_jm6sq")]
+position = Vector2(-333, -160)
+chosenWeapon = 1
+
+[node name="WeaponPickup3" parent="Pickups" unique_id=1888646906 instance=ExtResource("7_jm6sq")]
+position = Vector2(-329, 16)
+chosenWeapon = 3
+
+[node name="ShipPowerUpChestSpawner" parent="Pickups" unique_id=631959143 instance=ExtResource("8_ifviu")]
+
+[node name="ShipPowerUpChest" parent="Pickups/ShipPowerUpChestSpawner" unique_id=875542953 instance=ExtResource("9_obpc4")]
+position = Vector2(-256, -16)
+
+[node name="ShipPowerUpChest2" parent="Pickups/ShipPowerUpChestSpawner" unique_id=244508317 instance=ExtResource("9_obpc4")]
+position = Vector2(-312, -80)
+
+[node name="ShipPowerUpChest3" parent="Pickups/ShipPowerUpChestSpawner" unique_id=1722093879 instance=ExtResource("9_obpc4")]
+position = Vector2(-151, -192)
+
+[node name="BeamsOfDeath" type="Node2D" parent="." unique_id=2140450625 node_paths=PackedStringArray("beamRight", "beamLeft")]
+z_index = 10
+script = ExtResource("10_h2xtr")
+beamRight = NodePath("BeamOfDeadRight")
+beamLeft = NodePath("BeamOfDeadLeft")
+
+[node name="BeamOfDeadRight" type="Area2D" parent="BeamsOfDeath" unique_id=1497454015]
+position = Vector2(550, 0)
+collision_layer = 0
+
+[node name="BeamOfDeath" type="AnimatedSprite2D" parent="BeamsOfDeath/BeamOfDeadRight" unique_id=1549871354]
+scale = Vector2(1, 50)
+sprite_frames = SubResource("SpriteFrames_6ntql")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BeamsOfDeath/BeamOfDeadRight" unique_id=1741353700]
+shape = SubResource("WorldBoundaryShape2D_4c8ex")
+
+[node name="BeamOfDeadLeft" type="Area2D" parent="BeamsOfDeath" unique_id=781877965]
+position = Vector2(-550, 1)
+collision_layer = 0
+
+[node name="BeamOfDeath2" type="AnimatedSprite2D" parent="BeamsOfDeath/BeamOfDeadLeft" unique_id=1649821416]
+scale = Vector2(1, 50)
+sprite_frames = SubResource("SpriteFrames_6ntql")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BeamsOfDeath/BeamOfDeadLeft" unique_id=1825420657]
+position = Vector2(0, -1)
+shape = SubResource("WorldBoundaryShape2D_vsa67")
+
+[node name="Player" parent="." unique_id=2096548899 instance=ExtResource("12_jm6sq")]
+material = SubResource("ShaderMaterial_jm6sq")
+position = Vector2(-25, 59)

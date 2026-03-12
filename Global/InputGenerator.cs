@@ -23,29 +23,39 @@ public partial class InputGenerator : Node
 
 		foreach (int inputIdx in inputIdxs)
 		{
-			foreach (StringName action in actionList)
-			{
-				string strAction = action.ToString();
-				if (strAction.StartsWith("ui_") || strAction.Contains("editor") || strAction.StartsWith("Menu")  || StringEndsWithInt(strAction))
-					continue;
-				if  (strAction.Contains("Keyboard") && !strAction.EndsWith("Keyboard") || strAction.Contains("Keyboard") && inputIdx != -1)
-					continue;
-
-				string currentAction = action + inputIdx;
-				InputMap.AddAction(currentAction);
-				foreach (InputEvent input in InputMap.ActionGetEvents(action))
-				{
-					InputEvent currentInput = input.Duplicate(true) as InputEvent;
-					currentInput.Device = inputIdx;
-					GD.Print(currentAction);
-					InputMap.ActionAddEvent(currentAction, currentInput);
-					newActions.Add(currentAction);
-				}
-			}
+			GeneratePlayersInput(inputIdx, false);
 		}
 
 		actionList = InputMap.GetActions();
 	}
+
+	public void GeneratePlayersInput(int inputIdx, bool updateActionList = true)
+	{
+		foreach (StringName action in actionList)
+		{
+			string strAction = action.ToString();
+			if (strAction.StartsWith("ui_") || strAction.Contains("editor") || strAction.StartsWith("Menu")  || StringEndsWithInt(strAction))
+				continue;
+			if  (strAction.Contains("Keyboard") && !strAction.EndsWith("Keyboard") || strAction.Contains("Keyboard") && inputIdx != -1)
+				continue;
+
+			string currentAction = action + inputIdx;
+			InputMap.AddAction(currentAction);
+			foreach (InputEvent input in InputMap.ActionGetEvents(action))
+			{
+				InputEvent currentInput = input.Duplicate(true) as InputEvent;
+				currentInput.Device = inputIdx;
+				GD.Print(currentAction);
+				InputMap.ActionAddEvent(currentAction, currentInput);
+				newActions.Add(currentAction);
+			}
+		}
+		if (updateActionList)
+		{
+			actionList = InputMap.GetActions();
+		}
+	}
+
 	public void ClearExtraInputs(bool includeMenuInput = false)
     {
 		var tempNewActions = newActions.ToArray();
