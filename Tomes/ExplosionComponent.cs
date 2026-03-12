@@ -10,6 +10,7 @@ public partial class ExplosionComponent : Area2D
 	[Export] CollisionShape2D explosionCollision;
 	[Export] AudioStreamPlayer2D ExplosionAudio;
 	public float explosionRadius;
+	public Player owner;
 	public int colorIdx = -1;
 	CollisionShape2D shape;
 
@@ -38,7 +39,10 @@ public partial class ExplosionComponent : Area2D
 		if (body is Player player)
 		{
 			if (hasLOS(player))
-				player.TakeDamage(colorIdx);
+				if (owner != null)
+					player.TakeDamage(owner);
+				else if (colorIdx != -1)
+					player.TakeDamage(colorIdx);
 		}
     }
 	void OnAreaEntered(Area2D area)

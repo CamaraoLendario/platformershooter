@@ -4,16 +4,26 @@ using System.Collections;
 
 public partial class ShipPowerUp : Node2D
 {
-	protected ShipPowerUpsHolder holder;
+	public int powerUpID = -1;
+    protected ShipPowerUpsHolder holder;
     protected ShipAttack controller;
+
     public override void _Ready()
     {
         holder = GetParent<ShipPowerUpsHolder>();
         controller = holder.controller;
+        Game.Instance.NewRoundStarted += End;
     }
 
-    protected virtual void End()
+    public virtual void End()
     {
         QueueFree();
     }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        Game.Instance.NewRoundStarted -= End;
+    }
+
 }

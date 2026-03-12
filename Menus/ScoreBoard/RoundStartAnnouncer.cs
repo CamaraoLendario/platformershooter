@@ -22,7 +22,7 @@ public partial class RoundStartAnnouncer : Control
 		QueueRedraw();
 	}
 
-	async void OnNewRound()
+	void OnNewRound()
 	{
 		Game.Instance.CallDeferred(Game.MethodName.PauseGame);
 		isRoundStart = true;

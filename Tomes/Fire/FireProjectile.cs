@@ -7,7 +7,6 @@ public partial class FireProjectile : LinearProjectile
 	[Export] float explosionRadius = 100;
 	[Export] GpuParticles2D trailParticles;
 	[Export] GpuParticles2D explosionParticles;
-	GpuParticles2D newExplosionParticles;
 	[Export] AudioStreamPlayer2D FireAudio;
 	Timer waitParticlesTimer = new();
 	ExplosionComponent explosionComponent;
@@ -20,15 +19,17 @@ public partial class FireProjectile : LinearProjectile
 		AddChild(waitParticlesTimer);
 		FireAudio.Finished += () => {FireAudio.Play();};
 		waitParticlesTimer.Timeout += OnParticlesFinished;
-		PrepareExplosion();
+		PrepareExplosionParticles();
     }
 
-	void PrepareExplosion()
+	void PrepareExplosionParticles()
 	{
-		newExplosionParticles = explosionParticles.Duplicate() as GpuParticles2D;
-		newExplosionParticles.Finished += () => newExplosionParticles.QueueFree();
+		explosionParticles.Finished += () => explosionParticles.QueueFree();
+		explosionParticles.Reparent(Game.Instance.world);
+
 		ExplosionComponent explosionComponent = explosionComponentScene.Instantiate<ExplosionComponent>();
 		explosionComponent.SetSize(explosionRadius);
+		explosionComponent.owner = owner;
 		explosionComponent.colorIdx = owner.colorIdx;
 		this.explosionComponent = explosionComponent;
 	}
@@ -51,14 +52,13 @@ public partial class FireProjectile : LinearProjectile
 		waitParticlesTimer.Start(trailParticles.Lifetime);
 		SetDeferred(PropertyName.Monitorable, false);
 		SetDeferred(PropertyName.Monitoring, false);
-		velocity *= 0;
+		speed = 0;
 	}
+
 	void SummonExplosionParticles()
 	{
-		newExplosionParticles.GlobalPosition = GlobalPosition;
-		newExplosionParticles.SetDeferred(GpuParticles2D.PropertyName.Emitting, true);
-		Game.Instance.world.CallDeferred(MethodName.AddChild, newExplosionParticles);
-
+		explosionParticles.GlobalPosition = GlobalPosition;
+		explosionParticles.Emitting = true;
 	}
 
 	void OnParticlesFinished()

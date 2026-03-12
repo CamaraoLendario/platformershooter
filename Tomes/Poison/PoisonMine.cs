@@ -55,6 +55,7 @@ public partial class PoisonMine : Node2D
 		ExplosionComponent explosionComponent = explosionComponentScene.Instantiate<ExplosionComponent>();
 		explosionComponent.GlobalPosition = GlobalPosition + wallSide * 16; 
 		explosionComponent.SetSize(explosionRadius);
+		explosionComponent.owner = owner;
 		explosionComponent.colorIdx = owner.colorIdx;
 		this.explosionComponent = explosionComponent;
 	}

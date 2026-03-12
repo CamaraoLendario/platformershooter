@@ -7,7 +7,6 @@ public partial class PilotAttack : PilotController
 	[Export] public PilotWeaponHolder weaponHolder;
 	[Export] public MeleeAttack Melee;
 
-
 	public override void _Ready()
 	{
 		base._Ready();
@@ -25,7 +24,7 @@ public partial class PilotAttack : PilotController
 
 	public override void OnShootStart()
 	{
-		if (!IsAllowed()) return;
+		if (!IsAllowed() || Main.effectHandler.isFrozen) return;
 		weaponHolder.Shoot(aimVector);
 	}
 
@@ -53,7 +52,7 @@ public partial class PilotAttack : PilotController
 
 	public override void OnMeleeStart()
 	{
-		if (!IsAllowed()) return;
+		if (!IsAllowed() || Main.effectHandler.isFrozen) return;
 		Melee.Attack();
 	}
 
@@ -66,7 +65,6 @@ public partial class PilotAttack : PilotController
 	public override void Reset()
 	{
 		base.Reset();
-
 		weaponHolder.DropWeapon();
 	}
 }

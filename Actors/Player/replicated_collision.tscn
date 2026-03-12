@@ -1,3 +1,0 @@
-[gd_scene format=3 uid="uid://bwuhvu0msmir0"]
-
-[node name="ReplicatedCollision" type="CharacterBody2D"]

@@ -1,8 +1,6 @@
 [gd_resource type="CanvasTexture" format=3 uid="uid://bujxcmbiyws5f"]
 
 [ext_resource type="Texture2D" uid="uid://hxf35eft4qcs" path="res://Maps/MapAssets/TileMaps/Sprites/tilessheet.png" id="1_a4nwu"]
-[ext_resource type="Texture2D" uid="uid://dguiygnckuoma" path="res://Maps/MapAssets/TileMaps/Sprites/tilessheet-normalmap.png" id="2_dhx8e"]
 
 [resource]
 diffuse_texture = ExtResource("1_a4nwu")
-normal_texture = ExtResource("2_dhx8e")

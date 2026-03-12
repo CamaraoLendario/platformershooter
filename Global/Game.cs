@@ -32,7 +32,7 @@ public partial class Game : Node
 
 	public override void _Ready()
 	{
-		Instance = this;
+		Instance ??= this;
 	}
 
 	void ChooseGamemode(FFA gameMode)
@@ -44,6 +44,7 @@ public partial class Game : Node
 			BackToMapSelector();
 		};
 		EmitSignal(SignalName.GameStarted);
+		GPUParticlesPool.NormalizePoolCountToPlayerCount();
 	}
 
 	public void BackToMapSelector()
@@ -52,7 +53,10 @@ public partial class Game : Node
         {
 			gameMode.OnGameOver();
         }
-		else GetTree().ChangeSceneToFile("uid://gclokew2nun0");
+		else
+		{
+			GetTree().ChangeSceneToFile("uid://gclokew2nun0");
+		}
     }
 
 	public void AddPlayer(Player newPlayer)

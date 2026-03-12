@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://jar7cmpp4gky"]
+
+[ext_resource type="PackedScene" uid="uid://cbmq3xh2bcijs" path="res://Actors/Player/Player.tscn" id="1_i5oh1"]
+[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="2_liqnt"]
+[ext_resource type="Shader" uid="uid://c5of2yh1koxya" path="res://Actors/Player/ShieldColorer.gdshader" id="3_0hj0u"]
+[ext_resource type="Script" uid="uid://mpnoseptms1m" path="res://Actors/Player/Godmodeplayer.cs" id="3_liqnt"]
+[ext_resource type="Shader" uid="uid://cnr3u2i0u1fwl" path="res://Actors/Player/Pilot/PilotExplosion.gdshader" id="4_m3o7f"]
+[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Sprites/PilotStill.png" id="5_hffpr"]
+[ext_resource type="Shader" uid="uid://dxivkxlfvph5y" path="res://Actors/Player/Ship/ShipPowerUps/ShipFormingParticles.gdshader" id="6_tcke3"]
+[ext_resource type="Texture2D" uid="uid://kayfo7ufdpc2" path="res://Actors/Player/Ship/Sprites/spaceships.png" id="7_gck5q"]
+[ext_resource type="Script" uid="uid://mngn1sccvdul" path="res://Actors/Player/GODMODEPlayerInput.cs" id="9_0hj0u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p0yau"]
+resource_local_to_scene = true
+shader = ExtResource("2_liqnt")
+shader_parameter/PoisonBuildup = 0.0
+shader_parameter/Color = Color(0.9019608, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nx5tv"]
+resource_local_to_scene = true
+shader = ExtResource("3_0hj0u")
+shader_parameter/Color = Color(0.9, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_87ye5"]
+offsets = PackedFloat32Array(0.8040541, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_aao0a"]
+gradient = SubResource("Gradient_87ye5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6uvcf"]
+resource_local_to_scene = true
+lifetime_randomness = 0.62
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(1, 0.675, 1)
+emission_shape = 1
+emission_sphere_radius = 17.25
+angle_min = -183.4
+angle_max = 183.40001
+inherit_velocity_ratio = 1.0
+direction = Vector3(0, -1, 0)
+spread = 51.176
+initial_velocity_min = 23.59
+initial_velocity_max = 42.46
+angular_velocity_min = -196.98001
+angular_velocity_max = 183.39998
+gravity = Vector3(0, 98, 0)
+color_ramp = SubResource("GradientTexture1D_aao0a")
+anim_offset_max = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vatla"]
+resource_local_to_scene = true
+shader = ExtResource("4_m3o7f")
+shader_parameter/initialDir = Vector2(1, 0)
+shader_parameter/mainTexture = ExtResource("5_hffpr")
+shader_parameter/outlineColor = Color(1, 0, 0, 1)
+shader_parameter/rotation = 90.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d0kvm"]
+resource_local_to_scene = true
+shader = ExtResource("3_0hj0u")
+shader_parameter/Color = Color(1, 1, 1, 1)
+
+[sub_resource type="Shader" id="Shader_l7nff"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.6.stable.mono's CanvasItemMaterial.
+
+shader_type canvas_item;
+render_mode blend_mix;
+uniform int particles_anim_h_frames;
+uniform int particles_anim_v_frames;
+uniform bool particles_anim_loop;
+uniform vec4 Color: source_color = vec4 (1);
+
+void vertex() {
+	float h_frames = float(particles_anim_h_frames);
+	float v_frames = float(particles_anim_v_frames);
+	VERTEX.xy /= vec2(h_frames, v_frames);
+	float particle_total_frames = float(particles_anim_h_frames * particles_anim_v_frames);
+	float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
+	if (!particles_anim_loop) {
+		particle_frame = clamp(particle_frame, 0.0, particle_total_frames - 1.0);
+	} else {
+		particle_frame = mod(particle_frame, particle_total_frames);
+	}	UV /= vec2(h_frames, v_frames);
+	UV += vec2(mod(particle_frame, h_frames) / h_frames, floor((particle_frame + 0.5) / h_frames) / v_frames);
+}
+
+void fragment() {
+	float a = COLOR.a;
+	COLOR = (COLOR + (Color*2.))/3.;
+	COLOR.a = a;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0j0yy"]
+resource_local_to_scene = true
+shader = SubResource("Shader_l7nff")
+shader_parameter/particles_anim_h_frames = 4
+shader_parameter/particles_anim_v_frames = 2
+shader_parameter/particles_anim_loop = false
+shader_parameter/Color = Color(1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_bm4xa"]
+offsets = PackedFloat32Array(0, 0.8040541, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3m56x"]
+gradient = SubResource("Gradient_bm4xa")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qvrkt"]
+resource_local_to_scene = true
+lifetime_randomness = 0.62
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(1, 0.5, 1)
+emission_shape = 1
+emission_sphere_radius = 30.12
+angle_min = -169.79999
+angle_max = 142.70001
+inherit_velocity_ratio = 1.0
+spread = 180.0
+initial_velocity_min = 23.59
+initial_velocity_max = 61.329998
+angular_velocity_min = -183.40001
+angular_velocity_max = 176.59998
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_3m56x")
+anim_offset_max = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4lv8w"]
+resource_local_to_scene = true
+shader = ExtResource("6_tcke3")
+shader_parameter/mainTexture = ExtResource("7_gck5q")
+shader_parameter/outlineColor = Color(1, 0, 0, 1)
+shader_parameter/initPos = Vector2(0, 0)
+shader_parameter/newPos = Vector2(0, 0)
+shader_parameter/rotation = 90.0
+
+[node name="Player" unique_id=2096548899 instance=ExtResource("1_i5oh1")]
+material = SubResource("ShaderMaterial_p0yau")
+script = ExtResource("3_liqnt")
+
+[node name="pilotShield" parent="PilotSprite" parent_id_path=PackedInt32Array(1745249850) index="0" unique_id=423941914]
+material = SubResource("ShaderMaterial_nx5tv")
+
+[node name="PilotShieldDestructionParticles" parent="PilotSprite/pilotShield" index="0" unique_id=2015931778]
+process_material = SubResource("ParticleProcessMaterial_6uvcf")
+
+[node name="PilotDeathParticles" parent="PilotSprite" parent_id_path=PackedInt32Array(1745249850) index="2" unique_id=888372523]
+process_material = SubResource("ShaderMaterial_vatla")
+
+[node name="shipShield" parent="ShipSprite" parent_id_path=PackedInt32Array(675688146) index="0" unique_id=1713597204]
+material = SubResource("ShaderMaterial_d0kvm")
+
+[node name="ShipShieldDestructionParticles" parent="ShipSprite/shipShield" index="0" unique_id=1177343099]
+material = SubResource("ShaderMaterial_0j0yy")
+process_material = SubResource("ParticleProcessMaterial_qvrkt")
+
+[node name="ShipReconstructionParticles" parent="ShipSprite" parent_id_path=PackedInt32Array(675688146) index="3" unique_id=713480820]
+process_material = SubResource("ShaderMaterial_4lv8w")
+
+[node name="PlayerInput" parent="." index="11" unique_id=181455471]
+script = ExtResource("9_0hj0u")

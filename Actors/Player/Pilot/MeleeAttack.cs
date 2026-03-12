@@ -113,9 +113,9 @@ public partial class MeleeAttack : Area2D
 
 	void OnAreaEntered(Node2D area)
 	{
-		if (area is LinearProjectile projectile && projectile is not PoisonProjectile)
+		if (area is LinearProjectile projectile/*  && projectile is not PoisonProjectile */)
 		{
-			projectile.velocity = pilot.aimVector.Normalized() * projectile.velocity.Length();
+			projectile.Direction = pilot.aimVector.Normalized();
 			projectile.owner = Main;
 			//projectile.End();
 			hasDeflectionPrivelage = true;
@@ -184,5 +184,10 @@ public partial class MeleeAttack : Area2D
 			return true;
 		else
 			return false;
+	}
+
+	public int GetIDX()
+	{
+		return Main.inputIdx;
 	}
 }

@@ -30,7 +30,6 @@ public partial class CharacterCapsule : Control
 		}
 		set
 		{
-			currentColorIdx = value;
 			SetColor(value);
 		}
 	}
@@ -191,8 +190,10 @@ public partial class CharacterCapsule : Control
 	}
 	public string GetPlayerName()
     {
-        return PlayerNameDisplay.Text;
-    }
+		if (PlayerNameDisplay.Text != "")
+        	return PlayerNameDisplay.Text;
+		else return SpaceMagesVars.teamColorsDict.ElementAt(CurrentColorIdx).Key;
+	}
 	void ChangeColor(int direction)
 	{
 		if (direction >= 0)
@@ -216,7 +217,6 @@ public partial class CharacterCapsule : Control
 			if (!Main.avaliableColors[index])
 			{
 				CurrentColorIdx = index;
-				Main.avaliableColors[index] = true;
 				foreach (bool coloravaliablility in Main.avaliableColors.Values)
                 {
                     GD.Print(coloravaliablility);
@@ -232,14 +232,15 @@ public partial class CharacterCapsule : Control
 		(playerSprite.Material as ShaderMaterial).SetShaderParameter("Color", newColor);
 		(colorChoice.GetChild(0).GetChild(1) as Label).Text = SpaceMagesVars.teamColorsDict.Keys.ElementAt(idx);
 		playerNameKeyboard.PlayerColor = new Color(newColor.X, newColor.Y, newColor.Z);
+		Main.avaliableColors[idx] = true;
+		currentColorIdx = idx;
 	}
 
-	public void Enable(int inputIdx, int colorIdx = 1)
+	public void Enable(int inputIdx, int colorIdx = -1)
 	{
 		InputGenerator.Instance.GeneratePlayersMenuInput(inputIdx);
 		inputNode.inputIdx = inputIdx;
 		GD.Print("new capsule input = " + inputNode.inputIdx);
-
 		isEnabled = true;
 		if (inputIdx == -1) inputNode.IsKeyboardControlled = true;
 		else inputNode.IsKeyboardControlled = false;
@@ -251,18 +252,23 @@ public partial class CharacterCapsule : Control
 		if (playerSprite.Material == null)
 		{
 			GD.Print("Loading player outline shader...");
-			ShaderMaterial newShaderMaterial = new ShaderMaterial();
-			newShaderMaterial.Shader = outlineShader;
-			playerSprite.Material = newShaderMaterial;
+            ShaderMaterial newShaderMaterial = new()
+            {
+                Shader = outlineShader
+            };
+            playerSprite.Material = newShaderMaterial;
 		}
 		CurrentColorIdx = SpaceMagesVars.teamColors.Length - 1;
 
-		ChangeColor(colorIdx);
+		if (colorIdx < 0 || colorIdx >= SpaceMagesVars.teamColors.Length)
+		{
+			ChangeColor(1);
+		}
+		else SetColor(colorIdx);
 	}
 
 	public void Disable()
 	{
-		GD.Print("Capsule number " + GetIndex() + "has been disabled");
 		InputGenerator.Instance.ClearMenuInput(inputNode.inputIdx);
 		inputNode.inputIdx = -1;
 		isEnabled = false;
@@ -273,5 +279,6 @@ public partial class CharacterCapsule : Control
 		IsReady = false;
 		Main.avaliableNumbers[capsuleID] = false;
 		capsuleID = -1;
+		GD.Print("Capsule number " + GetIndex() + " has been disabled");
 	}
 }

@@ -63,11 +63,11 @@ rotates = false
 bullet = ExtResource("3_vkqiy")
 maxAmmo = 3
 
-[node name="Sprite2D" parent="." index="0"]
+[node name="Sprite2D" parent="." index="0" unique_id=570493511]
 visible = false
 texture = SubResource("AtlasTexture_21d0j")
 
-[node name="AudioStreamPlayer2D" parent="." index="1"]
+[node name="AudioStreamPlayer2D" parent="." index="1" unique_id=1734592678]
 stream = ExtResource("4_1dloi")
 
 [node name="Bullets Animator" type="Node2D" parent="." index="2" unique_id=944670557]

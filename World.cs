@@ -21,9 +21,10 @@ public partial class World : Node2D
 
 	public void UpdateWeaponPickups()
 	{
-		foreach (WeaponPickup pickup in currentMap.weaponPickups.GetChildren())
+		foreach (Node pickup in currentMap.Pickups.GetChildren())
 		{
-			pickup.CheckForPlayers();
+			if (pickup is not WeaponPickup weaponPickup) return;
+			weaponPickup.CheckForPlayers();
 		}
 	}
 }

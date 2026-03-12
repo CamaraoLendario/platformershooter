@@ -30,6 +30,7 @@ public partial class CharacterSelectScreen : Control
 
 	public override void _Ready()
 	{
+		GD.Print("konradgryt");
 		inputDirectory.Add(-1, -1);
 		for (int i = 0; i <= maxPlayerCount - 1; i++)
 		{
@@ -54,6 +55,7 @@ public partial class CharacterSelectScreen : Control
 
 		if (Game.Instance.currentPlayerInfoList != null)
 		{
+			GD.Print("reconstructingplayercapsules!");
 			ReconstructPlayerCapsules(Game.Instance.currentPlayerInfoList);
 		}
 		Input.JoyConnectionChanged += OnJoyConnectionChanged;
@@ -78,7 +80,7 @@ public partial class CharacterSelectScreen : Control
 		// input color capsule
 		foreach (Dictionary<string, int> playerInfoDict in playerInfoList)
 		{
-			EnableCapsule(playerInfoDict.Keys.First(), playerInfoDict["inputIdx"], playerInfoDict["colorIdx"], playerInfoDict["capsuleID"] );
+			EnableCustomCapsule(playerInfoDict.Keys.First(), playerInfoDict["inputIdx"], playerInfoDict["colorIdx"], playerInfoDict["capsuleID"] );
 		}
 	}
 
@@ -105,7 +107,7 @@ public partial class CharacterSelectScreen : Control
 		if (IsDeviceNew(@event)) return;
 	}
 
-	private void EnableCapsule(string playerName, int deviceIdx, int capsuleID, int colorIdx)
+	private void EnableCustomCapsule(string playerName, int deviceIdx, int colorIdx, int capsuleID)
 	{
 		CharacterCapsule currentCapsule = null;
 		foreach (CharacterCapsule characterCapsule in capsulesContainer.GetChildren())
@@ -120,11 +122,8 @@ public partial class CharacterSelectScreen : Control
 
 		playerCount++;
 		inputDirectory[deviceIdx] = playerCount - 1;
-
 		currentCapsule.SetPlayerName(playerName);
-
 		currentCapsule.Enable(deviceIdx, colorIdx);
-		GD.Print("I HAVE BEEN REBUILD WITH deviceIdx = " + deviceIdx);
 
 		currentCapsule.capsuleID = capsuleID;
 		avaliableNumbers[capsuleID] = true;
@@ -191,7 +190,6 @@ public partial class CharacterSelectScreen : Control
 				return true;
 			}
 		}
-		GD.Print("Processed input = " + inputIndex);
 		foreach (int input in inputDirectory.Values)
 		{
 			GD.Print(input);
@@ -202,14 +200,14 @@ public partial class CharacterSelectScreen : Control
 	public void PrepareMapSelector()
 	{
 		if (gameStartAvaliable.Modulate.A != 1) return;
-		List<Dictionary<string, int>> playerInfoList = GetPlayerInfoList();
+		List<Dictionary<string, int>> playerInfoList = GetPlayerInfo();
 		Game.Instance.currentPlayerInfoList = playerInfoList;
 		mapSelector.Commence(playerInfoList);
 	}
 
-	List<Dictionary<string, int>> GetPlayerInfoList()
+	List<Dictionary<string, int>> GetPlayerInfo()
 	{
-		List<Dictionary<string, int>> playerInfoList = [];
+		List<Dictionary<string, int>> playerInfo = [];
 
 		for (int inputIndex = -1; inputIndex <= inputDirectory.Count - 2; inputIndex++)
 		{
@@ -224,11 +222,10 @@ public partial class CharacterSelectScreen : Control
 					["colorIdx"] = currentCapsule.CurrentColorIdx,
 					["capsuleID"] = currentCapsule.capsuleID,
 				};
-				playerInfoList.Add(playerInfoDict);
-				GD.Print("appending ", playerInfoDict);
+				playerInfo.Add(playerInfoDict);
 			}
 		}
 
-		return playerInfoList;
+		return playerInfo;
 	}
 }

@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://dxlaqrx6eq4ea"]
+
+[ext_resource type="PackedScene" uid="uid://fi88ocyqxvqn" path="res://Tomes/Base/LinearProjectileTemplate.tscn" id="1_4aqxx"]
+[ext_resource type="Texture2D" uid="uid://dcpbsslhj7cj5" path="res://Tomes/TomeAssets/BulletsSpriteSheet.png" id="3_8w1l6"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_koncm"]
+script/source = "using Godot;
+using System;
+
+public partial class PoisonProjectile : LinearProjectile
+{
+	World world;
+	float groundLifetime = 3.0f;
+	bool IsStuck
+    {
+        get
+        {
+            return isStuck;
+        }
+        set
+        {
+            isStuck = value;
+			if(value)
+				velocity *= 0;
+        }
+    }
+	bool isStuck = false;
+	public override void _Ready()
+	{
+		world = Game.Instance.world;
+		base._Ready();
+	}
+
+	protected override void OnBodyHit(Node2D body)
+	{
+		if (IsStuck) return;
+		if (body is TileMapLayer || body is StaticBody2D) OnWallCollision();
+		if (body is Player player) OnPlayerCollision(player);
+	}
+
+	public override void _PhysicsProcess(double delta)
+	{
+		base._PhysicsProcess(delta);
+
+		if (IsStuck) return;
+
+		Vector2 velDir = velocity.Normalized();
+		if (velDir.Y >= 0)
+			Rotation = MathF.Acos(velDir.X);
+		else Rotation = -MathF.Acos(velDir.X);
+
+
+		isInPilotArea = world.currentMap.IsPositionInPilotArea(GlobalPosition);
+		velocity -= velocity.Normalized() * speed * (float)delta;
+		if (isInPilotArea) velocity.Y += speed * 3 * (float)delta;
+		else if (velocity.LengthSquared() < 0.1f) velocity *= 0;
+	}
+    public override void OnLifeEnd()
+    {
+		QueueFree();
+    }
+	public void OnWallCollision()
+	{
+		Land();
+		CollisionConfirm();
+		lifeTimer.Start(groundLifetime);
+	}
+	
+	void OnPlayerCollision(Player player)
+	{
+		if (player.colorIdx == owner.colorIdx) return;
+		Land();
+		lifeTimer.Stop();
+
+		CallDeferred(MethodName.Reparent, player, true);
+		player.effectHandler.AddPoisonBlob(this);
+    }
+	
+	void Land()
+    {
+        SetDeferred(PropertyName.Monitoring, false);
+		SetDeferred(PropertyName.Monitorable, false);
+		IsStuck = true;
+		velocity *= 0;
+    }
+
+	public async void RemoveFromPlayer()
+    {
+		velocity = Position.Normalized() * speed;
+		IsStuck = false;
+		CallDeferred(MethodName.Reparent, Game.Instance.world, true);
+		await ToSignal(GetTree().CreateTimer(0.5f), Timer.SignalName.Timeout);
+        QueueFree();
+    }
+}
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5q0od"]
+atlas = ExtResource("3_8w1l6")
+region = Rect2(0, 16, 16, 16)
+
+[node name="LinearProjectile" unique_id=1575351678 instance=ExtResource("1_4aqxx")]
+script = SubResource("CSharpScript_koncm")
+isDestroyedOutOfZone = false
+
+[node name="Sprite2D" parent="." index="1"]
+z_index = 2
+texture = SubResource("AtlasTexture_5q0od")

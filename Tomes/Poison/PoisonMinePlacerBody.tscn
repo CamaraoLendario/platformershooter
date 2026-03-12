@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dppx4kindrph4"]
+[gd_scene format=3 uid="uid://dppx4kindrph4"]
 
 [ext_resource type="Script" uid="uid://fl5btn20tcwk" path="res://Tomes/Poison/PoisonMinePlacerBody.cs" id="1_8xcwg"]
 [ext_resource type="PackedScene" uid="uid://cw1x6mgwv0ove" path="res://Tomes/Poison/PoisonMine.tscn" id="2_46opx"]
@@ -11,14 +11,14 @@ size = Vector2(4, 4)
 atlas = ExtResource("2_s1py2")
 region = Rect2(0, 16, 16, 16)
 
-[node name="PoisonMinePlacerBody" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
+[node name="PoisonMinePlacerBody" type="CharacterBody2D" unique_id=1518503122 node_paths=PackedStringArray("sprite")]
 collision_mask = 2
 script = ExtResource("1_8xcwg")
 sprite = NodePath("Sprite2D")
 poisonMineScene = ExtResource("2_46opx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1616729047]
 shape = SubResource("RectangleShape2D_46opx")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1452374825]
 texture = SubResource("AtlasTexture_s1py2")

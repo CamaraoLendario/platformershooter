@@ -10,8 +10,20 @@ public partial class LinearProjectile : Area2D
 	[ExportGroup("Nodes")]
 	[Export] public Node2D sprite;
 	[Export] Node2D confirmRaysNode;
+	public Vector2 Direction
+	{
+		get
+		{
+			return direction;
+		}
+		set
+		{
+			direction = value;
+			sprite.Rotation = direction.Angle();
+		}
+	}
 	public Vector2 direction;
-	public Vector2 velocity;
+
 	public Player owner;
 	public bool isInPilotArea = true;
 	protected float collisionConfirmLength = 24.0f;
@@ -20,10 +32,7 @@ public partial class LinearProjectile : Area2D
 
 	public override void _Ready()
 	{
-		velocity = direction * speed;
-		if (direction.Y >= 0)
-			sprite.Rotation = MathF.Acos(direction.X);
-		else sprite.Rotation = -MathF.Acos(direction.X);
+		sprite.Rotation = Direction.Angle();
 	
 		if (sprite.Rotation > Mathf.Pi/2 || sprite.Rotation < -Mathf.Pi/2)
 			FlipVSprite(sprite, true);
@@ -50,7 +59,7 @@ public partial class LinearProjectile : Area2D
 
     public override void _PhysicsProcess(double delta)
 	{
-		Position += velocity * (float)delta;
+		Position += Direction * speed * (float)delta;
 	}
 
 	public void SetDirection(float inputRotation)
@@ -59,15 +68,15 @@ public partial class LinearProjectile : Area2D
 		{
 			inputRotation += (2 * MathF.PI);
 		}
-		direction = new Vector2(MathF.Cos(inputRotation), MathF.Sin(inputRotation));
+		Direction = new Vector2(MathF.Cos(inputRotation), MathF.Sin(inputRotation));
 	}
 	public void SetDirection(Vector2 inputVector)
 	{
-		direction = inputVector.Normalized();
+		Direction = inputVector.Normalized();
 	}
 	public void SetDirection(int x, int y)
 	{
-		direction = new Vector2(x, y).Normalized();
+		Direction = new Vector2(x, y).Normalized();
 	}
 
 	protected virtual void OnBodyHit(Node2D body)

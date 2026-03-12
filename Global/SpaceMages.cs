@@ -18,7 +18,7 @@ namespace SpaceMages
 			 ["Orange"] = new Vector3(0.9f, 0.5f, 0.0f),
 		 };
 		public static Vector3[] teamColors =
-		{
+		{	
 			teamColorsDict["Red"],
 			teamColorsDict["Purple"],
 			teamColorsDict["Blue"],

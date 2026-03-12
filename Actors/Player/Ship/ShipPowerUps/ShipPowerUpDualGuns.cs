@@ -5,6 +5,11 @@ public partial class ShipPowerUpDualGuns : ShipGunPowerUp
 {
 	int shotCount = 3;
 
+    public override void _Ready()
+    {
+        base._Ready();
+    }
+
     protected override void Shoot()
 	{
 		Rotation = controller.sprite.Rotation;

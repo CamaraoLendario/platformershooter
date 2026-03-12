@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.AccessControl;
 
 public partial class WindBulletsAnimator : Node2D
@@ -10,6 +11,20 @@ public partial class WindBulletsAnimator : Node2D
 	float time = 0f;
     public override void _Ready()
     {
+		AnimatedSprite2D baseAmmoTemplate = null;
+		foreach(Node node in GetChildren())
+		{
+			if (node is not AnimatedSprite2D sprite) continue;
+			if (baseAmmoTemplate == null) baseAmmoTemplate = sprite.Duplicate() as AnimatedSprite2D; 
+			sprite.QueueFree();
+		}
+
+		int maxAmmo = GetParent<WindTome>().maxAmmo;
+		for(int i = 0; i < maxAmmo; i++)
+		{
+			AddChild(baseAmmoTemplate.Duplicate());
+		}
+
 		GetParent<Weapon>().Shot += () =>
 		{
 			ammo[0].QueueFree();
@@ -19,6 +34,7 @@ public partial class WindBulletsAnimator : Node2D
         foreach(Node node in GetChildren())
 		{
 			if (node is not AnimatedSprite2D sprite) return;
+			if (sprite.IsQueuedForDeletion()) continue;
 			sprite.Frame = GD.RandRange(0, sprite.SpriteFrames.GetFrameCount("default") - 1);
 
 			ammo.Add(sprite);
@@ -37,7 +53,7 @@ public partial class WindBulletsAnimator : Node2D
 			float Angle = (time * Mathf.Pi * 2) + (step * idx);
 			sprite.Position = new Vector2(
 				Mathf.Cos(Angle),
-			 	Mathf.Sin(Angle) * 0.69f // <-- Suggested by mr shadow zerkling (he thinks 69 is funnier than 67??? like hello??)
+			 	Mathf.Sin(Angle) * 0.69f
 			) * 10;
 			
 			if (oldPosition.X > sprite.Position.X)
@@ -55,6 +71,7 @@ public partial class WindBulletsAnimator : Node2D
 
 			idx ++;
 		}
+		if (animationSpeed > 5) animationSpeed = 5;
 		if (animationSpeed >= 1) animationSpeed -= (float)delta;
 
 		time -= (float)delta * animationSpeed;

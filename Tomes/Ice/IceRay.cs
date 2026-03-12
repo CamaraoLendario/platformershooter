@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO.Pipes;
+using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.Serialization;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,42 +16,58 @@ public partial class IceRay : HitscanBullet
 	[ExportGroup("Visual")]
 	[Export] int animationSpeed = 1;
 	[ExportGroup("Nodes")]
-	[Export] GpuParticles2D iceParticlesEmitter;
-	[Export] GpuParticles2D hitEmitter;
-	[Export] GpuParticles2D rayRing;
-	float distance;
+	[Export] public GpuParticles2D rayRingEmitter;
+	[Export] public GpuParticles2D iceDroppletsEmitter;
+	[Export] public GpuParticles2D hitEmitter;
+	float distance = -1;
 	Timer iceParticlesCoyoteTimer = new();
 	float iceParticlesCoyoteTime = 1;
-	List<GpuParticles2D> iceParticlesQueue = new();
+	List<GpuParticles2D> iceParticlesQueue = [];
 	Node2D iceDroppletsParent = new();
 	Node2D rayRingsParent = new();
+	List<(GpuParticles2D node, float velocity)> fallingIce = [];
 
 	public override void _Ready()
 	{
  		base._Ready();
 		AddParticleParents();
-		checkHit();
-		SpawnParticleEmitters();
+		CheckHit();
+		CallDeferred(MethodName.SpawnParticleEmitters);
  	}
+
+    public override void _PhysicsProcess(double delta)
+	{
+		for(int i = 0; i < fallingIce.Count; i++)
+		{
+			(GpuParticles2D node, float velocity) = fallingIce[i];
+			node.Position += Vector2.Down * velocity;
+			velocity += (float)delta;
+			fallingIce[i] = (node, velocity);
+		}
+	}
+
 	void AddParticleParents()
 	{
 		AddChild(iceDroppletsParent);
-		iceParticlesEmitter.Reparent(iceDroppletsParent);
-		iceParticlesQueue.Add(iceParticlesEmitter);
 		AddChild(rayRingsParent);
-		rayRing.Reparent(rayRingsParent);
+		iceDroppletsEmitter.Reparent(iceDroppletsParent);
+		iceParticlesQueue.Add(iceDroppletsEmitter);
+		rayRingEmitter.Reparent(rayRingsParent);
 	}
 
 	void SpawnParticleEmitters()
 	{
-		Vector2 collidingPoint = GetCollisionPoint();
-		distance = (collidingPoint - GlobalPosition).Length();
-
+		if (distance == -1)
+		{
+			Vector2 collidingPoint = GetCollisionPoint();
+			distance = (collidingPoint - GlobalPosition).Length();
+		}
+		Enabled = false;
 		hitEmitter.Position = new Vector2(distance, 0);
 		InitializeSpawnEmitters();
 		AnimateIceParticlesEmitter();
-		iceParticlesEmitter.OneShot = true;
-		iceParticlesEmitter.Emitting = true;
+		iceDroppletsEmitter.OneShot = true;
+		iceDroppletsEmitter.Emitting = true;
 		hitEmitter.OneShot = true;
 		hitEmitter.Emitting = true;
 	}
@@ -68,31 +86,27 @@ public partial class IceRay : HitscanBullet
 
 	void InitializeFellIceDropplets()
 	{
-		float gravityAngle = Mathf.Pi/2 - Rotation;
-		Vector2 gravity2D = new Vector2(Mathf.Cos(gravityAngle), Mathf.Sin(gravityAngle)) * 50;
-		FellIceDropplet(gravity2D);
+		FellIceDropplet();
 	}
 
-	async void FellIceDropplet(Vector2 gravity2D)	
+	async void FellIceDropplet()	
 	{
 		if (iceParticlesQueue.Count <= 0)
 		{
 			return;
 		}
 		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
-		ParticleProcessMaterial iceParticlesMaterial = iceParticlesQueue[0].ProcessMaterial.Duplicate() as ParticleProcessMaterial;
-		iceParticlesMaterial.Gravity = new Vector3(gravity2D.X, gravity2D.Y, 0);
-		iceParticlesQueue[0].ProcessMaterial = iceParticlesMaterial;
+		fallingIce.Add((iceParticlesQueue[0], 0));
 		iceParticlesQueue.Remove(iceParticlesQueue[0]);
 		
-		FellIceDropplet(gravity2D);
+		FellIceDropplet();
 	}
 
 	void InitializeSpawnEmitters()
 	{
-		rayRing.OneShot = true;
-		rayRing.Emitting = true;
-		int separation = (int) rayRing.Position.X;
+		rayRingEmitter.OneShot = true;
+		rayRingEmitter.Emitting = true;
+		int separation = (int) rayRingEmitter.Position.X;
 		SpawnRayRings(separation);
 	}
 	async void SpawnRayRings(int separation, int animationStep = 1, int current = 2)
@@ -110,22 +124,20 @@ public partial class IceRay : HitscanBullet
 			animationStep = 1;
 			await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
 		}
-		
-		GpuParticles2D newRayRing = rayRing.Duplicate() as GpuParticles2D;
-		GpuParticles2D newIceParticles = iceParticlesEmitter.Duplicate() as GpuParticles2D;
-		
-		newRayRing.OneShot = true;
-		newRayRing.Emitting = true;
-		newRayRing.Position = current * separation * Vector2.Right;
-		rayRingsParent.AddChild(newRayRing);
+		(GpuParticles2D newRayRing, GpuParticles2D newIceParticles) = GPUParticlesPool.GetIceParticles();
 
-		newIceParticles.Amount = 1;
+
+		newRayRing.OneShot = true;
+		newRayRing.Position = GlobalPosition + (current * separation * Vector2.Right.Rotated(Rotation));
+		newRayRing.Emitting = true;
+		newRayRing.Rotation = Rotation;
+	
 		newIceParticles.OneShot = true;
+		newIceParticles.Position = GlobalPosition + (current * separation * Vector2.Right.Rotated(Rotation));
 		newIceParticles.Emitting = true;
-		newIceParticles.Position = current * separation * Vector2.Right;
-		iceDroppletsParent.AddChild(newIceParticles);
+		newIceParticles.Rotation = Rotation;
 		iceParticlesQueue.Add(newIceParticles);
-		
+		if (printDebug) GD.Print("spawned particles ", current);
 		SpawnRayRings(separation, animationStep, current+1);
 	}
 
@@ -144,17 +156,62 @@ public partial class IceRay : HitscanBullet
 		iceDroppletsParent.Position = Vector2.Zero + randVec;
 	}
 
-    void checkHit()
+    void CheckHit()
 	{
 		ForceRaycastUpdate();
 		var collider = GetCollider();
+		while (collider != null)
+		{
+			if (collider is Area2D)
+			{
+				if (CheckHitArea2D(collider as Area2D))
+					break;
+			}
+			else
+			{
+				if (CheckHitBody(collider as Node2D))
+					break;
+			}
+			GD.Print(collider);
+			GD.Print((GetCollisionPoint() - GlobalPosition).Length());
+			ForceRaycastUpdate();
+			collider = GetCollider();
+		}
+		Enabled = false;
+		if (collider == null)
+		{
+			distance = 500f;
+		}
+	}
+
+	bool CheckHitArea2D(Area2D collider)
+	{
+		if (collider is HittableComponent hittableComponent)
+		{
+
+			hittableComponent.Hit(this);
+
+			if (!hittableComponent.stopsHitscan || !hittableComponent.Enabled)
+			{
+				AddException(collider);
+				return false;
+			}
+			else return true;
+		}
+		else
+		{
+			AddException(collider);
+			return false;
+		}
+	}
+	bool CheckHitBody(Node2D collider)
+	{
 		if (collider is Player player)
 		{
 			if (player.colorIdx == owner.colorIdx)
             {
 				AddException(player);
-				checkHit();
-				return;
+				return false;
             }
 			else Hit(player);
 		}
@@ -166,11 +223,10 @@ public partial class IceRay : HitscanBullet
 		{
 			Hit(collider as StaticBody2D);
 		}
+		return true;
 	}
-
 	protected override void Hit(Player player)
 	{
-		GD.Print(player);
 		if(player.HasShield)
 			player.TakeDamage(owner);
 		else
@@ -205,4 +261,22 @@ public partial class IceRay : HitscanBullet
 			(int) vec.Y
 		);
 	}
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+		if (printDebug) GD.Print("Distance: ", distance, " | ","Hitting: ", (GetCollider() as Node).Name, " | ", "Hit Pos: ", GetCollisionPoint(), " | ", "Global Position: ", GlobalPosition);
+		foreach(GpuParticles2D particles in rayRingsParent.GetChildren())
+		{
+			if (particles.Name.ToString().StartsWith("GPUParticles2D")) continue;
+			GPUParticlesPool.ReturnRing(particles);
+		}
+
+		foreach(GpuParticles2D particles in iceDroppletsParent.GetChildren())
+		{
+			if (particles.Name.ToString().StartsWith("GPUParticles2D")) continue;
+			GPUParticlesPool.ReturnDropplet(particles);
+		}
+    }
+
 }

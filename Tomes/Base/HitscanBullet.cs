@@ -5,10 +5,13 @@ using System.IO;
 public partial class HitscanBullet : RayCast2D
 {
 	[Export] protected float lifeTime = 0.5f; 
+	[ExportGroup("Debug")]
+	[Export] protected bool printDebug = false;
 	public Player owner;
 	public Vector2 inputDir;
 	float maxLength = 10000f;
 	Timer lifeTimer = new();
+
 
 	public override void _Ready()
 	{
@@ -33,7 +36,7 @@ public partial class HitscanBullet : RayCast2D
 	{
 		GD.Print(body);
 	}
-	void End()
+	public void End()
     {
 		QueueFree();
     }

@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://sq6e0stnk1ls"]
-
-[ext_resource type="Script" uid="uid://b2wjmjkcfqmfx" path="res://Maps/MapTools/CollisionReplicator.cs" id="1_cm54l"]
-
-[node name="CollisionReplicator" type="Area2D"]
-script = ExtResource("1_cm54l")

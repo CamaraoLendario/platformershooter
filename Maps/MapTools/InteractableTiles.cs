@@ -45,6 +45,7 @@ public partial class InteractableTiles : TileMapLayer
 
 	void ResetDestructibleBlocksChecks()
 	{
+		destructibleBlockFlags.Clear();
 		desctructibleTilesContainer = GetNode<TileMapLayer>("DestructibleTiles");
 		foreach (DestructibleBlockFlag oldFlag in desctructibleTilesContainer.GetChildren())
 		{

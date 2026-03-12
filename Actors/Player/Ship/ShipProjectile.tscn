@@ -4,43 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://fr4ig4ir7mcu" path="res://Actors/Player/Ship/Sprites/ShipBullet.png" id="2_5cqit"]
 [ext_resource type="Script" uid="uid://c3t42tugelp5u" path="res://Actors/Player/Ship/ShipProjectile.cs" id="2_a567x"]
 [ext_resource type="Texture2D" uid="uid://ccrdfxkd7uemu" path="res://Assets/LightingBrushes/LightBrush.png" id="2_xcja3"]
+[ext_resource type="Material" uid="uid://bniqjtc2x7lkc" path="res://Actors/Player/Ship/Material/ShipProjectileTrailParticles.tres" id="3_h2hpt"]
+[ext_resource type="Material" uid="uid://bb6qj2nxuidly" path="res://Actors/Player/Ship/Material/ShipProjectileExplosionParticles.tres" id="4_mgvg5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5cqit"]
 radius = 4.5
-
-[sub_resource type="Gradient" id="Gradient_xcja3"]
-offsets = PackedFloat32Array(0, 0.512987, 0.78571427, 1)
-colors = PackedColorArray(0.56078434, 0.2509804, 0.70980394, 1, 0.6313726, 0.28235295, 0.7372549, 1, 0.68587893, 0.30814135, 0.7625778, 1, 0.70185494, 0.31570002, 0.77, 0.078431375)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_a567x"]
-gradient = SubResource("Gradient_xcja3")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xcja3"]
-lifetime_randomness = 1.0
-particle_flag_align_y = true
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 4.34
-direction = Vector3(-1, 0, 0)
-spread = 5.0
-initial_velocity_max = 9.17
-gravity = Vector3(0, 0, 0)
-color_ramp = SubResource("GradientTexture1D_a567x")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a567x"]
-lifetime_randomness = 1.0
-particle_flag_align_y = true
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 4.34
-direction = Vector3(-1, 0, 0)
-spread = 180.0
-initial_velocity_min = 21.01
-initial_velocity_max = 41.16
-gravity = Vector3(0, 0, 0)
-linear_accel_min = -4.530002
-linear_accel_max = -4.530002
-color_ramp = SubResource("GradientTexture1D_a567x")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xcja3"]
 atlas = ExtResource("2_5cqit")
@@ -99,7 +67,7 @@ amount = 393
 sub_emitter = NodePath(".")
 fixed_fps = 1000
 visibility_rect = Rect2(-1000, -1000, 2000, 2000)
-process_material = SubResource("ParticleProcessMaterial_xcja3")
+process_material = ExtResource("3_h2hpt")
 
 [node name="EplosionParticles" type="GPUParticles2D" parent="." index="3" unique_id=632793105]
 light_mask = 0
@@ -110,7 +78,7 @@ sub_emitter = NodePath(".")
 one_shot = true
 explosiveness = 1.0
 fixed_fps = 1000
-process_material = SubResource("ParticleProcessMaterial_a567x")
+process_material = ExtResource("4_mgvg5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="4" unique_id=405515676]
 z_index = 1

@@ -8,7 +8,7 @@ public partial class ShipGunPowerUp : ShipPowerUp
         base._Ready(); // <-- keep this, idiot
 		controller.Shot += Shoot;
     }
-    protected override void End()
+    public override void End()
     {
         base.End();
 		controller.Shot -= Shoot;

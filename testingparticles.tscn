@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://b21mdwxehi2be"]
+
+[ext_resource type="Script" uid="uid://ccubeqhpap1bn" path="res://Testingparticles.cs" id="1_jl5lc"]
+[ext_resource type="Material" uid="uid://cuu7ef3oi50rv" path="res://Actors/Player/Pilot/pilotDeathParticles.tres" id="1_two45"]
+[ext_resource type="Material" uid="uid://bgglq6jh35xxs" path="res://Actors/Player/Ship/ShipReconstructionParticles.tres" id="2_1w7aq"]
+
+[node name="Node2D" type="Node2D" unique_id=298116757 node_paths=PackedStringArray("reconstruction")]
+script = ExtResource("1_jl5lc")
+reconstruction = NodePath("ShipReconstructionParticles")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=2128121280]
+emitting = false
+amount = 272
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+process_material = ExtResource("1_two45")
+
+[node name="ShipReconstructionParticles" type="GPUParticles2D" parent="." unique_id=832438993]
+z_index = 2
+emitting = false
+amount = 1024
+lifetime = 1.87
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = ExtResource("2_1w7aq")

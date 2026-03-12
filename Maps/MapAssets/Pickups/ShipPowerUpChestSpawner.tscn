@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://deavbdxssxkrb"]
+
+[ext_resource type="Script" uid="uid://bwrrnxkwueao0" path="res://Maps/MapAssets/Pickups/ShipPowerUpChestSpawner.cs" id="1_lq4e2"]
+
+[node name="ShipPowerUpChestSpawner" type="Node2D" unique_id=631959143]
+script = ExtResource("1_lq4e2")

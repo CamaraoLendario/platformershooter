@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bxienc218xiot"]
+
+[ext_resource type="Shader" uid="uid://dc8dv5u5hl323" path="res://BlackHole.gdshader" id="1_bjy8h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rv61l"]
+shader = ExtResource("1_bjy8h")
+shader_parameter/radiusLength = 50.0
+shader_parameter/initialVelocity = 100.0
+shader_parameter/pullStrength = 500.0
+shader_parameter/color1 = Color(0, 0.101960786, 0.24313726, 1)
+shader_parameter/color2 = Color(0, 0.78431374, 0.8666667, 1)
+shader_parameter/color3 = Color(1, 0.9411765, 1, 1)
+
+[node name="Node2D" type="Node2D" unique_id=760288141]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1955495408]
+amount = 1000
+process_material = SubResource("ShaderMaterial_rv61l")

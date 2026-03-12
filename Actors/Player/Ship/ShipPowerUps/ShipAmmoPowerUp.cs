@@ -21,7 +21,7 @@ public partial class ShipAmmoPowerUp : ShipPowerUp
 			End();
 		}
 	}
-    protected override void End()
+    public override void End()
     {
 		controller.bullet = defaultShot;
 		controller.Shot -= OnShoot;

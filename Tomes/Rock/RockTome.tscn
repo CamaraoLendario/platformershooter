@@ -1,16 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://d0lhsiquci2f5"]
+[gd_scene format=3 uid="uid://d0lhsiquci2f5"]
 
 [ext_resource type="PackedScene" uid="uid://bnj055xj8cr1x" path="res://Tomes/Base/weapon_template.tscn" id="1_8pabp"]
-[ext_resource type="Texture2D" uid="uid://daawcol3kgydg" path="res://Tomes/TomeAssets/Weapons.png" id="2_jqs3d"]
 [ext_resource type="Script" uid="uid://b3yddsyd1tjwb" path="res://Tomes/Rock/RockTome.cs" id="2_x4wbo"]
 [ext_resource type="PackedScene" uid="uid://cb8rndkouptad" path="res://Tomes/Rock/RockPellet.tscn" id="3_x4wbo"]
+[ext_resource type="Texture2D" uid="uid://e4i5m6l7lwv2" path="res://Tomes/Rock/RockTomeStages.png" id="4_x4wbo"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_x4wbo"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfd27"]
 resource_local_to_scene = true
-atlas = ExtResource("2_jqs3d")
-region = Rect2(32, 0, 16, 16)
+atlas = ExtResource("4_x4wbo")
+region = Rect2(0, 0, 16, 16)
 
-[node name="RockTome" instance=ExtResource("1_8pabp")]
+[node name="RockTome" unique_id=120997672 instance=ExtResource("1_8pabp")]
 script = ExtResource("2_x4wbo")
 bulletCount = 5
 coneAngle = 7.5
@@ -18,4 +18,4 @@ bullet = ExtResource("3_x4wbo")
 maxAmmo = 3
 
 [node name="Sprite2D" parent="." index="0"]
-texture = SubResource("AtlasTexture_x4wbo")
+texture = SubResource("AtlasTexture_wfd27")

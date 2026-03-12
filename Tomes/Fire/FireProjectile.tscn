@@ -4,64 +4,20 @@
 [ext_resource type="Script" uid="uid://bbrco4fxfp2xx" path="res://Tomes/Fire/FireProjectile.cs" id="2_saxex"]
 [ext_resource type="Texture2D" uid="uid://dcpbsslhj7cj5" path="res://Tomes/TomeAssets/BulletsSpriteSheet.png" id="2_v674n"]
 [ext_resource type="PackedScene" uid="uid://c6gpkqe1yquou" path="res://Tomes/explosion_component.tscn" id="3_hmg7v"]
-[ext_resource type="Shader" uid="uid://d28ig06mwsk6d" path="res://Tomes/Fire/FireProjectile.gdshader" id="4_myqm5"]
+[ext_resource type="Material" uid="uid://biflh5l4gvpao" path="res://Tomes/Fire/Materials/FireProjectileTrailParticles.tres" id="5_s51s0"]
 [ext_resource type="AudioStream" uid="uid://bh5nclrms46nb" path="res://Tomes/Fire/Audio/FireBallExisting2.ogg" id="6_dw3gq"]
 [ext_resource type="Texture2D" uid="uid://cw0mcwp3fsiht" path="res://Assets/Particles/explosion particle.png" id="7_5ttp6"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dw3gq"]
-shader = ExtResource("4_myqm5")
+[ext_resource type="Material" uid="uid://evaeqexklt5o" path="res://Tomes/Fire/Materials/FireProjectileExplosionParticles.tres" id="8_54gh8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_saxex"]
 atlas = ExtResource("2_v674n")
 region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="Gradient" id="Gradient_myqm5"]
-offsets = PackedFloat32Array(0, 0.17924528, 0.29245284, 0.4245283, 0.44339624, 0.6226415, 0.6415094, 0.7735849, 0.7830189, 1)
-colors = PackedColorArray(0.7137255, 0.023529412, 0.023529412, 1, 0.7137255, 0.023529412, 0.023529412, 1, 0.7921569, 0.21960784, 0.07058824, 1, 0.7921569, 0.21960784, 0.07058824, 1, 0.85882354, 0.47058824, 0.11764706, 1, 0.85882354, 0.47058824, 0.11764706, 1, 0.92156863, 0.6784314, 0.15686275, 1, 0.92156863, 0.6784314, 0.15686275, 1, 0.9843137, 0.9490196, 0.21176471, 1, 0.9843137, 0.9490196, 0.21176471, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_dw3gq"]
-gradient = SubResource("Gradient_myqm5")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5ttp6"]
-lifetime_randomness = 0.25
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 6.06
-velocity_pivot = Vector3(0, 1, 0)
-direction = Vector3(-1, 0, 0)
-spread = 5.0
-initial_velocity_max = 33.19
-gravity = Vector3(0, 0, 0)
-color_ramp = SubResource("GradientTexture1D_dw3gq")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_s51s0"]
 particles_animation = true
 particles_anim_h_frames = 2
 particles_anim_v_frames = 2
 particles_anim_loop = false
-
-[sub_resource type="Gradient" id="Gradient_54gh8"]
-offsets = PackedFloat32Array(0.754717, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_5ttp6"]
-gradient = SubResource("Gradient_54gh8")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dkq5y"]
-lifetime_randomness = 1.0
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 27.28
-angle_min = -237.2
-angle_max = 50.80001
-direction = Vector3(0, -1, 0)
-spread = 180.0
-initial_velocity_min = 23.519999
-initial_velocity_max = 52.93
-angular_velocity_min = -432.0
-angular_velocity_max = 262.58997
-color_ramp = SubResource("GradientTexture1D_5ttp6")
-anim_offset_max = 1.0
 
 [node name="FireProjectile" unique_id=272137038 node_paths=PackedStringArray("trailParticles", "explosionParticles", "FireAudio") instance=ExtResource("1_y17ak")]
 script = ExtResource("2_saxex")
@@ -73,7 +29,6 @@ FireAudio = NodePath("AudioStreamPlayer2D")
 speed = 200.0
 
 [node name="Sprite2D" parent="." index="1"]
-material = SubResource("ShaderMaterial_dw3gq")
 texture = SubResource("AtlasTexture_saxex")
 
 [node name="TrailParticles" type="GPUParticles2D" parent="Sprite2D" index="1" unique_id=1544821431]
@@ -82,7 +37,7 @@ amount = 131
 sub_emitter = NodePath(".")
 lifetime = 0.31
 fixed_fps = 1000
-process_material = SubResource("ParticleProcessMaterial_5ttp6")
+process_material = ExtResource("5_s51s0")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." index="2" unique_id=2019108726]
 process_mode = 3
@@ -99,4 +54,4 @@ lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
-process_material = SubResource("ParticleProcessMaterial_dkq5y")
+process_material = ExtResource("8_54gh8")

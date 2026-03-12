@@ -5,7 +5,7 @@ using System.ComponentModel;
 [Tool]
 public partial class MapBorders : Node2D
 {
-	[Export] PackedScene collisionReplicatorScene;
+	//PackedScene collisionReplicatorScene = GD.Load<PackedScene>("uid://wli55setbe04");
 	[Export]
 	bool DrawBorders
 	{
@@ -159,7 +159,7 @@ public partial class MapBorders : Node2D
 		);
 	}
 
-	void SetupCollisionReplicator()
+	/* void SetupCollisionReplicator()
 	{
 		int collisionThickness = 100;
 		Godot.Vector2[] dirsArray = new Godot.Vector2[4]
@@ -173,8 +173,9 @@ public partial class MapBorders : Node2D
 		foreach (Vector2 dir in dirsArray)
 		{
 			//CollisionReplicator collisionReplicator = new CollisionReplicator(); LEARN HOW TO DO THIS CUZ IT WOULD BE COOL AS FUCK
-			CollisionReplicator collisionReplicator = collisionReplicatorScene.Instantiate<CollisionReplicator>();
-
+			CollisionsReplicator collisionReplicator = collisionReplicatorScene.Instantiate<CollisionsReplicator>();
+			collisionReplicator.main = GetParent<Map>();
+			
 			CollisionShape2D collision = new CollisionShape2D();
 			RectangleShape2D shape = new RectangleShape2D();
 			collision.Shape = shape;
@@ -190,5 +191,5 @@ public partial class MapBorders : Node2D
 			CallDeferred(MethodName.AddChild, collisionReplicator);
 			collisionReplicator.CallDeferred(MethodName.AddChild, collision);
 		}
-	}
+	} */
 }

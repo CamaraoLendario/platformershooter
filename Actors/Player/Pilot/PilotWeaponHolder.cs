@@ -5,6 +5,7 @@ public partial class PilotWeaponHolder : Node2D
 {
 	[Signal] public delegate void WeaponShotEventHandler();
 	[Export] PilotAttack Pilot;
+	[Export] Sprite2D crossAirSprite;
 
 	public Weapon CurrentWeapon
 	{
@@ -24,17 +25,19 @@ public partial class PilotWeaponHolder : Node2D
 
     public override void _Ready()
     {
+		crossAirSprite.Hide();
 		world = Game.Instance.world;
 		Pilot.playerInput.DropStart += DropWeapon;
     }
 	public override void _Process(double delta)
 	{
+		crossAirSprite.Visible = Pilot.Main.isAiming;
+		Rotation = Pilot.aimVector.Angle();
 		if (CurrentWeapon == null) return;
 		
-		if(CurrentWeapon != null && CurrentWeapon.rotates) Rotation = Pilot.aimVector.Angle();
-		else Rotation = 0;
+		if(!CurrentWeapon.rotates) CurrentWeapon.Rotation = -Pilot.aimVector.Angle();
 
-		if (Pilot.aimVector.X < 0 && CurrentWeapon != null && CurrentWeapon.flips)
+		if (Pilot.aimVector.X < 0 && CurrentWeapon.flips)
 			FlipVSprite(CurrentWeapon.sprite, true);
 		else FlipVSprite(CurrentWeapon.sprite, false);
 	}

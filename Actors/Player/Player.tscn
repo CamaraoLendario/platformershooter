@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://cbmq3xh2bcijs"]
 
-[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutine.gdshader" id="1_gh11b"]
+[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="1_gh11b"]
 [ext_resource type="Script" uid="uid://dfc37w7c5df0r" path="res://Actors/Player/Player.cs" id="2_30khc"]
 [ext_resource type="PackedScene" uid="uid://by5s8sc2bwo1o" path="res://Actors/Player/Pilot/pilot_ragdol.tscn" id="3_fllei"]
 [ext_resource type="Script" uid="uid://dpajyn7twtmqh" path="res://Actors/Player/Pilot/PilotAttack.cs" id="3_iwrur"]
 [ext_resource type="FontFile" uid="uid://c5a2sdgkmsblj" path="res://Fonts/SpaceMagesFontOutlined.png" id="4_jiph2"]
+[ext_resource type="Texture2D" uid="uid://m2xw66h74o04" path="res://Actors/Player/Ship/Sprites/shipPowerUpIndicators.png" id="5_87ye5"]
 [ext_resource type="Script" uid="uid://btwuke1gfr05i" path="res://Actors/Player/Ship/ShipAttack.cs" id="5_fllei"]
 [ext_resource type="PackedScene" uid="uid://ceiwo7xx53l5y" path="res://Actors/Player/Ship/ShipProjectile.tscn" id="5_gsc2s"]
 [ext_resource type="SpriteFrames" uid="uid://bcbvwjw2kxhut" path="res://Actors/Player/Pilot/PilotSpriteFrames.tres" id="6_alwmy"]
@@ -14,37 +15,60 @@
 [ext_resource type="Script" uid="uid://qdxgmtuu50ff" path="res://Actors/Player/Pilot/PilotWeaponHolder.cs" id="10_a5pbq"]
 [ext_resource type="Script" uid="uid://hs076ncgtutx" path="res://Actors/Player/Pilot/MeleeAttack.cs" id="11_gffum"]
 [ext_resource type="Texture2D" uid="uid://c5440b3wlhm0" path="res://Actors/Player/Pilot/Sprites/pilotShieldParticles.png" id="11_j53hc"]
+[ext_resource type="Material" uid="uid://x38tv3nmu01" path="res://Actors/Player/Materials/PilotShieldBreakParticles.tres" id="11_rda0l"]
 [ext_resource type="Texture2D" uid="uid://ddymh4fx17tto" path="res://Actors/Player/Pilot/Sprites/PilotShield.png" id="12_g6ejb"]
 [ext_resource type="Texture2D" uid="uid://cogxnc4ocl7vq" path="res://Actors/Player/Pilot/Sprites/MeleeEffect.png" id="12_ujyek"]
 [ext_resource type="Script" uid="uid://8cm6grcsm8l3" path="res://Actors/Player/PlayerParticleEmitters.cs" id="12_upr3p"]
+[ext_resource type="Material" uid="uid://cuu7ef3oi50rv" path="res://Actors/Player/Pilot/pilotDeathParticles.tres" id="13_f6sss"]
 [ext_resource type="Texture2D" uid="uid://hlhysuf1ahja" path="res://Actors/Player/Ship/Sprites/ShipShield.png" id="13_r3pko"]
+[ext_resource type="Texture2D" uid="uid://x4ovpn52h8gn" path="res://Actors/Player/Pilot/Sprites/CrossAir1.png" id="15_f6sss"]
 [ext_resource type="Texture2D" uid="uid://ca2jhf1dvchi5" path="res://Actors/Player/Ship/Sprites/shipShieldParticles.png" id="15_jiph2"]
 [ext_resource type="Script" uid="uid://c1vl7s8234f5g" path="res://Actors/Player/PlayerInput.cs" id="15_n45d6"]
-[ext_resource type="Script" uid="uid://cugp6ewji0rnl" path="res://Actors/Player/PlayerEffectHandler.cs" id="16_8np4b"]
+[ext_resource type="Script" uid="uid://cugp6ewji0rnl" path="res://Actors/Player/Effects/Frozen/PlayerEffectHandler.cs" id="16_8np4b"]
+[ext_resource type="Material" uid="uid://iawq5go2txhe" path="res://Actors/Player/Materials/PilotDashParticles.tres" id="16_sg1wo"]
 [ext_resource type="AudioStream" uid="uid://gkcajckfe2c0" path="res://Actors/Player/Pilot/Audio/PilotDash.wav" id="18_iwmb3"]
 [ext_resource type="AudioStream" uid="uid://b7ytipig3ka0c" path="res://Actors/Player/Pilot/Audio/Jump.wav" id="20_704ek"]
 [ext_resource type="AudioStream" uid="uid://uitr02mt5aa6" path="res://Actors/Player/Ship/Audio/ShipShoot.wav" id="20_s8ljq"]
 [ext_resource type="Script" uid="uid://cm35ummf61a2h" path="res://Actors/Player/Ship/ShipPowerUps/ShipPowerUpsHolder.cs" id="21_87ye5"]
 [ext_resource type="AudioStream" uid="uid://df3887uxi4rdk" path="res://Actors/Player/Ship/Audio/ShipDash.wav" id="21_k8e2g"]
 [ext_resource type="AudioStream" uid="uid://dme50v05dt1qp" path="res://Actors/Player/Ship/Audio/ShipDestroyed.wav" id="22_7m1i7"]
+[ext_resource type="Material" uid="uid://b5s0ni7p05ow1" path="res://Actors/Player/Materials/ShipShieldBreakParticles.tres" id="22_aao0a"]
+[ext_resource type="Shader" uid="uid://c5of2yh1koxya" path="res://Actors/Player/ShieldColorer.gdshader" id="22_l7nff"]
 [ext_resource type="AudioStream" uid="uid://c861r8jtk0so" path="res://Assets/Audio/Ilikeit.wav" id="23_k8e2g"]
-[ext_resource type="PackedScene" uid="uid://diosn7qu6kfh6" path="res://Actors/Player/frozen_ddr.tscn" id="24_aao0a"]
-[ext_resource type="Shader" uid="uid://djdkl0hm4q5m6" path="res://Maps/MapTools/BorderShader.gdshader" id="24_yw7as"]
-[ext_resource type="Script" uid="uid://bcqb1wp85nt01" path="res://Maps/MapTools/BorderShower.cs" id="25_hdio0"]
+[ext_resource type="PackedScene" uid="uid://diosn7qu6kfh6" path="res://Actors/Player/Effects/Frozen/frozen_ddr.tscn" id="24_aao0a"]
+[ext_resource type="Texture2D" uid="uid://sk1boe546wm1" path="res://Actors/Player/Ship/Sprites/BrokenShipSpriteSheet.png" id="26_kr5aq"]
+[ext_resource type="Material" uid="uid://bgglq6jh35xxs" path="res://Actors/Player/Ship/ShipReconstructionParticles.tres" id="28_ia8ke"]
 [ext_resource type="Script" uid="uid://lcfkknp3vonf" path="res://Actors/Player/PlayeronPlayerCollision.cs" id="32_aao0a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jkixf"]
 resource_local_to_scene = true
 shader = ExtResource("1_gh11b")
 shader_parameter/PoisonBuildup = 0.0
-shader_parameter/Color = Color(1, 1, 0, 1)
+shader_parameter/Color = Color(0.9019608, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_g6ejb"]
 font = ExtResource("4_jiph2")
 font_size = 6
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7nff"]
+atlas = ExtResource("5_87ye5")
+region = Rect2(0, 0, 8, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kr5aq"]
+atlas = ExtResource("5_87ye5")
+region = Rect2(8, 0, 10, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emuwr"]
+atlas = ExtResource("5_87ye5")
+region = Rect2(18, 0, 10, 5)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0jobf"]
 size = Vector2(12, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l7nff"]
+resource_local_to_scene = true
+shader = ExtResource("22_l7nff")
+shader_parameter/Color = Color(0.9, 0, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r3pko"]
 atlas = ExtResource("12_g6ejb")
@@ -75,37 +99,41 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_87ye5"]
-particles_animation = true
-particles_anim_h_frames = 3
-particles_anim_v_frames = 2
-particles_anim_loop = false
+[sub_resource type="Shader" id="Shader_kr5aq"]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+uniform int particles_anim_h_frames;
+uniform int particles_anim_v_frames;
+uniform bool particles_anim_loop;
+uniform vec4 Color: source_color = vec4(1);
 
-[sub_resource type="Gradient" id="Gradient_87ye5"]
-offsets = PackedFloat32Array(0.8040541, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+void vertex() {
+	float h_frames = float(particles_anim_h_frames);
+	float v_frames = float(particles_anim_v_frames);
+	VERTEX.xy /= vec2(h_frames, v_frames);
+	float particle_total_frames = float(particles_anim_h_frames * particles_anim_v_frames);
+	float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
+	if (!particles_anim_loop) {
+		particle_frame = clamp(particle_frame, 0.0, particle_total_frames - 1.0);
+	} else {
+		particle_frame = mod(particle_frame, particle_total_frames);
+	}	UV /= vec2(h_frames, v_frames);
+	UV += vec2(mod(particle_frame, h_frames) / h_frames, floor((particle_frame + 0.5) / h_frames) / v_frames);
+}
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_aao0a"]
-gradient = SubResource("Gradient_87ye5")
+void fragment() {
+	float a = COLOR.a;
+	COLOR = (COLOR + (Color*2.))/3.;
+	COLOR.a = a;
+}
+"
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_87ye5"]
-lifetime_randomness = 0.62
-particle_flag_disable_z = true
-emission_shape_scale = Vector3(1, 0.675, 1)
-emission_shape = 1
-emission_sphere_radius = 17.25
-angle_min = -183.4
-angle_max = 183.40001
-inherit_velocity_ratio = 1.0
-direction = Vector3(0, -1, 0)
-spread = 51.176
-initial_velocity_min = 23.59
-initial_velocity_max = 42.46
-angular_velocity_min = -196.98001
-angular_velocity_max = 183.39998
-gravity = Vector3(0, 98, 0)
-color_ramp = SubResource("GradientTexture1D_aao0a")
-anim_offset_max = 1.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ia8ke"]
+shader = SubResource("Shader_kr5aq")
+shader_parameter/particles_anim_h_frames = 3
+shader_parameter/particles_anim_v_frames = 2
+shader_parameter/particles_anim_loop = false
+shader_parameter/Color = Color(1, 1, 1, 1)
 
 [sub_resource type="Animation" id="Animation_87ye5"]
 length = 0.001
@@ -136,7 +164,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0.000983566, 0.05498357, 0.2572093, 0.2582093, 0.31219548, 0.35023642, 0.35123646, 0.40522265, 0.5683718, 0.5693718, 0.623358, 0.65442204, 0.655422, 0.70940816, 0.7381464, 0.74),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_aao0a"]
@@ -144,6 +172,8 @@ _data = {
 &"RESET": SubResource("Animation_87ye5"),
 &"shieldRegeneration": SubResource("Animation_jiph2")
 }
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f6sss"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cksok"]
 size = Vector2(29, 16)
@@ -191,47 +221,13 @@ animations = [{
 "speed": 20.0
 }]
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lxc4y"]
-lifetime_randomness = 0.57
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 12.06
-inherit_velocity_ratio = 1.0
-direction = Vector3(-1, 0, 0)
-spread = 10.0
-initial_velocity_min = 35.29
-initial_velocity_max = 76.47
-gravity = Vector3(0, 0, 0)
-tangential_accel_min = -35.31
-tangential_accel_max = 35.309998
-turbulence_noise_speed_random = 4.0
-turbulence_influence_min = 0.39100003
-turbulence_influence_max = 0.76500005
-turbulence_initial_displacement_min = -100.0
-turbulence_initial_displacement_max = 84.600006
-
-[sub_resource type="Gradient" id="Gradient_upr3p"]
-offsets = PackedFloat32Array(0.6886792, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ujyek"]
-gradient = SubResource("Gradient_upr3p")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gh11b"]
-lifetime_randomness = 1.0
-particle_flag_disable_z = true
-velocity_pivot = Vector3(0, 1, 0)
-direction = Vector3(1, -0.5, 0)
-spread = 15.0
-flatness = 1.0
-initial_velocity_min = 35.29
-initial_velocity_max = 64.71
-gravity = Vector3(0, 200, 0)
-color_ramp = SubResource("GradientTexture1D_ujyek")
-collision_mode = 2
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_o4arb"]
 radius = 13.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kr5aq"]
+resource_local_to_scene = true
+shader = ExtResource("22_l7nff")
+shader_parameter/Color = Color(1, 1, 1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aao0a"]
 atlas = ExtResource("13_r3pko")
@@ -262,29 +258,43 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jiph2"]
-particles_animation = true
-particles_anim_h_frames = 4
-particles_anim_v_frames = 2
-particles_anim_loop = false
+[sub_resource type="Shader" id="Shader_l7nff"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.6.stable.mono's CanvasItemMaterial.
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rda0l"]
-lifetime_randomness = 0.62
-particle_flag_disable_z = true
-emission_shape_scale = Vector3(1, 0.5, 1)
-emission_shape = 1
-emission_sphere_radius = 30.12
-angle_min = -169.79999
-angle_max = 142.70001
-inherit_velocity_ratio = 1.0
-spread = 180.0
-initial_velocity_min = 23.59
-initial_velocity_max = 61.329998
-angular_velocity_min = -183.40001
-angular_velocity_max = 176.59998
-gravity = Vector3(0, 0, 0)
-color_ramp = SubResource("GradientTexture1D_aao0a")
-anim_offset_max = 1.0
+shader_type canvas_item;
+render_mode blend_mix;
+uniform int particles_anim_h_frames;
+uniform int particles_anim_v_frames;
+uniform bool particles_anim_loop;
+uniform vec4 Color: source_color = vec4 (1);
+
+void vertex() {
+	float h_frames = float(particles_anim_h_frames);
+	float v_frames = float(particles_anim_v_frames);
+	VERTEX.xy /= vec2(h_frames, v_frames);
+	float particle_total_frames = float(particles_anim_h_frames * particles_anim_v_frames);
+	float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
+	if (!particles_anim_loop) {
+		particle_frame = clamp(particle_frame, 0.0, particle_total_frames - 1.0);
+	} else {
+		particle_frame = mod(particle_frame, particle_total_frames);
+	}	UV /= vec2(h_frames, v_frames);
+	UV += vec2(mod(particle_frame, h_frames) / h_frames, floor((particle_frame + 0.5) / h_frames) / v_frames);
+}
+
+void fragment() {
+	float a = COLOR.a;
+	COLOR = (COLOR + (Color*2.))/3.;
+	COLOR.a = a;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_emuwr"]
+resource_local_to_scene = true
+shader = SubResource("Shader_l7nff")
+shader_parameter/particles_anim_h_frames = 4
+shader_parameter/particles_anim_v_frames = 2
+shader_parameter/particles_anim_loop = false
+shader_parameter/Color = Color(1, 1, 1, 1)
 
 [sub_resource type="Animation" id="Animation_rda0l"]
 length = 0.001
@@ -302,7 +312,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.054000005, 0.25622573, 0.25722572, 0.3112119, 0.34925285, 0.3502529, 0.4042391, 0.5673882, 0.5683882, 0.6223744, 0.65343845, 0.6544384, 0.70842457, 0.7371628, 0.7390164),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196)]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -325,14 +335,433 @@ _data = {
 &"shieldRegeneration": SubResource("Animation_aao0a")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_g6ejb"]
-shader = ExtResource("24_yw7as")
-shader_parameter/borderSize = Vector2(832, 480)
-shader_parameter/rectSize = Vector2(129, 115)
-shader_parameter/position = Vector2(-64, -57)
-shader_parameter/showRadius = 32.0
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_emuwr"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 2
+particles_anim_loop = false
 
-[node name="Player" type="CharacterBody2D" unique_id=2096548899 node_paths=PackedStringArray("effectHandler", "pilot", "ship", "playerInput", "NameLabel", "pilotWeaponHolder", "pilotMeleeAttack", "shipDeadAudio", "pilotDeadAudio", "pilotShield", "shipShield", "pilotShieldFlickerer", "shipShieldFlickerer")]
+[sub_resource type="Shader" id="Shader_emuwr"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.6.stable.mono's ParticleProcessMaterial.
+
+shader_type particles;
+render_mode disable_velocity;
+
+uniform vec3 direction;
+uniform float spread;
+uniform float flatness;
+uniform float inherit_emitter_velocity_ratio = 0.0;
+uniform float initial_linear_velocity_min;
+uniform float initial_linear_velocity_max;
+uniform float directional_velocity_min;
+uniform float directional_velocity_max;
+uniform float angular_velocity_min;
+uniform float angular_velocity_max;
+uniform float orbit_velocity_min;
+uniform float orbit_velocity_max;
+uniform float radial_velocity_min;
+uniform float radial_velocity_max;
+uniform float linear_accel_min;
+uniform float linear_accel_max;
+uniform float radial_accel_min;
+uniform float radial_accel_max;
+uniform float tangent_accel_min;
+uniform float tangent_accel_max;
+uniform float damping_min;
+uniform float damping_max;
+uniform float initial_angle_min;
+uniform float initial_angle_max;
+uniform float scale_min;
+uniform float scale_max;
+uniform float hue_variation_min;
+uniform float hue_variation_max;
+uniform float anim_speed_min;
+uniform float anim_speed_max;
+uniform float anim_offset_min;
+uniform float anim_offset_max;
+uniform float lifetime_randomness;
+uniform vec3 emission_shape_offset = vec3(0.0);
+uniform vec3 emission_shape_scale = vec3(1.0);
+uniform vec3 velocity_pivot = vec3(0.0);
+uniform float emission_sphere_radius;
+uniform vec4 color_value : source_color;
+uniform vec3 gravity;
+uniform sampler2D color_ramp : repeat_disable;
+
+vec3 normalize_or_else(vec3 _in, const vec3 _else) {
+	if (_in == vec3(0.0)) {
+		return _else;
+	}
+	return normalize(_in);
+}
+
+vec4 rotate_hue(vec4 current_color, float hue_rot_angle) {
+	float hue_rot_c = cos(hue_rot_angle);
+	float hue_rot_s = sin(hue_rot_angle);
+	mat4 hue_rot_mat =
+			mat4(vec4(0.299, 0.587, 0.114, 0.0),
+					vec4(0.299, 0.587, 0.114, 0.0),
+					vec4(0.299, 0.587, 0.114, 0.0),
+					vec4(0.000, 0.000, 0.000, 1.0)) +
+			mat4(vec4(0.701, -0.587, -0.114, 0.0),
+					vec4(-0.299, 0.413, -0.114, 0.0),
+					vec4(-0.300, -0.588, 0.886, 0.0),
+					vec4(0.000, 0.000, 0.000, 0.0)) *
+					hue_rot_c +
+			mat4(vec4(0.168, 0.330, -0.497, 0.0),
+					vec4(-0.328, 0.035, 0.292, 0.0),
+					vec4(1.250, -1.050, -0.203, 0.0),
+					vec4(0.000, 0.000, 0.000, 0.0)) *
+					hue_rot_s;
+	return hue_rot_mat * current_color;
+}
+
+float rand_from_seed(inout uint seed) {
+	int k;
+	int s = int(seed);
+	if (s == 0) {
+		s = 305420679;
+	}
+	k = s / 127773;
+	s = 16807 * (s - k * 127773) - 2836 * k;
+	if (s < 0) {
+		s += 2147483647;
+	}
+	seed = uint(s);
+	return float(seed % uint(65536)) / 65535.0;
+}
+
+float rand_from_seed_m1_p1(inout uint seed) {
+	return rand_from_seed(seed) * 2.0 - 1.0;
+}
+
+uint hash(uint x) {
+	x = ((x >> uint(16)) ^ x) * uint(73244475);
+	x = ((x >> uint(16)) ^ x) * uint(73244475);
+	x = (x >> uint(16)) ^ x;
+	return x;
+}
+
+struct DisplayParameters {
+	vec3 scale;
+	float hue_rotation;
+	float animation_speed;
+	float animation_offset;
+	float lifetime;
+	vec4 color;
+	float emission_texture_position;
+};
+
+struct DynamicsParameters {
+	float angle;
+	float angular_velocity;
+	float initial_velocity_multiplier;
+	float directional_velocity;
+	float radial_velocity;
+	float orbit_velocity;
+};
+
+struct PhysicalParameters {
+	float linear_accel;
+	float radial_accel;
+	float tangent_accel;
+	float damping;
+};
+
+void calculate_initial_physical_params(inout PhysicalParameters params, inout uint alt_seed) {
+	params.linear_accel = mix(linear_accel_min, linear_accel_max, rand_from_seed(alt_seed));
+	params.radial_accel = mix(radial_accel_min, radial_accel_max, rand_from_seed(alt_seed));
+	params.tangent_accel = mix(tangent_accel_min, tangent_accel_max, rand_from_seed(alt_seed));
+	params.damping = mix(damping_min, damping_max, rand_from_seed(alt_seed));
+}
+
+void calculate_initial_dynamics_params(inout DynamicsParameters params, inout uint alt_seed) {
+	// -------------------- DO NOT REORDER OPERATIONS, IT BREAKS VISUAL COMPATIBILITY
+	// -------------------- ADD NEW OPERATIONS AT THE BOTTOM
+	params.angle = mix(initial_angle_min, initial_angle_max, rand_from_seed(alt_seed));
+	params.angular_velocity = mix(angular_velocity_min, angular_velocity_max, rand_from_seed(alt_seed));
+	params.initial_velocity_multiplier = mix(initial_linear_velocity_min, initial_linear_velocity_max, rand_from_seed(alt_seed));
+	params.directional_velocity = mix(directional_velocity_min, directional_velocity_max, rand_from_seed(alt_seed));
+	params.radial_velocity = mix(radial_velocity_min, radial_velocity_max, rand_from_seed(alt_seed));
+	params.orbit_velocity = mix(orbit_velocity_min, orbit_velocity_max, rand_from_seed(alt_seed));
+}
+
+void calculate_initial_display_params(inout DisplayParameters params, inout uint alt_seed) {
+	// -------------------- DO NOT REORDER OPERATIONS, IT BREAKS VISUAL COMPATIBILITY
+	// -------------------- ADD NEW OPERATIONS AT THE BOTTOM
+	float pi = 3.14159;
+	params.scale = vec3(mix(scale_min, scale_max, rand_from_seed(alt_seed)));
+	params.scale = sign(params.scale) * max(abs(params.scale), 0.001);
+	params.hue_rotation = pi * 2.0 * mix(hue_variation_min, hue_variation_max, rand_from_seed(alt_seed));
+	params.animation_speed = mix(anim_speed_min, anim_speed_max, rand_from_seed(alt_seed));
+	params.animation_offset = mix(anim_offset_min, anim_offset_max, rand_from_seed(alt_seed));
+	params.lifetime = (1.0 - lifetime_randomness * rand_from_seed(alt_seed));
+	params.color = color_value;
+}
+
+void process_display_param(inout DisplayParameters parameters, float lifetime) {
+	// Compile-time add textures.
+	parameters.color *= texture(color_ramp, vec2(lifetime));
+	parameters.color = rotate_hue(parameters.color, parameters.hue_rotation);
+}
+
+vec3 calculate_initial_position(inout DisplayParameters params, inout uint alt_seed) {
+	float pi = 3.14159;
+	vec3 pos = vec3(0.0);
+	{ // Emission shape.
+		float s = rand_from_seed(alt_seed) * 2.0 - 1.0;
+		float t = rand_from_seed(alt_seed) * 2.0 * pi;
+		float p = rand_from_seed(alt_seed);
+		float radius = emission_sphere_radius * sqrt(1.0 - s * s);
+		pos = mix(vec3(0.0, 0.0, 0.0), vec3(radius * cos(t), radius * sin(t), emission_sphere_radius * s), p);
+	}
+	return pos * emission_shape_scale + emission_shape_offset;
+}
+
+vec3 process_orbit_displacement(DynamicsParameters param, float lifetime, inout uint alt_seed, mat4 transform, mat4 emission_transform, float delta, float total_lifetime) {
+	if (abs(param.orbit_velocity) < 0.01 || delta < 0.001) {
+		return vec3(0.0);
+	}
+	vec3 displacement = vec3(0.0);
+	float pi = 3.14159;
+	float orbit_amount = param.orbit_velocity;
+	if (orbit_amount != 0.0) {
+		vec3 pos = transform[3].xyz;
+		vec3 org = emission_transform[3].xyz;
+		vec3 diff = pos - org;
+		float ang = orbit_amount * pi * 2.0 * delta;
+		mat2 rot = mat2(vec2(cos(ang), -sin(ang)), vec2(sin(ang), cos(ang)));
+		displacement.xy -= diff.xy;
+		displacement.xy += rot * diff.xy;
+	}
+	return (emission_transform * vec4(displacement / delta, 0.0)).xyz;
+}
+
+vec3 get_random_direction_from_spread(inout uint alt_seed, float spread_angle) {
+	float pi = 3.14159;
+	float degree_to_rad = pi / 180.0;
+	float spread_rad = spread_angle * degree_to_rad;
+	float angle1_rad = rand_from_seed_m1_p1(alt_seed) * spread_rad;
+	angle1_rad += direction.x != 0.0 ? atan(direction.y, direction.x) : sign(direction.y) * (pi / 2.0);
+	vec3 spread_direction = vec3(cos(angle1_rad), sin(angle1_rad), 0.0);
+	return spread_direction;
+}
+
+vec3 process_radial_displacement(DynamicsParameters param, float lifetime, inout uint alt_seed, mat4 transform, mat4 emission_transform, float delta) {
+	vec3 radial_displacement = vec3(0.0);
+	if (delta < 0.001) {
+		return radial_displacement;
+	}
+	float radial_displacement_multiplier = 1.0;
+	vec3 global_pivot = (emission_transform * vec4(velocity_pivot, 1.0)).xyz;
+	if (length(transform[3].xyz - global_pivot) > 0.01) {
+		radial_displacement = normalize(transform[3].xyz - global_pivot) * radial_displacement_multiplier * param.radial_velocity;
+	} else {
+		radial_displacement = get_random_direction_from_spread(alt_seed, 360.0) * param.radial_velocity;
+	}
+	if (radial_displacement_multiplier * param.radial_velocity < 0.0) {
+		// Prevent inwards velocity to flicker once the point is reached.
+		radial_displacement = normalize(radial_displacement) * min(abs(radial_displacement_multiplier * param.radial_velocity), length(transform[3].xyz - global_pivot) / delta);
+	}
+	return radial_displacement;
+}
+
+void process_physical_parameters(inout PhysicalParameters params, float lifetime_percent) {
+}
+
+void start() {
+	uint base_number = NUMBER;
+	uint alt_seed = hash(base_number + uint(1) + RANDOM_SEED);
+	DisplayParameters params;
+	calculate_initial_display_params(params, alt_seed);
+	// Reset alt seed?
+	//alt_seed = hash(base_number + uint(1) + RANDOM_SEED);
+	DynamicsParameters dynamic_params;
+	calculate_initial_dynamics_params(dynamic_params, alt_seed);
+	PhysicalParameters physics_params;
+	calculate_initial_physical_params(physics_params, alt_seed);
+	process_display_param(params, 0.0);
+	if (rand_from_seed(alt_seed) > AMOUNT_RATIO) {
+		ACTIVE = false;
+	}
+
+	if (RESTART_CUSTOM) {
+		CUSTOM = vec4(0.0);
+		CUSTOM.w = params.lifetime;
+		CUSTOM.x = dynamic_params.angle;
+	}
+	if (RESTART_COLOR) {
+		COLOR = params.color;
+	}
+	if (RESTART_ROT_SCALE) {
+		TRANSFORM[0].xyz = vec3(1.0, 0.0, 0.0);
+		TRANSFORM[1].xyz = vec3(0.0, 1.0, 0.0);
+		TRANSFORM[2].xyz = vec3(0.0, 0.0, 1.0);
+	}
+	if (RESTART_POSITION) {
+		TRANSFORM[3].xyz = calculate_initial_position(params, alt_seed);
+		TRANSFORM = EMISSION_TRANSFORM * TRANSFORM;
+	}
+	if (RESTART_VELOCITY) {
+		VELOCITY = get_random_direction_from_spread(alt_seed, spread) * dynamic_params.initial_velocity_multiplier;
+	}
+
+	process_display_param(params, 0.0);
+
+	VELOCITY = (EMISSION_TRANSFORM * vec4(VELOCITY, 0.0)).xyz;
+	VELOCITY += EMITTER_VELOCITY * inherit_emitter_velocity_ratio;
+	VELOCITY.z = 0.0;
+	TRANSFORM[3].z = 0.0;
+}
+
+void process() {
+	uint base_number = NUMBER;
+	//if (repeatable) {
+	//	base_number = INDEX;
+	//}
+	uint alt_seed = hash(base_number + uint(1) + RANDOM_SEED);
+	DisplayParameters params;
+	calculate_initial_display_params(params, alt_seed);
+	DynamicsParameters dynamic_params;
+	calculate_initial_dynamics_params(dynamic_params, alt_seed);
+	PhysicalParameters physics_params;
+	calculate_initial_physical_params(physics_params, alt_seed);
+
+	float pi = 3.14159;
+	float degree_to_rad = pi / 180.0;
+
+	CUSTOM.y += DELTA / LIFETIME;
+	CUSTOM.y = mix(CUSTOM.y, 1.0, INTERPOLATE_TO_END);
+	
+	float lifetime_percent = CUSTOM.y / params.lifetime;
+	if (CUSTOM.y > CUSTOM.w) {
+		ACTIVE = false;
+	}
+
+	// Calculate all velocity.
+	vec3 controlled_displacement = vec3(0.0);
+	controlled_displacement += process_orbit_displacement(dynamic_params, lifetime_percent, alt_seed, TRANSFORM, EMISSION_TRANSFORM, DELTA, params.lifetime * LIFETIME);
+	controlled_displacement += process_radial_displacement(dynamic_params, lifetime_percent, alt_seed, TRANSFORM, EMISSION_TRANSFORM, DELTA);
+
+	process_physical_parameters(physics_params, lifetime_percent);
+	vec3 force;
+	{
+		// Copied from previous version.
+		vec3 pos = TRANSFORM[3].xyz;
+		force = gravity;
+		// Apply linear acceleration.
+		force += length(VELOCITY) > 0.0 ? normalize(VELOCITY) * physics_params.linear_accel : vec3(0.0);
+		// Apply radial acceleration.
+		vec3 org = EMISSION_TRANSFORM[3].xyz;
+		vec3 diff = pos - org;
+		force += length(diff) > 0.0 ? normalize(diff) * physics_params.radial_accel : vec3(0.0);
+		// Apply tangential acceleration.
+		float tangent_accel_val = physics_params.tangent_accel;
+		force += length(diff.yx) > 0.0 ? vec3(normalize(diff.yx * vec2(-1.0, 1.0)), 0.0) * tangent_accel_val : vec3(0.0);
+		force += ATTRACTOR_FORCE;
+		force.z = 0.0;
+		// Apply attractor forces.
+		VELOCITY += force * DELTA;
+	}
+	{
+		// Copied from previous version.
+		if (physics_params.damping > 0.0) {
+			float v = length(VELOCITY);
+			v -= physics_params.damping * DELTA;
+			if (v < 0.0) {
+				VELOCITY = vec3(0.0);
+			} else {
+				VELOCITY = normalize(VELOCITY) * v;
+			}
+		}
+	}
+
+	// Turbulence before limiting.
+	vec3 final_velocity = controlled_displacement + VELOCITY;
+
+	final_velocity.z = 0.0;
+
+	TRANSFORM[3].xyz += final_velocity * DELTA;
+
+	process_display_param(params, lifetime_percent);
+
+	float base_angle = dynamic_params.angle;
+	base_angle += CUSTOM.y * LIFETIME * dynamic_params.angular_velocity;
+	CUSTOM.x = base_angle * degree_to_rad;
+	COLOR = params.color;
+
+	TRANSFORM[0] = vec4(cos(CUSTOM.x), -sin(CUSTOM.x), 0.0, 0.0);
+	TRANSFORM[1] = vec4(sin(CUSTOM.x), cos(CUSTOM.x), 0.0, 0.0);
+	TRANSFORM[2] = vec4(0.0, 0.0, 1.0, 0.0);
+	TRANSFORM[3].z = 0.0;
+
+	float scale_sign_x = params.scale.x < 0.0 ? -1.0 : 1.0;
+	float scale_sign_y = params.scale.y < 0.0 ? -1.0 : 1.0;
+	float scale_sign_z = params.scale.z < 0.0 ? -1.0 : 1.0;
+	float scale_minimum = 0.001;
+	TRANSFORM[0].xyz *= scale_sign_x * max(abs(params.scale.x), scale_minimum);
+	TRANSFORM[1].xyz *= scale_sign_y * max(abs(params.scale.y), scale_minimum);
+	TRANSFORM[2].xyz *= scale_sign_z * max(abs(params.scale.z), scale_minimum);
+
+	CUSTOM.z = params.animation_offset + lifetime_percent * params.animation_speed;
+
+	if (CUSTOM.y > CUSTOM.w) {
+		ACTIVE = false;
+	}
+}
+"
+
+[sub_resource type="Gradient" id="Gradient_ia8ke"]
+offsets = PackedFloat32Array(0, 0.8153153, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_f6sss"]
+gradient = SubResource("Gradient_ia8ke")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f6sss"]
+shader = SubResource("Shader_emuwr")
+shader_parameter/direction = Vector3(0, -1, 0)
+shader_parameter/spread = 180.0
+shader_parameter/flatness = 0.0
+shader_parameter/inherit_emitter_velocity_ratio = 0.0
+shader_parameter/initial_linear_velocity_min = 25.55
+shader_parameter/initial_linear_velocity_max = 62.039997
+shader_parameter/directional_velocity_min = 1.0
+shader_parameter/directional_velocity_max = 1.0
+shader_parameter/angular_velocity_min = -720.0
+shader_parameter/angular_velocity_max = 720.0
+shader_parameter/orbit_velocity_min = 0.0
+shader_parameter/orbit_velocity_max = 0.0
+shader_parameter/radial_velocity_min = 0.0
+shader_parameter/radial_velocity_max = 0.0
+shader_parameter/linear_accel_min = 0.0
+shader_parameter/linear_accel_max = 0.0
+shader_parameter/radial_accel_min = 0.0
+shader_parameter/radial_accel_max = 0.0
+shader_parameter/tangent_accel_min = 0.0
+shader_parameter/tangent_accel_max = 0.0
+shader_parameter/damping_min = 0.0
+shader_parameter/damping_max = 19.925
+shader_parameter/initial_angle_min = 0.0
+shader_parameter/initial_angle_max = 360.0
+shader_parameter/scale_min = 1.0
+shader_parameter/scale_max = 1.0
+shader_parameter/hue_variation_min = 0.0
+shader_parameter/hue_variation_max = 0.0
+shader_parameter/anim_speed_min = 0.0
+shader_parameter/anim_speed_max = 0.0
+shader_parameter/anim_offset_min = 0.0
+shader_parameter/anim_offset_max = 1.0
+shader_parameter/lifetime_randomness = 0.4
+shader_parameter/emission_shape_offset = Vector3(0, 0, 0)
+shader_parameter/emission_shape_scale = Vector3(1, 1, 1)
+shader_parameter/velocity_pivot = Vector3(0, 0, 0)
+shader_parameter/emission_sphere_radius = 16.87
+shader_parameter/color_value = Color(1, 1, 1, 1)
+shader_parameter/gravity = Vector3(0, 0, 0)
+shader_parameter/color_ramp = SubResource("GradientTexture1D_f6sss")
+
+[node name="Player" type="CharacterBody2D" unique_id=2096548899 node_paths=PackedStringArray("effectHandler", "pilot", "ship", "playerInput", "NameLabel", "pilotWeaponHolder", "pilotMeleeAttack", "shipExplosionParticles", "shipReconstructionParticles", "pilotDeathParticles", "shipDeadAudio", "pilotDeadAudio", "pilotSprite", "shipSprite", "shipShield", "pilotShield", "pilotShieldFlickerer", "shipShieldFlickerer")]
 material = SubResource("ShaderMaterial_jkixf")
 collision_mask = 2
 script = ExtResource("2_30khc")
@@ -342,44 +771,72 @@ effectHandler = NodePath("EffectHandler")
 pilot = NodePath("Pilot Controller")
 ship = NodePath("Ship Controller")
 playerInput = NodePath("PlayerInput")
-NameLabel = NodePath("NameLabel")
+NameLabel = NodePath("OverHeadDisplay/NameLabel")
 pilotWeaponHolder = NodePath("pilotWeaponHolder")
 pilotMeleeAttack = NodePath("MeleeAttack")
+shipExplosionParticles = NodePath("ShipSprite/ShipDestructionParticles")
+shipReconstructionParticles = NodePath("ShipSprite/ShipReconstructionParticles")
+pilotDeathParticles = NodePath("PilotSprite/PilotDeathParticles")
 shipDeadAudio = NodePath("Sound/ShipDestroyed")
 pilotDeadAudio = NodePath("Sound/PilotDead")
-pilotShield = NodePath("PilotSprite/pilotShield")
+pilotSprite = NodePath("PilotSprite")
+shipSprite = NodePath("ShipSprite")
 shipShield = NodePath("ShipSprite/shipShield")
+pilotShield = NodePath("PilotSprite/pilotShield")
 pilotShieldFlickerer = NodePath("PilotSprite/AnimationPlayer")
 shipShieldFlickerer = NodePath("ShipSprite/AnimationPlayer")
 
-[node name="NameLabel" type="Label" parent="." unique_id=2017447394]
-offset_left = -48.0
-offset_top = -30.0
-offset_right = 49.0
-offset_bottom = -18.0
+[node name="OverHeadDisplay" type="VBoxContainer" parent="." unique_id=1352916891]
+offset_left = -20.0
+offset_top = -32.0
+offset_right = 20.0
+offset_bottom = -17.0
+grow_vertical = 0
+alignment = 2
+
+[node name="NameLabel" type="Label" parent="OverHeadDisplay" unique_id=2017447394]
+layout_mode = 2
 text = "test"
 label_settings = SubResource("LabelSettings_g6ejb")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Pilot Controller" type="Node" parent="." unique_id=1255384266 node_paths=PackedStringArray("weaponHolder", "Melee", "rightWallCheck", "leftWallCheck", "particlesNodes", "jumpAudioPlayer", "sprite", "collision", "playerInput")]
+[node name="PowerUpIcons" type="HBoxContainer" parent="OverHeadDisplay" unique_id=559806006]
+layout_mode = 2
+theme_override_constants/separation = 1
+alignment = 1
+
+[node name="DrillIcon" type="TextureRect" parent="OverHeadDisplay/PowerUpIcons" unique_id=1388031357]
+visible = false
+layout_mode = 2
+texture = SubResource("AtlasTexture_l7nff")
+
+[node name="SpeedIcon" type="TextureRect" parent="OverHeadDisplay/PowerUpIcons" unique_id=1794328594]
+visible = false
+layout_mode = 2
+texture = SubResource("AtlasTexture_kr5aq")
+
+[node name="DualGunsIcon" type="TextureRect" parent="OverHeadDisplay/PowerUpIcons" unique_id=1954065496]
+visible = false
+layout_mode = 2
+texture = SubResource("AtlasTexture_emuwr")
+
+[node name="Pilot Controller" type="Node" parent="." unique_id=1255384266 node_paths=PackedStringArray("weaponHolder", "Melee", "rightWallCheck", "leftWallCheck", "jumpAudioPlayer", "sprite", "collision", "playerInput")]
 script = ExtResource("3_iwrur")
 weaponHolder = NodePath("../pilotWeaponHolder")
 Melee = NodePath("../MeleeAttack")
 rightWallCheck = NodePath("../WallSideGetters/Right")
 leftWallCheck = NodePath("../WallSideGetters/Left")
-particlesNodes = NodePath("../LandingParticleEmitters")
 jumpAudioPlayer = NodePath("../Sound/JumpSound")
 sprite = NodePath("../PilotSprite")
 collision = NodePath("../PilotCollision")
 playerInput = NodePath("../PlayerInput")
 
-[node name="PilotCollision" type="CollisionShape2D" parent="." unique_id=1663037647]
+[node name="PilotCollision" type="CollisionShape2D" parent="." unique_id=1663037647 groups=["PilotCollisions"]]
 visible = false
 shape = SubResource("RectangleShape2D_0jobf")
 
 [node name="PilotSprite" type="AnimatedSprite2D" parent="." unique_id=1745249850 node_paths=PackedStringArray("controller", "Main")]
-visible = false
 z_index = 1
 use_parent_material = true
 sprite_frames = ExtResource("6_alwmy")
@@ -390,14 +847,17 @@ Main = NodePath("..")
 
 [node name="pilotShield" type="AnimatedSprite2D" parent="PilotSprite" unique_id=423941914]
 self_modulate = Color(1, 1, 1, 0)
-z_index = 1
+z_index = 3
+material = SubResource("ShaderMaterial_l7nff")
 position = Vector2(0, -0.5)
 sprite_frames = SubResource("SpriteFrames_aao0a")
 autoplay = "default"
 frame_progress = 0.37089354
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="PilotSprite/pilotShield" unique_id=2015931778]
-material = SubResource("CanvasItemMaterial_87ye5")
+[node name="PilotShieldDestructionParticles" type="GPUParticles2D" parent="PilotSprite/pilotShield" unique_id=2015931778]
+z_index = 3
+z_as_relative = false
+material = SubResource("ShaderMaterial_ia8ke")
 position = Vector2(0, 0.5)
 emitting = false
 sub_emitter = NodePath(".")
@@ -406,17 +866,34 @@ one_shot = true
 explosiveness = 1.0
 randomness = 1.0
 fixed_fps = 60
-process_material = SubResource("ParticleProcessMaterial_87ye5")
+process_material = ExtResource("11_rda0l")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PilotSprite" unique_id=862347567]
 libraries/ = SubResource("AnimationLibrary_aao0a")
 
-[node name="pilotWeaponHolder" type="Node2D" parent="." unique_id=1996847872 node_paths=PackedStringArray("Pilot")]
+[node name="PilotDeathParticles" type="GPUParticles2D" parent="PilotSprite" unique_id=888372523]
+z_index = 1
+material = SubResource("CanvasItemMaterial_f6sss")
+emitting = false
+amount = 272
+lifetime = 3.0
+one_shot = true
+speed_scale = 1.8
+explosiveness = 1.0
+local_coords = true
+process_material = ExtResource("13_f6sss")
+
+[node name="pilotWeaponHolder" type="Node2D" parent="." unique_id=1996847872 node_paths=PackedStringArray("Pilot", "crossAirSprite")]
 script = ExtResource("10_a5pbq")
 Pilot = NodePath("../Pilot Controller")
+crossAirSprite = NodePath("CrossAir")
+
+[node name="CrossAir" type="Sprite2D" parent="pilotWeaponHolder" unique_id=803625459]
+position = Vector2(30, 0)
+rotation = 0.7853982
+texture = ExtResource("15_f6sss")
 
 [node name="WallSideGetters" type="Node2D" parent="." unique_id=1324378572]
-visible = false
 
 [node name="Right" type="RayCast2D" parent="WallSideGetters" unique_id=1681196812]
 target_position = Vector2(20, 0)
@@ -452,42 +929,17 @@ offset = Vector2(0, 4)
 [node name="DashparticleEmitter" type="Node2D" parent="MeleeAttack" unique_id=1317478179]
 script = ExtResource("12_upr3p")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="MeleeAttack/DashparticleEmitter" unique_id=1599359695]
+[node name="DashParticles" type="GPUParticles2D" parent="MeleeAttack/DashparticleEmitter" unique_id=1599359695]
 emitting = false
-amount = 93
+amount = 53
 sub_emitter = NodePath(".")
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_lxc4y")
+process_material = ExtResource("16_sg1wo")
 
 [node name="MeleeSound" type="AudioStreamPlayer2D" parent="MeleeAttack" unique_id=1016438432]
 process_mode = 3
 stream = ExtResource("18_iwmb3")
-
-[node name="LandingParticleEmitters" type="Node2D" parent="." unique_id=1927271241]
-script = ExtResource("12_upr3p")
-
-[node name="Right" type="GPUParticles2D" parent="LandingParticleEmitters" unique_id=1390350739]
-position = Vector2(0, 8)
-emitting = false
-amount = 13
-sub_emitter = NodePath(".")
-lifetime = 0.48
-one_shot = true
-explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_gh11b")
-
-[node name="Left" type="GPUParticles2D" parent="LandingParticleEmitters" unique_id=1297629819]
-position = Vector2(0, 8)
-rotation = 3.1415927
-scale = Vector2(1, -1)
-emitting = false
-amount = 13
-sub_emitter = NodePath(".")
-lifetime = 0.48
-one_shot = true
-explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_gh11b")
 
 [node name="Ship Controller" type="Node" parent="." unique_id=534347838 node_paths=PackedStringArray("ShootAudio", "powerUpsHolder", "DashAudio", "sprite", "collision", "playerInput")]
 script = ExtResource("5_fllei")
@@ -499,7 +951,7 @@ sprite = NodePath("../ShipSprite")
 collision = NodePath("../ShipCollision")
 playerInput = NodePath("../PlayerInput")
 
-[node name="ShipCollision" type="CollisionShape2D" parent="." unique_id=398740990]
+[node name="ShipCollision" type="CollisionShape2D" parent="." unique_id=398740990 groups=["ShipCollisions"]]
 visible = false
 shape = SubResource("CircleShape2D_o4arb")
 disabled = true
@@ -514,13 +966,15 @@ controller = NodePath("../Ship Controller")
 Main = NodePath("..")
 
 [node name="shipShield" type="AnimatedSprite2D" parent="ShipSprite" unique_id=1713597204]
-self_modulate = Color(1, 1, 1, 0.5411765)
+self_modulate = Color(1, 1, 1, 0.7490196)
+z_index = 3
+material = SubResource("ShaderMaterial_kr5aq")
 sprite_frames = SubResource("SpriteFrames_l7nff")
 autoplay = "default"
 frame_progress = 0.9349899
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="ShipSprite/shipShield" unique_id=1177343099]
-material = SubResource("CanvasItemMaterial_jiph2")
+[node name="ShipShieldDestructionParticles" type="GPUParticles2D" parent="ShipSprite/shipShield" unique_id=1177343099]
+material = SubResource("ShaderMaterial_emuwr")
 emitting = false
 sub_emitter = NodePath(".")
 texture = ExtResource("15_jiph2")
@@ -528,13 +982,35 @@ one_shot = true
 explosiveness = 1.0
 randomness = 1.0
 fixed_fps = 60
-process_material = SubResource("ParticleProcessMaterial_rda0l")
+process_material = ExtResource("22_aao0a")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ShipSprite" unique_id=589171231]
 libraries/ = SubResource("AnimationLibrary_rda0l")
 
-[node name="ShipPowerUpsHolder" type="Node2D" parent="." unique_id=261392534 node_paths=PackedStringArray("controller")]
+[node name="ShipDestructionParticles" type="GPUParticles2D" parent="ShipSprite" unique_id=250211982]
+material = SubResource("CanvasItemMaterial_emuwr")
+emitting = false
+texture = ExtResource("26_kr5aq")
+lifetime = 0.63
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 120
+process_material = SubResource("ShaderMaterial_f6sss")
+
+[node name="ShipReconstructionParticles" type="GPUParticles2D" parent="ShipSprite" unique_id=713480820]
+z_index = 2
+emitting = false
+amount = 1024
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+process_material = ExtResource("28_ia8ke")
+
+[node name="ShipPowerUpsHolder" type="Node2D" parent="." unique_id=261392534 node_paths=PackedStringArray("drillIcon", "speedIcon", "dualGunsIcon", "controller")]
 script = ExtResource("21_87ye5")
+drillIcon = NodePath("../OverHeadDisplay/PowerUpIcons/DrillIcon")
+speedIcon = NodePath("../OverHeadDisplay/PowerUpIcons/SpeedIcon")
+dualGunsIcon = NodePath("../OverHeadDisplay/PowerUpIcons/DualGunsIcon")
 controller = NodePath("../Ship Controller")
 
 [node name="PlayerInput" type="Node" parent="." unique_id=181455471 node_paths=PackedStringArray("Main")]
@@ -564,30 +1040,13 @@ stream = ExtResource("21_k8e2g")
 process_mode = 3
 stream = ExtResource("22_7m1i7")
 
-[node name="PilotDead" type="AudioStreamPlayer2D" parent="Sound" unique_id=348718477]
+[node name="PilotDead" type="AudioStreamPlayer" parent="Sound" unique_id=317725591]
 process_mode = 3
 stream = ExtResource("23_k8e2g")
 
-[node name="BorderShower" type="ColorRect" parent="." unique_id=10641576]
-visible = false
-material = SubResource("ShaderMaterial_g6ejb")
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -57.0
-offset_right = 65.0
-offset_bottom = 58.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("25_hdio0")
-metadata/_edit_use_anchors_ = true
-
-[node name="Area2D" type="Area2D" parent="." unique_id=1636300373]
+[node name="PlayerOnPlayerCollision" type="Area2D" parent="." unique_id=1636300373]
 script = ExtResource("32_aao0a")
 
-[node name="PilotCollision" type="CollisionShape2D" parent="Area2D" unique_id=572772313]
+[node name="PilotCollision" type="CollisionShape2D" parent="PlayerOnPlayerCollision" unique_id=572772313]
 visible = false
 shape = SubResource("RectangleShape2D_0jobf")

@@ -11,12 +11,12 @@ public partial class ShipProjectile : LinearProjectile
     {
         base._Ready();
 
-		(particlesTrail.ProcessMaterial as ParticleProcessMaterial).Direction = new Vector3(-direction.X, -direction.Y, 0);
+		(particlesTrail.ProcessMaterial as ParticleProcessMaterial).Direction = new Vector3(-Direction.X, -Direction.Y, 0);
     }
 
     public override void End()
     {
-        velocity *= 0;
+        speed = 0;
 		SetDeferred(PropertyName.Monitoring, false);
 		SetDeferred(PropertyName.Monitorable, false);
 

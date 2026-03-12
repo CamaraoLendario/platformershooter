@@ -193,6 +193,12 @@ public partial class MapPreviewsContainer : Control
 
 		tween.TweenMethod(Callable.From((float tweenFactor) =>
 		{
+			if (!IsInstanceValid(playerSelectorSprite))
+			{
+				GD.Print("instance invalid, stopping tween");
+				tween.Stop();
+				return;
+			}
 			playerSelectorSprite.Position = initialPosition * tweenFactor;
 			playerSelectorSprite.Offset = initialOffset + ((targetOffset - initialOffset) * (1 - tweenFactor));
 			playerSelectorSprite.Scale = (initialScale + ((targetScale - initialScale) * (1 - tweenFactor))) * Vector2.One;

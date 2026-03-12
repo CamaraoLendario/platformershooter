@@ -30,7 +30,8 @@ public partial class MapSelector : Control
 		["Amethyst"] = new Color(144f/255f, 68f/255f, 150f/255f),
 		["Rock"] = new Color(74f/255f, 83f/255f, 89f/255f),
 		["Planks"] = new Color(117f/255f, 87f/255f, 56f/255f),
-		["Glass"] = new Color(203f/255f, 219f/255f, 252f/255f)
+		["Glass"] = new Color(203f/255f, 219f/255f, 252f/255f),
+		["Purple Grates"] = new Color(61f/255f, 41f/255f, 81f/255f)
 	};
 
 	public override void _Ready()
@@ -78,24 +79,30 @@ public partial class MapSelector : Control
 
 		for (int i = 0; i < maps.Count; i++)
         {
-			TextureRect mapPreview = new TextureRect();
-            mapPreview.Texture = GetMapTexturePreview(maps[i]);
-			mapPreview.CustomMinimumSize = new Vector2(maxMapWidth * 8, maxMapHeight * 8);
-			mapPreview.Material = new ShaderMaterial();
-			(mapPreview.Material as ShaderMaterial).Shader = mapSelectedShader.Duplicate() as Shader;
+            TextureRect mapPreview = new()
+            {
+                Texture = GetMapTexturePreview(maps[i]),
+                CustomMinimumSize = new Vector2(maxMapWidth * 8, maxMapHeight * 8),
+                Material = new ShaderMaterial()
+            };
+            (mapPreview.Material as ShaderMaterial).Shader = mapSelectedShader.Duplicate() as Shader;
 			mapPreviewsContainer.AddChild(mapPreview);
 
-			HBoxContainer playersSelectingContainter = new HBoxContainer();
-			playersSelectingContainter.Name = SELECTINGNAME;
-			playersSelectingContainter.SetAnchorsPreset(LayoutPreset.TopLeft);
+            HBoxContainer playersSelectingContainter = new()
+            {
+                Name = SELECTINGNAME
+            };
+            playersSelectingContainter.SetAnchorsPreset(LayoutPreset.TopLeft);
 			//playersSelectingContainter.Position += Vector2.Right * 64;
         	playersSelectingContainter.AddThemeConstantOverride("separation", 0);
 
 			mapPreview.AddChild(playersSelectingContainter);
 
-			HBoxContainer playersSelectedContainter = new HBoxContainer();
-			playersSelectedContainter.Name = SELECTEDNAME;
-			playersSelectedContainter.SetAnchorsPreset(LayoutPreset.BottomRight);
+            HBoxContainer playersSelectedContainter = new()
+            {
+                Name = SELECTEDNAME
+            };
+            playersSelectedContainter.SetAnchorsPreset(LayoutPreset.BottomRight);
 			playersSelectedContainter.Alignment = BoxContainer.AlignmentMode.End;
 			playersSelectedContainter.GrowHorizontal = GrowDirection.Begin;
         	playersSelectedContainter.AddThemeConstantOverride("separation", 0);
@@ -131,14 +138,16 @@ public partial class MapSelector : Control
                         3 => tilesMapColor["Rock"],
                         4 => tilesMapColor["Planks"],
                         5 => tilesMapColor["Glass"],
+						6 => tilesMapColor["Purple Grates"],
                         _ => Black,
                     };
                 }
 				image.SetPixel(X, Y, color);
 			}
         }
-		foreach(Node2D pickup in map.weaponPickups.GetChildren())
+		foreach(Node2D pickup in map.Pickups.GetChildren())
 		{
+			if (pickup is not WeaponPickup) continue;
 			Vector2 pickupPos = pickup.Position + new Vector2(28f, 17f) * 16;
 			pickupPos /= 16f;
 			image.SetPixel((int)pickupPos.X, (int)pickupPos.Y -1, Colors.LimeGreen);

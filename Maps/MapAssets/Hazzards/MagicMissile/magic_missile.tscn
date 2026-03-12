@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://d1rvfwvuso0x4"]
+
+[ext_resource type="Script" uid="uid://dnciiwb1epk3v" path="res://Maps/MapAssets/Hazzards/MagicMissile/MagicMissile.cs" id="1_3soe4"]
+[ext_resource type="Texture2D" uid="uid://d2lvitcc04jb3" path="res://Tomes/Base/Sprites/testBullet.png" id="2_37h4u"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dem7q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_37h4u")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ft25q"]
+radius = 4.0
+
+[node name="magicMissile" type="Area2D" unique_id=535427676 node_paths=PackedStringArray("sprite")]
+collision_layer = 0
+collision_mask = 5
+script = ExtResource("1_3soe4")
+sprite = NodePath("AnimatedSprite2D")
+Enabled = true
+stopsHitscan = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1644090284]
+sprite_frames = SubResource("SpriteFrames_dem7q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=664166209]
+shape = SubResource("CircleShape2D_ft25q")

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://800ei3re6rhl"]
+
+[ext_resource type="Script" uid="uid://dblf1grfi4gon" path="res://Maps/MapAssets/Hazzards/Spikes/Spikes.cs" id="1_gah3h"]
+[ext_resource type="Script" uid="uid://bqrlomvfrik22" path="res://Maps/MapAssets/Hazzards/Spikes/SpikesSprite.cs" id="1_unrle"]
+[ext_resource type="Texture2D" uid="uid://p2rf6f1i6qrp" path="res://Maps/MapAssets/Hazzards/Spikes/SpikesHazard.png" id="3_bnp0b"]
+
+[node name="Spikes" type="Area2D" unique_id=603614567 node_paths=PackedStringArray("spriteHandler")]
+script = ExtResource("1_gah3h")
+spriteHandler = NodePath("SpikesSprite")
+
+[node name="SpikesSprite" type="Node2D" parent="." unique_id=1241953219 node_paths=PackedStringArray("leftMarker", "rightMarker")]
+script = ExtResource("1_unrle")
+spikesSpritesheet = ExtResource("3_bnp0b")
+leftMarker = NodePath("Left Marker")
+rightMarker = NodePath("Right Marker")
+
+[node name="Left Marker" type="Marker2D" parent="SpikesSprite" unique_id=2122085139]
+
+[node name="Right Marker" type="Marker2D" parent="SpikesSprite" unique_id=1512692051]
+position = Vector2(16, 0)

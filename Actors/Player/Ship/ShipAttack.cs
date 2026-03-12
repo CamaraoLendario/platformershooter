@@ -36,7 +36,7 @@ public partial class ShipAttack : ShipController
 
     public override void OnMeleeStart()
 	{
-		if (!IsAllowed() || !shootCooldownTimer.IsStopped() || currentAmmo <= 0) return;
+		if (!IsAllowed() || Main.effectHandler.isFrozen || !shootCooldownTimer.IsStopped() || currentAmmo <= 0) return;
 		
 		if (!powerUpsHolder.HasDifferentShootingMechanics())
 		{
@@ -57,9 +57,9 @@ public partial class ShipAttack : ShipController
         }
 	}
 
-	public bool AddPowerUp(ShipPowerUp powerUp)
+	public bool AddPowerUp(ShipPowerUp powerUp, int PowerUpID)
 	{
-		return powerUpsHolder.AddPowerUp(powerUp);
+		return powerUpsHolder.AddPowerUp(powerUp, PowerUpID);
 	}
 
 	void Reload()

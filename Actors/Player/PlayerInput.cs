@@ -1,11 +1,12 @@
 using Godot;
 using GodotPlugins.Game;
 using System;
+using System.Collections.Generic;
 
 public partial class PlayerInput : Node
 {
 	public static PlayerInput Instance { get; private set; }
-
+#region Signals
 	[Signal] public delegate void InputDirChangedEventHandler(float X, float Y);
 	[Signal] public delegate void ShootStartEventHandler();
 	[Signal] public delegate void ShootEndEventHandler();
@@ -20,10 +21,16 @@ public partial class PlayerInput : Node
 	[Signal] public delegate void GrapplingHookStartEventHandler();
 	[Signal] public delegate void GrapplingHookEndEventHandler(); 
 	[Signal] public delegate void SpecialStartEventHandler(); 
+	[Signal] public delegate void SpecialEndEventHandler(); 
 	[Signal] public delegate void PauseRequestEventHandler(Player player, bool pausedByDisconnect);
-	[Export] Player Main;
+#endregion
+	[Export] protected Player Main;
 	public string keyboardKeyword = "";
-
+	List<string> inputs = new List<string>()
+	{
+		"Shoot", "Jump", "Aim", "Melee", "Drop", "Special"
+	};
+	
 	public override void _Ready()
 	{
 		/* if (Instance == null)
@@ -54,7 +61,21 @@ public partial class PlayerInput : Node
 			EmitSignal(SignalName.InputDirChanged, X, Y);
 		}
 
-		if (Input.IsActionJustPressed("Shoot" + keyboardKeyword + inputIndex))
+		foreach(string input in inputs)
+		{
+			if (Input.IsActionJustPressed(input + keyboardKeyword + inputIndex))
+			{
+				EmitSignal(input + "Start");
+			}
+			
+			if (Input.IsActionJustReleased(input + keyboardKeyword + inputIndex))
+			{
+				EmitSignal(input + "End");
+			}
+		}
+#region ZombieCodeLookLater
+
+		/* if (Input.IsActionJustPressed("Shoot" + keyboardKeyword + inputIndex))
 		{
 			EmitSignal(SignalName.ShootStart);
 		}
@@ -104,22 +125,29 @@ public partial class PlayerInput : Node
 			EmitSignal(SignalName.DropEnd);
 		}
 
-		if (Input.IsActionJustPressed("GrapplingHook" + keyboardKeyword + inputIndex))
-		{
-			EmitSignal(SignalName.GrapplingHookStart);
-		}
+		// if (Input.IsActionJustPressed("GrapplingHook" + keyboardKeyword + inputIndex))
+		// {
+		// 	EmitSignal(SignalName.GrapplingHookStart);
+		// }
 
-		if (Input.IsActionJustReleased("GrapplingHook" + keyboardKeyword + inputIndex))
-		{
-			EmitSignal(SignalName.GrapplingHookEnd);
-		}
+		// if (Input.IsActionJustReleased("GrapplingHook" + keyboardKeyword + inputIndex))
+		// {
+		// 	EmitSignal(SignalName.GrapplingHookEnd);
+		// }
 
-		if (Input.IsActionJustReleased("Special" + keyboardKeyword + inputIndex))
+	
+		if (Input.IsActionJustPressed("Special" + keyboardKeyword + inputIndex))
 		{
 			EmitSignal(SignalName.SpecialStart, Main, false);
 		}
-
-		if (Input.IsActionJustReleased("Pause" + keyboardKeyword + inputIndex))
+		
+		if (Input.IsActionJustReleased("Special" + keyboardKeyword + inputIndex))
+		{
+			EmitSignal(SignalName.SpecialEnd, Main, false);
+		}
+ */
+#endregion
+		if (Input.IsActionJustPressed("Pause" + keyboardKeyword + inputIndex))
 		{
 			EmitSignal(SignalName.PauseRequest, Main, false);
 		}

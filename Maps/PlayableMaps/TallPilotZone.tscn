@@ -1,274 +1,302 @@
-[gd_scene load_steps=16 format=4 uid="uid://tw7pvvfcnrf1"]
+[gd_scene format=4 uid="uid://tw7pvvfcnrf1"]
 
 [ext_resource type="PackedScene" uid="uid://dcln4npgljx4k" path="res://Maps/MapTemplate.tscn" id="1_5hond"]
-[ext_resource type="Texture2D" uid="uid://bh42upheoaqhe" path="res://Maps/MapAssets/Background/SpaceBackground.png" id="2_vwmyp"]
-[ext_resource type="PackedScene" uid="uid://bw7vmyeb1ymu6" path="res://Maps/MapAssets/Pickups/weapon_pickup.tscn" id="3_lklw2"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0ux0s"]
-atlas = ExtResource("2_vwmyp")
-region = Rect2(0, 0, 640, 360)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sx8kj"]
-atlas = ExtResource("2_vwmyp")
-region = Rect2(0, 360, 640, 360)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_50abn"]
-atlas = ExtResource("2_vwmyp")
-region = Rect2(0, 2520, 640, 360)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8ncyl"]
-atlas = ExtResource("2_vwmyp")
-region = Rect2(0, 1080, 640, 360)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_561s6"]
-atlas = ExtResource("2_vwmyp")
-region = Rect2(0, 720, 640, 360)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_l3q87"]
-atlas = ExtResource("2_vwmyp")
-region = Rect2(0, 1440, 640, 360)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_n8u0u"]
-atlas = ExtResource("2_vwmyp")
-region = Rect2(0, 1800, 640, 360)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rn45s"]
-atlas = ExtResource("2_vwmyp")
-region = Rect2(0, 2160, 640, 360)
-
-[sub_resource type="Animation" id="Animation_ba2kr"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("IslandShrappnel:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_3c23f"]
-resource_name = "upanddown"
-length = 20.0
-loop_mode = 1
-step = 0.5
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("IslandShrappnel:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.24999551, -0.14999731, 0.8333333, 0.5, 20.76, -0.8666667, -0.26000023, 0.76666754, 0.23000047, 20.76, -0.8666667, -0.26000023, 0.76666754, 0.23000047, 0, -0.8000002, 0.5, 0.25, 0),
-"times": PackedFloat32Array(0, 9.432444, 10.5, 19)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Island:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0, 0),
-"points": PackedFloat32Array(-4.3, -0.24999551, -0.14999731, 0.8333333, 0.5, 6.465, -0.8666667, -0.26000023, 0.76666754, 0.23000047, 6.465, -0.8666667, -0.26000023, 0.76666754, 0.23000047, -4.3, -0.8000002, 0.5, 0.25, 0),
-"times": PackedFloat32Array(0, 9.432444, 10.5, 19)
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_k65s8"]
-_data = {
-&"RESET": SubResource("Animation_ba2kr"),
-&"upanddown": SubResource("Animation_3c23f")
-}
+[ext_resource type="PackedScene" uid="uid://bw7vmyeb1ymu6" path="res://Maps/MapAssets/Pickups/WeaponPickups/weapon_pickup.tscn" id="3_lklw2"]
+[ext_resource type="PackedScene" uid="uid://d2381diivxfax" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/ShipPowerUpChest.tscn" id="4_5plbm"]
+[ext_resource type="Shader" uid="uid://cx67s33dt1lle" path="res://Maps/MapAssets/Background/Parallax/HomemadeParallax.gdshader" id="4_o074e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hond"]
 size = Vector2(192, 628)
 
-[node name="Map" instance=ExtResource("1_5hond")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o074e"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0.195)
+shader_parameter/scrollSpeed = 0.04
+shader_parameter/parallaxMultiplier = 0.005
+shader_parameter/repeats = false
+shader_parameter/textureRegion = Vector4(0, 0, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="Stars2" type="Parallax2D" parent="ParalaxLayers" index="0"]
-light_mask = 0
-scroll_scale = Vector2(0.005, 0.005)
-repeat_size = Vector2(640, 360)
-autoscroll = Vector2(1, 0)
-repeat_times = 3
-screen_offset = Vector2(1197.66, 632.985)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5plbm"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 1.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.01
+shader_parameter/repeats = false
+shader_parameter/textureRegion = Vector4(0, 360, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="Planet2" type="Parallax2D" parent="ParalaxLayers" index="1"]
-light_mask = 0
-scroll_scale = Vector2(0.01, 0.01)
-scroll_offset = Vector2(1197.66, 632.985)
-repeat_size = Vector2(1320.135, 0)
-repeat_times = 2
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r02xc"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, -2)
+shader_parameter/scrollSpeed = 0.135
+shader_parameter/parallaxMultiplier = 0.03
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 2520, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="Meteorites2" type="Parallax2D" parent="ParalaxLayers" index="2"]
-light_mask = 0
-scroll_scale = Vector2(0.03, 0.03)
-repeat_size = Vector2(660, 589.82)
-autoscroll = Vector2(-3, 3)
-repeat_times = 2
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ts4mn"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.04
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="AsteroidsFar2" type="Parallax2D" parent="ParalaxLayers" index="3"]
-light_mask = 0
-scroll_scale = Vector2(0.04, 0.04)
-repeat_size = Vector2(660, 419.555)
-autoscroll = Vector2(1, 2)
-repeat_times = 2
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8do5a"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.04
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 720, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="AsteroidsMedDistance2" type="Parallax2D" parent="ParalaxLayers" index="4"]
-light_mask = 0
-scroll_scale = Vector2(0.05, 0.05)
-repeat_size = Vector2(605.865, 419.555)
-autoscroll = Vector2(2, 1)
-repeat_times = 2
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_04lkj"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.04
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="AsteroidsClose2" type="Parallax2D" parent="ParalaxLayers" index="5"]
-light_mask = 0
-scroll_scale = Vector2(0.06, 0.06)
-repeat_size = Vector2(660, 440.48)
-autoscroll = Vector2(2, 0)
-repeat_times = 2
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h4y6u"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.05
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 720, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="WizardTower2" type="Parallax2D" parent="ParalaxLayers" index="6"]
-light_mask = 0
-scroll_scale = Vector2(0.07, 0.07)
-scroll_offset = Vector2(880.63, -87.79)
-repeat_size = Vector2(748.195, 569.81)
-repeat_times = 2
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cqvv3"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.05
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="Stars2" type="Sprite2D" parent="ParalaxLayers/Stars" index="0"]
-light_mask = 0
-position = Vector2(759.32825, 449.17993)
-texture = SubResource("AtlasTexture_0ux0s")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cak4x"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.05
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="Sprite2D2" type="Sprite2D" parent="ParalaxLayers/Planet" index="0"]
-light_mask = 0
-texture = SubResource("AtlasTexture_sx8kj")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_83gk3"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.05
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="Sprite2D8" type="Sprite2D" parent="ParalaxLayers/Meteorites" index="0"]
-light_mask = 0
-position = Vector2(1726, 502)
-texture = SubResource("AtlasTexture_50abn")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_675hb"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 720, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="AsteroidSmall2" type="Sprite2D" parent="ParalaxLayers/AsteroidsFar" index="0"]
-light_mask = 0
-position = Vector2(1286, 727)
-texture = SubResource("AtlasTexture_8ncyl")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i3e22"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="AsteroidBIG2" type="Sprite2D" parent="ParalaxLayers/AsteroidsFar" index="1"]
-light_mask = 0
-position = Vector2(1353, 518)
-texture = SubResource("AtlasTexture_561s6")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tysar"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="AsteroidMedium3" type="Sprite2D" parent="ParalaxLayers/AsteroidsFar" index="2"]
-light_mask = 0
-position = Vector2(1263, 540)
-texture = SubResource("AtlasTexture_l3q87")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6eca1"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="AsteroidBIG3" type="Sprite2D" parent="ParalaxLayers/AsteroidsMedDistance" index="0"]
-light_mask = 0
-position = Vector2(1188, 612)
-texture = SubResource("AtlasTexture_561s6")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mv21c"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="AsteroidSmall4" type="Sprite2D" parent="ParalaxLayers/AsteroidsMedDistance" index="1"]
-light_mask = 0
-position = Vector2(1735, 607)
-texture = SubResource("AtlasTexture_8ncyl")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qs6pw"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 1.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.07
+shader_parameter/repeats = false
+shader_parameter/textureRegion = Vector4(0, 1800, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="AsteroidSmall5" type="Sprite2D" parent="ParalaxLayers/AsteroidsMedDistance" index="2"]
-light_mask = 0
-position = Vector2(1718, 491)
-texture = SubResource("AtlasTexture_8ncyl")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ofq5t"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 1.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.07
+shader_parameter/repeats = false
+shader_parameter/textureRegion = Vector4(0, 2160, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
 
-[node name="AsteroidMedium4" type="Sprite2D" parent="ParalaxLayers/AsteroidsMedDistance" index="3"]
-light_mask = 0
-position = Vector2(1402, 695)
-texture = SubResource("AtlasTexture_l3q87")
+[node name="Map" unique_id=2124114388 instance=ExtResource("1_5hond")]
 
-[node name="AsteroidBIG4" type="Sprite2D" parent="ParalaxLayers/AsteroidsClose" index="0"]
-light_mask = 0
-position = Vector2(1122, 492)
-texture = SubResource("AtlasTexture_561s6")
-
-[node name="AsteroidMedium2" type="Sprite2D" parent="ParalaxLayers/AsteroidsClose" index="1"]
-light_mask = 0
-position = Vector2(1205, 434)
-texture = SubResource("AtlasTexture_l3q87")
-
-[node name="AsteroidSmall6" type="Sprite2D" parent="ParalaxLayers/AsteroidsClose" index="2"]
-light_mask = 0
-position = Vector2(1364, 652)
-texture = SubResource("AtlasTexture_8ncyl")
-
-[node name="AsteroidMedium5" type="Sprite2D" parent="ParalaxLayers/AsteroidsClose" index="3"]
-light_mask = 0
-position = Vector2(1444, 432)
-texture = SubResource("AtlasTexture_l3q87")
-
-[node name="AsteroidSmall7" type="Sprite2D" parent="ParalaxLayers/AsteroidsClose" index="4"]
-light_mask = 0
-position = Vector2(1381, 473)
-texture = SubResource("AtlasTexture_8ncyl")
-
-[node name="Island2" type="Sprite2D" parent="ParalaxLayers/WizardTower" index="0"]
-light_mask = 0
-position = Vector2(1542.76, 1131.79)
-texture = SubResource("AtlasTexture_n8u0u")
-
-[node name="IslandShrappnel2" type="Sprite2D" parent="ParalaxLayers/WizardTower" index="1"]
-light_mask = 0
-position = Vector2(1542.76, 0)
-texture = SubResource("AtlasTexture_rn45s")
-
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="ParalaxLayers/WizardTower" index="2"]
-libraries = {
-&"": SubResource("AnimationLibrary_k65s8")
-}
-autoplay = "upanddown"
-
-[node name="Node2D7" type="Node2D" parent="SpawnPoints" index="0"]
+[node name="Node2D7" type="Node2D" parent="SpawnPoints" parent_id_path=PackedInt32Array(1437720429) index="0" unique_id=1482769028]
 position = Vector2(-348, -102)
 scale = Vector2(1.0732985, 0.6136364)
 
-[node name="Node2D8" type="Node2D" parent="SpawnPoints" index="1"]
+[node name="Node2D8" type="Node2D" parent="SpawnPoints" parent_id_path=PackedInt32Array(1437720429) index="1" unique_id=1192929544]
 position = Vector2(348, 102)
 scale = Vector2(1.0732985, 0.6136364)
 
-[node name="Node2D9" type="Node2D" parent="SpawnPoints" index="2"]
+[node name="Node2D9" type="Node2D" parent="SpawnPoints" parent_id_path=PackedInt32Array(1437720429) index="2" unique_id=1164716122]
 position = Vector2(348, -102)
 scale = Vector2(1.0732985, 0.6136364)
 
-[node name="Node2D10" type="Node2D" parent="SpawnPoints" index="3"]
+[node name="Node2D10" type="Node2D" parent="SpawnPoints" parent_id_path=PackedInt32Array(1437720429) index="3" unique_id=1222581545]
 position = Vector2(-348, 102)
 scale = Vector2(1.0732985, 0.6136364)
 
-[node name="Node2D11" type="Node2D" parent="SpawnPoints" index="4"]
+[node name="Node2D11" type="Node2D" parent="SpawnPoints" parent_id_path=PackedInt32Array(1437720429) index="4" unique_id=1313864489]
 position = Vector2(-6.1035156e-05, -171.99997)
 scale = Vector2(1.0732985, 0.6136364)
 
-[node name="Node2D12" type="Node2D" parent="SpawnPoints" index="5"]
+[node name="Node2D12" type="Node2D" parent="SpawnPoints" parent_id_path=PackedInt32Array(1437720429) index="5" unique_id=391880521]
 position = Vector2(-6.1035156e-05, 119.00001)
 scale = Vector2(1.0732985, 0.6136364)
 
-[node name="BackgroundTiles" parent="." index="2"]
-tile_map_data = PackedByteArray("AAD7//L/AQAHAAAAAAD7//P/AAABAAIAAAD7//T/AAABAAIAAAD7//X/AAABAAIAAAD7//b/AAABAAIAAAD7//f/AAABAAIAAAD7//j/AAABAAIAAAD7//n/AAABAAIAAAD7//r/AAABAAIAAAD7//v/AAABAAIAAAD7//z/AAABAAIAAAD7//3/AAABAAIAAAD7//7/AAABAAIAAAD7////AAABAAIAAAD7/wAAAAABAAIAAAD7/wEAAAABAAIAAAD7/wIAAAABAAIAAAD7/wMAAAABAAIAAAD7/wQAAAABAAIAAAD7/wUAAAABAAIAAAD7/wYAAAABAAIAAAD7/wcAAAABAAIAAAD7/wgAAAABAAIAAAD7/wkAAAABAAIAAAD7/woAAAABAAIAAAD7/wsAAAABAAIAAAD7/wwAAAABAAIAAAD7/w0AAAABAAIAAAD8//L/AQAHAAAAAAD8//P/AAABAAIAAAD8//T/AAABAAIAAAD8//X/AAABAAIAAAD8//b/AAABAAIAAAD8//f/AAABAAIAAAD8//j/AAABAAIAAAD8//n/AAABAAIAAAD8//r/AAABAAIAAAD8//v/AAABAAIAAAD8//z/AAABAAIAAAD8//3/AAABAAIAAAD8//7/AAABAAIAAAD8////AAABAAIAAAD8/wAAAAABAAIAAAD8/wEAAAABAAIAAAD8/wIAAAABAAIAAAD8/wMAAAABAAIAAAD8/wQAAAABAAIAAAD8/wUAAAABAAIAAAD8/wYAAAABAAIAAAD8/wcAAAABAAIAAAD8/wgAAAABAAIAAAD8/wkAAAABAAIAAAD8/woAAAABAAIAAAD8/wsAAAABAAIAAAD8/wwAAAABAAIAAAD8/w0AAAABAAIAAAD9//L/AQAHAAAAAAD9//P/AAABAAIAAAD9//T/AAABAAIAAAD9//X/AAABAAIAAAD9//b/AAABAAIAAAD9//f/AAABAAIAAAD9//j/AAABAAIAAAD9//n/AAABAAIAAAD9/woAAAABAAIAAAD9/wsAAAABAAIAAAD9/wwAAAABAAIAAAD9/w0AAQAFAAAAAAD+//L/AQAHAAAAAAD+//P/AAABAAIAAAD+//T/AAABAAIAAAD+//X/AAABAAIAAAD+//b/AAABAAIAAAD+//f/AAABAAIAAAD+//j/AAABAAIAAAD+//n/AAABAAIAAAD+/woAAAABAAIAAAD+/wsAAAABAAIAAAD+/wwAAAABAAIAAAD+/w0AAQAHAAAAAAD///L/AQAHAAAAAAD///P/AAABAAIAAAD///T/AAABAAIAAAD///X/AAABAAIAAAD///b/AAABAAIAAAD///f/AAABAAIAAAD///j/AAABAAIAAAD///n/AAABAAIAAAD//woAAAABAAIAAAD//wsAAAABAAIAAAD//wwAAAABAAIAAAD//w0AAQAHAAAAAAAAAPL/AQAHAAAAAAAAAPP/AAABAAIAAAAAAPT/AAABAAIAAAAAAPX/AAABAAIAAAAAAPb/AAABAAIAAAAAAPf/AAABAAIAAAAAAPj/AAABAAIAAAAAAPn/AAABAAIAAAAAAAoAAAABAAIAAAAAAAsAAAABAAIAAAAAAAwAAAABAAIAAAAAAA0AAQAHAAAAAAABAPL/AQAHAAAAAAABAPP/AAABAAIAAAABAPT/AAABAAIAAAABAPX/AAABAAIAAAABAPb/AAABAAIAAAABAPf/AAABAAIAAAABAPj/AAABAAIAAAABAPn/AAABAAIAAAABAAoAAAABAAIAAAABAAsAAAABAAIAAAABAAwAAAABAAIAAAABAA0AAQAHAAAAAAACAPL/AQAHAAAAAAACAPP/AAABAAIAAAACAPT/AAABAAIAAAACAPX/AAABAAIAAAACAPb/AAABAAIAAAACAPf/AAABAAIAAAACAPj/AAABAAIAAAACAPn/AAABAAIAAAACAAoAAAABAAIAAAACAAsAAAABAAIAAAACAAwAAAABAAIAAAACAA0AAQAFAAIAAAADAPL/AQAHAAAAAAADAPP/AAABAAIAAAADAPT/AAABAAIAAAADAPX/AAABAAIAAAADAPb/AAABAAIAAAADAPf/AAABAAIAAAADAPj/AAABAAIAAAADAPn/AAABAAIAAAADAPr/AAABAAIAAAADAPv/AAABAAIAAAADAPz/AAABAAIAAAADAP3/AAABAAIAAAADAP7/AAABAAIAAAADAP//AAABAAIAAAADAAAAAAABAAIAAAADAAEAAAABAAIAAAADAAIAAAABAAIAAAADAAMAAAABAAIAAAADAAQAAAABAAIAAAADAAYAAAABAAIAAAADAAcAAAABAAIAAAADAAgAAAABAAIAAAADAAkAAAABAAIAAAADAAoAAAABAAIAAAADAAsAAAABAAIAAAADAAwAAAABAAIAAAADAA0AAAABAAIAAAAEAPL/AQAHAAAAAAAEAPP/AAABAAIAAAAEAPT/AAABAAIAAAAEAPX/AAABAAIAAAAEAPb/AAABAAIAAAAEAPf/AAABAAIAAAAEAPj/AAABAAIAAAAEAPn/AAABAAIAAAAEAPr/AAABAAIAAAAEAPv/AAABAAIAAAAEAPz/AAABAAIAAAAEAP3/AAABAAIAAAAEAP7/AAABAAIAAAAEAP//AAABAAIAAAAEAAAAAAABAAIAAAAEAAEAAAABAAIAAAAEAAIAAAABAAIAAAAEAAMAAAABAAIAAAAEAAQAAAABAAIAAAAEAAUAAAABAAIAAAAEAAYAAAABAAIAAAAEAAcAAAABAAIAAAAEAAgAAAABAAIAAAAEAAkAAAABAAIAAAAEAAoAAAABAAIAAAAEAAsAAAABAAIAAAAEAAwAAAABAAIAAAAEAA0AAAABAAIAAAD9//r/AQAGAAcAAAD9//v/AQAIAAcAAAD9//z/AQAGAAUAAAD9//3/AAABAAIAAAD9//7/AAABAAIAAAD9////AAABAAIAAAD9/wAAAAABAAIAAAD9/wEAAAABAAIAAAD9/wIAAAABAAIAAAD9/wMAAQAGAAcAAAD9/wQAAQAIAAcAAAD9/wUAAQAGAAUAAAD9/wYAAAABAAIAAAD9/wcAAAABAAIAAAD+//r/AQAIAAQAAAD+//v/AQAJAAUAAAD+//z/AQAIAAYAAAD+//3/AAABAAIAAAD+//7/AAABAAIAAAD+////AAABAAIAAAD+/wAAAAABAAIAAAD+/wEAAAABAAIAAAD+/wIAAAABAAIAAAD+/wMAAQAIAAQAAAD+/wQAAQAJAAUAAAD+/wUAAQAIAAYAAAD+/wYAAAABAAIAAAD+/wcAAAABAAIAAAD///r/AQAIAAQAAAD///v/AQAJAAUAAAD///z/AQAIAAYAAAD///3/AAABAAIAAAD///7/AAABAAIAAAD/////AAABAAIAAAD//wAAAAABAAIAAAD//wEAAAABAAIAAAD//wIAAAABAAIAAAD//wMAAQAIAAQAAAD//wQAAQAJAAUAAAD//wUAAQAIAAYAAAD//wYAAAABAAIAAAD//wcAAAABAAIAAAAAAPr/AQAIAAQAAAAAAPv/AQAJAAUAAAAAAPz/AQAIAAYAAAAAAP3/AAABAAIAAAAAAP7/AAABAAIAAAAAAP//AAABAAIAAAAAAAAAAAABAAIAAAAAAAEAAAABAAIAAAAAAAIAAAABAAIAAAAAAAMAAQAIAAQAAAAAAAQAAQAJAAUAAAAAAAUAAQAIAAYAAAAAAAYAAAABAAIAAAAAAAcAAAABAAIAAAABAPr/AQAIAAQAAAABAPv/AQAJAAUAAAABAPz/AQAIAAYAAAABAP3/AAABAAIAAAABAP7/AAABAAIAAAABAP//AAABAAIAAAABAAAAAAABAAIAAAABAAEAAAABAAIAAAABAAIAAAABAAIAAAABAAMAAQAIAAQAAAABAAQAAQAJAAUAAAABAAUAAQAIAAYAAAABAAYAAAABAAIAAAABAAcAAAABAAIAAAACAPr/AQAGAAQAAAACAPv/AQAIAAUAAAACAPz/AQAGAAYAAAACAP3/AAABAAIAAAACAP7/AAABAAIAAAACAP//AAABAAIAAAACAAAAAAABAAIAAAACAAEAAAABAAIAAAACAAIAAAABAAIAAAACAAMAAQAGAAQAAAACAAQAAQAIAAUAAAACAAUAAQAGAAYAAAACAAcAAAABAAIAAAD9/wgAAAABAAIAAAD9/wkAAAABAAIAAAD+/wgAAAABAAIAAAD+/wkAAAABAAIAAAD//wgAAAABAAIAAAD//wkAAAABAAIAAAAAAAgAAAABAAIAAAAAAAkAAAABAAIAAAABAAgAAAABAAIAAAABAAkAAAABAAIAAAACAAgAAAABAAIAAAACAAkAAAABAAIAAAD6//L/AQAGAAMAAAD6//P/AQAHAAEAAAD6//T/AQAHAAEAAAD6//X/AQAHAAEAAAD6//b/AQAHAAEAAAD6//f/AQAHAAEAAAD6//j/AQAHAAEAAAD6//n/AQAHAAEAAAD6//r/AQAHAAEAAAD6//v/AQAHAAEAAAD6//z/AQAHAAEAAAD6//3/AQAHAAEAAAD6//7/AQAHAAEAAAD6////AQAHAAEAAAD6/wAAAQAHAAEAAAD6/wEAAQAHAAEAAAD6/wIAAQAHAAEAAAD6/wMAAQAHAAEAAAD6/wQAAQAHAAEAAAD6/wUAAQAHAAEAAAD6/wYAAQAHAAEAAAD6/wcAAQAHAAEAAAD6/wgAAQAHAAEAAAD6/wkAAQAHAAEAAAD6/woAAQAHAAEAAAD6/wsAAQAHAAEAAAD6/wwAAQAHAAEAAAD6/w0AAQAFAAEAAAAFAA0AAQAFAAEAAAAFAAwAAQAHAAEAAAAFAAsAAQAHAAEAAAAFAAoAAQAHAAEAAAAFAAkAAQAFAAMAAAAFAAgAAAABAAIAAAAFAAcAAAABAAIAAAAFAAYAAAABAAIAAAAFAAUAAAABAAIAAAAFAAQAAAABAAIAAAAFAAMAAAABAAIAAAAFAAIAAAABAAIAAAAFAAEAAAABAAIAAAAFAAAAAAABAAIAAAAFAP//AAABAAIAAAAFAP7/AAABAAIAAAAFAP3/AAABAAIAAAAFAPz/AAABAAIAAAAFAPv/AAABAAIAAAAFAPr/AAABAAIAAAAFAPn/AAABAAIAAAAFAPj/AAABAAIAAAAFAPf/AAABAAIAAAAFAPb/AQAFAAEAAAAFAPX/AQAHAAEAAAAFAPT/AQAHAAEAAAAFAPP/AQAHAAEAAAAFAPL/AQAGAAAAAAACAAYAAAABAAIAAAADAAUAAAABAAIAAAA=")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PilotArea" index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PilotArea" parent_id_path=PackedInt32Array(35701636) index="1" unique_id=1370822128]
 visible = false
 shape = SubResource("RectangleShape2D_5hond")
 
-[node name="InteractableTiles" parent="." index="4"]
+[node name="Background" parent="BackgroundTiles" parent_id_path=PackedInt32Array(1552887034) index="0" unique_id=617801030]
+tile_map_data = PackedByteArray("AAAEAAwAAAABAAIAAAAEAAsAAAADAAEAAAAEAAoAAAADAAEAAAAEAAkAAAADAAEAAAAEAAgAAAADAAEAAAAEAAcAAAADAAEAAAAEAAYAAAADAAEAAAAEAAUAAAADAAEAAAAEAAQAAAADAAEAAAAEAAMAAAADAAEAAAAEAAIAAAADAAEAAAAEAAEAAAADAAEAAAAEAAAAAAADAAEAAAAEAP//AAADAAEAAAAEAP7/AAADAAEAAAAEAP3/AAADAAEAAAAEAPz/AAADAAEAAAAEAPv/AAADAAEAAAAEAPr/AAADAAEAAAAEAPn/AAADAAEAAAAEAPj/AAADAAEAAAAEAPf/AAADAAEAAAAEAPb/AAADAAEAAAAEAPX/AAADAAEAAAAEAPT/AAADAAEAAAAEAPP/AAABAAAAAAADAAwAAAADAAIAAAADAAsAAAAEAAAAAAADAAoAAAAEAAAAAAADAAkAAAAEAAAAAAADAAgAAAAEAAAAAAADAAcAAAAEAAAAAAADAAYAAAAEAAAAAAADAAUAAAAEAAAAAAADAAQAAAAEAAAAAAADAAMAAAAEAAAAAAADAAIAAAAEAAAAAAADAAEAAAAEAAAAAAADAAAAAAAEAAAAAAADAP//AAAEAAAAAAADAP7/AAAEAAAAAAADAP3/AAAEAAAAAAADAPz/AAAEAAAAAAADAPv/AAAEAAAAAAADAPr/AAAEAAAAAAADAPn/AAAEAAAAAAADAPj/AAAEAAAAAAADAPf/AAAEAAAAAAADAPb/AAAEAAAAAAADAPX/AAAEAAAAAAADAPT/AAAEAAAAAAADAPP/AAADAAAAAAACAAwAAAADAAIAAAACAAsAAAAEAAAAAAACAAoAAAAEAAAAAAACAAkAAAAEAAAAAAACAAgAAAAEAAAAAAACAAcAAAAEAAAAAAACAAYAAQAGAAYAAAACAAUAAQAIAAUAAAACAAQAAQAGAAQAAAACAAMAAAAEAAAAAAACAAIAAAAEAAAAAAACAAEAAAAEAAAAAAACAAAAAAAEAAAAAAACAP//AAAEAAAAAAACAP7/AAAEAAAAAAACAP3/AQAGAAYAAAACAPz/AQAIAAUAAAACAPv/AQAGAAQAAAACAPr/AAAEAAAAAAACAPn/AAAEAAAAAAACAPj/AAAEAAAAAAACAPf/AAAEAAAAAAACAPb/AAAEAAAAAAACAPX/AAAEAAAAAAACAPT/AAAEAAAAAAACAPP/AAADAAAAAAABAAwAAAADAAIAAAABAAsAAAAEAAAAAAABAAoAAAAEAAAAAAABAAkAAAAEAAAAAAABAAgAAAAEAAAAAAABAAcAAAAEAAAAAAABAAYAAQAIAAYAAAABAAUAAQAJAAUAAAABAAQAAQAIAAQAAAABAAMAAAAEAAAAAAABAAIAAAAEAAAAAAABAAEAAAAEAAAAAAABAAAAAAAEAAAAAAABAP//AAAEAAAAAAABAP7/AAAEAAAAAAABAP3/AQAIAAYAAAABAPz/AQAJAAUAAAABAPv/AQAIAAQAAAABAPr/AAAEAAAAAAABAPn/AAAEAAAAAAABAPj/AAAEAAAAAAABAPf/AAAEAAAAAAABAPb/AAAEAAAAAAABAPX/AAAEAAAAAAABAPT/AAAEAAAAAAABAPP/AAADAAAAAAAAAAwAAAADAAIAAAAAAAsAAAAEAAAAAAAAAAoAAAAEAAAAAAAAAAkAAAAEAAAAAAAAAAgAAAAEAAAAAAAAAAcAAAAEAAAAAAAAAAYAAQAIAAYAAAAAAAUAAQAJAAUAAAAAAAQAAQAIAAQAAAAAAAMAAAAEAAAAAAAAAAIAAAAEAAAAAAAAAAEAAAAEAAAAAAAAAAAAAAAEAAAAAAAAAP//AAAEAAAAAAAAAP7/AAAEAAAAAAAAAP3/AQAIAAYAAAAAAPz/AQAJAAUAAAAAAPv/AQAIAAQAAAAAAPr/AAAEAAAAAAAAAPn/AAAEAAAAAAAAAPj/AAAEAAAAAAAAAPf/AAAEAAAAAAAAAPb/AAAEAAAAAAAAAPX/AAAEAAAAAAAAAPT/AAAEAAAAAAAAAPP/AAADAAAAAAD//wwAAAADAAIAAAD//wsAAAAEAAAAAAD//woAAAAEAAAAAAD//wkAAAAEAAAAAAD//wgAAAAEAAAAAAD//wcAAAAEAAAAAAD//wYAAQAIAAYAAAD//wUAAQAJAAUAAAD//wQAAQAIAAQAAAD//wMAAAAEAAAAAAD//wIAAAAEAAAAAAD//wEAAAAEAAAAAAD//wAAAAAEAAAAAAD/////AAAEAAAAAAD///7/AAAEAAAAAAD///3/AQAIAAYAAAD///z/AQAJAAUAAAD///v/AQAIAAQAAAD///r/AAAEAAAAAAD///n/AAAEAAAAAAD///j/AAAEAAAAAAD///f/AAAEAAAAAAD///b/AAAEAAAAAAD///X/AAAEAAAAAAD///T/AAAEAAAAAAD///P/AAADAAAAAAD+/wwAAAADAAIAAAD+/wsAAAAEAAAAAAD+/woAAAAEAAAAAAD+/wkAAAAEAAAAAAD+/wgAAAAEAAAAAAD+/wcAAAAEAAAAAAD+/wYAAQAIAAYAAAD+/wUAAQAJAAUAAAD+/wQAAQAIAAQAAAD+/wMAAAAEAAAAAAD+/wIAAAAEAAAAAAD+/wEAAAAEAAAAAAD+/wAAAAAEAAAAAAD+////AAAEAAAAAAD+//7/AAAEAAAAAAD+//3/AQAIAAYAAAD+//z/AQAJAAUAAAD+//v/AQAIAAQAAAD+//r/AAAEAAAAAAD+//n/AAAEAAAAAAD+//j/AAAEAAAAAAD+//f/AAAEAAAAAAD+//b/AAAEAAAAAAD+//X/AAAEAAAAAAD+//T/AAAEAAAAAAD+//P/AAADAAAAAAD9/wwAAAADAAIAAAD9/wsAAAAEAAAAAAD9/woAAAAEAAAAAAD9/wkAAAAEAAAAAAD9/wgAAAAEAAAAAAD9/wcAAAAEAAAAAAD9/wYAAQAGAAUAAAD9/wUAAQAIAAcAAAD9/wQAAQAGAAcAAAD9/wMAAAAEAAAAAAD9/wIAAAAEAAAAAAD9/wEAAAAEAAAAAAD9/wAAAAAEAAAAAAD9////AAAEAAAAAAD9//7/AAAEAAAAAAD9//3/AQAGAAUAAAD9//z/AQAIAAcAAAD9//v/AQAGAAcAAAD9//r/AAAEAAAAAAD9//n/AAAEAAAAAAD9//j/AAAEAAAAAAD9//f/AAAEAAAAAAD9//b/AAAEAAAAAAD9//X/AAAEAAAAAAD9//T/AAAEAAAAAAD9//P/AAADAAAAAAD8/wwAAAADAAIAAAD8/wsAAAAEAAAAAAD8/woAAAAEAAAAAAD8/wkAAAAEAAAAAAD8/wgAAAAEAAAAAAD8/wcAAAAEAAAAAAD8/wYAAAAEAAAAAAD8/wUAAAAEAAAAAAD8/wQAAAAEAAAAAAD8/wMAAAAEAAAAAAD8/wIAAAAEAAAAAAD8/wEAAAAEAAAAAAD8/wAAAAAEAAAAAAD8////AAAEAAAAAAD8//7/AAAEAAAAAAD8//3/AAAEAAAAAAD8//z/AAAEAAAAAAD8//v/AAAEAAAAAAD8//r/AAAEAAAAAAD8//n/AAAEAAAAAAD8//j/AAAEAAAAAAD8//f/AAAEAAAAAAD8//b/AAAEAAAAAAD8//X/AAAEAAAAAAD8//T/AAAEAAAAAAD8//P/AAADAAAAAAD7/wwAAAABAAEAAAD7/wsAAAADAAMAAAD7/woAAAADAAMAAAD7/wkAAAADAAMAAAD7/wgAAAADAAMAAAD7/wcAAAADAAMAAAD7/wYAAAADAAMAAAD7/wUAAAADAAMAAAD7/wQAAAADAAMAAAD7/wMAAAADAAMAAAD7/wIAAAADAAMAAAD7/wEAAAADAAMAAAD7/wAAAAADAAMAAAD7////AAADAAMAAAD7//7/AAADAAMAAAD7//3/AAADAAMAAAD7//z/AAADAAMAAAD7//v/AAADAAMAAAD7//r/AAADAAMAAAD7//n/AAADAAMAAAD7//j/AAADAAMAAAD7//f/AAADAAMAAAD7//b/AAADAAMAAAD7//X/AAADAAMAAAD7//T/AAADAAMAAAD7//P/AAABAAMAAAA=")
+
+[node name="Foreground" parent="BackgroundTiles" parent_id_path=PackedInt32Array(1552887034) index="1" unique_id=1369292428]
+tile_map_data = PackedByteArray("AAD8/w0AAQAHAAAAAAD9/w0AAQAHAAAAAAD+/w0AAQAHAAAAAAD//w0AAQAHAAAAAAAAAA0AAQAHAAAAAAABAA0AAQAHAAAAAAACAA0AAQAHAAAAAAADAA0AAQAHAAAAAAAFAAgAAQAFAAMAAAAFAAkAAQAHAAEAAAAFAAoAAQAHAAEAAAAFAAsAAQAHAAEAAAAFAAwAAQAHAAEAAAAFAA0AAQAGAAIAAAAEAA0AAQAHAAAAAAD6/wkAAQAFAAMAAAD6/woAAQAHAAEAAAD6/wsAAQAHAAEAAAD6/wwAAQAHAAEAAAD6/w0AAQAGAAEAAAD7/w0AAQAHAAAAAAD6//b/AQAFAAEAAAD6//X/AQAHAAEAAAD6//T/AQAHAAEAAAD6//P/AQAHAAEAAAD6//L/AQAGAAMAAAD7//L/AQAHAAAAAAD8//L/AQAHAAAAAAD9//L/AQAHAAAAAAD+//L/AQAHAAAAAAD///L/AQAHAAAAAAAAAPL/AQAHAAAAAAABAPL/AQAHAAAAAAACAPL/AQAHAAAAAAADAPL/AQAHAAAAAAAEAPL/AQAHAAAAAAAFAPL/AQAGAAAAAAAFAPP/AQAHAAEAAAAFAPT/AQAHAAEAAAAFAPX/AQAHAAEAAAAFAPb/AQAHAAEAAAAFAPf/AQAFAAEAAAA=")
+
+[node name="InteractableTiles" parent="." index="3" unique_id=327176720]
 tile_map_data = PackedByteArray("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")
 
-[node name="Camera2D" parent="." index="5"]
+[node name="Camera2D" parent="." index="4" unique_id=970432431]
 zoom = Vector2(2.39, 2.39)
 
-[node name="MapBorders" parent="." index="6"]
+[node name="MapBorders" parent="." index="5" unique_id=247059389]
 MapSize = Vector2i(48, 26)
 
-[node name="WeaponPickup" parent="WeaponPickups" index="0" instance=ExtResource("3_lklw2")]
+[node name="WeaponPickup" parent="Pickups" parent_id_path=PackedInt32Array(1916535538) index="0" unique_id=711691087 instance=ExtResource("3_lklw2")]
 position = Vector2(0, -16)
 chosenWeapon = 3
+
+[node name="ShipPowerUpChest" parent="Pickups/ShipPowerUpChestSpawner" parent_id_path=PackedInt32Array(631959143) index="0" unique_id=875542953 instance=ExtResource("4_5plbm")]
+position = Vector2(48, 208)
+
+[node name="ShipPowerUpChest2" parent="Pickups/ShipPowerUpChestSpawner" parent_id_path=PackedInt32Array(631959143) index="1" unique_id=1866546258 instance=ExtResource("4_5plbm")]
+position = Vector2(-48, 208)
+
+[node name="Sprite2D2" parent="ParallaxBackgroundLayers/Space" parent_id_path=PackedInt32Array(640977743) index="0" unique_id=111226547]
+material = SubResource("ShaderMaterial_o074e")
+
+[node name="Sprite2D" parent="ParallaxBackgroundLayers/Planet" parent_id_path=PackedInt32Array(624547171) index="0" unique_id=384033498]
+material = SubResource("ShaderMaterial_5plbm")
+
+[node name="Sprite2D7" parent="ParallaxBackgroundLayers/Meteorites" parent_id_path=PackedInt32Array(970284129) index="0" unique_id=1106239700]
+material = SubResource("ShaderMaterial_r02xc")
+
+[node name="AsteroidSmall" parent="ParallaxBackgroundLayers/AsteroidsFar" parent_id_path=PackedInt32Array(1201650016) index="0" unique_id=1235984877]
+material = SubResource("ShaderMaterial_ts4mn")
+
+[node name="AsteroidBIG" parent="ParallaxBackgroundLayers/AsteroidsFar" parent_id_path=PackedInt32Array(1201650016) index="1" unique_id=974079818]
+material = SubResource("ShaderMaterial_8do5a")
+
+[node name="AsteroidMedium2" parent="ParallaxBackgroundLayers/AsteroidsFar" parent_id_path=PackedInt32Array(1201650016) index="2" unique_id=8829527]
+material = SubResource("ShaderMaterial_04lkj")
+
+[node name="AsteroidBIG2" parent="ParallaxBackgroundLayers/AsteroidsMid" parent_id_path=PackedInt32Array(1630353232) index="0" unique_id=1670056597]
+material = SubResource("ShaderMaterial_h4y6u")
+
+[node name="AsteroidSmall2" parent="ParallaxBackgroundLayers/AsteroidsMid" parent_id_path=PackedInt32Array(1630353232) index="1" unique_id=7258765]
+material = SubResource("ShaderMaterial_cqvv3")
+
+[node name="AsteroidSmall3" parent="ParallaxBackgroundLayers/AsteroidsMid" parent_id_path=PackedInt32Array(1630353232) index="2" unique_id=1370390788]
+material = SubResource("ShaderMaterial_cak4x")
+
+[node name="AsteroidMedium3" parent="ParallaxBackgroundLayers/AsteroidsMid" parent_id_path=PackedInt32Array(1630353232) index="3" unique_id=1735445889]
+material = SubResource("ShaderMaterial_83gk3")
+
+[node name="AsteroidBIG3" parent="ParallaxBackgroundLayers/AsteroidsClose" parent_id_path=PackedInt32Array(1692209107) index="0" unique_id=604264202]
+material = SubResource("ShaderMaterial_675hb")
+
+[node name="AsteroidMedium" parent="ParallaxBackgroundLayers/AsteroidsClose" parent_id_path=PackedInt32Array(1692209107) index="1" unique_id=1726845116]
+material = SubResource("ShaderMaterial_i3e22")
+
+[node name="AsteroidSmall4" parent="ParallaxBackgroundLayers/AsteroidsClose" parent_id_path=PackedInt32Array(1692209107) index="2" unique_id=1732436961]
+material = SubResource("ShaderMaterial_tysar")
+
+[node name="AsteroidMedium4" parent="ParallaxBackgroundLayers/AsteroidsClose" parent_id_path=PackedInt32Array(1692209107) index="3" unique_id=731861262]
+material = SubResource("ShaderMaterial_6eca1")
+
+[node name="AsteroidSmall5" parent="ParallaxBackgroundLayers/AsteroidsClose" parent_id_path=PackedInt32Array(1692209107) index="4" unique_id=303699803]
+material = SubResource("ShaderMaterial_mv21c")
+
+[node name="Island" parent="ParallaxBackgroundLayers/MageTower" parent_id_path=PackedInt32Array(646301627) index="0" unique_id=2120119648]
+material = SubResource("ShaderMaterial_qs6pw")
+
+[node name="IslandShrappnel" parent="ParallaxBackgroundLayers/MageTower" parent_id_path=PackedInt32Array(646301627) index="1" unique_id=317131510]
+material = SubResource("ShaderMaterial_ofq5t")

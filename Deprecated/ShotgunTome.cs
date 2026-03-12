@@ -6,11 +6,12 @@ public partial class ShotgunTome : Weapon
 {
 	[Export] float coneAngle = 30f;
 	[Export] int bulletCount = 5;
-	public override void OnShoot(Vector2 inputDir)
+	public override bool OnShoot(Vector2 inputDir)
 	{
-		if (!shootCooldownTimer.IsStopped()) return;
-		base.OnShoot(inputDir);
-		shootCooldownTimer.Start(shootCooldownTime);
+		if (!base.OnShoot(inputDir))
+		{
+			return false;
+		}
 		float coneAngleRad = Mathf.DegToRad(coneAngle);
 		for (int bulletNum = 1; bulletNum <= bulletCount; bulletNum++)
 		{
@@ -21,8 +22,8 @@ public partial class ShotgunTome : Weapon
 			rot += (bulletNum - 1) * coneAngleRad / (bulletCount - 1);
 
 			newBullet.SetDirection(Vector2.FromAngle(rot));
-			newBullet.direction.Y -= 0.5f;
-			newBullet.direction = newBullet.direction.Normalized(); 
+			newBullet.Direction -= Vector2.Down * 0.5f;
+			newBullet.Direction = newBullet.Direction.Normalized(); 
 			newBullet.owner = owner;
 
 			world.CallDeferred(MethodName.AddChild, newBullet);
@@ -30,5 +31,6 @@ public partial class ShotgunTome : Weapon
 		
 		currentAmmo--;
 		if (currentAmmo <= 0) holder.DropWeapon();
+		return true;
 	}
 }

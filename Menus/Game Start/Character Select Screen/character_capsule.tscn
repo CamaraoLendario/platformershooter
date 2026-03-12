@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b7npu7lra7rke"]
+[gd_scene format=3 uid="uid://b7npu7lra7rke"]
 
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_bynxu"]
 [ext_resource type="Script" uid="uid://c27p6psygv5sf" path="res://Menus/Game Start/Character Select Screen/CharacterCapsule.cs" id="1_h7gxc"]
@@ -43,7 +43,7 @@ corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
-[node name="Control" type="Control" node_paths=PackedStringArray("inputNode", "PlayerNameDisplay", "colorChoice", "changeName", "readyButton", "playerSprite", "selectedButtonIndicator", "buttonsContainer", "hasPlayerCapsule", "playerlessCapsule", "playerNameKeyboard")]
+[node name="Control" type="Control" unique_id=1083669964 node_paths=PackedStringArray("inputNode", "PlayerNameDisplay", "colorChoice", "changeName", "readyButton", "playerSprite", "selectedButtonIndicator", "buttonsContainer", "hasPlayerCapsule", "playerlessCapsule", "playerNameKeyboard")]
 custom_minimum_size = Vector2(400, 800)
 layout_mode = 3
 anchors_preset = 8
@@ -71,7 +71,7 @@ hasPlayerCapsule = NodePath("Character Capsule/PlayerConnected")
 playerlessCapsule = NodePath("Character Capsule/NoPlayerConnected")
 playerNameKeyboard = NodePath("Character Capsule/PlayerNameKeyboard")
 
-[node name="Character Capsule" type="Panel" parent="."]
+[node name="Character Capsule" type="Panel" parent="." unique_id=1712448254]
 custom_minimum_size = Vector2(400, 850)
 layout_mode = 1
 anchors_preset = 8
@@ -87,7 +87,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_sfclw")
 
-[node name="PlayerConnected" type="VBoxContainer" parent="Character Capsule"]
+[node name="PlayerConnected" type="VBoxContainer" parent="Character Capsule" unique_id=1214983651]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -103,62 +103,62 @@ grow_vertical = 2
 theme_override_constants/separation = 174
 alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Character Capsule/PlayerConnected"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Character Capsule/PlayerConnected" unique_id=346792999]
 layout_mode = 2
 alignment = 1
 
-[node name="PlayerName" type="Label" parent="Character Capsule/PlayerConnected/HBoxContainer"]
+[node name="PlayerName" type="Label" parent="Character Capsule/PlayerConnected/HBoxContainer" unique_id=1863001872]
 custom_minimum_size = Vector2(315, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "P1"
 horizontal_alignment = 1
 
-[node name="InputDeviceIcon" type="TextureRect" parent="Character Capsule/PlayerConnected/HBoxContainer"]
+[node name="InputDeviceIcon" type="TextureRect" parent="Character Capsule/PlayerConnected/HBoxContainer" unique_id=1495278548]
 layout_mode = 2
 texture = SubResource("AtlasTexture_52xkb")
 
-[node name="PlayerSprite" type="TextureRect" parent="Character Capsule/PlayerConnected"]
+[node name="PlayerSprite" type="TextureRect" parent="Character Capsule/PlayerConnected" unique_id=1332384942]
 custom_minimum_size = Vector2(300, 306)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_xga1x")
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="Character Capsule/PlayerConnected"]
+[node name="ButtonsContainer" type="VBoxContainer" parent="Character Capsule/PlayerConnected" unique_id=110881742]
 layout_mode = 2
 
-[node name="ColorSelect" type="Panel" parent="Character Capsule/PlayerConnected/ButtonsContainer"]
+[node name="ColorSelect" type="Panel" parent="Character Capsule/PlayerConnected/ButtonsContainer" unique_id=1859223584]
 custom_minimum_size = Vector2(374, 88)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_52xkb")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect" unique_id=203365273]
 layout_mode = 0
 offset_left = 12.0
 offset_right = 362.0
 offset_bottom = 88.0
 
-[node name="LeftArrow" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect/HBoxContainer"]
+[node name="LeftArrow" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect/HBoxContainer" unique_id=1960661680]
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "<"
 horizontal_alignment = 1
 
-[node name="ColorName" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect/HBoxContainer"]
+[node name="ColorName" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect/HBoxContainer" unique_id=314030684]
 custom_minimum_size = Vector2(268.94, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "Red"
 horizontal_alignment = 1
 
-[node name="RightArrow" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect/HBoxContainer"]
+[node name="RightArrow" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect/HBoxContainer" unique_id=1164022802]
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = ">"
 horizontal_alignment = 1
 
-[node name="SelectedButton" type="Panel" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect"]
+[node name="SelectedButton" type="Panel" parent="Character Capsule/PlayerConnected/ButtonsContainer/ColorSelect" unique_id=51077615]
 custom_minimum_size = Vector2(374, 88)
 layout_mode = 0
 offset_top = 0.5
@@ -166,12 +166,12 @@ offset_right = 374.0
 offset_bottom = 88.50006
 theme_override_styles/panel = SubResource("StyleBoxFlat_8exbf")
 
-[node name="Rename" type="Panel" parent="Character Capsule/PlayerConnected/ButtonsContainer"]
+[node name="Rename" type="Panel" parent="Character Capsule/PlayerConnected/ButtonsContainer" unique_id=157228906]
 custom_minimum_size = Vector2(374, 88)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_52xkb")
 
-[node name="ColorName" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/Rename"]
+[node name="ColorName" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/Rename" unique_id=1746167867]
 layout_mode = 0
 offset_left = 12.0
 offset_top = 11.0
@@ -181,12 +181,12 @@ theme_override_font_sizes/font_size = 64
 text = "Rename"
 horizontal_alignment = 1
 
-[node name="ReadyButton" type="Panel" parent="Character Capsule/PlayerConnected/ButtonsContainer"]
+[node name="ReadyButton" type="Panel" parent="Character Capsule/PlayerConnected/ButtonsContainer" unique_id=1921582932]
 custom_minimum_size = Vector2(374, 88)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_52xkb")
 
-[node name="ColorName" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/ReadyButton"]
+[node name="ColorName" type="Label" parent="Character Capsule/PlayerConnected/ButtonsContainer/ReadyButton" unique_id=227313734]
 layout_mode = 0
 offset_left = 12.0
 offset_top = 11.0
@@ -196,7 +196,7 @@ theme_override_font_sizes/font_size = 64
 text = "Ready"
 horizontal_alignment = 1
 
-[node name="NoPlayerConnected" type="VBoxContainer" parent="Character Capsule"]
+[node name="NoPlayerConnected" type="VBoxContainer" parent="Character Capsule" unique_id=664448844]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -211,13 +211,13 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="Character Capsule/NoPlayerConnected"]
+[node name="Label" type="Label" parent="Character Capsule/NoPlayerConnected" unique_id=557247354]
 layout_mode = 2
 theme_override_font_sizes/font_size = 29
 text = "Press Any Key.."
 horizontal_alignment = 1
 
-[node name="PlayerNameKeyboard" type="VBoxContainer" parent="Character Capsule" node_paths=PackedStringArray("menuInput", "nameDisplay")]
+[node name="PlayerNameKeyboard" type="VBoxContainer" parent="Character Capsule" unique_id=356285836 node_paths=PackedStringArray("menuInput", "nameDisplay")]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -237,156 +237,156 @@ script = ExtResource("4_02ewk")
 menuInput = NodePath("../../PlayerMenuInput")
 nameDisplay = NodePath("../PlayerConnected/HBoxContainer/PlayerName")
 
-[node name="HTextBox" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard"]
+[node name="HTextBox" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard" unique_id=3153488]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox"]
+[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox" unique_id=145801876]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox"]
+[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox" unique_id=1136155535]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox"]
+[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox" unique_id=917658949]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox"]
+[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox" unique_id=1561932996]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="HTextBox2" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard"]
+[node name="HTextBox2" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard" unique_id=1557518450]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox2"]
+[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox2" unique_id=2140888964]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox2"]
+[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox2" unique_id=937665492]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox2"]
+[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox2" unique_id=1725821649]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox2"]
+[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox2" unique_id=1773063582]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="HTextBox3" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard"]
+[node name="HTextBox3" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard" unique_id=2050126699]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox3"]
+[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox3" unique_id=2096433931]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox3"]
+[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox3" unique_id=1351697243]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox3"]
+[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox3" unique_id=1713079657]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox3"]
+[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox3" unique_id=1320426135]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="HTextBox4" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard"]
+[node name="HTextBox4" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard" unique_id=1458029390]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox4"]
+[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox4" unique_id=126017634]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox4"]
+[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox4" unique_id=1053747379]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox4"]
+[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox4" unique_id=1182043837]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox4"]
+[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox4" unique_id=1783437537]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="HTextBox5" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard"]
+[node name="HTextBox5" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard" unique_id=1712348927]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox5"]
+[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox5" unique_id=2136520365]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox5"]
+[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox5" unique_id=1990904734]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox5"]
+[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox5" unique_id=682874950]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox5"]
+[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox5" unique_id=991289149]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="HTextBox6" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard"]
+[node name="HTextBox6" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard" unique_id=2115671802]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox6"]
+[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox6" unique_id=1874734416]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox6"]
+[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox6" unique_id=772785254]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox6"]
+[node name="TextureRect3" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox6" unique_id=849536156]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox6"]
+[node name="TextureRect4" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox6" unique_id=1102622387]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="HTextBox7" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard"]
+[node name="HTextBox7" type="HBoxContainer" parent="Character Capsule/PlayerNameKeyboard" unique_id=73711438]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox7"]
+[node name="TextureRect" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox7" unique_id=1143600341]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox7"]
+[node name="TextureRect2" type="TextureRect" parent="Character Capsule/PlayerNameKeyboard/HTextBox7" unique_id=2065771051]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture = ExtResource("5_bynxu")
 
-[node name="PlayerMenuInput" type="Node" parent="."]
+[node name="PlayerMenuInput" type="Node" parent="." unique_id=931635424]
 script = ExtResource("30_ljorx")

@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bgglq6jh35xxs"]
+
+[ext_resource type="Shader" uid="uid://dxivkxlfvph5y" path="res://Actors/Player/Ship/ShipPowerUps/ShipFormingParticles.gdshader" id="1_lydl0"]
+[ext_resource type="Texture2D" uid="uid://kayfo7ufdpc2" path="res://Actors/Player/Ship/Sprites/spaceships.png" id="2_ur1o3"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_lydl0")
+shader_parameter/mainTexture = ExtResource("2_ur1o3")
+shader_parameter/outlineColor = Color(1, 0, 0, 1)
+shader_parameter/initPos = Vector2(0, 0)
+shader_parameter/newPos = Vector2(0, 0)
+shader_parameter/rotation = 90.0

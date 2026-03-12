@@ -3,9 +3,12 @@ using System;
 
 public partial class IceTome : Weapon
 {
-	public override void OnShoot(Vector2 inputDir)
+	public override bool OnShoot(Vector2 inputDir)
 	{
-		base.OnShoot(inputDir);
+		if (!base.OnShoot(inputDir))
+		{
+			return false;
+		}
 		IceRay newBullet = bullet.Instantiate<IceRay>();
 		newBullet.owner = owner;
 		newBullet.inputDir = inputDir;
@@ -14,5 +17,6 @@ public partial class IceTome : Weapon
 
 		currentAmmo--;
 		if (currentAmmo <= 0) holder.DropWeapon();
+		return true;
 	}
 }

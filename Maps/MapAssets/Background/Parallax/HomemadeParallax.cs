@@ -107,7 +107,7 @@ public partial class HomemadeParallax : Node2D
         {
             Vector2 cameraDistFromOrigin = currentCamera.GlobalPosition;
             //Position = -cameraDistFromOrigin;
-            Position = (cameraDistFromOrigin * parallaxMultiplier);
+            Position = cameraDistFromOrigin * parallaxMultiplier;
         }
     }
 

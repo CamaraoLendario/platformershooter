@@ -1,10 +1,8 @@
 using Godot;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using SpaceMages;
-using GodotPlugins.Game;
-using System.Collections.ObjectModel;
+using System.Security.AccessControl;
+using System.IO.Pipes;
 
 public partial class Player : CharacterBody2D
 {
@@ -32,8 +30,8 @@ public partial class Player : CharacterBody2D
 			}
 			else
 			{
-				pilotShield.SelfModulate = new Color(1, 1, 1, 1);
-				shipShield.SelfModulate = new Color(1, 1, 1, 1);
+				pilotShield.SelfModulate = new Color(1, 1, 1, 0.75f);
+				shipShield.SelfModulate = new Color(1, 1, 1, 0.75f);
 			}
 		}
 	}
@@ -48,10 +46,16 @@ public partial class Player : CharacterBody2D
 	[Export] public Label NameLabel;
 	[Export] PilotWeaponHolder pilotWeaponHolder;
 	[Export] MeleeAttack pilotMeleeAttack;
+	[Export] GpuParticles2D shipExplosionParticles;
+	[Export] GpuParticles2D shipReconstructionParticles;
+	GpuParticles2D currentShipReconstructionParticles;
+	[Export] GpuParticles2D pilotDeathParticles;
 	[Export] AudioStreamPlayer2D shipDeadAudio;
-	[Export] AudioStreamPlayer2D pilotDeadAudio;
-	[Export] AnimatedSprite2D pilotShield;
+	[Export] AudioStreamPlayer pilotDeadAudio;
+	[Export] AnimatedSprite2D pilotSprite;
+	[Export] AnimatedSprite2D shipSprite;
 	[Export] AnimatedSprite2D shipShield;
+	[Export] AnimatedSprite2D pilotShield;
 	[Export] AnimationPlayer pilotShieldFlickerer;
 	[Export] AnimationPlayer shipShieldFlickerer;
 	#endregion
@@ -89,8 +93,18 @@ public partial class Player : CharacterBody2D
 			if (value)
 			{
 				Hide();
-				pilot.collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
-				ship.collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+				foreach(CollisionShape2D pilotColShape in GetTree().GetNodesInGroup("PilotCollisions"))
+				{
+					if (pilotColShape.GetParent<Player>() == this)
+						pilotColShape.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+				}
+				foreach(CollisionShape2D shipColShape in GetTree().GetNodesInGroup("ShipCollisions"))
+				{
+					if (shipColShape.GetParent<Player>() == this)
+						shipColShape.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+				}
+				//pilot.collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+				//ship.collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
 				pilot.inputVector *= 0;
 				ship.inputVector *= 0;
 			}
@@ -123,6 +137,7 @@ public partial class Player : CharacterBody2D
 			if (value)
 			{
 				GoPilot();
+				CancelTurningShip();
 			}
 			else
 			{
@@ -132,6 +147,7 @@ public partial class Player : CharacterBody2D
 	}
 	private bool isInPilotArea = false;
 	public bool isPilot = false;
+	bool isTurningToShip = false;
 	public List<CollisionShape2D> collisionShapes = [];
 	public bool isAiming = false;
 
@@ -152,10 +168,10 @@ public partial class Player : CharacterBody2D
 
 		shipCooldown.OneShot = true;
 		AddChild(shipCooldown);
-		shipCooldown.Timeout += TryGoShip;
+		shipCooldown.Timeout += PlayParticlesForTryGoShip;
 		goShipTimer.OneShot = true;
 		AddChild(goShipTimer);
-		goShipTimer.Timeout += TryGoShip;
+		goShipTimer.Timeout += PlayParticlesForTryGoShip;
 		shipCooldown.OneShot = true;
 		AddChild(shipPardonTimer);
 		shipPardonTimer.OneShot = true;
@@ -185,7 +201,16 @@ public partial class Player : CharacterBody2D
 
 	public void SetColor(int colorIdx)
 	{
+
 		(Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
+		(pilotDeathParticles.ProcessMaterial as ShaderMaterial).SetShaderParameter("outlineColor", SpaceMagesVars.teamColors[colorIdx]);
+		
+		(shipShield.Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
+		(shipShield.GetChild<GpuParticles2D>(0).Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
+		
+		(pilotShield.Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
+		(pilotShield.GetChild<GpuParticles2D>(0).Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
+		
 		this.colorIdx = colorIdx;
 	}
 
@@ -193,35 +218,46 @@ public partial class Player : CharacterBody2D
 	{
 		TakeDamage(Game.Instance.playerNodesByColor[ID]);
 	}
-	public void TakeDamage(Player damageDealer)
+	public void TakeDamage(Player damageDealer = null)
 	{
-		if (damageDealer == null) damageDealer = this;
 		if (isDead || isInvulnerable) return;
-		HandleIFrames();
+		if (damageDealer == null) damageDealer = this;
+
 		if (HasShield)
 		{
+			Input.StartJoyVibration(inputIdx, 0.3f, 0.3f, 0.2f);
+			Shake(0.5f, 3);
 			HasShield = false;
 		}
 		else if (isPilot)
 		{
+			Input.StartJoyVibration(inputIdx, 0.8f, 0.8f, 0.6f);
 			IsDead = true;
-			CreateRagdol(damageDealer);
+			//CreateRagdol(damageDealer);
+			CreateDeathParticles(damageDealer);
+			Position = new Vector2(99999, 99999);
 			EmitSignal(SignalName.died, this, damageDealer);
 			pilotDeadAudio.PitchScale = 1 + (float) GD.RandRange(-0.1, 0.1);
 			pilotDeadAudio.Play();
+			GD.Print(this, " was killed by ", damageDealer);
 		}
 		else
 		{
-			EmitSignal(SignalName.tookDamage, this);
+			GpuParticles2D newShipExplosionParticles = GPUParticlesPool.GetClonedParticles(shipExplosionParticles);
+			newShipExplosionParticles.Position = Position;
+			newShipExplosionParticles.Emitting = true;
+			Input.StartJoyVibration(inputIdx, 0.6f, 0.6f, 0.4f);
+			Shake(0.5f, 5);
 			shipCooldown.Start(SHIPCOOLDOWNTIME);
 			GoPilot();
 			shipDeadAudio.PitchScale = 1 + (float) GD.RandRange(-0.1, 0.1);
 			shipDeadAudio.Play();
 		}
-		
-		GD.Print(this.Name, " was killed by ", damageDealer.Name);
+		HandleIFrames();
+		EmitSignal(SignalName.tookDamage, damageDealer);
+		GD.Print(this.Name, " took Damage from by ", damageDealer.Name);
 	}
-	
+
 	async void HandleIFrames()
 	{
 		isInvulnerable = true;
@@ -244,10 +280,11 @@ public partial class Player : CharacterBody2D
 		}
 		
 		GpuParticles2D newParticlesEmitter = particlesEmitter.Duplicate() as GpuParticles2D;
+		
 		newParticlesEmitter.Position = Position;
-		world.AddChild(newParticlesEmitter);
 		newParticlesEmitter.Emitting = true;
 
+		Game.Instance.world.AddChild(newParticlesEmitter);
 		newParticlesEmitter.Finished += () =>
 		{
 			newParticlesEmitter.QueueFree();
@@ -264,7 +301,7 @@ public partial class Player : CharacterBody2D
 		pilot.Start();
 		ship.End();
 		if (isInPilotArea) Velocity = Velocity.Normalized() * 300f;
-		if (!isPilot) shipPardonTimer.Start(SHIPPARDONTIME);
+		if (!isPilot) shipPardonTimer.Start(SHIPPARDONTIME - shipReconstructionParticles.Lifetime);
 		isPilot = true;
 	}
 	void GoShip()
@@ -274,21 +311,85 @@ public partial class Player : CharacterBody2D
 		{
 			TryGoShip();
 		}
-		else goShipTimer.Start(TIMETOSHIP);
+		else goShipTimer.Start(TIMETOSHIP - shipReconstructionParticles.Lifetime);
 	}
+
+	void PlayParticlesForTryGoShip()
+	{
+		GD.Print("Playing Particles For Ship Reconstruction...");
+		if (isTurningToShip) return;
+		GpuParticles2D particles = GPUParticlesPool.GetClonedParticles(shipReconstructionParticles);
+		currentShipReconstructionParticles = particles;
+
+		particles.Position = Vector2.Zero;
+		particles.Restart();
+		particles.Visible = true;
+		isTurningToShip = true;
+		//particles.ProcessMaterial = particles.ProcessMaterial.Duplicate() as ShaderMaterial;
+		(particles.ProcessMaterial as ShaderMaterial).
+		SetShaderParameter("outlineColor", SpaceMagesVars.teamColors[colorIdx]);
+		(particles.ProcessMaterial as ShaderMaterial).
+		SetShaderParameter("initPos", Position);
+		(particles.ProcessMaterial as ShaderMaterial).
+		SetShaderParameter("newPos", Position);
+		particles.Finished += OnShipRebuiltFinished;
+		(particles.ProcessMaterial as ShaderMaterial).
+		SetShaderParameter("rotation", shipSprite.Rotation);
+		
+	}
+
+    public override void _Process(double delta)
+	{
+		if (currentShipReconstructionParticles != null)
+		{
+			(currentShipReconstructionParticles.ProcessMaterial as ShaderMaterial).
+			SetShaderParameter("newPos", Position);
+		}
+	}
+
+	void OnShipRebuiltFinished()
+	{
+		GD.Print("rebuildFinished");
+		isTurningToShip = false;
+		RemoveParticles(currentShipReconstructionParticles);
+		TryGoShip();
+	}
+
+	void RemoveParticles(GpuParticles2D particles)
+	{
+		if (currentShipReconstructionParticles == null) return;
+		currentShipReconstructionParticles = null;
+		particles.Finished -= OnShipRebuiltFinished;
+		particles.Visible = false;
+		particles.Emitting = false;
+		GPUParticlesPool.Return(particles);
+	}
+
+	void CancelTurningShip()
+	{
+		if (!isTurningToShip) return;
+		goShipTimer.Stop();
+		shipPardonTimer.Stop();
+		isTurningToShip = false;
+		RemoveParticles(currentShipReconstructionParticles);
+	}
+
 	void TryGoShip()
 	{
 		TryGoShip(false);
 	}
 	void TryGoShip(bool forced)
 	{
+		GD.Print("trying to go ship...");
 		if ((goShipTimer.IsStopped() && shipCooldown.IsStopped() && !isInPilotArea) || !shipPardonTimer.IsStopped() || forced)
 		{
+			GD.Print("Succeded!");
 			shipPardonTimer.Stop();
 			isPilot = false;
 			ship.Start();
 			pilot.End();
 		}
+		else GD.Print("try go ship failed..");
 	}
 
 	void CreateRagdol(Player damager)
@@ -307,6 +408,34 @@ public partial class Player : CharacterBody2D
 		}
 		Game.Instance.world.CallDeferred(MethodName.AddChild, newRagdol);
 	}
+	void CreateDeathParticles(Player damager)
+	{
+		GpuParticles2D particles = GPUParticlesPool.GetClonedParticles(pilotDeathParticles);
+		(particles.ProcessMaterial as ShaderMaterial).SetShaderParameter("initialDir", (Position - damager.Position).Normalized());
+		(particles.ProcessMaterial as ShaderMaterial).SetShaderParameter("rotation", pilotSprite.Rotation);
+		particles.Position = Position;
+	}
+
+	async void Shake(float shakeTime, float shakeForce = 1)
+	{
+		Timer shakeTimer = new Timer()
+		{
+			OneShot = true,
+		};
+		AddChild(shakeTimer);
+		shakeTimer.Start(shakeTime);
+		while(!shakeTimer.IsStopped())
+		{
+			float stepModifier = (float)shakeTimer.TimeLeft/shakeTime;
+			float angle = GD.Randf() * Mathf.Pi * 2;
+			Vector2 dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+			pilotSprite.Offset = Vector2.Zero + dir * shakeForce * stepModifier;
+			shipSprite.Offset = Vector2.Zero + dir * shakeForce * stepModifier;
+			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+		}
+		pilotSprite.Offset = Vector2.Zero;
+		shipSprite.Offset = Vector2.Zero;
+	}
 
 	public void Reset()
 	{
@@ -315,6 +444,7 @@ public partial class Player : CharacterBody2D
 		Tween tween = CreateTween();
 		tween.SetTrans(Tween.TransitionType.Quint);
 		tween.SetEase(Tween.EaseType.In);
+		NameLabel.Modulate = new Color(1, 1, 1, 1);
 		tween.TweenProperty(NameLabel, "modulate:a", 0, NAMEHIDETIME);
 		
 		pilot.Reset();
@@ -322,6 +452,9 @@ public partial class Player : CharacterBody2D
 		HasShield = true;
 		pilotShieldFlickerer.Stop();
 		shipShieldFlickerer.Stop();
+		goShipTimer.Stop();
+		shipPardonTimer.Stop();
+		RemoveParticles(currentShipReconstructionParticles);
 		foreach (Timer timer in timers)
 		{
 			timer.Stop();

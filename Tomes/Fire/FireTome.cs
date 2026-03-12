@@ -5,15 +5,19 @@ using System;
 public partial class FireTome : Weapon
 {
 	[Export] GpuParticles2D particles;
-	public override void OnShoot(Vector2 inputDir)
+	public override bool OnShoot(Vector2 inputDir)
 	{
-		base.OnShoot(inputDir);
+		if (!base.OnShoot(inputDir))
+		{
+			return false;
+		}
 		LinearProjectile newBullet = GetNewBullet(owner.colorIdx, inputDir);
 
 		world.CallDeferred(MethodName.AddChild, newBullet);
 
 		currentAmmo--;
 		if (currentAmmo <= 0) holder.DropWeapon();
+		return true;
 	}
 
     public override void _Process(double delta)

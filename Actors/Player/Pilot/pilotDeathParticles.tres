@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cuu7ef3oi50rv"]
+
+[ext_resource type="Shader" uid="uid://cnr3u2i0u1fwl" path="res://Actors/Player/Pilot/PilotExplosion.gdshader" id="1_1t66e"]
+[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Sprites/PilotStill.png" id="2_piuy8"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_1t66e")
+shader_parameter/initialDir = Vector2(1, 0)
+shader_parameter/mainTexture = ExtResource("2_piuy8")
+shader_parameter/outlineColor = Color(1, 0, 0, 1)
+shader_parameter/rotation = 90.0

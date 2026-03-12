@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://diosn7qu6kfh6"]
+
+[ext_resource type="Script" uid="uid://15ac2tx8x5lw" path="res://Actors/Player/Effects/Frozen/FrozenDDR.cs" id="1_5hxyl"]
+[ext_resource type="Texture2D" uid="uid://b8idoo2np415a" path="res://Actors/Player/Effects/Frozen/FrozenCharacterSprite.png" id="1_7vw5j"]
+[ext_resource type="Texture2D" uid="uid://dv2s24wker1p3" path="res://Actors/Player/Effects/Frozen/DDRArrow.png" id="1_l6xsd"]
+[ext_resource type="Script" uid="uid://tjeauhrn2wha" path="res://Actors/Player/Effects/Frozen/DDRInputsParent.cs" id="3_k16qw"]
+[ext_resource type="Texture2D" uid="uid://bm1f7wr3qvi40" path="res://Actors/Player/Effects/Frozen/IceBreakingParticlesSpriteSheet.png" id="5_5kjhp"]
+[ext_resource type="Material" uid="uid://nvr4df8waewf" path="res://Actors/Player/Effects/Frozen/IceBreakingParticles.tres" id="6_153eh"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0nc8g"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 2
+particles_anim_loop = true
+
+[node name="FrozenDDR" type="Node2D" unique_id=1256611054 node_paths=PackedStringArray("DDRparent", "explosionParticles")]
+script = ExtResource("1_5hxyl")
+DDRparent = NodePath("DDRInputsParent")
+explosionParticles = NodePath("GPUParticles2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=101390810]
+z_index = 1
+texture = ExtResource("1_7vw5j")
+
+[node name="DDRInputsParent" type="Node2D" parent="." unique_id=1195743199]
+position = Vector2(0, -16)
+script = ExtResource("3_k16qw")
+InputButtonTexture = ExtResource("1_l6xsd")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=18838021]
+z_index = 2
+z_as_relative = false
+material = SubResource("CanvasItemMaterial_0nc8g")
+emitting = false
+texture = ExtResource("5_5kjhp")
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+process_material = ExtResource("6_153eh")

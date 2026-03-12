@@ -82,7 +82,7 @@ public partial class ShipController : Controller
 
 	public override void OnJumpStart()
 	{
-		if(!IsAllowed() || !dashCooldownTimer.IsStopped()) return;
+		if(!IsAllowed() || !dashCooldownTimer.IsStopped() || Main.effectHandler.isFrozen) return;
 		if (Main.effectHandler.isFrozen) return;
 		DashAudio.PitchScale = 1 + (float) GD.RandRange(-0.1, 0.1);
 		DashAudio.Play();

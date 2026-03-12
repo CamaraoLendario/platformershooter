@@ -5,36 +5,34 @@ using System.Numerics;
 public partial class DestructibleBlockFlag : Area2D
 {
     [Export] Texture2D particleCutterTexture;
+    [Export] GpuParticles2D DestructionParticles;
     public TileMapLayer tileMapLayer;
     public Vector2I tilePos;
-    GpuParticles2D newParticlesNode;
     const int TILETEXTURESIZE = 20;
 
     public override void _Ready()
     {
-        newParticlesNode = GetNode("GPUParticles2D").Duplicate() as GpuParticles2D;
         tilePos = new Vector2I((int) Position.X/16, (int) Position.Y/16);
+        SetupDestructionParticles();
     }
 
     public void Destroy()
     {
         if (IsQueuedForDeletion()) return;
-        SpawnNewParticlesNode();
-
+        DestructionParticles.Emitting = true;
         tileMapLayer.SetCell(tilePos, -1); // deletes tile
         GD.Print("destroyed tile at position" + tilePos);
         QueueFree();
     }
 
-    void SpawnNewParticlesNode()
+    void SetupDestructionParticles()
     {
-        newParticlesNode.OneShot = true;
-        newParticlesNode.Finished += () => newParticlesNode.QueueFree();
-        newParticlesNode.Texture = CreateParticlesTextureFromTilemapCoords(tilePos);
-        newParticlesNode.Position = GlobalPosition;
-        newParticlesNode.Emitting = true;
 
-        Game.Instance.world.CallDeferred(MethodName.AddChild, newParticlesNode);
+        DestructionParticles.Reparent(Game.Instance.world);
+        DestructionParticles.OneShot = true;
+        DestructionParticles.Texture = CreateParticlesTextureFromTilemapCoords(tilePos);
+        DestructionParticles.Emitting = false;
+        DestructionParticles.Finished += () => DestructionParticles.QueueFree();
     }
 
     ImageTexture CreateParticlesTextureFromTilemapCoords(Vector2I coords)

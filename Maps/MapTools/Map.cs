@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 public partial class Map : Node2D
 {
-    [Export] public float TimeToSuddenDeath = 120f;
+    [Export] public float TimeToSuddenDeath = 30f;
     [ExportGroup("Nodes")]
-    [Export] public Node weaponPickups;
+    [Export] public Node Pickups;
     [Export] public MapBorders MapBordersNode;
     [Export] public PilotArea pilotArea;
     [Export] public MapCamera camera;
@@ -28,16 +28,38 @@ public partial class Map : Node2D
     {
         Game.Instance.NewRoundStarted += OnNewRoundStarted;
         currentTileMapLayerNode = GetNode<InteractableTiles>("InteractableTiles");
+        //ReplicateCollisions();
     }
     
     void OnNewRoundStarted()
     {
         currentTileMapLayerNode.Reset();
+        ForcePickupsReset();
     }
 
     public bool IsPositionInPilotArea(Vector2 Position)
     {
         return pilotArea.IsInPilotArea(Position);
+    }
+
+    void ForcePickupsReset()
+    {
+        foreach(Node Node in Pickups.GetChildren())
+        {
+            if (Node is WeaponPickup weaponPickup)
+            {
+                weaponPickup.EndCooldown();
+            }
+            else if (Node is ShipPowerUpChestSpawner shipPowerUpChest)
+            {
+                foreach(Node child in shipPowerUpChest.GetChildren())
+                {
+                    if (child is not ShipPowerUpChest shipPowerupChest) continue;
+                    shipPowerupChest.Despawn();
+                }
+            }
+
+        }
     }
 
     public override void _ExitTree()
@@ -48,7 +70,26 @@ public partial class Map : Node2D
 
     void DisconnectSignals()
     {
-        Game.Instance.NewRoundStarted -= OnNewRoundStarted;   
+        Game.Instance.NewRoundStarted -= OnNewRoundStarted;
     }
 
+    void ReplicateCollisions()
+    {
+        foreach(Player player in Game.Instance.playerNodesByColor.Values)
+        {
+            foreach (CollisionShape2D col in player.collisionShapes)
+            {
+                for(int x = -1; x < 2; x++)
+                {
+                    for(int y = -1; y < 2; y++)
+                    {
+                        if (x == 0 && y == 0) continue;
+                        CollisionShape2D newCol = col.Duplicate((int) DuplicateFlags.Groups) as CollisionShape2D;
+                        newCol.Position += new Vector2(x, y) * 10;
+                        player.AddChild(newCol);
+                    }
+                }
+            }
+        }
+    }
 }

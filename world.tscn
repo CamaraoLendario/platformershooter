@@ -1,9 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://blk3xlkdst7il"]
+[gd_scene format=3 uid="uid://blk3xlkdst7il"]
 
 [ext_resource type="Script" uid="uid://ep0pldqcx4sy" path="res://OverWorld.cs" id="1_tlwt5"]
 [ext_resource type="Script" uid="uid://dv65lm23iaghu" path="res://World.cs" id="3_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://be0bay5c30jmy" path="res://Menus/ScoreBoard/ScoreHUD.tscn" id="3_tlwt5"]
-[ext_resource type="PackedScene" uid="uid://i7qqi76sh82u" path="res://InGameMenu.tscn" id="4_aqk2v"]
+[ext_resource type="PackedScene" uid="uid://i7qqi76sh82u" path="res://InGameMenu/InGameMenu.tscn" id="4_aqk2v"]
 
 [node name="OverWorld" type="Node2D" groups=["OverWorld"]]
 process_mode = 3

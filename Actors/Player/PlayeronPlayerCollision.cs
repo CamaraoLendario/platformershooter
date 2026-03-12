@@ -30,7 +30,6 @@ public partial class PlayeronPlayerCollision : Area2D
 			if (area is PlayeronPlayerCollision playercol)
 			{
 				main.Velocity += (main.Position - playercol.main.Position).Normalized() * PilotController.MAXHSPEED/10;
-				GD.Print("playersCollided"); 
 				collidedWithPlayer = true;
 			}
     	}

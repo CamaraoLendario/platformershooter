@@ -10,12 +10,11 @@ public partial class Weapon : Node2D
 	[Export] public bool rotates = true;
 	[Export] public Node2D sprite;
 	[Export] protected PackedScene bullet;
-	[Export] int maxAmmo = 1;
-	[Export] protected AudioStreamPlayer2D shootAudio;
+	[Export] public int maxAmmo = 1;
 	protected int currentAmmo;
-	[Export] float cooldownTime = 0.0f;
-	public Timer shootCooldownTimer = new();
-	public float shootCooldownTime = 0.1f;
+	[Export] protected AudioStreamPlayer2D shootAudio;
+	private Timer shootCooldownTimer = new();
+	[Export] float shootCooldownTime = 0.1f;
 	public Player owner;
 	protected World world;
 	protected PilotWeaponHolder holder;
@@ -31,8 +30,13 @@ public partial class Weapon : Node2D
 		holder = GetParent<PilotWeaponHolder>();
 	}
 
-	public virtual void OnShoot(Vector2 inputDir)
+	public virtual bool OnShoot(Vector2 inputDir)
 	{
+		if (!shootCooldownTimer.IsStopped())
+		{
+			return false;
+		}
+		shootCooldownTimer.Start(shootCooldownTime);
 		GD.Print("shooting: ", this);
 		AudioStreamPlayer2D newShootAudio = shootAudio.Duplicate() as AudioStreamPlayer2D;
 		world.AddChild(newShootAudio);
@@ -40,6 +44,7 @@ public partial class Weapon : Node2D
 		newShootAudio.Play();
 		newShootAudio.Finished += () => newShootAudio.QueueFree();
 		EmitSignal(SignalName.Shot);
+		return true;
 	}
 
 	protected LinearProjectile GetNewBullet(int colorIdx, Vector2 inputDir)

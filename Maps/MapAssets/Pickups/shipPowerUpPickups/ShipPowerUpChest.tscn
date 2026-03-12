@@ -1,0 +1,158 @@
+[gd_scene format=3 uid="uid://d2381diivxfax"]
+
+[ext_resource type="Texture2D" uid="uid://o2aye5es0b5l" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/Chest.png" id="1_bg0iw"]
+[ext_resource type="Script" uid="uid://dpc1c8h2qa32r" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/ShipPowerUpChest.cs" id="1_f20eu"]
+[ext_resource type="Script" uid="uid://dti4v2vsestft" path="res://Components/HittableComponent.cs" id="2_w485a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bg0iw"]
+size = Vector2(16, 16)
+
+[sub_resource type="Animation" id="Animation_w485a"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Chest:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Chest:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Chest:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-9, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Chest:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HittableComponent:Enabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_f20eu"]
+resource_name = "Spawn"
+length = 0.93333334
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Chest:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(-0.135, 0, 0, 0, 0, -0.37, -0.25, 0, 0.25, 0, -0.37, 0, 0, 0.1, 0, -0.05235988, 0, 0, 0, 0, 0.06981317, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.36666667, 0.63333344, 0.7667, 0.8333333, 0.8666667)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Chest:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 2, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.16666667, 0, 0, 0, 0, 0.16666667, 0, 0, 0, 0, 0.1, 0, 0, 0, 0, 0, 0, 0.002, 0, 0, 0, 0, 0.642, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.36666667, 0.63333344, 0.76666665, 0.7667, 0.8333333, 0.8666667)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Chest:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 2, 0, 0),
+"points": PackedFloat32Array(-13.78, -0.25, 0, 0, 0, -17.455, -0.25, 0, 0.25, 0, -17.455, -0.25, 0, 0.1, 0, -9, 0, 0, 0, 0, -9.41, 0, 0, 0, 0, -9.5, 0, 0, 0, 0, -9, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.36666667, 0.63333344, 0.76666665, 0.7667, 0.8333333, 0.8666667)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Chest:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.044573605, 0.07790694, 0.11117363, 0.14330384, 0.17663717, 0.20990384, 0.24420398, 0.2775373, 0.31080395, 0.33376974, 0.36710304, 0.4003697, 0.43249995, 0.46583325, 0.49909997, 0.53340006, 0.56666666, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.36078432), Color(1, 1, 1, 1), Color(1, 1, 1, 0.36078432), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.36078432), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.36078432), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.36078432), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.36078432), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.36078432), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HittableComponent:Enabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.7667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rwcu8"]
+_data = {
+&"RESET": SubResource("Animation_w485a"),
+&"Spawn": SubResource("Animation_f20eu")
+}
+
+[node name="ShipPowerUpChest" type="Node2D" unique_id=875542953 node_paths=PackedStringArray("hittableComponent", "animationPlayer")]
+script = ExtResource("1_f20eu")
+hittableComponent = NodePath("HittableComponent")
+animationPlayer = NodePath("AnimationPlayer")
+
+[node name="HittableComponent" type="Area2D" parent="." unique_id=261133549]
+collision_layer = 16
+collision_mask = 5
+script = ExtResource("2_w485a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HittableComponent" unique_id=1739348075]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_bg0iw")
+
+[node name="Chest" type="Sprite2D" parent="." unique_id=457004708]
+self_modulate = Color(1, 1, 1, 0)
+position = Vector2(0, -9)
+texture = ExtResource("1_bg0iw")
+offset = Vector2(0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=167889876]
+libraries/ = SubResource("AnimationLibrary_rwcu8")

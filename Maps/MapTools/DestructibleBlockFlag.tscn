@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cyhc0waevvoee"]
+[gd_scene format=3 uid="uid://cyhc0waevvoee"]
 
 [ext_resource type="Script" uid="uid://qpmiptfy64qi" path="res://Maps/MapTools/DestructibleBlockFlag.cs" id="1_lrm18"]
 [ext_resource type="Texture2D" uid="uid://c5tqs6m8jjsim" path="res://Maps/MapAssets/TileMaps/Textures/ParticleFromTileGeneratorTexture.png" id="3_m6vex"]
@@ -38,16 +38,17 @@ linear_accel_max = -21.700003
 color_ramp = SubResource("GradientTexture1D_8j5pn")
 anim_offset_max = 1.0
 
-[node name="DestructibleBlockFlag" type="Area2D"]
+[node name="DestructibleBlockFlag" type="Area2D" unique_id=584555463 node_paths=PackedStringArray("DestructionParticles")]
 collision_mask = 0
 script = ExtResource("1_lrm18")
 particleCutterTexture = ExtResource("3_m6vex")
+DestructionParticles = NodePath("DestructionParticles")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=15241155]
 position = Vector2(8, 8)
 shape = SubResource("RectangleShape2D_n13dd")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="DestructionParticles" type="GPUParticles2D" parent="." unique_id=1649045522]
 material = SubResource("CanvasItemMaterial_b3ir4")
 position = Vector2(8, 8)
 emitting = false

@@ -5,7 +5,6 @@ public partial class PilotController : Controller
 	[Signal] public delegate void JumpedEventHandler(int wallSide);
 	[Export] RayCast2D rightWallCheck;
 	[Export] RayCast2D leftWallCheck;
-	[Export] PlayerParticleEmitters particlesNodes;
 	[Export] AudioStreamPlayer2D jumpAudioPlayer;
 	public Vector2 aimVector = new Vector2(1, 0);
 	public int facing = 1;
@@ -28,6 +27,17 @@ public partial class PilotController : Controller
 	Vector2 gravityDirection = new Vector2(0, 1);
 	const float MAXFALLSPEED = 600f;
 	bool hasAirJump = true;
+	bool isFrozen
+	{
+		get
+		{
+			return Main.effectHandler.isFrozen;
+		}
+		set
+		{
+			Main.effectHandler.isFrozen = value;
+		}
+	}
 
 	public override void _Ready()
 	{
@@ -54,10 +64,7 @@ public partial class PilotController : Controller
 
 		if (!Main.IsOnFloor() && wasOnFloor)
 			coyoteTimer.Start(COYOTETIME);
-		else if (Main.IsOnFloor() && !wasOnFloor)
-		{
-			EmitGroundParticles();
-		}
+
 		if (!Main.IsOnWall() && wasOnWall)
 			wallCoyoteTimer.Start(COYOTETIME);
 	}
@@ -93,14 +100,6 @@ public partial class PilotController : Controller
 		}
 	}
 	
-	void EmitGroundParticles()
-	{
-		PlayerParticleEmitters newParticles = particlesNodes.Duplicate() as PlayerParticleEmitters;
-		newParticles.GlobalPosition = Main.GlobalPosition + Vector2.Up;
-		Game.Instance.world.AddChild(newParticles);
-		newParticles.Emit();
-	}
-	
 	void ProcessMovement(float delta)
 	{
 		if (!Main.IsInPilotArea)
@@ -122,6 +121,10 @@ public partial class PilotController : Controller
 	{
 		Vector2 newVel = Velocity;
 		Vector2 processedInputVector = GetProcessedInput();
+		if (isFrozen && IsOnFloor())
+		{
+			friction /= 5;
+		}
 		int XinputDirection = (int)new Vector2(processedInputVector.X, 0).Normalized().X;
 		if (processedInputVector != Vector2.Zero)
 		{
@@ -269,4 +272,16 @@ public partial class PilotController : Controller
 		base.Start();
 		hasAirJump = true;
 	}
+
+	bool IsOnFloor()
+	{
+		return Main.IsOnFloor();
+	}
+
+    public override void Reset()
+    {
+        base.Reset();
+		sprite.Rotation = 0;
+    }
+
 }

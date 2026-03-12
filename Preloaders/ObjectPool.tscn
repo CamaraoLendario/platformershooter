@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cgs51e0ovys3i"]
+
+[ext_resource type="Script" uid="uid://dnf5wma5v25ci" path="res://Preloaders/GPUParticlesPool.cs" id="1_6dd44"]
+
+[node name="ObjectPool" type="Node" unique_id=1355225771]
+process_mode = 3
+
+[node name="GPUParticles" type="Node2D" parent="." unique_id=1134558399]
+script = ExtResource("1_6dd44")
