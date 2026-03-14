@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://b2i3ntmjeatnu"]
+[gd_scene format=3 uid="uid://bvcx1q4u318q6"]
 
 [ext_resource type="PackedScene" uid="uid://blk3xlkdst7il" path="res://world.tscn" id="1_fnwb8"]
 [ext_resource type="Script" uid="uid://dvx3nqegjh5o8" path="res://DEBUGTEST/Gym.cs" id="2_n4umm"]
@@ -572,6 +572,6 @@ shape = SubResource("WorldBoundaryShape2D_vsa67")
 
 [node name="DebugPlayer" parent="." index="4" unique_id=2096548899 instance=ExtResource("15_yp32w")]
 material = SubResource("ShaderMaterial_yafuf")
-position = Vector2(-94, 28)
+position = Vector2(-159, 86)
 
 [editable path="InGameMenu"]

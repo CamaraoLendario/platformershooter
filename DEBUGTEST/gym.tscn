@@ -11,8 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://d2381diivxfax" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/ShipPowerUpChest.tscn" id="9_obpc4"]
 [ext_resource type="Script" uid="uid://x4dnw7pvkhwb" path="res://Maps/MapAssets/SuddenDeath/BeamsOfDeath.cs" id="10_h2xtr"]
 [ext_resource type="Texture2D" uid="uid://dd6up0jcu0f6j" path="res://Maps/MapAssets/SuddenDeath/BeamOfDeath.png" id="11_l6qgj"]
-[ext_resource type="PackedScene" uid="uid://jar7cmpp4gky" path="res://DEBUGTEST/GODMODEPLAYER.tscn" id="12_jm6sq"]
-[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="13_ifviu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ar61a"]
 size = Vector2(177, 288)
@@ -66,12 +64,6 @@ distance = 6.5
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_vsa67"]
 normal = Vector2(1, 0)
 distance = 6.5
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jm6sq"]
-resource_local_to_scene = true
-shader = ExtResource("13_ifviu")
-shader_parameter/PoisonBuildup = 0.0
-shader_parameter/Color = Color(0.9019608, 0, 0, 1)
 
 [node name="GYM" type="Node2D" unique_id=1442766345 node_paths=PackedStringArray("Pickups", "MapBordersNode", "pilotArea", "camera")]
 script = ExtResource("1_lf0e5")
@@ -174,7 +166,3 @@ autoplay = "default"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BeamsOfDeath/BeamOfDeadLeft" unique_id=1825420657]
 position = Vector2(0, -1)
 shape = SubResource("WorldBoundaryShape2D_vsa67")
-
-[node name="Player" parent="." unique_id=2096548899 instance=ExtResource("12_jm6sq")]
-material = SubResource("ShaderMaterial_jm6sq")
-position = Vector2(-25, 59)
