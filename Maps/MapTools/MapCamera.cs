@@ -102,7 +102,7 @@ public partial class MapCamera : Camera2D
 		{
 			foreach (Player playerB in Game.Instance.playerNodesByColor.Values)
 			{
-				if (playerB == playerA) continue;
+				if (playerB == playerA) continue; //TODO: add a check for if the player is dead or not this is literally so easy why didn't I do this before you idiot
 
 				Vector2 playerpos1 = new Vector2(playerA.Position.X, playerA.Position.Y);
 				Vector2 playerpos2 = new Vector2(playerB.Position.X, playerB.Position.Y);

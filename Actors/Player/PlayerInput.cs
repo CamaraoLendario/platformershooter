@@ -24,23 +24,33 @@ public partial class PlayerInput : Node
 	[Signal] public delegate void SpecialEndEventHandler(); 
 	[Signal] public delegate void PauseRequestEventHandler(Player player, bool pausedByDisconnect);
 #endregion
-	[Export] protected Player Main;
+	protected Player Main = null;
 	public string keyboardKeyword = "";
 	List<string> inputs = new List<string>()
 	{
-		"Shoot", "Jump", "Aim", "Melee", "Drop", "Special"
+		"Shoot",
+		"Jump",
+		"Aim",
+		"Melee",
+		"Drop",
+		"Special"
 	};
 	
 	public override void _Ready()
 	{
 		/* if (Instance == null)
 			Instance = this; */
-
+		if (Main == null){
+			Main = GetParentOrNull<Player>();
+			GD.Print(Main);
+		}
 		if (Main.isKeyboardControlled) keyboardKeyword = "Keyboard";
 	}
 
 	public override void _Input(InputEvent @event)
 	{
+		if (!GodotObject.IsInstanceValid(Main))
+    		return;
 		if (@event is InputEventMouseMotion) return;
 		int inputIndex = Main.inputIdx;
 		
@@ -65,11 +75,13 @@ public partial class PlayerInput : Node
 		{
 			if (Input.IsActionJustPressed(input + keyboardKeyword + inputIndex))
 			{
+				GD.Print("Detected Input: ", input + "Start");
 				EmitSignal(input + "Start");
 			}
 			
 			if (Input.IsActionJustReleased(input + keyboardKeyword + inputIndex))
 			{
+				GD.Print("Detected Input: ", input + "End");
 				EmitSignal(input + "End");
 			}
 		}
@@ -134,7 +146,6 @@ public partial class PlayerInput : Node
 		// {
 		// 	EmitSignal(SignalName.GrapplingHookEnd);
 		// }
-
 	
 		if (Input.IsActionJustPressed("Special" + keyboardKeyword + inputIndex))
 		{

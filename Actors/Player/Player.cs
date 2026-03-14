@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SpaceMages;
 using System.Security.AccessControl;
 using System.IO.Pipes;
+using System.Runtime.CompilerServices;
 
 public partial class Player : CharacterBody2D
 {
@@ -11,6 +12,7 @@ public partial class Player : CharacterBody2D
 	[Signal] public delegate void diedEventHandler(Player player, Player killer);
 	[Signal] public delegate void resetingEventHandler();
 	#endregion
+	[Export] public bool godMode = false;
 	[Export] public bool HasShield
 	{
 		get
@@ -54,12 +56,12 @@ public partial class Player : CharacterBody2D
 	[Export] AudioStreamPlayer pilotDeadAudio;
 	[Export] AnimatedSprite2D pilotSprite;
 	[Export] AnimatedSprite2D shipSprite;
-	[Export] AnimatedSprite2D shipShield;
-	[Export] AnimatedSprite2D pilotShield;
-	[Export] AnimationPlayer pilotShieldFlickerer;
-	[Export] AnimationPlayer shipShieldFlickerer;
+	[Export] public AnimatedSprite2D shipShield;
+	[Export] public AnimatedSprite2D pilotShield;
+	[Export] public AnimationPlayer pilotShieldFlickerer;
+	[Export] public AnimationPlayer shipShieldFlickerer;
 	#endregion
-
+	public Controller currentController;
 	public int inputIdx = -2;
 	public int colorIdx = -1;
 	public bool isKeyboardControlled = false;
@@ -70,7 +72,7 @@ public partial class Player : CharacterBody2D
 	const float SHIPCOOLDOWNTIME = 5.0f;
 	Timer goShipTimer = new();
 	const float TIMETOSHIP = 2.0f;
-	Timer shieldCooldownTimer = new();
+	public Timer shieldCooldownTimer = new();
 	const float SHIELDCOOLDOWNTIME = 15f;
 	Timer shipPardonTimer = new();
 	const float SHIPPARDONTIME = 0.2f;
@@ -153,41 +155,16 @@ public partial class Player : CharacterBody2D
 
 	public override void _Ready()
 	{
-		playerInput.AimStart += OnAimStart;
-		playerInput.AimEnd += OnAimEnd;
-		
-		GD.Print("MY PLAYER COLOR INDEX IS THIS: " + colorIdx);
-
-		world = Game.Instance.world;
-
-		foreach (Node node in GetChildren())
-		{
-			if (node is CollisionShape2D shape)
-				collisionShapes.Add(shape);
-		}
-
-		shipCooldown.OneShot = true;
-		AddChild(shipCooldown);
-		shipCooldown.Timeout += PlayParticlesForTryGoShip;
-		goShipTimer.OneShot = true;
-		AddChild(goShipTimer);
-		goShipTimer.Timeout += PlayParticlesForTryGoShip;
-		shipCooldown.OneShot = true;
-		AddChild(shipPardonTimer);
-		shipPardonTimer.OneShot = true;
-		pilotWeaponHolder.WeaponShot += () => shipPardonTimer.Stop();
-		pilotMeleeAttack.meleed += () => shipPardonTimer.Stop();
-		AddChild(shieldCooldownTimer);
-		shieldCooldownTimer.Timeout  += () =>
-		{
-			pilotShieldFlickerer.Play("shieldRegeneration");
-			shipShieldFlickerer.Play("shieldRegeneration");
-		};
-		timers = [shipCooldown, goShipTimer, shieldCooldownTimer];
-
+		currentController = ship;
+		SetupTimersVarsAndSignals();
 		pilotShieldFlickerer.CurrentAnimation = "shieldRegeneration";
 		shipShieldFlickerer.CurrentAnimation = "shieldRegeneration";
 	}
+    public override void _PhysicsProcess(double delta)
+    {
+        base._PhysicsProcess(delta);
+		currentController.ProcessPhysics(delta);
+    }
 
 	public void OnAimStart()
 	{
@@ -220,7 +197,7 @@ public partial class Player : CharacterBody2D
 	}
 	public void TakeDamage(Player damageDealer = null)
 	{
-		if (isDead || isInvulnerable) return;
+		if (isDead || isInvulnerable || godMode) return;
 		if (damageDealer == null) damageDealer = this;
 
 		if (HasShield)
@@ -295,11 +272,12 @@ public partial class Player : CharacterBody2D
 		HasShield = true;
 	}
 
-	void GoPilot()
+	public void GoPilot()
 	{	
 		if(isDead) return;
 		pilot.Start();
 		ship.End();
+		if (currentController is not PlayerDebugComponent) currentController = pilot;
 		if (isInPilotArea) Velocity = Velocity.Normalized() * 300f;
 		if (!isPilot) shipPardonTimer.Start(SHIPPARDONTIME - shipReconstructionParticles.Lifetime);
 		isPilot = true;
@@ -374,11 +352,11 @@ public partial class Player : CharacterBody2D
 		RemoveParticles(currentShipReconstructionParticles);
 	}
 
-	void TryGoShip()
+	public void TryGoShip()
 	{
 		TryGoShip(false);
 	}
-	void TryGoShip(bool forced)
+	public void TryGoShip(bool forced)
 	{
 		GD.Print("trying to go ship...");
 		if ((goShipTimer.IsStopped() && shipCooldown.IsStopped() && !isInPilotArea) || !shipPardonTimer.IsStopped() || forced)
@@ -388,6 +366,7 @@ public partial class Player : CharacterBody2D
 			isPilot = false;
 			ship.Start();
 			pilot.End();
+			if (currentController is not PlayerDebugComponent)currentController = ship;
 		}
 		else GD.Print("try go ship failed..");
 	}
@@ -471,5 +450,40 @@ public partial class Player : CharacterBody2D
 	{
 		base._ExitTree();
 		Game.Instance.playerNodesByColor.Remove(colorIdx);
+	}
+
+	void SetupTimersVarsAndSignals()
+	{
+		playerInput.AimStart += OnAimStart;
+		playerInput.AimEnd += OnAimEnd;
+		
+		GD.Print("MY PLAYER COLOR INDEX IS THIS: " + colorIdx);
+
+		world = Game.Instance.world;
+
+		foreach (Node node in GetChildren())
+		{
+			if (node is CollisionShape2D shape)
+				collisionShapes.Add(shape);
+		}
+
+		shipCooldown.OneShot = true;
+		AddChild(shipCooldown);
+		shipCooldown.Timeout += PlayParticlesForTryGoShip;
+		goShipTimer.OneShot = true;
+		AddChild(goShipTimer);
+		goShipTimer.Timeout += PlayParticlesForTryGoShip;
+		shipCooldown.OneShot = true;
+		AddChild(shipPardonTimer);
+		shipPardonTimer.OneShot = true;
+		pilotWeaponHolder.WeaponShot += () => shipPardonTimer.Stop();
+		pilotMeleeAttack.meleed += () => shipPardonTimer.Stop();
+		AddChild(shieldCooldownTimer);
+		shieldCooldownTimer.Timeout  += () =>
+		{
+			pilotShieldFlickerer.Play("shieldRegeneration");
+			shipShieldFlickerer.Play("shieldRegeneration");
+		};
+		timers = [shipCooldown, goShipTimer, shieldCooldownTimer];
 	}
 }

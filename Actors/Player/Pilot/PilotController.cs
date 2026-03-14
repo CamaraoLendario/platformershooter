@@ -50,7 +50,7 @@ public partial class PilotController : Controller
 		}
 		SetupTimers([coyoteTimer, wallCoyoteTimer, jumpBufferTimer]);
 	}
-	public override void _PhysicsProcess(double delta)
+	public override void ProcessPhysics(double delta)
 	{
 		SetAimAndFacing();
 		if (!IsAllowed()) return;

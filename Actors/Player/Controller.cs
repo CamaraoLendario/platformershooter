@@ -10,6 +10,7 @@ public partial class Controller : Node
 	public Vector2 inputVector = Vector2.Zero;
 	public bool isPilotController = false;
 	protected float controllerDeadzone = 0.3f;
+	public bool forceDisallow = false;
 	public Player Main;
 	public Vector2 Velocity
 	{
@@ -50,6 +51,10 @@ public partial class Controller : Node
 		playerInput.MeleeEnd += OnMeleeEnd;
 		playerInput.DropStart += OnDropStart;
 		playerInput.DropEnd += OnDropEnd;
+	}
+	public virtual void ProcessPhysics(double delta)
+	{
+		
 	}
 	public void SetupTimers(List<Timer> timers)
 	{
@@ -155,7 +160,7 @@ public partial class Controller : Node
 
 	public bool IsAllowed()
 	{
-		if (Main.isPilot != isPilotController || Main.IsDead)
+		if (Main.isPilot != isPilotController || Main.IsDead || forceDisallow)
 			return false;
 		return true;
 	}

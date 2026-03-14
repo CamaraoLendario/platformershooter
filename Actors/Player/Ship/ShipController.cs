@@ -40,7 +40,7 @@ public partial class ShipController : Controller
 		inputVector = newInputVec.Normalized();
     }
 
-	public override void _PhysicsProcess(double delta)
+	public override void ProcessPhysics(double delta)
 	{
 		if (!IsAllowed()) return;
 		Movement((float)delta);

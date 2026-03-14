@@ -952,7 +952,6 @@ collision = NodePath("../ShipCollision")
 playerInput = NodePath("../PlayerInput")
 
 [node name="ShipCollision" type="CollisionShape2D" parent="." unique_id=398740990 groups=["ShipCollisions"]]
-visible = false
 shape = SubResource("CircleShape2D_o4arb")
 disabled = true
 
@@ -1013,9 +1012,8 @@ speedIcon = NodePath("../OverHeadDisplay/PowerUpIcons/SpeedIcon")
 dualGunsIcon = NodePath("../OverHeadDisplay/PowerUpIcons/DualGunsIcon")
 controller = NodePath("../Ship Controller")
 
-[node name="PlayerInput" type="Node" parent="." unique_id=181455471 node_paths=PackedStringArray("Main")]
+[node name="PlayerInput" type="Node" parent="." unique_id=181455471]
 script = ExtResource("15_n45d6")
-Main = NodePath("..")
 
 [node name="EffectHandler" type="Node" parent="." unique_id=611864569]
 script = ExtResource("16_8np4b")
