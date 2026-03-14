@@ -48,11 +48,15 @@ void start() {
 	CUSTOM.xy = TRANSFORM[3].xy;
 	CUSTOM.w = length(TRANSFORM[3].xy);
 	COLOR.a = 1.;
+	CUSTOM.z = 0.;
 }
 
 void process() {
 	float normalizedDistanceToCenter = length(TRANSFORM[3].xy) / CUSTOM.w;
-	
+	CUSTOM.z += DELTA/LIFETIME;
+	// TODO: explore this VV
+	//VELOCITY.xy -= RotateVec(normalize(TRANSFORM[3].xy), PI/2.) * 6.;
+	// VV normal friction VV
 	VELOCITY.xy -= VELOCITY.xy * DELTA * 4.;
 	VELOCITY.xy += -normalize(TRANSFORM[3].xy) * pullStrength * DELTA * (1. - normalizedDistanceToCenter);
 	
@@ -62,6 +66,7 @@ void process() {
 	else
 		COLOR = mix(color3, color2, (normalizedDistanceToCenter*2.));
 	
+	COLOR.a = min(CUSTOM.z*3., 1);
 	//if (dot(normalize(CUSTOM.xy), normalize(TRANSFORM[3].xy)) <= -0.4){
 		//COLOR.a = 0.;
 	//}
