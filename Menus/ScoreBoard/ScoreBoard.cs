@@ -10,7 +10,7 @@ public partial class ScoreBoard : Control
 {
 	public Callable HideScoreButton => Callable.From(HideScore);
 	[Export] PackedScene individualScoreCounterScene;
-	[Export] HBoxContainer scoreCountersContainer;
+	[Export] VBoxContainer scoreCountersContainer;
 	Dictionary<int, int> oldTeamsScore = [];
 	List<IndividualScoreCounter> scoreCounters = [];
 
@@ -28,11 +28,12 @@ public partial class ScoreBoard : Control
 
 	public void Initialize(Dictionary<int, Player> players)
 	{
-		foreach (int colorIdx in players.Keys)
+		for (int i = 0 ; i < players.Count; i++)//int colorIdx in players.Keys)
 		{
+			int colorIdx = players.Keys.ElementAt(i);
 			IndividualScoreCounter counter = individualScoreCounterScene.Instantiate<IndividualScoreCounter>();
 			counter.colorIdx = colorIdx;
-			scoreCountersContainer.AddChild(counter);
+			scoreCountersContainer.GetChild(i/3).AddChild(counter);
 			scoreCounters.Add(counter);
 		}
 	}
@@ -65,7 +66,7 @@ public partial class ScoreBoard : Control
 		await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
 		ShowScore();
 		await ToSignal(GetTree().CreateTimer(1f), "timeout");
-		foreach (IndividualScoreCounter counter in GetChild(0).GetChildren())
+		foreach (IndividualScoreCounter counter in scoreCounters)
 		{
 			if (!scoreToAdd.ContainsKey(counter.colorIdx)) continue;
 			counter.AddScore(scoreToAdd[counter.colorIdx]);

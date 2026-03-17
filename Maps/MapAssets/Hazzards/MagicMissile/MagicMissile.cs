@@ -7,7 +7,7 @@ public partial class MagicMissile : HittableComponent
 {
     [Export] AnimatedSprite2D sprite;
 
-	Player target;
+	public Player target;
     float acceleration = 1000f;
 
     float initialSpeed = 300f;
@@ -18,13 +18,19 @@ public partial class MagicMissile : HittableComponent
     public override void _Ready()
     {
         base._Ready();
+
+        if (target == null)
+        {   // get random target
+            target = GetRandomPlayer([]);
+        }
+        direction = (target.GlobalPosition - GlobalPosition).Normalized();
         velocity = direction * initialSpeed;
         Dictionary<int, Player> playerList = Game.Instance.playerNodesByInputIdx.ToDictionary();
         SetDeferred(PropertyName.target, playerList.ElementAt(GD.RandRange(0, playerList.Count() - 1)).Value);
-        GD.Print(target);
 
         BodyEntered += onBodyDetected;
         GotHitvec += OnGotHit;
+        target.died += OnTargetDead;
     }
 
     public override void _Process(double delta)
@@ -35,6 +41,7 @@ public partial class MagicMissile : HittableComponent
 
     public override void _PhysicsProcess(double delta)
     {
+        velocity -= velocity.Normalized() * acceleration/5 * (float)delta;
         velocity += (target.GlobalPosition - GlobalPosition).Normalized() * acceleration * (float)delta;
         
         if (velocity.LengthSquared() > maxSpeed * maxSpeed)
@@ -55,18 +62,47 @@ public partial class MagicMissile : HittableComponent
 
     void OnGotHit(Vector2 hitterPos)
     {
-        GD.Print("GOT HIT!!!");
         velocity = (hitterPos - GlobalPosition).Normalized() * maxSpeed;
+
+        target = GetRandomPlayer(target);
+        
+        maxSpeed *= 1.1f;
+        acceleration *= 1.1f;
+
+    }
+
+    void OnTargetDead(Player player, Player killer)
+    {
+        target.died -= OnTargetDead;
+        target = GetRandomPlayer(target);
+        target.died += OnTargetDead;
+    }
+
+    Player GetRandomPlayer(Player exclude)
+    {
+        return GetRandomPlayer([exclude]);
+    }
+    Player GetRandomPlayer(Player[] excludeArray)
+    {
         Dictionary<int, Player> playerList = Game.Instance.playerNodesByInputIdx.ToDictionary();
-        playerList.Remove(target.inputIdx);
+        
+        foreach(Player player in Game.Instance.playerNodesByInputIdx.ToDictionary().Values)
+        {
+            if (player.IsDead) playerList.Remove(player.inputIdx);
+        }
+
+        foreach(Player player in excludeArray)
+        {     
+            playerList.Remove(player.inputIdx);
+        }
 
         if (playerList.Count() <= 0)
         {
-            GD.PrintErr("No other players found, maintaining current target.");
-            return;
+            GD.PrintErr("No other players found, returning current target.");
+            return target;
         }
 
-        target = playerList.ElementAt(GD.RandRange(0, playerList.Count() - 1)).Value;
-        maxSpeed += 50f;
+        return playerList.ElementAt(GD.RandRange(0, playerList.Count() - 1)).Value;
     }
+
 }

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://fkbfea7dye1q"]
+
+[ext_resource type="Script" uid="uid://c2mvn5ydrxx3" path="res://DEBUGRADIALMENU.cs" id="1_pnngy"]
+[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Sprites/PilotStill.png" id="2_lgg64"]
+
+[node name="DebugRadialMenu" type="Node2D" unique_id=1101127890]
+script = ExtResource("1_pnngy")
+MenuSectionCount = 10
+borderThickness = 0.25
+currentSelectedItem = 1
+
+[node name="PilotStill" type="Sprite2D" parent="." unique_id=463865341]
+texture = ExtResource("2_lgg64")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1546040998]
+zoom = Vector2(8.04, 8.04)

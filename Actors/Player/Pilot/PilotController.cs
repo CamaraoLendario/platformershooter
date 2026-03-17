@@ -58,6 +58,7 @@ public partial class PilotController : Controller
 	public override void ProcessPhysics(double delta)
 	{
 		if (!IsAllowed()) return;
+		
 		ProcessMovement((float)delta);
 
 		bool wasOnFloor = Main.IsOnFloor();

@@ -1,11 +1,7 @@
 shader_type particles;
-
-uniform int tendrilCount = 4;
-uniform float radius = 50.;
-uniform float offsetLength = 10.;
+uniform float radiusLength = 50.;
 uniform float initialVelocity = 100.;
-uniform float pullStrength = 10.;
-uniform float frinctionStrength = 10;
+uniform float pullStrength = 100.;
 
 uniform vec4 color1 :source_color;
 uniform vec4 color2 :source_color;
@@ -44,38 +40,24 @@ float rand_from_seed(inout uint seed) {
 
 void start() {
 	uint alt_seed = hash(NUMBER + uint(1.) + RANDOM_SEED);
-	float TendrilCount = float(tendrilCount);
-	float angle = floor(rand_from_seed(alt_seed) * TendrilCount) * (PI*2.)/TendrilCount;
-	float spawnDistOffset = (rand_from_seed(alt_seed)-.5) * offsetLength;
-	vec2 spawnDirVec = vec2(
-		cos(angle),
-		sin(angle)
-	);
-	angle = rand_from_seed(alt_seed) * PI * 2.;
-	vec2 offsetDirVec = vec2(
-		cos(angle),
-		sin(angle)
-	);
-	TRANSFORM[3].xy = spawnDirVec * radius + offsetDirVec * offsetLength * rand_from_seed(alt_seed);
-	
-	VELOCITY.xy = RotateVec(-normalize(TRANSFORM[3].xy), PI/2.5) * initialVelocity;
+	float x = rand_from_seed(alt_seed) - .5;
+	float y = rand_from_seed(alt_seed) - .5;
+	TRANSFORM[3].xy = normalize(vec2(x, y)) * (radiusLength + rand_from_seed(alt_seed) * 20.); 
+	VELOCITY.xy = RotateVec(normalize(TRANSFORM[3].xy), PI/1.2) * initialVelocity;
+	CUSTOM.xy = TRANSFORM[3].xy;
 	CUSTOM.w = length(TRANSFORM[3].xy);
+	COLOR.a = 1.;
 	CUSTOM.z = 0.;
-	CUSTOM.xy = normalize(TRANSFORM[3].xy);
-	TRANSFORM[3].w = 0.;
 }
 
 void process() {
-	CUSTOM.z += DELTA/LIFETIME;
 	float normalizedDistanceToCenter = length(TRANSFORM[3].xy) / CUSTOM.w;
-	float gravitationalPull = pullStrength * (1.- normalizedDistanceToCenter * 0.8);
-	VELOCITY.xy -= VELOCITY.xy * DELTA * frinctionStrength;
-	VELOCITY.xy += -normalize(TRANSFORM[3].xy) * gravitationalPull * DELTA;
-
+	CUSTOM.z += DELTA/LIFETIME;
 	// TODO: explore this VV
 	//VELOCITY.xy -= RotateVec(normalize(TRANSFORM[3].xy), PI/2.) * 6.;
 	// VV normal friction VV
-	//VELOCITY.xy += -normalize(TRANSFORM[3].xy) * pullStrength * DELTA * (1. - normalizedDistanceToCenter);
+	VELOCITY.xy -= VELOCITY.xy * DELTA * 4.;
+	VELOCITY.xy += -normalize(TRANSFORM[3].xy) * pullStrength * DELTA * (1. - normalizedDistanceToCenter);
 	
 	normalizedDistanceToCenter = smoothstep(0, 1, normalizedDistanceToCenter);
 	if (normalizedDistanceToCenter > 0.5)
@@ -83,14 +65,8 @@ void process() {
 	else
 		COLOR = mix(color3, color2, (normalizedDistanceToCenter*2.));
 	
-	COLOR.a = min(CUSTOM.z * 1., 1);
-	
-	if (normalizedDistanceToCenter < 0.5 && TRANSFORM[3].w != 1.){
-		CUSTOM.xy = TRANSFORM[3].xy;
-		TRANSFORM[3].w = 1.;
-	}
-	
-	if (dot(CUSTOM.xy, normalize(TRANSFORM[3].xy)) < 0.){
-		COLOR.a = 0.;
-	}
+	COLOR.a = min(CUSTOM.z*3., 1);
+	//if (dot(normalize(CUSTOM.xy), normalize(TRANSFORM[3].xy)) <= -0.4){
+		//COLOR.a = 0.;
+	//}
 }

@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://deavbdxssxkrb" path="res://Maps/MapAssets/Pickups/ShipPowerUpChestSpawner.tscn" id="16_44myo"]
 [ext_resource type="PackedScene" uid="uid://d2381diivxfax" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/ShipPowerUpChest.tscn" id="17_dat1j"]
 [ext_resource type="PackedScene" uid="uid://800ei3re6rhl" path="res://Maps/MapAssets/Hazzards/Spikes/Spikes.tscn" id="18_4tert"]
+[ext_resource type="Script" uid="uid://cacu8rejhbrse" path="res://Maps/PlayableMaps/MagicMissileComponent.cs" id="19_dyhce"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nl7gd"]
 size = Vector2(177, 288)
@@ -72,7 +73,7 @@ distance = 6.5
 normal = Vector2(1, 0)
 distance = 6.5
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4tert"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xm4ex"]
 shader = ExtResource("2_oauj1")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, 0.195)
@@ -87,7 +88,7 @@ shader_parameter/separation = Vector2(300, 300)
 atlas = ExtResource("2_rdlog")
 region = Rect2(0, 0, 640, 360)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dyhce"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e1ufx"]
 shader = ExtResource("2_oauj1")
 shader_parameter/sideLength = 1.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -102,7 +103,7 @@ shader_parameter/separation = Vector2(300, 300)
 atlas = ExtResource("2_rdlog")
 region = Rect2(0, 360, 640, 360)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_q5udb"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c2pg8"]
 shader = ExtResource("2_oauj1")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, -2)
@@ -117,7 +118,7 @@ shader_parameter/separation = Vector2(300, 300)
 atlas = ExtResource("2_rdlog")
 region = Rect2(0, 2520, 640, 360)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xm4ex"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dbn5u"]
 shader = ExtResource("2_oauj1")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -132,7 +133,7 @@ shader_parameter/separation = Vector2(300, 300)
 atlas = ExtResource("2_rdlog")
 region = Rect2(0, 1080, 640, 360)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e1ufx"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u8bug"]
 shader = ExtResource("2_oauj1")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -147,7 +148,7 @@ shader_parameter/separation = Vector2(300, 300)
 atlas = ExtResource("2_rdlog")
 region = Rect2(0, 720, 640, 360)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_c2pg8"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kktro"]
 shader = ExtResource("2_oauj1")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -162,39 +163,6 @@ shader_parameter/separation = Vector2(300, 300)
 atlas = ExtResource("2_rdlog")
 region = Rect2(0, 1440, 640, 360)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dbn5u"]
-shader = ExtResource("2_oauj1")
-shader_parameter/sideLength = 2.0
-shader_parameter/scrollDir = Vector2(1, 0)
-shader_parameter/scrollSpeed = 0.0
-shader_parameter/parallaxMultiplier = 0.05
-shader_parameter/repeats = true
-shader_parameter/textureRegion = Vector4(0, 720, 640, 360)
-shader_parameter/texSize = Vector2(640, 2880)
-shader_parameter/separation = Vector2(300, 300)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_u8bug"]
-shader = ExtResource("2_oauj1")
-shader_parameter/sideLength = 2.0
-shader_parameter/scrollDir = Vector2(1, 0)
-shader_parameter/scrollSpeed = 0.0
-shader_parameter/parallaxMultiplier = 0.05
-shader_parameter/repeats = true
-shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
-shader_parameter/texSize = Vector2(640, 2880)
-shader_parameter/separation = Vector2(300, 300)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kktro"]
-shader = ExtResource("2_oauj1")
-shader_parameter/sideLength = 2.0
-shader_parameter/scrollDir = Vector2(1, 0)
-shader_parameter/scrollSpeed = 0.0
-shader_parameter/parallaxMultiplier = 0.05
-shader_parameter/repeats = true
-shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
-shader_parameter/texSize = Vector2(640, 2880)
-shader_parameter/separation = Vector2(300, 300)
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_au1ql"]
 shader = ExtResource("2_oauj1")
 shader_parameter/sideLength = 2.0
@@ -202,7 +170,7 @@ shader_parameter/scrollDir = Vector2(1, 0)
 shader_parameter/scrollSpeed = 0.0
 shader_parameter/parallaxMultiplier = 0.05
 shader_parameter/repeats = true
-shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
+shader_parameter/textureRegion = Vector4(0, 720, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
@@ -211,9 +179,9 @@ shader = ExtResource("2_oauj1")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, 0)
 shader_parameter/scrollSpeed = 0.0
-shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/parallaxMultiplier = 0.05
 shader_parameter/repeats = true
-shader_parameter/textureRegion = Vector4(0, 720, 640, 360)
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
@@ -222,9 +190,9 @@ shader = ExtResource("2_oauj1")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, 0)
 shader_parameter/scrollSpeed = 0.0
-shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/parallaxMultiplier = 0.05
 shader_parameter/repeats = true
-shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
@@ -233,9 +201,9 @@ shader = ExtResource("2_oauj1")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, 0)
 shader_parameter/scrollSpeed = 0.0
-shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/parallaxMultiplier = 0.05
 shader_parameter/repeats = true
-shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
@@ -246,7 +214,7 @@ shader_parameter/scrollDir = Vector2(1, 0)
 shader_parameter/scrollSpeed = 0.0
 shader_parameter/parallaxMultiplier = 0.06
 shader_parameter/repeats = true
-shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
+shader_parameter/textureRegion = Vector4(0, 720, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
@@ -257,11 +225,44 @@ shader_parameter/scrollDir = Vector2(1, 0)
 shader_parameter/scrollSpeed = 0.0
 shader_parameter/parallaxMultiplier = 0.06
 shader_parameter/repeats = true
-shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fxf63"]
+shader = ExtResource("2_oauj1")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_clq0o"]
+shader = ExtResource("2_oauj1")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iju5t"]
+shader = ExtResource("2_oauj1")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ydxqe"]
 shader = ExtResource("2_oauj1")
 shader_parameter/sideLength = 1.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -276,7 +277,7 @@ shader_parameter/separation = Vector2(300, 300)
 atlas = ExtResource("2_rdlog")
 region = Rect2(0, 1800, 640, 360)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_clq0o"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p3m2g"]
 shader = ExtResource("2_oauj1")
 shader_parameter/sideLength = 1.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -491,7 +492,7 @@ ParallaxMultiplier = 0.005
 Repeats = false
 
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackgroundLayers/Space" unique_id=1343766999]
-material = SubResource("ShaderMaterial_4tert")
+material = SubResource("ShaderMaterial_xm4ex")
 texture = SubResource("AtlasTexture_4tert")
 
 [node name="Planet" parent="ParallaxBackgroundLayers" unique_id=1475176813 instance=ExtResource("8_thkr4")]
@@ -502,7 +503,7 @@ Repeats = false
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackgroundLayers/Planet" unique_id=236394339]
 light_mask = 0
-material = SubResource("ShaderMaterial_dyhce")
+material = SubResource("ShaderMaterial_e1ufx")
 position = Vector2(229, 56)
 texture = SubResource("AtlasTexture_q5udb")
 
@@ -513,7 +514,7 @@ ParallaxMultiplier = 0.03
 
 [node name="Sprite2D7" type="Sprite2D" parent="ParallaxBackgroundLayers/Meteorites" unique_id=1707436421]
 light_mask = 0
-material = SubResource("ShaderMaterial_q5udb")
+material = SubResource("ShaderMaterial_c2pg8")
 texture = SubResource("AtlasTexture_e1ufx")
 
 [node name="AsteroidsFar" parent="ParallaxBackgroundLayers" unique_id=434697396 instance=ExtResource("8_thkr4")]
@@ -521,19 +522,19 @@ ParallaxMultiplier = 0.04
 
 [node name="AsteroidSmall" type="Sprite2D" parent="ParallaxBackgroundLayers/AsteroidsFar" unique_id=1760842082]
 light_mask = 0
-material = SubResource("ShaderMaterial_xm4ex")
+material = SubResource("ShaderMaterial_dbn5u")
 position = Vector2(162, -38.5)
 texture = SubResource("AtlasTexture_dbn5u")
 
 [node name="AsteroidBIG" type="Sprite2D" parent="ParallaxBackgroundLayers/AsteroidsFar" unique_id=1550812961]
 light_mask = 0
-material = SubResource("ShaderMaterial_e1ufx")
+material = SubResource("ShaderMaterial_u8bug")
 position = Vector2(199.5, -161.5)
 texture = SubResource("AtlasTexture_kktro")
 
 [node name="AsteroidMedium2" type="Sprite2D" parent="ParallaxBackgroundLayers/AsteroidsFar" unique_id=1121703332]
 light_mask = 0
-material = SubResource("ShaderMaterial_c2pg8")
+material = SubResource("ShaderMaterial_kktro")
 position = Vector2(71, -250)
 texture = SubResource("AtlasTexture_gf04x")
 
@@ -542,25 +543,25 @@ ParallaxMultiplier = 0.05
 
 [node name="AsteroidBIG2" type="Sprite2D" parent="ParallaxBackgroundLayers/AsteroidsMid" unique_id=498119882]
 light_mask = 0
-material = SubResource("ShaderMaterial_dbn5u")
+material = SubResource("ShaderMaterial_au1ql")
 position = Vector2(-220, 84.5)
 texture = SubResource("AtlasTexture_kktro")
 
 [node name="AsteroidSmall2" type="Sprite2D" parent="ParallaxBackgroundLayers/AsteroidsMid" unique_id=673944328]
 light_mask = 0
-material = SubResource("ShaderMaterial_u8bug")
+material = SubResource("ShaderMaterial_gf04x")
 position = Vector2(241, -148)
 texture = SubResource("AtlasTexture_dbn5u")
 
 [node name="AsteroidSmall3" type="Sprite2D" parent="ParallaxBackgroundLayers/AsteroidsMid" unique_id=1958346468]
 light_mask = 0
-material = SubResource("ShaderMaterial_kktro")
+material = SubResource("ShaderMaterial_u6qdl")
 position = Vector2(-2.5, -80)
 texture = SubResource("AtlasTexture_dbn5u")
 
 [node name="AsteroidMedium3" type="Sprite2D" parent="ParallaxBackgroundLayers/AsteroidsMid" unique_id=926095805]
 light_mask = 0
-material = SubResource("ShaderMaterial_au1ql")
+material = SubResource("ShaderMaterial_4oyp2")
 position = Vector2(22, 20.5)
 texture = SubResource("AtlasTexture_gf04x")
 
@@ -569,31 +570,31 @@ ParallaxMultiplier = 0.06
 
 [node name="AsteroidBIG3" type="Sprite2D" parent="ParallaxBackgroundLayers/AsteroidsClose" unique_id=1197784979]
 light_mask = 0
-material = SubResource("ShaderMaterial_gf04x")
+material = SubResource("ShaderMaterial_7gcqy")
 position = Vector2(292.5, -71.5)
 texture = SubResource("AtlasTexture_kktro")
 
 [node name="AsteroidMedium" type="Sprite2D" parent="ParallaxBackgroundLayers/AsteroidsClose" unique_id=1689361443]
 light_mask = 0
-material = SubResource("ShaderMaterial_u6qdl")
+material = SubResource("ShaderMaterial_5mx3f")
 position = Vector2(-157.5, -93.5)
 texture = SubResource("AtlasTexture_gf04x")
 
 [node name="AsteroidSmall4" type="Sprite2D" parent="ParallaxBackgroundLayers/AsteroidsClose" unique_id=791082704]
 light_mask = 0
-material = SubResource("ShaderMaterial_4oyp2")
+material = SubResource("ShaderMaterial_fxf63")
 position = Vector2(134.5, 65.5)
 texture = SubResource("AtlasTexture_dbn5u")
 
 [node name="AsteroidMedium4" type="Sprite2D" parent="ParallaxBackgroundLayers/AsteroidsClose" unique_id=708753601]
 light_mask = 0
-material = SubResource("ShaderMaterial_7gcqy")
+material = SubResource("ShaderMaterial_clq0o")
 position = Vector2(121.73999, -132)
 texture = SubResource("AtlasTexture_gf04x")
 
 [node name="AsteroidSmall5" type="Sprite2D" parent="ParallaxBackgroundLayers/AsteroidsClose" unique_id=918361578]
 light_mask = 0
-material = SubResource("ShaderMaterial_5mx3f")
+material = SubResource("ShaderMaterial_iju5t")
 position = Vector2(46.5, -81.5)
 texture = SubResource("AtlasTexture_dbn5u")
 
@@ -605,13 +606,13 @@ Repeats = false
 
 [node name="Island" type="Sprite2D" parent="ParallaxBackgroundLayers/MageTower" unique_id=1347559451]
 light_mask = 0
-material = SubResource("ShaderMaterial_fxf63")
+material = SubResource("ShaderMaterial_ydxqe")
 position = Vector2(222.5, -4.3)
 texture = SubResource("AtlasTexture_ry5q6")
 
 [node name="IslandShrappnel" type="Sprite2D" parent="ParallaxBackgroundLayers/MageTower" unique_id=1600112356]
 light_mask = 0
-material = SubResource("ShaderMaterial_clq0o")
+material = SubResource("ShaderMaterial_p3m2g")
 position = Vector2(225.73999, 0)
 texture = SubResource("AtlasTexture_1xc6c")
 
@@ -620,10 +621,15 @@ libraries/ = SubResource("AnimationLibrary_7m7vj")
 autoplay = &"upanddown"
 
 [node name="Spikes" parent="." unique_id=603614567 instance=ExtResource("18_4tert")]
-position = Vector2(-416, -44)
+position = Vector2(-416, -60)
 rotation = 1.5707964
 
 [node name="Right Marker" parent="Spikes/SpikesSprite" parent_id_path=PackedInt32Array(603614567, 1241953219) index="1" unique_id=1512692051]
-position = Vector2(58, 0)
+position = Vector2(75, 0)
+
+[node name="MagicMissileComponent" type="Node" parent="." unique_id=95296135 node_paths=PackedStringArray("mapNode")]
+script = ExtResource("19_dyhce")
+mapNode = NodePath("..")
+spawnTime = 10.0
 
 [editable path="Spikes"]

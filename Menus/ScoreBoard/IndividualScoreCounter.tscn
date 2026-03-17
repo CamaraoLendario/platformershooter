@@ -1,12 +1,77 @@
-[gd_scene load_steps=4 format=3 uid="uid://c2q477nhb4j0p"]
+[gd_scene format=3 uid="uid://c2q477nhb4j0p"]
 
 [ext_resource type="Script" uid="uid://cw8w6rias5p3w" path="res://Menus/ScoreBoard/IndividualScoreCounter.cs" id="1_6iebm"]
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_c015y"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_6iebm"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6iebm"]
+bg_color = Color(0, 0, 0, 0.2901961)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
 
-[node name="IndividualScoreCounter" type="Control" node_paths=PackedStringArray("name", "scoreCount", "addedScore")]
-custom_minimum_size = Vector2(140, 70)
+[sub_resource type="LabelSettings" id="LabelSettings_6iebm"]
+font_size = 58
+
+[sub_resource type="Animation" id="Animation_6iebm"]
+resource_name = "AddScore"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/addedScore:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(200, -0.25, 0, 0.25, 0, 70, -0.25, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/addedScore:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+
+[sub_resource type="Animation" id="Animation_c015y"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel/addedScore:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(96, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel/addedScore:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lvm1b"]
+_data = {
+&"AddScore": SubResource("Animation_6iebm"),
+&"RESET": SubResource("Animation_c015y")
+}
+
+[node name="IndividualScoreCounter" type="Control" unique_id=781488971 node_paths=PackedStringArray("name", "scoreCount", "addedScore", "animationPlayer")]
+custom_minimum_size = Vector2(400, 200)
 layout_mode = 3
 anchor_left = 0.44400004
 anchor_top = 0.44900003
@@ -23,50 +88,56 @@ script = ExtResource("1_6iebm")
 name = NodePath("Panel/VBoxContainer/PlayerName")
 scoreCount = NodePath("Panel/VBoxContainer/Score")
 addedScore = NodePath("Panel/addedScore")
+animationPlayer = NodePath("AnimationPlayer")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=40575644]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6iebm")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=710388440]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -170.0
+offset_top = -54.0
+offset_right = 170.0
+offset_bottom = 54.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="PlayerName" type="Label" parent="Panel/VBoxContainer"]
+[node name="PlayerName" type="Label" parent="Panel/VBoxContainer" unique_id=1286508398]
 layout_mode = 2
 text = "PlayerName"
 label_settings = SubResource("LabelSettings_6iebm")
 horizontal_alignment = 1
 
-[node name="Score" type="Label" parent="Panel/VBoxContainer"]
+[node name="Score" type="Label" parent="Panel/VBoxContainer" unique_id=755896319]
 layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_6iebm")
 horizontal_alignment = 1
 
-[node name="addedScore" type="Label" parent="Panel"]
+[node name="addedScore" type="Label" parent="Panel" unique_id=1324386165]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(69, 17)
 layout_mode = 0
-offset_left = 35.5
-offset_top = 37.0
-offset_right = 104.5
-offset_bottom = 60.0
+offset_left = 92.0
+offset_top = 96.0
+offset_right = 273.0
+offset_bottom = 213.00058
 text = "+1"
+label_settings = SubResource("LabelSettings_6iebm")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1546575423]
+libraries/ = SubResource("AnimationLibrary_lvm1b")
