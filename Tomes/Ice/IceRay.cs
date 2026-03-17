@@ -19,7 +19,6 @@ public partial class IceRay : HitscanBullet
 	[Export] public GpuParticles2D rayRingEmitter;
 	[Export] public GpuParticles2D iceDroppletsEmitter;
 	[Export] public GpuParticles2D hitEmitter;
-	float distance = -1;
 	Timer iceParticlesCoyoteTimer = new();
 	float iceParticlesCoyoteTime = 1;
 	List<GpuParticles2D> iceParticlesQueue = [];
@@ -29,14 +28,13 @@ public partial class IceRay : HitscanBullet
 
 	public override void _Ready()
 	{
- 		base._Ready();
 		AddParticleParents();
-		CheckHit();
+ 		base._Ready();
 		CallDeferred(MethodName.SpawnParticleEmitters);
  	}
-
     public override void _PhysicsProcess(double delta)
 	{
+		base._PhysicsProcess(delta);
 		for(int i = 0; i < fallingIce.Count; i++)
 		{
 			(GpuParticles2D node, float velocity) = fallingIce[i];
@@ -109,6 +107,7 @@ public partial class IceRay : HitscanBullet
 		int separation = (int) rayRingEmitter.Position.X;
 		SpawnRayRings(separation);
 	}
+
 	async void SpawnRayRings(int separation, int animationStep = 1, int current = 2)
 	{
 		if (separation * current > distance)
@@ -125,7 +124,6 @@ public partial class IceRay : HitscanBullet
 			await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
 		}
 		(GpuParticles2D newRayRing, GpuParticles2D newIceParticles) = GPUParticlesPool.GetIceParticles();
-
 
 		newRayRing.OneShot = true;
 		newRayRing.Position = GlobalPosition + (current * separation * Vector2.Right.Rotated(Rotation));
@@ -156,110 +154,12 @@ public partial class IceRay : HitscanBullet
 		iceDroppletsParent.Position = Vector2.Zero + randVec;
 	}
 
-    void CheckHit()
-	{
-		ForceRaycastUpdate();
-		var collider = GetCollider();
-		while (collider != null)
-		{
-			if (collider is Area2D)
-			{
-				if (CheckHitArea2D(collider as Area2D))
-					break;
-			}
-			else
-			{
-				if (CheckHitBody(collider as Node2D))
-					break;
-			}
-			GD.Print(collider);
-			GD.Print((GetCollisionPoint() - GlobalPosition).Length());
-			ForceRaycastUpdate();
-			collider = GetCollider();
-		}
-		Enabled = false;
-		if (collider == null)
-		{
-			distance = 500f;
-		}
-	}
-
-	bool CheckHitArea2D(Area2D collider)
-	{
-		if (collider is HittableComponent hittableComponent)
-		{
-
-			hittableComponent.Hit(this);
-
-			if (!hittableComponent.stopsHitscan || !hittableComponent.Enabled)
-			{
-				AddException(collider);
-				return false;
-			}
-			else return true;
-		}
-		else
-		{
-			AddException(collider);
-			return false;
-		}
-	}
-	bool CheckHitBody(Node2D collider)
-	{
-		if (collider is Player player)
-		{
-			if (player.colorIdx == owner.colorIdx)
-            {
-				AddException(player);
-				return false;
-            }
-			else Hit(player);
-		}
-		else if (collider is TileMapLayer)
-		{
-			Hit(collider as TileMapLayer);
-		}
-		else if (collider is StaticBody2D)
-		{
-			Hit(collider as StaticBody2D);
-		}
-		return true;
-	}
 	protected override void Hit(Player player)
 	{
 		if(player.HasShield)
 			player.TakeDamage(owner);
 		else
 			player.effectHandler.Freeze();
-	}
-    protected override void Hit(StaticBody2D body)
-    {
-		base.Hit(body);
-    }
-	
-	void Hit(TileMapLayer mapLayer)
-	{
-		if (mapLayer.GetParent() is not InteractableTiles parentLayer) return;
-		
-		Vector2I tilePos = GetTilePos(GetCollisionPoint(), mapLayer.TileSet.TileSize);
-		parentLayer.destructibleBlockFlags[tilePos].Destroy();
-	}
-
-	Vector2I GetTilePos(Vector2 pos, Vector2 tileSize)
-	{
-		pos -= GetCollisionNormal();
-		pos /= (int)tileSize.X;
-		if (pos.X < 0) pos.X --;
-		if (pos.Y < 0) pos.Y --;
-		Vector2I tilePos = ToIntVec(pos);
-		return tilePos;
-	}	
-	Vector2I ToIntVec(Vector2 vec)
-	{
-		return new Vector2I(
-			(int) vec.X,
-			(int) vec.Y
-		);
 	}
 
     public override void _ExitTree()

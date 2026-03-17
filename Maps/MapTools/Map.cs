@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public partial class Map : Node2D
 {
-    [Export] public float TimeToSuddenDeath = 30f;
     [ExportGroup("Nodes")]
     [Export] public Node Pickups;
     [Export] public MapBorders MapBordersNode;

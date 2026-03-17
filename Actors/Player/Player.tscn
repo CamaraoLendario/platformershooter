@@ -866,6 +866,7 @@ one_shot = true
 explosiveness = 1.0
 randomness = 1.0
 fixed_fps = 60
+local_coords = true
 process_material = ExtResource("11_rda0l")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PilotSprite" unique_id=862347567]
@@ -981,6 +982,7 @@ one_shot = true
 explosiveness = 1.0
 randomness = 1.0
 fixed_fps = 60
+local_coords = true
 process_material = ExtResource("22_aao0a")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ShipSprite" unique_id=589171231]

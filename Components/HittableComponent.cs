@@ -6,11 +6,8 @@ using System.Threading;
 
 public partial class HittableComponent : Area2D
 {
-	[Signal] public delegate void GotHitEventHandler();
-	[Signal] public delegate void GotHitidxEventHandler(int hitterIdx);
-	[Signal] public delegate void GotHitvecEventHandler(Vector2 hitterIdx);
+	[Signal] public delegate void GotHitEventHandler(Node2D hitter);
 	
-
 	[Export] public bool Enabled
 	{
 		get
@@ -57,22 +54,16 @@ public partial class HittableComponent : Area2D
 		if (area is MeleeAttack meleeAttack && meleeAllowed)
 		{
 			GD.Print("melee entered!!!");
-			GetHit(meleeAttack.GetIDX());
-			GetHit(meleeAttack.GlobalPosition);
-			GetHit();
+			GetHit(meleeAttack.Main);
 		}
 		else if (area is LinearProjectile projectile && linearProjectilesAllowed)
 		{
 			projectile.End();
-			GetHit(projectile.owner.inputIdx);
-			GetHit(projectile.GlobalPosition);
-			GetHit();
+			GetHit(projectile);
 		}
 		else if (area is ExplosionComponent explosionComponent && explosionAllowed)
 		{
-			GetHit(explosionComponent.owner.inputIdx);
-			GetHit(explosionComponent.GlobalPosition);
-			GetHit();
+			GetHit(explosionComponent);
 		}
 	}	
 
@@ -81,38 +72,21 @@ public partial class HittableComponent : Area2D
 		if (!enabled) return;
 		if (Hitter is HitscanBullet ray && hitscanBulletAllowed)
 		{
-			GetHit(ray.owner.inputIdx);
-			GetHit(ray.GlobalPosition);
-			GetHit();
+			GetHit(ray);
 		}
 		else if (Hitter is MeleeAttack meleeAttack && meleeAllowed)
 		{
-			GetHit(meleeAttack.GetIDX());
-			GetHit(meleeAttack.GlobalPosition);
-			GetHit();
+			GetHit(meleeAttack.Main);
 		}
 		else if (Hitter is LinearProjectile projectile && linearProjectilesAllowed)
 		{
 			projectile.End();
-			GetHit(projectile.owner.inputIdx);
-			GetHit(projectile.GlobalPosition);
-			GetHit();
+			GetHit(projectile);
 		}
 	}
 
-	void GetHit()
+	void GetHit(Node2D Hitter)
 	{
-		EmitSignal(SignalName.GotHit);
-	}
-
-	void GetHit(int hitterIdx)
-	{
-		EmitSignal(SignalName.GotHitidx, hitterIdx);
-	}
-	
-	void GetHit(Vector2 hitterPos)
-	{
-		GD.Print("got hit vector");
-		EmitSignal(SignalName.GotHitvec, hitterPos);
+		EmitSignal(SignalName.GotHit, Hitter);
 	}
 }

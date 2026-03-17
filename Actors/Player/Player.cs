@@ -183,11 +183,8 @@ public partial class Player : CharacterBody2D
 		(pilotDeathParticles.ProcessMaterial as ShaderMaterial).SetShaderParameter("outlineColor", SpaceMagesVars.teamColors[colorIdx]);
 		
 		(shipShield.Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
-		(shipShield.GetChild<GpuParticles2D>(0).Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
-		
 		(pilotShield.Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
-		(pilotShield.GetChild<GpuParticles2D>(0).Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
-		
+
 		this.colorIdx = colorIdx;
 	}
 
@@ -256,16 +253,18 @@ public partial class Player : CharacterBody2D
 			particlesEmitter = shipShield.GetChild<GpuParticles2D>(0);
 		}
 		
-		GpuParticles2D newParticlesEmitter = particlesEmitter.Duplicate() as GpuParticles2D;
-		
+		//GpuParticles2D newParticlesEmitter = particlesEmitter.Duplicate() as GpuParticles2D;
+		GpuParticles2D newParticlesEmitter = GPUParticlesPool.GetClonedParticles(particlesEmitter);
+		(newParticlesEmitter.Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
 		newParticlesEmitter.Position = Position;
-		newParticlesEmitter.Emitting = true;
-
-		Game.Instance.world.AddChild(newParticlesEmitter);
-		newParticlesEmitter.Finished += () =>
-		{
-			newParticlesEmitter.QueueFree();
-		};
+		newParticlesEmitter.OneShot = true;
+		thisissofuckingweirdwhatdemonhaspocessedthisgameatleastitworksIguessbutatwhatcost(newParticlesEmitter);
+	}
+	async void thisissofuckingweirdwhatdemonhaspocessedthisgameatleastitworksIguessbutatwhatcost(GpuParticles2D newParticlesEmitter)
+	{
+		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+		newParticlesEmitter.Restart();
 	}
 	public void ForceRecoverShield()
 	{
@@ -393,6 +392,7 @@ public partial class Player : CharacterBody2D
 		(particles.ProcessMaterial as ShaderMaterial).SetShaderParameter("initialDir", (Position - damager.Position).Normalized());
 		(particles.ProcessMaterial as ShaderMaterial).SetShaderParameter("rotation", pilotSprite.Rotation);
 		particles.Position = Position;
+		particles.Restart();
 	}
 
 	async void Shake(float shakeTime, float shakeForce = 1)

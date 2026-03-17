@@ -5,6 +5,7 @@ using System.ComponentModel;
 
 public partial class BeamsOfDeath : Node2D
 {
+	[Export] float timeToSuddenDeath = 30f;
 	[Export] float beamVelocity = 10;
 	[ExportGroup("Nodes")]
 	[Export] Area2D beamRight;
@@ -27,7 +28,7 @@ public partial class BeamsOfDeath : Node2D
 			started = 1;
 		};
 
-		SuddenDeathTimer.Start(currentMap.TimeToSuddenDeath);
+		SuddenDeathTimer.Start(timeToSuddenDeath);
 		Game.Instance.NewRoundStarted += Reset;
     }
 
@@ -55,7 +56,7 @@ public partial class BeamsOfDeath : Node2D
 			beam.beam.Position = beam.beamPos;
 			started = 0;
 		}
-		SuddenDeathTimer.Start(currentMap.TimeToSuddenDeath);
+		SuddenDeathTimer.Start(timeToSuddenDeath);
 	}
 
     public override void _ExitTree()

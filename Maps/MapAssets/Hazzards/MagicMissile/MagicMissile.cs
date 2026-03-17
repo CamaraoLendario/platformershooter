@@ -29,7 +29,7 @@ public partial class MagicMissile : HittableComponent
         SetDeferred(PropertyName.target, playerList.ElementAt(GD.RandRange(0, playerList.Count() - 1)).Value);
 
         BodyEntered += onBodyDetected;
-        GotHitvec += OnGotHit;
+        GotHit += OnGotHit;
         target.died += OnTargetDead;
     }
 
@@ -37,7 +37,6 @@ public partial class MagicMissile : HittableComponent
     {
         sprite.Rotation = velocity.Angle();
     }
-
 
     public override void _PhysicsProcess(double delta)
     {
@@ -60,15 +59,14 @@ public partial class MagicMissile : HittableComponent
         QueueFree();
     }   
 
-    void OnGotHit(Vector2 hitterPos)
+    void OnGotHit(Node2D hitter)
     {
-        velocity = (hitterPos - GlobalPosition).Normalized() * maxSpeed;
+        velocity = (hitter.GlobalPosition - GlobalPosition).Normalized() * maxSpeed;
 
         target = GetRandomPlayer(target);
         
         maxSpeed *= 1.1f;
         acceleration *= 1.1f;
-
     }
 
     void OnTargetDead(Player player, Player killer)

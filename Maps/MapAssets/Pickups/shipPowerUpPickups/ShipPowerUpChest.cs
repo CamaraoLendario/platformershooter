@@ -42,7 +42,7 @@ public partial class ShipPowerUpChest : Node2D
 		hittableComponent.Enabled = false;
 	}
 
-	void OnHit()
+	void OnHit(Node2D hitter)
 	{
 		OpenChest();
 	}

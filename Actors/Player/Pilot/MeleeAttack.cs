@@ -11,7 +11,7 @@ public partial class MeleeAttack : Area2D
 	[Export] AnimatedSprite2D sprite;
 	[Export] CollisionShape2D collisionShape;
 	[Export] PlayerParticleEmitters dashParticles;
-	[Export] Player Main;
+	[Export] public Player Main;
 	[Export] float dashForce = 500f;
 	Timer cooldownTimer = new();
 	const float COOLDOWNTIME = 0.35f;
@@ -186,7 +186,7 @@ public partial class MeleeAttack : Area2D
 			return false;
 	}
 
-	public int GetIDX()
+	public int GetIdx()
 	{
 		return Main.inputIdx;
 	}

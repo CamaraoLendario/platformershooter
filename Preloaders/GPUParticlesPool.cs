@@ -87,7 +87,7 @@ public partial class GPUParticlesPool : Node2D
 			particles = GenerateNewGeneralUseParticles();
 		}
 		Instance.MoveChild(particles, -1);
-		particles.Emitting = true;
+		//particles.Emitting = true;
 		particles.Show();
 		return particles;
 	}
@@ -181,10 +181,12 @@ public partial class GPUParticlesPool : Node2D
 	public static void ReturnRing(GpuParticles2D particles)
 	{
 		particles.Reparent(Instance.ringsParent);
+		particles.Position = Vector2.Zero;
 	}
 	public static void ReturnDropplet(GpuParticles2D particles)
 	{
 		particles.Reparent(Instance.droppletsParent);
+		particles.Position = Vector2.Zero;
 	}
 
 	void OnNodeEntered(Node node)
