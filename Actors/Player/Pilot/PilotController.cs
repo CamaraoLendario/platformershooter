@@ -23,7 +23,8 @@ public partial class PilotController : Controller
 	public float groundFrictionIndex = 1500f;
 	const float AIRFRICTIONINDEX = 1000f;
 	public const float JUMPFORCE = 500f;
-	const float GRAVITYFORCE = 1500f;
+	public const float BASEGRAVITYFORCE = 1500f;
+	public float gravityForce = BASEGRAVITYFORCE;
 	Vector2 gravityDirection = new Vector2(0, 1);
 	const float MAXFALLSPEED = 600f;
 	bool hasAirJump = true;
@@ -196,7 +197,7 @@ public partial class PilotController : Controller
 			tempMaxFallSpeed *= 0.1f;
 		}
 
-		Velocity += gravityDirection * GRAVITYFORCE * delta;
+		Velocity += gravityDirection * gravityForce * delta;
 		if(Velocity.Y > tempMaxFallSpeed)
 		{
 			Velocity = new Vector2(Velocity.X, tempMaxFallSpeed);

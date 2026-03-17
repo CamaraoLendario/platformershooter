@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://bxienc218xiot"]
 
 [ext_resource type="Shader" uid="uid://dc8dv5u5hl323" path="res://BlackHole.gdshader" id="1_bjy8h"]
-[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Sprites/PilotStill.png" id="2_rv61l"]
+[ext_resource type="Script" uid="uid://34ghvcb3tr0t" path="res://Blackhole.cs" id="1_rv61l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bjy8h"]
+radius = 44.011364
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rv61l"]
 shader = ExtResource("1_bjy8h")
-shader_parameter/tendrilCount = 8
+shader_parameter/tendrilCount = 7
 shader_parameter/radius = 24.0
 shader_parameter/offsetLength = 5.0
 shader_parameter/initialVelocity = 147.85
@@ -15,13 +18,39 @@ shader_parameter/color1 = Color(6.9789587e-07, 0.22117198, 0.46957147, 1)
 shader_parameter/color2 = Color(0, 0.78431374, 0.8666667, 1)
 shader_parameter/color3 = Color(1, 0.9411765, 1, 1)
 
-[node name="Node2D" type="Node2D" unique_id=760288141]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y4q54"]
+shader = ExtResource("1_bjy8h")
+shader_parameter/tendrilCount = 7
+shader_parameter/radius = 36.0
+shader_parameter/offsetLength = 7.5
+shader_parameter/initialVelocity = 221.775
+shader_parameter/pullStrength = 1117.328
+shader_parameter/frinctionStrength = 6.13
+shader_parameter/color1 = Color(6.9789587e-07, 0.22117198, 0.46957147, 1)
+shader_parameter/color2 = Color(0, 0.78431374, 0.8666667, 1)
+shader_parameter/color3 = Color(1, 0.9411765, 1, 1)
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1955495408]
+[node name="BlackHole" type="Node2D" unique_id=760288141 node_paths=PackedStringArray("pullArea")]
+script = ExtResource("1_rv61l")
+baseGravityForce = 5000.0
+pullArea = NodePath("PullArea")
+
+[node name="PullArea" type="Area2D" parent="." unique_id=61996743]
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PullArea" unique_id=808402503]
+shape = SubResource("CircleShape2D_bjy8h")
+debug_color = Color(0, 0.6, 0.69803923, 0.09019608)
+
+[node name="InnerParticles" type="GPUParticles2D" parent="." unique_id=1955495408]
+rotation = 0.43633232
 amount = 1000
 lifetime = 0.76
+local_coords = true
 process_material = SubResource("ShaderMaterial_rv61l")
 
-[node name="PilotStill" type="Sprite2D" parent="." unique_id=1090217844]
-position = Vector2(-56, -31)
-texture = ExtResource("2_rv61l")
+[node name="OuterParticles" type="GPUParticles2D" parent="." unique_id=896582460]
+amount = 2000
+lifetime = 0.76
+local_coords = true
+process_material = SubResource("ShaderMaterial_y4q54")
