@@ -19,10 +19,10 @@ public partial class LinearProjectile : Area2D
 		set
 		{
 			direction = value;
-			sprite.Rotation = direction.Angle();
+			sprite.Rotation = value.Angle();
 		}
 	}
-	public Vector2 direction;
+	private Vector2 direction;
 
 	public Player owner;
 	public bool isInPilotArea = true;

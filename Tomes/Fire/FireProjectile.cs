@@ -10,6 +10,7 @@ public partial class FireProjectile : LinearProjectile
 	[Export] AudioStreamPlayer2D FireAudio;
 	Timer waitParticlesTimer = new();
 	ExplosionComponent explosionComponent;
+	float acceleration = 300f;
 
 
     public override void _Ready()
@@ -21,6 +22,13 @@ public partial class FireProjectile : LinearProjectile
 		waitParticlesTimer.Timeout += OnParticlesFinished;
 		PrepareExplosionParticles();
     }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        base._PhysicsProcess(delta);
+		speed += acceleration * (float)delta;
+    }
+
 
 	void PrepareExplosionParticles()
 	{
