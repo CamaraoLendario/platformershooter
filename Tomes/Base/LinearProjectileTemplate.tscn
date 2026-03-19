@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://fi88ocyqxvqn"]
+[gd_scene format=3 uid="uid://fi88ocyqxvqn"]
 
 [ext_resource type="Texture2D" uid="uid://d2lvitcc04jb3" path="res://Tomes/Base/Sprites/testBullet.png" id="1_qnca1"]
 [ext_resource type="Script" uid="uid://ceclud1gjsfgc" path="res://Tomes/Base/LinearProjectile.cs" id="1_rkdl8"]
@@ -6,32 +6,32 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_rkdl8"]
 radius = 4.0
 
-[node name="LinearProjectile" type="Area2D" node_paths=PackedStringArray("sprite", "confirmRaysNode")]
+[node name="LinearProjectile" type="Area2D" unique_id=1463168731 node_paths=PackedStringArray("sprite", "confirmRaysNode")]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 35
 script = ExtResource("1_rkdl8")
 sprite = NodePath("Sprite2D")
 confirmRaysNode = NodePath("Sprite2D/collisionConfirmRays")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1324468261]
 shape = SubResource("CircleShape2D_rkdl8")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1321529545]
 texture = ExtResource("1_qnca1")
 
-[node name="collisionConfirmRays" type="Node2D" parent="Sprite2D"]
+[node name="collisionConfirmRays" type="Node2D" parent="Sprite2D" unique_id=859082764]
 
-[node name="RayCast2D" type="RayCast2D" parent="Sprite2D/collisionConfirmRays"]
+[node name="RayCast2D" type="RayCast2D" parent="Sprite2D/collisionConfirmRays" unique_id=1246176037]
 position = Vector2(-12, 0)
 target_position = Vector2(24, 0)
 collision_mask = 2
 
-[node name="RayCast2D2" type="RayCast2D" parent="Sprite2D/collisionConfirmRays"]
+[node name="RayCast2D2" type="RayCast2D" parent="Sprite2D/collisionConfirmRays" unique_id=723366185]
 position = Vector2(-12, 0)
 target_position = Vector2(24, 0)
 collision_mask = 2
 
-[node name="RayCast2D3" type="RayCast2D" parent="Sprite2D/collisionConfirmRays"]
+[node name="RayCast2D3" type="RayCast2D" parent="Sprite2D/collisionConfirmRays" unique_id=2008850178]
 position = Vector2(-12, 0)
 target_position = Vector2(24, 0)
 collision_mask = 2

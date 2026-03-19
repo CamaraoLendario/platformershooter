@@ -763,7 +763,7 @@ shader_parameter/color_ramp = SubResource("GradientTexture1D_f6sss")
 
 [node name="Player" type="CharacterBody2D" unique_id=2096548899 node_paths=PackedStringArray("effectHandler", "pilot", "ship", "playerInput", "NameLabel", "pilotWeaponHolder", "pilotMeleeAttack", "shipExplosionParticles", "shipReconstructionParticles", "pilotDeathParticles", "shipDeadAudio", "pilotDeadAudio", "pilotSprite", "shipSprite", "shipShield", "pilotShield", "pilotShieldFlickerer", "shipShieldFlickerer")]
 material = SubResource("ShaderMaterial_jkixf")
-collision_mask = 2
+collision_mask = 34
 script = ExtResource("2_30khc")
 HasShield = false
 pilotRagdol = ExtResource("3_fllei")
@@ -906,7 +906,7 @@ collision_mask = 2
 
 [node name="MeleeAttack" type="Area2D" parent="." unique_id=546809376 node_paths=PackedStringArray("meleeAudioPlayer", "sprite", "collisionShape", "dashParticles", "Main")]
 collision_layer = 4
-collision_mask = 5
+collision_mask = 7
 script = ExtResource("11_gffum")
 meleeAudioPlayer = NodePath("MeleeSound")
 sprite = NodePath("AnimatedSprite2D")

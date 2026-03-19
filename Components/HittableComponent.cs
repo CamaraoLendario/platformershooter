@@ -27,6 +27,7 @@ public partial class HittableComponent : Area2D
 
 	[Export] bool breaksBullets = true;
 	[Export] public bool stopsHitscan = false;
+	[Export] public bool blocksExplosions = false;
 
 	[ExportGroup("Hittable by")]
 	[Export] public bool meleeAllowed = true;

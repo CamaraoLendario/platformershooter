@@ -12,7 +12,7 @@ atlas = ExtResource("2_s1py2")
 region = Rect2(0, 16, 16, 16)
 
 [node name="PoisonMinePlacerBody" type="CharacterBody2D" unique_id=1518503122 node_paths=PackedStringArray("sprite")]
-collision_mask = 2
+collision_mask = 34
 script = ExtResource("1_8xcwg")
 sprite = NodePath("Sprite2D")
 poisonMineScene = ExtResource("2_46opx")
