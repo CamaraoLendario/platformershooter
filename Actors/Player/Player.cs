@@ -276,8 +276,8 @@ public partial class Player : CharacterBody2D
 		if(isDead) return;
 		pilot.Start();
 		ship.End();
-		if (currentController is not PlayerDebugComponent) currentController = pilot;
-		if (isInPilotArea) Velocity = Velocity.Normalized() * 300f;
+		if (currentController is not PlayerDebugComponent) currentController = pilot;	
+
 		if (!isPilot) shipPardonTimer.Start(SHIPPARDONTIME - shipReconstructionParticles.Lifetime);
 		isPilot = true;
 	}

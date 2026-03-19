@@ -162,16 +162,40 @@ public partial class PilotController : Controller
 	}
 	void SpaceMove(float delta)
 	{
-		if (!Main.isAiming) Velocity += GetProcessedInput().Normalized() * acceleration * delta;
+		Vector2 newVelocity = Velocity;
+
+		if (!Main.isAiming)
+		{
+			Vector2 accelVec = GetProcessedInput().Normalized() * acceleration * delta;
+			float initialSpeedSquared = newVelocity.LengthSquared();
+			float addedSpeedSquared = (newVelocity + accelVec).LengthSquared();
+
+			if (addedSpeedSquared > (SOFTMAXHSPEED * SOFTMAXHSPEED) && addedSpeedSquared > initialSpeedSquared)
+			{
+				newVelocity += accelVec;
+				newVelocity = newVelocity.Normalized() * Mathf.Sqrt(initialSpeedSquared);
+			}
+			else
+			{
+				newVelocity += accelVec;
+			}
+		}
 
 		float dragMag = AIRFRICTIONINDEX * 0.05f;
+		float currentSpeed = newVelocity.Length();
+		if (currentSpeed > SOFTMAXHSPEED)
+		{
+			dragMag *= currentSpeed / SOFTMAXHSPEED;
+		}
  
-		Velocity -= Velocity.Normalized() * dragMag * delta;
+		newVelocity -= newVelocity.Normalized() * dragMag * delta;
 
-		if (Velocity.LengthSquared() > SOFTMAXHSPEED * SOFTMAXHSPEED)
-			Velocity = Velocity.Normalized() * SOFTMAXHSPEED;
-		if (Velocity.LengthSquared() < 0.1)
-			Velocity *= 0;
+		if (newVelocity.LengthSquared() > MAXHSPEED/2 * MAXHSPEED/2)
+			newVelocity = newVelocity.Normalized() * MAXHSPEED/2;
+		if (newVelocity.LengthSquared() < 0.1)
+			newVelocity *= 0;
+
+		Velocity = newVelocity;
 	}
 
 	public Vector2 GetProcessedInput()
@@ -276,7 +300,7 @@ public partial class PilotController : Controller
 	public override void Start()
 	{
 		base.Start();
-		hasAirJump = true;
+		hasAirJump = true; 
 	}
 
 	bool IsOnFloor()

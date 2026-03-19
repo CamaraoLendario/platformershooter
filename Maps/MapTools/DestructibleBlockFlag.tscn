@@ -39,6 +39,7 @@ color_ramp = SubResource("GradientTexture1D_8j5pn")
 anim_offset_max = 1.0
 
 [node name="DestructibleBlockFlag" type="Area2D" unique_id=584555463 node_paths=PackedStringArray("DestructionParticles")]
+collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_lrm18")
 particleCutterTexture = ExtResource("3_m6vex")

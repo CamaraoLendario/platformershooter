@@ -12,20 +12,26 @@ public partial class ShipController : Controller
 	[Export] AudioStreamPlayer2D DashAudio;
 	const float Acceleration = 500f;
 	float acceleration = Acceleration;
-	const float MAXSPEED = 200f;
+	public const float MAXSPEED = 200f;
 	float maxSpeed = MAXSPEED;
+	public const float DASHSPEEDMULTIPLIER = 3f;
 	Timer dashCooldownTimer = new Timer();
 	float dashCooldownTime = 0.5f;
 	Timer dashTimer = new Timer();
 	float dashTime = 0.15f;
 	bool isDashing = false;
 	public ShipPowerUpSpeedUp speedUp = null;
-	protected World world;
+	protected Node2D world;
 
 	public override void _Ready()
 	{
 		base._Ready();
-		world = Game.Instance.world;
+        if (Game.Instance.world !=  null)
+            world = Game.Instance.world;
+        else
+        {
+            world = Main.GetParent<Node2D>();
+        }
 		isPilotController = false;
 		SetupTimers(new List<Timer> { dashTimer, dashCooldownTimer });
 		
@@ -86,15 +92,17 @@ public partial class ShipController : Controller
 		if (Main.effectHandler.isFrozen) return;
 		DashAudio.PitchScale = 1 + (float) GD.RandRange(-0.1, 0.1);
 		DashAudio.Play();
-		maxSpeed *= 3f;
+		maxSpeed *= DASHSPEEDMULTIPLIER;
 		acceleration *= 10f;
 		isDashing = true;
 		Vector2 dashInput = inputVector.Normalized();
 		
 		if (inputVector == Vector2.Zero)
-			dashInput = (GetParent() as Player).Velocity.Normalized();
+			dashInput = Main.Velocity.Normalized();
+		if (inputVector == Vector2.Zero)
+			dashInput = Vector2.FromAngle(sprite.Rotation).Normalized();
 
-		Velocity = dashInput * acceleration * 10;
+		Velocity = dashInput * maxSpeed;	
 		if (dashInput.Y >= 0)
 			sprite.Rotation = MathF.Acos(dashInput.X);
 		else

@@ -44,7 +44,7 @@ public partial class ShipAttack : ShipController
 			world.AddChild(newBullet);
 		}
 		
-		EmitSignal(SignalName.Shot);
+		EmitSignal(SignalName.Shot); 
 		shootCooldownTimer.Start(shootCooldownTime);
 		ShootAudio.PitchScale = 1 + (float) GD.RandRange(-0.1, 0.1);
 		ShootAudio.Play();
@@ -89,7 +89,7 @@ public partial class ShipAttack : ShipController
 		LinearProjectile newBullet = bullet.Instantiate<LinearProjectile>();
 		newBullet.owner = Main;
 		newBullet.SetDirection(sprite.Rotation);
-		newBullet.Position = Position;
+		newBullet.GlobalPosition = Main.GlobalPosition;
 		newBullet.isInPilotArea = false;
 		return newBullet;
 	}

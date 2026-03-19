@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://ckjbxccmrmhmb" path="res://Maps/PlayableMaps/PilotOnlySmall.tscn" id="10_xghcv"]
 [ext_resource type="AudioStream" uid="uid://bw61s6dcjwa4o" path="res://Assets/Audio/Menuing/menubeep.wav" id="11_7gepq"]
 [ext_resource type="PackedScene" uid="uid://cjg0yfrc2mlc0" path="res://Maps/PlayableMaps/PoisonRiddenMap.tscn" id="11_nj5r4"]
+[ext_resource type="PackedScene" uid="uid://dxgxqieibdi5n" path="res://Maps/PlayableMaps/CaveMap.tscn" id="14_ueajk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dq7fd"]
 font = ExtResource("5_ueajk")
@@ -203,7 +204,7 @@ theme = ExtResource("1_8m61k")
 script = ExtResource("5_8m61k")
 mapPreviewsContainer = NodePath("MarginContainer/Panel/MapPreviewsContainer")
 pilotTexture = ExtResource("6_ueajk")
-mapscenes = Array[PackedScene]([ExtResource("8_48hed"), ExtResource("7_540kp"), ExtResource("10_xghcv"), ExtResource("11_nj5r4"), ExtResource("9_2ujp5")])
+mapscenes = Array[PackedScene]([ExtResource("8_48hed"), ExtResource("7_540kp"), ExtResource("10_xghcv"), ExtResource("11_nj5r4"), ExtResource("9_2ujp5"), ExtResource("14_ueajk")])
 
 [node name="MarginContainer" type="MarginContainer" parent="Map selector" unique_id=1523777735]
 layout_mode = 1

@@ -327,6 +327,7 @@ limit_enabled = false
 script = ExtResource("7_nxmd1")
 
 [node name="MapBorders" type="Node2D" parent="." unique_id=247059389]
+visible = false
 script = ExtResource("8_8m8bc")
 DrawBorders = true
 

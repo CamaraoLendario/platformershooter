@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Numerics;
+using System.Reflection.Metadata.Ecma335;
 
 public partial class DestructibleBlockFlag : Area2D
 {
@@ -9,26 +10,33 @@ public partial class DestructibleBlockFlag : Area2D
     public TileMapLayer tileMapLayer;
     public Vector2I tilePos;
     const int TILETEXTURESIZE = 20;
+    Node2D SpawnParentNode;
 
     public override void _Ready()
     {
         tilePos = new Vector2I((int) Position.X/16, (int) Position.Y/16);
+        if (Game.Instance.world !=  null)
+            SpawnParentNode = Game.Instance.world;
+        else
+        {
+            SpawnParentNode = GetParent<Node2D>();
+        }
         SetupDestructionParticles();
     }
 
-    public void Destroy()
+    public bool Destroy()
     {
-        if (IsQueuedForDeletion()) return;
+        if (IsQueuedForDeletion()) return false;
         DestructionParticles.Emitting = true;
         tileMapLayer.SetCell(tilePos, -1); // deletes tile
         GD.Print("destroyed tile at position" + tilePos);
         QueueFree();
+        return true;
     }
 
     void SetupDestructionParticles()
     {
-
-        DestructionParticles.Reparent(Game.Instance.world);
+        DestructionParticles.Reparent(SpawnParentNode);
         DestructionParticles.OneShot = true;
         DestructionParticles.Texture = CreateParticlesTextureFromTilemapCoords(tilePos);
         DestructionParticles.Emitting = false;

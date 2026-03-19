@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://o2aye5es0b5l" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/Chest.png" id="1_bg0iw"]
 [ext_resource type="Script" uid="uid://dpc1c8h2qa32r" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/ShipPowerUpChest.cs" id="1_f20eu"]
 [ext_resource type="Script" uid="uid://dti4v2vsestft" path="res://Components/HittableComponent.cs" id="2_w485a"]
+[ext_resource type="Script" uid="uid://yw2eygjjykmc" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/ShipPowerupAnimationPlayer.cs" id="4_rwcu8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bg0iw"]
 size = Vector2(16, 16)
@@ -66,6 +67,56 @@ tracks/4/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Chest:scale:x")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Chest:scale:y")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Chest:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -17.37364)]
+}
+
+[sub_resource type="Animation" id="Animation_c743q"]
+resource_name = "SpaceRotation"
+length = 33.7334
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Chest:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0, 6.284, 0, 0, 0.25, 0),
+"times": PackedFloat32Array(0.033333335, 33.7334)
+}
 
 [sub_resource type="Animation" id="Animation_f20eu"]
 resource_name = "Spawn"
@@ -100,7 +151,7 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0, 0, 2, 0, 0),
-"points": PackedFloat32Array(-13.78, -0.25, 0, 0, 0, -17.455, -0.25, 0, 0.25, 0, -17.455, -0.25, 0, 0.1, 0, -9, 0, 0, 0, 0, -9.41, 0, 0, 0, 0, -9.5, 0, 0, 0, 0, -9, 0, 0, 0, 0),
+"points": PackedFloat32Array(-12.78, -0.25, 0, 0, 0, -16.455, -0.25, 0, 0.25, 0, -16.455, -0.25, 0, 0.1, 0, -8, 0, 0, 0, 0, -9.41, 0, 0, 0, 0, -8.5, 0, 0, 0, 0, -8, 0, 0, 0, 0),
 "times": PackedFloat32Array(0, 0.36666667, 0.63333344, 0.76666665, 0.7667, 0.8333333, 0.8666667)
 }
 tracks/3/type = "value"
@@ -127,11 +178,108 @@ tracks/4/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Chest:scale:x")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(2),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Chest:scale:y")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(2),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_rwcu8"]
+resource_name = "SpawnSpace"
+length = 4.0667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HittableComponent:Enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Chest:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 2, 0, 0, 2),
+"points": PackedFloat32Array(12.565, 0, 0, 0.050000004, 0, -0.14, -0.13601929, 0.98807305, 0.025156284, -0.1827406, -0.6426723, -0.25, 0, 0, 0, -0.591, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.36666667, 0.6333333, 0.9, 4.0666666)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Chest:scale:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.4, -0.25, 0, 0.25, 0, 1.4, -0.25, 0, 0.167, 0, 1, -0.165, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.36776853, 0.63369703, 0.9)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Chest:scale:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(2, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.4, -0.25, 0, 0.25, 0, 1.4, -0.25, 0, 0.167, 0, 1, -0.165, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.36776853, 0.63369703, 0.9)
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Chest:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.044573605, 0.07790694, 0.11117363, 0.14330384, 0.17663717, 0.20990384, 0.24420398, 0.2775373, 0.31080395, 0.33376974, 0.36710304, 0.4003697, 0.43249995, 0.46583325, 0.49909997, 0.53340006, 0.56666666, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.36078432), Color(1, 1, 1, 1), Color(1, 1, 1, 0.36078432), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.36078432), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.36078432), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.36078432), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.36078432), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.36078432), Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Chest:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -8)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rwcu8"]
 _data = {
 &"RESET": SubResource("Animation_w485a"),
-&"Spawn": SubResource("Animation_f20eu")
+&"SpaceRotation": SubResource("Animation_c743q"),
+&"Spawn": SubResource("Animation_f20eu"),
+&"SpawnSpace": SubResource("Animation_rwcu8")
 }
 
 [node name="ShipPowerUpChest" type="Node2D" unique_id=875542953 node_paths=PackedStringArray("hittableComponent", "animationPlayer")]
@@ -150,9 +298,10 @@ shape = SubResource("RectangleShape2D_bg0iw")
 
 [node name="Chest" type="Sprite2D" parent="." unique_id=457004708]
 self_modulate = Color(1, 1, 1, 0)
-position = Vector2(0, -9)
+position = Vector2(0, -17.37364)
+scale = Vector2(1e-05, 1e-05)
 texture = ExtResource("1_bg0iw")
-offset = Vector2(0, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=167889876]
 libraries/ = SubResource("AnimationLibrary_rwcu8")
+script = ExtResource("4_rwcu8")

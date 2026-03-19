@@ -12,12 +12,18 @@ public partial class ShipPowerUpChest : Node2D
 	[Export] AnimationPlayer animationPlayer;
 	bool isOrphan = false;
 	Timer spawnCooldownTimer = new();
-	World world;
+	Node2D world;
+	Map map;
 	PackedScene shipPowerUpPickup = GD.Load<PackedScene>("uid://bgvvii5wegfxh");
 
     public override void _Ready()
     {
+		map = Game.Instance.selectedMap;
 		world = Game.Instance.world;
+		if (world == null)
+		{
+			world = map;
+		}
 	    hittableComponent.GotHit += OnHit;
 		Despawn();
 		
@@ -34,7 +40,10 @@ public partial class ShipPowerUpChest : Node2D
 	{
 		Visible = true;
 		hittableComponent.Enabled = true;
-		animationPlayer.Play("Spawn");
+		if (map.IsPositionInPilotArea(this.GlobalPosition))
+			animationPlayer.Play("Spawn");
+		else
+			animationPlayer.Play("SpawnSpace");
 	}
 	public void Despawn()
 	{

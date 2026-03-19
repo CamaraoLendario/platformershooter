@@ -31,7 +31,7 @@ public partial class MapSelector : Control
 		["Rock"] = new Color(74f/255f, 83f/255f, 89f/255f),
 		["Planks"] = new Color(117f/255f, 87f/255f, 56f/255f),
 		["Glass"] = new Color(203f/255f, 219f/255f, 252f/255f),
-		["Purple Grates"] = new Color(61f/255f, 41f/255f, 81f/255f)
+		["PurpleGrates"] = new Color(61f/255f, 41f/255f, 81f/255f)
 	};
 
 	public override void _Ready()
@@ -118,6 +118,8 @@ public partial class MapSelector : Control
         Image image = Image.CreateEmpty(imageSize.X, imageSize.Y, false, Image.Format.Rgba8);
 		Color color;
 		TileMapLayer tileMap = map.GetNode<TileMapLayer>("InteractableTiles");
+		TileMapLayer foreground = map.GetNode<TileMapLayer>("BackgroundTiles/Foreground");
+		TileMapLayer background = map.GetNode<TileMapLayer>("BackgroundTiles/Background");
 
 		for (int Y = 0; Y < imageSize.Y; Y++)
         {
@@ -127,10 +129,21 @@ public partial class MapSelector : Control
 
 				Vector2I tilePos = new Vector2I(X - imageSize.X/2, Y - imageSize.Y/2);
 				TileData currentTileData = tileMap.GetCellTileData(tilePos);
+				bool isBackgroundTile = false;
+				if (currentTileData == null)
+				{
+					currentTileData = foreground.GetCellTileData(tilePos);
+					if ( currentTileData != null) isBackgroundTile = true;
+				}
+				if (currentTileData == null)
+				{
+					currentTileData = background.GetCellTileData(tilePos);
+					if ( currentTileData != null) isBackgroundTile = true;
+				}
 				if ( currentTileData != null)
                 {
 					int tileTerrainIdx = currentTileData.Terrain;
-                    color = tileTerrainIdx switch
+					color = tileTerrainIdx switch
                     {
                         0 => tilesMapColor["Grass"],
                         1 => tilesMapColor["Factory"],
@@ -138,9 +151,10 @@ public partial class MapSelector : Control
                         3 => tilesMapColor["Rock"],
                         4 => tilesMapColor["Planks"],
                         5 => tilesMapColor["Glass"],
-						6 => tilesMapColor["Purple Grates"],
+						6 => tilesMapColor["PurpleGrates"],
                         _ => Black,
                     };
+                    if (isBackgroundTile) color *= new Color(0.8f, 0.8f, 0.8f, 1);
                 }
 				image.SetPixel(X, Y, color);
 			}
