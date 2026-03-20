@@ -50,12 +50,11 @@ public partial class HittableComponent : Area2D
 
 	void OnAreaEntered(Area2D area)
 	{
-		GD.Print("area entered!!!");
 		if (!enabled) return;
 		if (area is MeleeAttack meleeAttack && meleeAllowed)
 		{
 			GD.Print("melee entered!!!");
-			GetHit(meleeAttack.Main);
+			GetHit(meleeAttack);
 		}
 		else if (area is LinearProjectile projectile && linearProjectilesAllowed)
 		{
@@ -77,12 +76,12 @@ public partial class HittableComponent : Area2D
 		}
 		else if (Hitter is MeleeAttack meleeAttack && meleeAllowed)
 		{
-			GetHit(meleeAttack.Main);
+			GetHit(meleeAttack);
 		}
 		else if (Hitter is LinearProjectile projectile && linearProjectilesAllowed)
 		{
-			projectile.End();
 			GetHit(projectile);
+			projectile.End();
 		}
 	}
 

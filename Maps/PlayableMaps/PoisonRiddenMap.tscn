@@ -239,6 +239,9 @@ position = Vector2(144, -32)
 [node name="ShipPowerUpChest" parent="Pickups/ShipPowerUpChestSpawner" parent_id_path=PackedInt32Array(631959143) index="0" unique_id=875542953 instance=ExtResource("5_xhaxe")]
 position = Vector2(-112, 32)
 
+[node name="ShipPowerUpChest2" parent="Pickups/ShipPowerUpChestSpawner" parent_id_path=PackedInt32Array(631959143) index="1" unique_id=972588904 instance=ExtResource("5_xhaxe")]
+position = Vector2(112, 32)
+
 [node name="Sprite2D2" parent="ParallaxBackgroundLayers/Space" parent_id_path=PackedInt32Array(640977743) index="0" unique_id=111226547]
 material = SubResource("ShaderMaterial_fc0jg")
 

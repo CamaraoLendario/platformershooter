@@ -2,14 +2,21 @@ using Godot;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Reflection;
 
 public partial class MagicMissile : HittableComponent
 {
     [Export] AnimatedSprite2D sprite;
+	[Export] public Player target;
 
-	public Player target;
+    Player ignoredTarget;
+    Timer ignoredTargetGraceTimer = new()
+    {
+      OneShot = true,  
+    };
+    float gracePeriodTime = 0.5f;
+    Vector2 targetPosition = Vector2.Zero;
     float acceleration = 1000f;
-
     float initialSpeed = 300f;
     float maxSpeed = 500f;
     Vector2 direction = Vector2.Left;
@@ -23,14 +30,25 @@ public partial class MagicMissile : HittableComponent
         {   // get random target
             target = GetRandomPlayer([]);
         }
-        direction = (target.GlobalPosition - GlobalPosition).Normalized();
+        if (target != null)
+        {
+            targetPosition = target.GlobalPosition;        
+            target.died += OnTargetDead;
+        }
+        direction = (targetPosition - GlobalPosition).Normalized();
         velocity = direction * initialSpeed;
         Dictionary<int, Player> playerList = Game.Instance.playerNodesByInputIdx.ToDictionary();
         SetDeferred(PropertyName.target, playerList.ElementAt(GD.RandRange(0, playerList.Count() - 1)).Value);
 
-        BodyEntered += onBodyDetected;
+        AddChild(ignoredTargetGraceTimer);
+        ignoredTargetGraceTimer.Timeout += () =>
+        {
+            ignoredTarget = null;  
+        };
+
+        BodyEntered += OnBodyDetected;
         GotHit += OnGotHit;
-        target.died += OnTargetDead;
+        Game.Instance.NewRoundStarted += OnNewRoundStarted;
     }
 
     public override void _Process(double delta)
@@ -41,7 +59,11 @@ public partial class MagicMissile : HittableComponent
     public override void _PhysicsProcess(double delta)
     {
         velocity -= velocity.Normalized() * acceleration/5 * (float)delta;
-        velocity += (target.GlobalPosition - GlobalPosition).Normalized() * acceleration * (float)delta;
+        
+        if (target != null && !target.IsDead)
+            targetPosition = target.Position;
+        
+        velocity += (targetPosition - GlobalPosition).Normalized() * acceleration * (float)delta;
         
         if (velocity.LengthSquared() > maxSpeed * maxSpeed)
         {
@@ -51,20 +73,35 @@ public partial class MagicMissile : HittableComponent
         Position += velocity * (float)delta;
     }
 
-    private void onBodyDetected(Node2D body)
+    private void OnBodyDetected(Node2D body)
     {
         if (body is not Player player) return;
-
-        player.TakeDamage(target);
-        QueueFree();
+        if (player == ignoredTarget) return;
+        if (player.TakeDamage(target))
+            End();
     }   
 
     void OnGotHit(Node2D hitter)
     {
-        velocity = (hitter.GlobalPosition - GlobalPosition).Normalized() * maxSpeed;
+        GD.Print("magicMissile got hit! hit by: ", hitter);
+        ignoredTarget = target;
+        ignoredTargetGraceTimer.Start(gracePeriodTime);
 
+        if (hitter is LinearProjectile projectile)
+        {
+            velocity = projectile.Direction * maxSpeed;
+        }
+        else if (hitter is MeleeAttack melee)
+        {
+            GD.Print(hitter);
+            velocity = -velocity.Normalized()  * maxSpeed;
+        }
+        else velocity = (hitter.GlobalPosition - GlobalPosition).Normalized() * maxSpeed;
+
+        target.died -= OnTargetDead;
         target = GetRandomPlayer(target);
-        
+        target.died += OnTargetDead;
+
         maxSpeed *= 1.1f;
         acceleration *= 1.1f;
     }
@@ -94,13 +131,34 @@ public partial class MagicMissile : HittableComponent
             playerList.Remove(player.inputIdx);
         }
 
-        if (playerList.Count() <= 0)
+        if (playerList.Count <= 0)
         {
-            GD.PrintErr("No other players found, returning current target.");
+            if (Game.Instance.alivePlayerCount > 0)
+            {    
+                GD.Print("No other players found, returning current target.");
+            }
+            else
+            {
+                GD.Print("All Players are Dead. running off stage..");
+                targetPosition = GlobalPosition * 10000;
+            }
             return target;
         }
-
         return playerList.ElementAt(GD.RandRange(0, playerList.Count() - 1)).Value;
     }
 
+    void OnNewRoundStarted()
+    {
+        End();
+    }
+
+    void End()
+    {
+        QueueFree();
+
+        BodyEntered -= OnBodyDetected;
+        GotHit -= OnGotHit;
+        target.died -= OnTargetDead;
+        Game.Instance.NewRoundStarted -= OnNewRoundStarted;
+    }
 }

@@ -188,13 +188,13 @@ public partial class Player : CharacterBody2D
 		this.colorIdx = colorIdx;
 	}
 
-	public void TakeDamage(int ID)
+	public bool TakeDamage(int ID)
 	{
-		TakeDamage(Game.Instance.playerNodesByColor[ID]);
+		return TakeDamage(Game.Instance.playerNodesByColor[ID]);
 	}
-	public void TakeDamage(Player damageDealer = null)
+	public bool TakeDamage(Player damageDealer = null)
 	{
-		if (isDead || isInvulnerable || godMode) return;
+		if (isDead || isInvulnerable || godMode) return false;
 		if (damageDealer == null) damageDealer = this;
 
 		if (HasShield)
@@ -230,6 +230,7 @@ public partial class Player : CharacterBody2D
 		HandleIFrames();
 		EmitSignal(SignalName.tookDamage, damageDealer);
 		GD.Print(this.Name, " took Damage from by ", damageDealer.Name);
+		return true;
 	}
 
 	async void HandleIFrames()

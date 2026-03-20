@@ -9,6 +9,7 @@ script = ExtResource("1_gah3h")
 spriteHandler = NodePath("SpikesSprite")
 
 [node name="SpikesSprite" type="Node2D" parent="." unique_id=1241953219 node_paths=PackedStringArray("leftMarker", "rightMarker")]
+process_mode = 3
 script = ExtResource("1_unrle")
 spikesSpritesheet = ExtResource("3_bnp0b")
 leftMarker = NodePath("Left Marker")

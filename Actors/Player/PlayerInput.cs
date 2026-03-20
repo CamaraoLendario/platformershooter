@@ -75,13 +75,11 @@ public partial class PlayerInput : Node
 		{
 			if (Input.IsActionJustPressed(input + keyboardKeyword + inputIndex))
 			{
-				GD.Print("Detected Input: ", input + "Start");
 				EmitSignal(input + "Start");
 			}
 			
 			if (Input.IsActionJustReleased(input + keyboardKeyword + inputIndex))
 			{
-				GD.Print("Detected Input: ", input + "End");
 				EmitSignal(input + "End");
 			}
 		}
