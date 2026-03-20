@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bw7vmyeb1ymu6" path="res://Maps/MapAssets/Pickups/WeaponPickups/weapon_pickup.tscn" id="3_lklw2"]
 [ext_resource type="PackedScene" uid="uid://d2381diivxfax" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/ShipPowerUpChest.tscn" id="4_5plbm"]
 [ext_resource type="Shader" uid="uid://cx67s33dt1lle" path="res://Maps/MapAssets/Background/Parallax/HomemadeParallax.gdshader" id="4_o074e"]
-[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="5_5plbm"]
+[ext_resource type="Script" uid="uid://cacu8rejhbrse" path="res://Maps/MapAssets/Hazzards/MagicMissile/MagicMissileComponent.cs" id="5_5plbm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hond"]
 size = Vector2(192, 628)
@@ -196,12 +196,6 @@ shader_parameter/textureRegion = Vector4(0, 2160, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1y7yi"]
-resource_local_to_scene = true
-shader = ExtResource("5_5plbm")
-shader_parameter/PoisonBuildup = 0.0
-shader_parameter/Color = Color(0.9019608, 0, 0, 1)
-
 [node name="Map" unique_id=2124114388 instance=ExtResource("1_5hond")]
 
 [node name="Pickups_ShipPowerUpChestSpawner#ShipPowerUpChest" parent="." index="0" unique_id=875542953 instance=ExtResource("4_5plbm")]
@@ -308,5 +302,6 @@ material = SubResource("ShaderMaterial_m76ho")
 [node name="IslandShrappnel" parent="ParallaxBackgroundLayers/MageTower" parent_id_path=PackedInt32Array(646301627) index="1" unique_id=317131510]
 material = SubResource("ShaderMaterial_ql778")
 
-[node name="DebugPlayer" parent="." index="12" unique_id=2096548899]
-material = SubResource("ShaderMaterial_1y7yi")
+[node name="MagicMissileComponent" type="Node" parent="." index="11" unique_id=1908810276 node_paths=PackedStringArray("mapNode")]
+script = ExtResource("5_5plbm")
+mapNode = NodePath("..")

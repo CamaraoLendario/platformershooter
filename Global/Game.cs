@@ -29,6 +29,7 @@ public partial class Game : Node
 	public int chosenWinningScore = 12;
 	public int chosenWinningScoreIdx = 1;
 	public List<Dictionary <string, int>> currentPlayerInfoList;
+	public ExperimentalFeatures experimentalFeatures;
 
 	public override void _Ready()
 	{

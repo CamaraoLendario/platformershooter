@@ -72,6 +72,7 @@ public partial class HittableComponent : Area2D
 		if (!enabled) return;
 		if (Hitter is HitscanBullet ray && hitscanBulletAllowed)
 		{
+			GD.Print("I GOT HIT BY A RAY MEMEMEMEMEEME");
 			GetHit(ray);
 		}
 		else if (Hitter is MeleeAttack meleeAttack && meleeAllowed)

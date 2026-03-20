@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 public partial class IceRay : HitscanBullet
 {
-	[Export] float freezeTime = 2f;
 	[ExportGroup("Visual")]
 	[Export] int animationSpeed = 1;
 	[ExportGroup("Nodes")]

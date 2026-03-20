@@ -16,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://bw61s6dcjwa4o" path="res://Assets/Audio/Menuing/menubeep.wav" id="11_7gepq"]
 [ext_resource type="PackedScene" uid="uid://cjg0yfrc2mlc0" path="res://Maps/PlayableMaps/PoisonRiddenMap.tscn" id="11_nj5r4"]
 [ext_resource type="PackedScene" uid="uid://dxgxqieibdi5n" path="res://Maps/PlayableMaps/CaveMap.tscn" id="14_ueajk"]
+[ext_resource type="Script" uid="uid://bdifliwwvf4qk" path="res://Menus/Game Start/ExperimentalFeatures.cs" id="17_540kp"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dq7fd"]
 font = ExtResource("5_ueajk")
@@ -106,6 +107,9 @@ _data = {
 &"RESET": SubResource("Animation_8m61k"),
 &"mapSelectTimer": SubResource("Animation_kperk")
 }
+
+[sub_resource type="LabelSettings" id="LabelSettings_ueajk"]
+font_size = 47
 
 [node name="GameStart" type="CanvasLayer" unique_id=1509971223]
 
@@ -260,3 +264,29 @@ libraries/ = SubResource("AnimationLibrary_ueajk")
 [node name="UnavaliableMaps" type="Control" parent="Map selector" unique_id=2061794782]
 visible = false
 anchors_preset = 0
+
+[node name="Experimental Features" type="Control" parent="." unique_id=1719559341 node_paths=PackedStringArray("label")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("17_540kp")
+label = NodePath("Label2")
+
+[node name="Label" type="Label" parent="Experimental Features" unique_id=1929493087]
+layout_mode = 0
+offset_right = 649.0
+offset_bottom = 263.0
+theme = ExtResource("1_8m61k")
+text = "Experimental Features"
+label_settings = SubResource("LabelSettings_ueajk")
+
+[node name="Label2" type="Label" parent="Experimental Features" unique_id=251715046]
+layout_mode = 0
+offset_top = 60.0
+offset_right = 664.0
+offset_bottom = 323.0
+theme = ExtResource("1_8m61k")
+text = "Magic missiles: True
+Interval: 10s"
+label_settings = SubResource("LabelSettings_ueajk")

@@ -9,7 +9,7 @@ public partial class MagicMissileComponent : Node
 {
 	[Export] PackedScene magicMissile = GD.Load<PackedScene>("uid://d1rvfwvuso0x4");
 	[Export] Map mapNode;
-	[Export] float spawnTime = 1f;
+	float spawnTime = 1f;
 	float extraDistance = 48;
 	Timer SpawnTimer = new()
 	{
@@ -18,6 +18,12 @@ public partial class MagicMissileComponent : Node
 
 	public override void _Ready()
 	{
+		if (!Game.Instance.experimentalFeatures.isActivated)
+		{
+			QueueFree();
+			return;
+		}
+		spawnTime = Game.Instance.experimentalFeatures.interval;
 		AddChild(SpawnTimer);
 		SpawnTimer.Timeout += OnSpawnTimerTimeout;
 		SpawnTimer.Start(spawnTime);
