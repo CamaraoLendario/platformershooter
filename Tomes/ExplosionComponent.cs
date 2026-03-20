@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using System.Xml.XPath;
 
 public partial class ExplosionComponent : Area2D
 {
@@ -36,7 +37,6 @@ public partial class ExplosionComponent : Area2D
 		newExplosionAudio.CallDeferred(AudioStreamPlayer2D.MethodName.Play);
 	}
 
-
 	public void SetSize(float size)
 	{
 		explosionRadius = size;
@@ -66,11 +66,33 @@ public partial class ExplosionComponent : Area2D
 	}
 	bool HasLOS(Node2D losTo)
     {
-		checkRay.TargetPosition = losTo.Position - Position;
 		GD.Print("checking LOS to: ", losTo);
-		return HelpLOS(losTo);
+		foreach(Node child in losTo.GetChildren())
+		{
+			if (child is CollisionShape2D colShape && colShape.Shape is RectangleShape2D)
+			{
+				return CheckRectCollision(losTo, colShape);
+			}
+		}
+		checkRay.TargetPosition = losTo.Position - Position;
+		return CheckLOS(losTo);
 	}	
-	bool HelpLOS(Node2D losTo)
+	bool CheckRectCollision(Node2D losTo, CollisionShape2D colShape)
+	{
+		Vector2 shapeSize = (colShape.Shape as RectangleShape2D).Size;
+		for(float Y = -1; Y <= 1; Y++)
+		{
+			for(float X = -1; X <= 1; X++)
+			{
+				Vector2 checkPosOffset = new Vector2(Y, X) * shapeSize/2;
+				checkRay.TargetPosition = colShape.GlobalPosition + checkPosOffset.Rotated(colShape.Rotation) - Position;
+				if (CheckLOS(losTo)) 
+					return true;
+			}
+		}
+		return false;
+	} 
+	bool CheckLOS(Node2D losTo)
     {
 		if (losTo is InteractableTiles) return false;
 		checkRay.ForceRaycastUpdate();
@@ -84,22 +106,22 @@ public partial class ExplosionComponent : Area2D
 		{
 			if (collider is Player player){
 				checkRay.AddException(player);
-				return HelpLOS(losTo);
+				return CheckLOS(losTo);
 			}
 			else if (collider is PlayeronPlayerCollision playerplayercol)
 			{
 				checkRay.AddException(playerplayercol);
-				return HelpLOS(losTo);
+				return CheckLOS(losTo);
 			}
 			else if (collider is HittableComponent hittableComponent && !hittableComponent.blocksExplosions)
 			{
 				checkRay.AddException(hittableComponent);
-				return HelpLOS(losTo);
+				return CheckLOS(losTo);
 			}
 			else if (collider is DestructibleBlockFlag destructibleFlag)
 			{
 				checkRay.AddException(destructibleFlag);
-				return HelpLOS(losTo);
+				return CheckLOS(losTo);
 			}
 			return false;
 		}
