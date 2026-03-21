@@ -4,7 +4,9 @@
 [ext_resource type="Script" uid="uid://dfc37w7c5df0r" path="res://Actors/Player/Player.cs" id="2_30khc"]
 [ext_resource type="PackedScene" uid="uid://by5s8sc2bwo1o" path="res://Actors/Player/Pilot/pilot_ragdol.tscn" id="3_fllei"]
 [ext_resource type="Script" uid="uid://dpajyn7twtmqh" path="res://Actors/Player/Pilot/PilotAttack.cs" id="3_iwrur"]
+[ext_resource type="Script" uid="uid://dxdjuabd4rwra" path="res://Actors/Player/OverHeadDisplay.cs" id="4_0ieod"]
 [ext_resource type="FontFile" uid="uid://c5a2sdgkmsblj" path="res://Fonts/SpaceMagesFontOutlined.png" id="4_jiph2"]
+[ext_resource type="Texture2D" uid="uid://t2bc6swfc46n" path="res://Actors/Player/Ship/Sprites/shipAmmoHUDSmall.png" id="5_4sko0"]
 [ext_resource type="Texture2D" uid="uid://m2xw66h74o04" path="res://Actors/Player/Ship/Sprites/shipPowerUpIndicators.png" id="5_87ye5"]
 [ext_resource type="Script" uid="uid://btwuke1gfr05i" path="res://Actors/Player/Ship/ShipAttack.cs" id="5_fllei"]
 [ext_resource type="PackedScene" uid="uid://ceiwo7xx53l5y" path="res://Actors/Player/Ship/ShipProjectile.tscn" id="5_gsc2s"]
@@ -49,6 +51,18 @@ shader_parameter/Color = Color(0.9019608, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_g6ejb"]
 font = ExtResource("4_jiph2")
 font_size = 6
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ieod"]
+atlas = ExtResource("5_4sko0")
+region = Rect2(0, 0, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhh7x"]
+atlas = ExtResource("5_4sko0")
+region = Rect2(0, 0, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3tbv"]
+atlas = ExtResource("5_4sko0")
+region = Rect2(0, 0, 4, 4)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l7nff"]
 atlas = ExtResource("5_87ye5")
@@ -786,13 +800,15 @@ pilotShield = NodePath("PilotSprite/pilotShield")
 pilotShieldFlickerer = NodePath("PilotSprite/AnimationPlayer")
 shipShieldFlickerer = NodePath("ShipSprite/AnimationPlayer")
 
-[node name="OverHeadDisplay" type="VBoxContainer" parent="." unique_id=1352916891]
+[node name="OverHeadDisplay" type="VBoxContainer" parent="." unique_id=1352916891 node_paths=PackedStringArray("ammoHud")]
 offset_left = -20.0
 offset_top = -32.0
 offset_right = 20.0
 offset_bottom = -17.0
 grow_vertical = 0
 alignment = 2
+script = ExtResource("4_0ieod")
+ammoHud = NodePath("AmmoHUD")
 
 [node name="NameLabel" type="Label" parent="OverHeadDisplay" unique_id=2017447394]
 layout_mode = 2
@@ -800,6 +816,23 @@ text = "test"
 label_settings = SubResource("LabelSettings_g6ejb")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AmmoHUD" type="HBoxContainer" parent="OverHeadDisplay" unique_id=268580610]
+layout_mode = 2
+theme_override_constants/separation = 1
+alignment = 1
+
+[node name="bullet1" type="TextureRect" parent="OverHeadDisplay/AmmoHUD" unique_id=878790161]
+layout_mode = 2
+texture = SubResource("AtlasTexture_0ieod")
+
+[node name="bullet2" type="TextureRect" parent="OverHeadDisplay/AmmoHUD" unique_id=295605450]
+layout_mode = 2
+texture = SubResource("AtlasTexture_jhh7x")
+
+[node name="bullet3" type="TextureRect" parent="OverHeadDisplay/AmmoHUD" unique_id=741408631]
+layout_mode = 2
+texture = SubResource("AtlasTexture_e3tbv")
 
 [node name="PowerUpIcons" type="HBoxContainer" parent="OverHeadDisplay" unique_id=559806006]
 layout_mode = 2

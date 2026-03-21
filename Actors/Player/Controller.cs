@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public partial class Controller : Node
 {
+	[Signal] public delegate void StartedEventHandler();
+	[Signal] public delegate void EndedEventHandler();
 	[Export] public AnimatedSprite2D sprite;
 	[Export] public CollisionShape2D collision;
 	[Export] public PlayerInput playerInput;
@@ -72,12 +74,14 @@ public partial class Controller : Node
 	public virtual void Start()
 	{
 		if (Main.IsDead) return;
+		EmitSignal(SignalName.Started);
 		sprite.Visible = true;
 		collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, false);
 	}
 	public virtual void End()
 	{
 		sprite.Visible = false;
+		EmitSignal(SignalName.Ended);
 		collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
 	}
 

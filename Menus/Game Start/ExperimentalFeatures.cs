@@ -18,7 +18,7 @@ public partial class ExperimentalFeatures : Control
 		string activatedtext = "false";
 		if (isActivated) activatedtext = "true";
 
-		label.Text = $"Magic missiles: {activatedtext}\n Interval: {interval}s";
+		label.Text = $"Magic missiles: {activatedtext}\nInterval: {interval}s";
 	}
 
     public override void _Input(InputEvent @event)

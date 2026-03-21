@@ -6,12 +6,13 @@ using System.Diagnostics.CodeAnalysis;
 public partial class ShipAttack : ShipController
 {
 	[Signal] public delegate void ShotEventHandler();
+	[Signal] public delegate void ReloadedEventHandler();
 	
 	[Export] public PackedScene bullet;
 	[Export] AudioStreamPlayer2D ShootAudio;
 	[Export] ShipPowerUpsHolder powerUpsHolder;
-	const int MAXAMMO = 3;
-	int currentAmmo = 3;
+	public const int MAXAMMO = 3;
+	public int currentAmmo = 3;
 
 	#region Timers
 	Timer bulletReloadTimer = new();
@@ -43,13 +44,12 @@ public partial class ShipAttack : ShipController
 			LinearProjectile newBullet = GetNewBullet();
 			world.AddChild(newBullet);
 		}
-		
-		EmitSignal(SignalName.Shot); 
 		shootCooldownTimer.Start(shootCooldownTime);
 		ShootAudio.PitchScale = 1 + (float) GD.RandRange(-0.1, 0.1);
 		ShootAudio.Play();
-
 		currentAmmo--;
+
+		EmitSignal(SignalName.Shot); 
 
 		if (bulletReloadTimer.IsStopped())
         {
@@ -67,6 +67,7 @@ public partial class ShipAttack : ShipController
 		if (currentAmmo < MAXAMMO)
 		{
 			currentAmmo++;
+			EmitSignal(SignalName.Reloaded);
 			bulletReloadTimer.Start(bulletreloadTime);
 		}
 	}

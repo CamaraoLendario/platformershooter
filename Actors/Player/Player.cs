@@ -345,7 +345,7 @@ public partial class Player : CharacterBody2D
 
 	void CancelTurningShip()
 	{
-		if (!isTurningToShip) return;
+//		if (!isTurningToShip) return;
 		goShipTimer.Stop();
 		shipPardonTimer.Stop();
 		isTurningToShip = false;
