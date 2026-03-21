@@ -358,8 +358,17 @@ position = Vector2(-288, -88)
 [node name="SpawnPoint2" type="Node2D" parent="SpawnPoints" unique_id=1593810119]
 position = Vector2(370, 176)
 
+[node name="SpawnPoint3" type="Node2D" parent="SpawnPoints" unique_id=1281150411]
+position = Vector2(-368, 163)
+
+[node name="SpawnPoint4" type="Node2D" parent="SpawnPoints" unique_id=527737731]
+position = Vector2(-2, 185)
+
 [node name="SpawnPoint5" type="Node2D" parent="SpawnPoints" unique_id=106695231]
 position = Vector2(-125, -199)
+
+[node name="SpawnPoint6" type="Node2D" parent="SpawnPoints" unique_id=997834347]
+position = Vector2(243, -199)
 
 [node name="PilotArea" type="Node2D" parent="." unique_id=807178193]
 script = ExtResource("1_nxrqf")
