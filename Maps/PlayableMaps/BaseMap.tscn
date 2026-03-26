@@ -432,7 +432,7 @@ position = Vector2(-133, -96)
 
 [node name="WeaponPickup2" parent="Pickups" unique_id=1303613705 instance=ExtResource("10_7nb3t")]
 position = Vector2(-333, -160)
-chosenWeapon = 1
+chosenWeapon = 3
 
 [node name="WeaponPickup3" parent="Pickups" unique_id=1333452003 instance=ExtResource("10_7nb3t")]
 position = Vector2(-329, 16)

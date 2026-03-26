@@ -109,7 +109,7 @@ _data = {
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_ueajk"]
-font_size = 47
+font_size = 34
 
 [node name="GameStart" type="CanvasLayer" unique_id=1509971223]
 
@@ -287,6 +287,6 @@ offset_top = 60.0
 offset_right = 664.0
 offset_bottom = 323.0
 theme = ExtResource("1_8m61k")
-text = "Magic missiles: True
+text = "Magic missiles: true
 Interval: 10s"
 label_settings = SubResource("LabelSettings_ueajk")
