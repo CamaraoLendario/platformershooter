@@ -1,231 +1,109 @@
-using Godot;
-using System;
-using SpaceMages;
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.Serialization;
+using Godot;
 public partial class CharacterSelectScreen : Control
 {
-	[Export] PackedScene CharacterCapsuleScene;
-	[Export] HBoxContainer capsulesContainer;
-	[Export] Label gameStartAvaliable;
 	[Export] public MapSelector mapSelector;
-	public int maxPlayerCount = 6;
-	public int playerCount = 0;
-	int ReadyPlayerCount
-	{
-		get
-		{
-			return readyPlayerCount;
-		}
-		set
-		{
-			readyPlayerCount = value;
-		}
-	}
-	int readyPlayerCount = 0;
-	Dictionary<int, int> inputDirectory = [];
-	public Dictionary<int, bool> avaliableColors = [];
-	public Dictionary<int, bool> avaliableNumbers = [];
-	
-
-	public override void _Ready()
-	{
-		GD.Print("konradgryt");
-		inputDirectory.Add(-1, -1);
-		for (int i = 0; i <= maxPlayerCount - 1; i++)
-		{
-			CharacterCapsule newCapsule = CharacterCapsuleScene.Instantiate<CharacterCapsule>();
-			newCapsule.Main = this;
-			inputDirectory.Add(i, -1);
-			newCapsule.changedReadyState += OnCapsuleChangedReadyState;
-			capsulesContainer.AddChild(newCapsule);
-		}
-
-		avaliableColors.Clear();
-		for (int i = 0; i <= SpaceMagesVars.teamColors.Length - 1; i++)
-		{
-			avaliableColors.Add(i, false);
-		}
-
-		avaliableNumbers.Clear();
-		for (int i = 1; i <= maxPlayerCount; i++)
-		{
-			avaliableNumbers.Add(i, false);
-		}
-
-		if (Game.Instance.currentPlayerInfoList != null)
-		{
-			GD.Print("reconstructingplayercapsules!");
-			ReconstructPlayerCapsules(Game.Instance.currentPlayerInfoList);
-		}
-		Input.JoyConnectionChanged += OnJoyConnectionChanged;
-	}
-	
-	private void OnJoyConnectionChanged(long device, bool connected)
+	[Export] HBoxContainer playerCapsulesContainer;
+	int maxPlayerCount = 6;
+	PackedScene capsuleScene = GD.Load<PackedScene>("uid://b7npu7lra7rke");
+	List<CharacterCapsule> activatedCapsules = [];
+	Dictionary<int, CharacterCapsule> inputDirectory = [];
+	public Dictionary<int, bool> colorAvaliability = [];
+    public override void _Ready()
     {
-		GD.Print("device connection changed: " +  device);
-		for (int i = 0; i < Game.Instance.playerNodesByInputIdx.Count; i++)
+        for(int i = 0; i < maxPlayerCount; i++)
 		{
-			int key = Game.Instance.playerNodesByInputIdx.Keys.ToList()[i];
-			GD.Print(key, Game.Instance.playerNodesByInputIdx[key].Name);
-		}
-        if (!connected)
-		{
-			capsulesContainer.GetChild<CharacterCapsule>(inputDirectory[(int)device]).Leave();
+			CharacterCapsule newCharacterCapsule = capsuleScene.Instantiate<CharacterCapsule>();
+			newCharacterCapsule.Main = this;
+			newCharacterCapsule.changedReadyState += CheckPlayersAreReady;
+			newCharacterCapsule.wasActivated += OnCapsuleActivated;
+			newCharacterCapsule.wasDeactivated += OnCapsuleDeactivated;
+			
+			playerCapsulesContainer.AddChild(newCharacterCapsule);
 		}
     }
 
-	void ReconstructPlayerCapsules(List<Dictionary<string, int>> playerInfoList)
-	{
-		// input color capsule
-		foreach (Dictionary<string, int> playerInfoDict in playerInfoList)
+    public override void _Input(InputEvent @event)
+    {
+		if (@event is InputEventMouse) return;
+		int inputIdx = @event.Device;
+		if (@event is not InputEventJoypadButton || @event is not InputEventJoypadMotion)
 		{
-			EnableCustomCapsule(playerInfoDict.Keys.First(), playerInfoDict["inputIdx"], playerInfoDict["colorIdx"], playerInfoDict["capsuleID"] );
+			inputIdx = -1;
 		}
-	}
+		
+		foreach (int directoryInputIdx in inputDirectory.Keys)
+		{
+			if (directoryInputIdx == inputIdx)
+				return;
+		}
+		
+		EnableCapsule(inputIdx);
+    }
 
-	void OnCapsuleChangedReadyState(bool isReady)
+	void EnableCapsule(int inputIdx)
 	{
-		if (isReady)
-			ReadyPlayerCount++;
-		else ReadyPlayerCount--;
-		CheckReadyStates();
-	}
-	void CheckReadyStates()
-	{
-		if (readyPlayerCount == playerCount && playerCount > 0)
-			{
-				gameStartAvaliable.Modulate = new Color(1, 1, 1, 1);
-			}
-			else gameStartAvaliable.Modulate = new Color(1, 1, 1, 0);
-	}
-
-	public override void _Input(InputEvent @event)
-	{
-		if (@event.IsReleased() || @event is InputEventMouse || @event is InputEventJoypadMotion) { return; }
-
-		if (IsDeviceNew(@event)) return;
-	}
-
-	private void EnableCustomCapsule(string playerName, int deviceIdx, int colorIdx, int capsuleID)
-	{
-		CharacterCapsule currentCapsule = null;
-		foreach (CharacterCapsule characterCapsule in capsulesContainer.GetChildren())
+		foreach (CharacterCapsule characterCapsule in playerCapsulesContainer.GetChildren())
 		{
 			if (!characterCapsule.isEnabled)
 			{
-				currentCapsule = characterCapsule;
-				break;
-			}
-		}
-		if (currentCapsule == null) return;
-
-		playerCount++;
-		inputDirectory[deviceIdx] = playerCount - 1;
-		currentCapsule.SetPlayerName(playerName);
-		currentCapsule.Enable(deviceIdx, colorIdx);
-
-		currentCapsule.capsuleID = capsuleID;
-		avaliableNumbers[capsuleID] = true;
-		gameStartAvaliable.Modulate = new Color(1, 1, 1, 0);
-	}
-
-	private void EnableCapsule(int deviceIdx)
-	{
-		CharacterCapsule CapsuleAtIndex = capsulesContainer.GetChild(inputDirectory[deviceIdx]) as CharacterCapsule;
-		CapsuleAtIndex.Enable(deviceIdx);
-		gameStartAvaliable.Modulate = new Color(1, 1, 1, 0);
-		for (int i = 1; i <= avaliableNumbers.Count; i++)
-		{
-			if (!avaliableNumbers[i])
-			{
-				CapsuleAtIndex.SetPlayerName("P" + i.ToString());
-				CapsuleAtIndex.capsuleID = i;
-				avaliableNumbers[i] = true;
-				break;
+				characterCapsule.Enable(inputIdx);
 			}
 		}
 	}
 
-	public void OnDisabledCapsule(int deviceIdx)
+	void CheckPlayersAreReady()
 	{
-		playerCount--;
-
-		foreach (int playerNumberKey in inputDirectory.Keys)
+		if (ArePlayersReady())
 		{
-			if (inputDirectory[playerNumberKey] != -1 && inputDirectory[playerNumberKey] > inputDirectory[deviceIdx])
-			{
-				inputDirectory[playerNumberKey]--;
-			}
+			GD.Print("ALL PLAYERS READY!");
 		}
-
-		inputDirectory[deviceIdx] = -1;
-		CheckReadyStates();
 	}
-
-	private bool IsDeviceNew(InputEvent @event)
+	bool ArePlayersReady()
 	{
-		int inputIndex = @event.Device;
-
-		if (!(@event is InputEventJoypadButton || @event is InputEventJoypadMotion))
+		foreach (CharacterCapsule capsule in activatedCapsules)
 		{
-			inputIndex = -1;
+			if (!capsule.IsReady) return false;
 		}
-
-		if (inputDirectory[inputIndex] == -1)
-		{
-			if (mapSelector.isCommenced) return true;
-			if (inputIndex == -1 && playerCount >= maxPlayerCount) return true;
-			if (playerCount < maxPlayerCount)
-			{
-				playerCount++;
-				inputDirectory[inputIndex] = playerCount - 1;
-				EnableCapsule(inputIndex);
-				return true;
-			}
-			else
-			{
-				inputDirectory[inputIndex] = inputDirectory[-1];
-				inputDirectory[-1] = -1;
-				return true;
-			}
-		}
-		foreach (int input in inputDirectory.Values)
-		{
-			GD.Print(input);
-		}
-		return false;
+		return true;
 	}
-
-	public void PrepareMapSelector()
+	void OnCapsuleActivated(CharacterCapsule capsule)
 	{
-		if (gameStartAvaliable.Modulate.A != 1) return;
-		List<Dictionary<string, int>> playerInfoList = GetPlayerInfo();
-		Game.Instance.currentPlayerInfoList = playerInfoList;
-		mapSelector.Commence(playerInfoList);
+		activatedCapsules.Add(capsule);
+	}
+	void OnCapsuleDeactivated(CharacterCapsule capsule)
+	{
+		activatedCapsules.Remove(capsule);
 	}
 
 	List<Dictionary<string, int>> GetPlayerInfo()
 	{
 		List<Dictionary<string, int>> playerInfo = [];
 
-		for (int inputIndex = -1; inputIndex <= inputDirectory.Count - 2; inputIndex++)
+		foreach (CharacterCapsule characterCapsule in activatedCapsules)
 		{
-			int capsuleIndex = inputDirectory[inputIndex];
-			if (capsuleIndex != -1)
+			Dictionary<string, int> playerInfoDict = new()
 			{
-				CharacterCapsule currentCapsule = capsulesContainer.GetChild<CharacterCapsule>(capsuleIndex); 
-				Dictionary<string, int> playerInfoDict = new Dictionary<string, int>
-				{
-					[currentCapsule.GetPlayerName()] = -1,
-					["inputIdx"] = inputIndex,
-					["colorIdx"] = currentCapsule.CurrentColorIdx,
-					["capsuleID"] = currentCapsule.capsuleID,
-				};
-				playerInfo.Add(playerInfoDict);
-			}
+				[characterCapsule.GetPlayerName()] = -1,
+				["inputIdx"] = characterCapsule.inputNode.inputIdx,
+				["colorIdx"] = characterCapsule.CurrentColorIdx,
+			};
+			playerInfo.Add(playerInfoDict);
 		}
 
 		return playerInfo;
+	}
+
+	public void PrintColorAvaliability()
+	{
+		int num = -1;
+		GD.Print("-----------------------\nColor avaliability");
+		foreach (bool coloravaliablility in colorAvaliability.Values)
+		{
+			num ++;
+			GD.Print(num, " - ", coloravaliablility);
+		}
+		GD.Print("-----------------------");
 	}
 }

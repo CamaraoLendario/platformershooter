@@ -7,7 +7,7 @@ public partial class PlayerMenuInput : Node
 	[Signal] public delegate void AcceptStartEventHandler();
 	[Signal] public delegate void BackStartEventHandler();
     [Signal] public delegate void StartStartEventHandler();
-	public int inputIdx;
+	public int inputIdx = -2;
 	CharacterCapsule capsule;
 	public bool IsKeyboardControlled
     {
@@ -32,6 +32,7 @@ public partial class PlayerMenuInput : Node
 		capsule = GetParent() as CharacterCapsule;
     }
 
+    // TODO: add analog stick support for menu WASD 
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event is InputEventMouseMotion ||

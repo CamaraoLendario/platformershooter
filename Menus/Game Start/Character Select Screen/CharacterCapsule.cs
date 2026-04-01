@@ -1,13 +1,13 @@
 using Godot;
-using Microsoft.VisualBasic;
 using SpaceMages;
-using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 
 public partial class CharacterCapsule : Control
 {
-	[Signal] public delegate void changedReadyStateEventHandler(bool isReady);
+	[Signal] public delegate void changedReadyStateEventHandler();
+	[Signal] public delegate void wasActivatedEventHandler(CharacterCapsule thisCapsule);
+	[Signal] public delegate void wasDeactivatedEventHandler(CharacterCapsule thisCapsule);
 	[Export] public PlayerMenuInput inputNode;
 	[Export] Label PlayerNameDisplay;
 	[Export] Panel colorChoice;
@@ -20,7 +20,6 @@ public partial class CharacterCapsule : Control
 	[Export] VBoxContainer playerlessCapsule;
 	[Export] PlayerNameKeyboard playerNameKeyboard;
 	Shader outlineShader = GD.Load<Shader>("uid://cywx8daesh6uu");
-	public int capsuleID = -1;
 	public bool isEnabled = false;
 	public int CurrentColorIdx
 	{
@@ -44,7 +43,7 @@ public partial class CharacterCapsule : Control
 		{
 			if (isReady == value) return;
 			isReady = value;
-			EmitSignal(SignalName.changedReadyState, isReady);
+			EmitSignal(SignalName.changedReadyState);
 			if (value) readyButton.Modulate = new Color(0.5f, 1, 0.5f, 1);
 			else readyButton.Modulate = new Color(1, 1, 1, 1);
 		}
@@ -88,7 +87,7 @@ public partial class CharacterCapsule : Control
 
 		if (!Main.mapSelector.isCommenced)
         	CapsuleWASD(XMenuInput, YMenuInput);
-		else Main.mapSelector.ChangePlayerMapSelection(new Vector2I(XMenuInput, YMenuInput), inputNode.inputIdx);
+		else Main.mapSelector.ChangePlayerMapSelection(XMenuInput, YMenuInput, inputNode.inputIdx);
     }
 
 	void CapsuleWASD(int XMenuInput, int YMenuInput)
@@ -217,10 +216,8 @@ public partial class CharacterCapsule : Control
 			if (!Main.avaliableColors[index])
 			{
 				CurrentColorIdx = index;
-				foreach (bool coloravaliablility in Main.avaliableColors.Values)
-                {
-                    GD.Print(coloravaliablility);
-                }
+				Main.PrintColorAvaliability();
+
 				break;
 			}
 		}
@@ -270,15 +267,13 @@ public partial class CharacterCapsule : Control
 	public void Disable()
 	{
 		InputGenerator.Instance.ClearMenuInput(inputNode.inputIdx);
-		inputNode.inputIdx = -1;
+		inputNode.inputIdx = -2;
 		isEnabled = false;
 
 		hasPlayerCapsule.Hide();
 		playerlessCapsule.Show();
-		Main.avaliableColors[CurrentColorIdx] = false;
+		Main.colorAvaliability[CurrentColorIdx] = false;
 		IsReady = false;
-		Main.avaliableNumbers[capsuleID] = false;
-		capsuleID = -1;
 		GD.Print("Capsule number " + GetIndex() + " has been disabled");
 	}
 }
