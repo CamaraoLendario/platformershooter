@@ -76,6 +76,11 @@ public partial class CharacterSelectScreen : Control
 	{
 		activatedCapsules.Remove(capsule);
 	}
+	public void OnDisabledCapsule(CharacterCapsule capsule)
+	{
+		colorAvaliability[capsule.CurrentColorIdx] = false;
+		inputDirectory[capsule.inputNode.inputIdx] = null;
+	}
 
 	List<Dictionary<string, int>> GetPlayerInfo()
 	{

@@ -72,6 +72,7 @@ public partial class CharacterCapsule : Control
 
 	public override void _Ready()
 	{
+		
 		inputNode.MenuWASD += ProcessWASD;
 		inputNode.AcceptStart += ProcessOnAccept;
 		inputNode.BackStart += ProcessOnBack;
@@ -84,10 +85,10 @@ public partial class CharacterCapsule : Control
 	void ProcessWASD(int XMenuInput, int YMenuInput)
     {
 		if (playerNameKeyboard.Visible) return;
-
+		
 		if (!Main.mapSelector.isCommenced)
         	CapsuleWASD(XMenuInput, YMenuInput);
-		else Main.mapSelector.ChangePlayerMapSelection(XMenuInput, YMenuInput, inputNode.inputIdx);
+		else Main.mapSelector.ChangePlayerMapSelection(new Vector2I(XMenuInput, YMenuInput), inputNode.inputIdx);
     }
 
 	void CapsuleWASD(int XMenuInput, int YMenuInput)
@@ -149,19 +150,8 @@ public partial class CharacterCapsule : Control
 			Main.mapSelector.PlayerBack(inputNode.inputIdx);
 		else if (IsReady)
 			IsReady = false;
-        else 
-            OnBack();
+        else Leave();
     }
-
-	// I hate this please find a way to avoid using this timer
-	// This timer is used because the input signal keeps traveling up the tree, which brings the capsule back right after its removed
-	bool isLeaving = false;
-	void OnBack()
-	{
-		if (isLeaving == true) return; 
-		Leave();
-	}
-
 	void processStart()
 	{
 		if (playerNameKeyboard.Visible)
@@ -169,18 +159,14 @@ public partial class CharacterCapsule : Control
 			playerNameKeyboard.Close();
 			return;
 		}
-		Main.PrepareMapSelector();
 	}
 
 	async public void Leave()
     {
-		isLeaving = true;
-		await ToSignal(GetTree().CreateTimer(0.1f), Timer.SignalName.Timeout);
-		Main.OnDisabledCapsule(inputNode.inputIdx);
+		Main.OnDisabledCapsule(this);
 		Disable();
 		GetParent().MoveChild(this, -1);
-		isLeaving = false;
-    }
+	}
 
 	public void SetPlayerName(string newName)
     {
@@ -200,7 +186,7 @@ public partial class CharacterCapsule : Control
 		else direction = -1;
 
 		int index = CurrentColorIdx;
-		Main.avaliableColors[index] = false;
+		Main.colorAvaliability[index] = false;
 		for (int i = 0; i < SpaceMagesVars.teamColors.Length; i++)
 		{
 			if (index + direction >= SpaceMagesVars.teamColors.Length)
@@ -213,7 +199,7 @@ public partial class CharacterCapsule : Control
 			}
 			else index += direction;
 
-			if (!Main.avaliableColors[index])
+			if (!Main.colorAvaliability[index])
 			{
 				CurrentColorIdx = index;
 				Main.PrintColorAvaliability();
@@ -229,7 +215,7 @@ public partial class CharacterCapsule : Control
 		(playerSprite.Material as ShaderMaterial).SetShaderParameter("Color", newColor);
 		(colorChoice.GetChild(0).GetChild(1) as Label).Text = SpaceMagesVars.teamColorsDict.Keys.ElementAt(idx);
 		playerNameKeyboard.PlayerColor = new Color(newColor.X, newColor.Y, newColor.Z);
-		Main.avaliableColors[idx] = true;
+		Main.colorAvaliability[idx] = true;
 		currentColorIdx = idx;
 	}
 
