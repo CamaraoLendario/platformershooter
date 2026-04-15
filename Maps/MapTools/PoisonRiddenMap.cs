@@ -40,7 +40,7 @@ public partial class PoisonRiddenMap : Map
     {
         isMapPoisoned = false;
 
-		foreach((int colorIdx, Player player) in Game.Instance.playerNodesByColor)
+		foreach(Player player in Game.Instance.players)
         {
 			player.effectHandler.isPoisoned = false;
         }
@@ -57,7 +57,7 @@ public partial class PoisonRiddenMap : Map
 
 	void ApplyPoison(float delta)
     {
-        foreach((int colorIdx, Player player) in Game.Instance.playerNodesByColor)
+        foreach(Player player in Game.Instance.players)
         {
 			if (!player.IsInPilotArea) player.effectHandler.isPoisoned = true;
 			else player.effectHandler.isPoisoned = false;

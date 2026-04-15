@@ -7,20 +7,19 @@ using System.Runtime.InteropServices;
 
 public partial class SpawnPoints : Node
 {
-	[Export] PackedScene playerScene;
 	List<Node2D> spawnPoints = new List<Node2D>();
 
 	public override void _Ready()
 	{
 		ScrambleSpawnPoints();
 		SpawnPlayers();
-		Game.Instance.NewRoundStarted += OnNewRoundStarted;
+		SignalBus.Instance.NewRoundStarted += OnNewRoundStarted;
 	}
 	void SpawnPlayers()
 	{
-		foreach (Dictionary<string, int> playerInfo in Game.Instance.players)
+		foreach (Dictionary<string, int> playerInfo in Game.Instance.playerInfoList)
 		{
-			Player newPlayer = playerScene.Instantiate<Player>();
+			Player newPlayer = Player.playerScene.Instantiate<Player>();
 			newPlayer.Name = playerInfo.Keys.First();
 			newPlayer.NameLabel.Text = newPlayer.Name;
 			newPlayer.inputIdx = playerInfo["inputIdx"];
@@ -31,12 +30,12 @@ public partial class SpawnPoints : Node
 			Game.Instance.AddPlayer(newPlayer);
 			newPlayer.CallDeferred("Reset");
 		}
-		Game.Instance.OnFinishedSpawningPlayers();
+		SignalBus.Instance.EmitSignal(SignalBus.SignalName.FinishedSpawningPlayers);
 	}
 	void OnNewRoundStarted()
 	{
 		ScrambleSpawnPoints();
-		foreach (Player player in Game.Instance.playerNodesByColor.Values)
+		foreach (Player player in Game.Instance.players)
 		{
 			player.Position = spawnPoints[player.colorIdx].Position;
 			player.Reset();
@@ -61,7 +60,7 @@ public partial class SpawnPoints : Node
 
 	public override void _ExitTree()
 	{
-		Game.Instance.NewRoundStarted -= OnNewRoundStarted;
+		SignalBus.Instance.NewRoundStarted -= OnNewRoundStarted;
 		base._ExitTree();
 	}
 

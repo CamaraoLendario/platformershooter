@@ -22,7 +22,6 @@ public partial class PlayerInput : Node
 	[Signal] public delegate void GrapplingHookEndEventHandler(); 
 	[Signal] public delegate void SpecialStartEventHandler(); 
 	[Signal] public delegate void SpecialEndEventHandler(); 
-	[Signal] public delegate void PauseRequestEventHandler(Player player, bool pausedByDisconnect);
 #endregion
 	protected Player Main = null;
 	public string keyboardKeyword = "";
@@ -83,82 +82,10 @@ public partial class PlayerInput : Node
 				EmitSignal(input + "End");
 			}
 		}
-#region ZombieCodeLookLater
 
-		/* if (Input.IsActionJustPressed("Shoot" + keyboardKeyword + inputIndex))
-		{
-			EmitSignal(SignalName.ShootStart);
-		}
-
-		if (Input.IsActionJustReleased("Shoot" + keyboardKeyword + inputIndex))
-		{
-			EmitSignal(SignalName.ShootEnd);
-		}
-
-		if (Input.IsActionJustPressed("Jump" + keyboardKeyword + inputIndex))
-		{
-			EmitSignal(SignalName.JumpStart);
-		}
-
-		if (Input.IsActionJustReleased("Jump" + keyboardKeyword + inputIndex))
-		{
-			EmitSignal(SignalName.JumpEnd);
-		}
-
-		if (Input.IsActionJustPressed("Aim" + keyboardKeyword + inputIndex))
-		{
-			EmitSignal(SignalName.AimStart);
-		}
-
-		if (!Input.IsActionPressed("Aim" + keyboardKeyword + inputIndex))
-		{
-			EmitSignal(SignalName.AimEnd);
-		}
-
-		if (Input.IsActionJustPressed("Melee" + keyboardKeyword + inputIndex))
-		{
-			EmitSignal(SignalName.MeleeStart);
-		}
-
-		if (Input.IsActionJustReleased("Melee" + keyboardKeyword + inputIndex))
-		{
-			EmitSignal(SignalName.MeleeEnd);
-		}
-
-		if (Input.IsActionJustPressed("Drop" + keyboardKeyword + inputIndex))
-		{
-			EmitSignal(SignalName.DropStart);
-		}
-
-		if (Input.IsActionJustReleased("Drop" + keyboardKeyword + inputIndex))
-		{
-			EmitSignal(SignalName.DropEnd);
-		}
-
-		// if (Input.IsActionJustPressed("GrapplingHook" + keyboardKeyword + inputIndex))
-		// {
-		// 	EmitSignal(SignalName.GrapplingHookStart);
-		// }
-
-		// if (Input.IsActionJustReleased("GrapplingHook" + keyboardKeyword + inputIndex))
-		// {
-		// 	EmitSignal(SignalName.GrapplingHookEnd);
-		// }
-	
-		if (Input.IsActionJustPressed("Special" + keyboardKeyword + inputIndex))
-		{
-			EmitSignal(SignalName.SpecialStart, Main, false);
-		}
-		
-		if (Input.IsActionJustReleased("Special" + keyboardKeyword + inputIndex))
-		{
-			EmitSignal(SignalName.SpecialEnd, Main, false);
-		}
- */
-#endregion
 		if (Input.IsActionJustPressed("Pause" + keyboardKeyword + inputIndex))
 		{
-			EmitSignal(SignalName.PauseRequest, Main, false);
+			SignalBus.Instance.EmitSignal(SignalBus.SignalName.PauseRequest, Main, false);
 		}
 	}
 }

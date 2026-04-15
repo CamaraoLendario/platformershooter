@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://fhy0fulyed0p"]
 
-[ext_resource type="PackedScene" uid="uid://blk3xlkdst7il" path="res://world.tscn" id="1_fnwb8"]
+[ext_resource type="PackedScene" uid="uid://blk3xlkdst7il" path="res://Maps/OverWorld.tscn" id="1_fnwb8"]
 [ext_resource type="Script" uid="uid://dvx3nqegjh5o8" path="res://DEBUGTEST/Gym.cs" id="2_n4umm"]
 [ext_resource type="TileSet" uid="uid://cu072ug2gfowi" path="res://Maps/MapAssets/TileMaps/BaseMapTileSet.tres" id="3_lyo7t"]
 [ext_resource type="Script" uid="uid://6gitervwywjh" path="res://Maps/MapTools/InteractableTiles.cs" id="4_yp32w"]

@@ -33,5 +33,24 @@ namespace SpaceMages
 			Vector2.Left,
 			Vector2.Up,
 		];
+
+		public static int NormalizeIdx(int idx, int collectionSize)
+		{
+			if (collectionSize == 0)
+			{
+				GD.PrintErr("Tried to normalize Idx of a collection with size 0, returning 0");
+				return 0;
+			}
+
+			if (idx < 0)
+			{
+				return (collectionSize - (-idx % collectionSize))% collectionSize;
+			}
+			if (idx >= collectionSize)
+			{
+				return idx % collectionSize;
+			}
+			return idx;
+		}
 	}
 }

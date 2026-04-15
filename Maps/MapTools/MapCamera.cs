@@ -25,7 +25,7 @@ public partial class MapCamera : Camera2D
 	{
 		if (Engine.IsEditorHint()) return;
 		
-		Game.Instance.playerDied += OnPlayerDied;
+		SignalBus.Instance.playerDied += OnPlayerDied;
 
 		PixelMapSize = GetParent<Map>().PixelsMapSize;
         baseMinZoom = base.Zoom.X;
@@ -85,10 +85,10 @@ public partial class MapCamera : Camera2D
 	{
 		Vector2 medianPos = Vector2.Zero;
 
-		foreach (Player player in Game.Instance.playerNodesByColor.Values)
+		foreach (Player player in Game.Instance.players)
 		{
 			if (player.IsDead) continue;
-			medianPos += player.GlobalPosition / Game.Instance.alivePlayerCount;
+			medianPos += player.GlobalPosition / Game.Instance.GetAlivePlayerCount();
 		}
 
 		return medianPos;
@@ -98,9 +98,9 @@ public partial class MapCamera : Camera2D
 	{
 		Vector2 CurrentLengthVector = Vector2.One * 0;
 		float currentGreatestLength = 0;
-		foreach (Player playerA in Game.Instance.playerNodesByColor.Values)
+		foreach (Player playerA in Game.Instance.players)
 		{
-			foreach (Player playerB in Game.Instance.playerNodesByColor.Values)
+			foreach (Player playerB in Game.Instance.players)
 			{
 				if (playerB == playerA) continue; //TODO: add a check for if the player is dead or not this is literally so easy why didn't I do this before you idiot
 
@@ -159,7 +159,7 @@ public partial class MapCamera : Camera2D
 
 	void OnPlayerDied(Player died, Player killed)
 	{
-		if (Game.Instance.alivePlayerCount == 1)
+		if (Game.Instance.GetAlivePlayerCount() == 1)
 		{
 			shakeForce = 15;
 			shakeTime = 1;

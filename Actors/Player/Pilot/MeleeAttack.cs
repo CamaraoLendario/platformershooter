@@ -155,7 +155,7 @@ public partial class MeleeAttack : Area2D
 		((newDashParticles.GetChild(0) as GpuParticles2D).ProcessMaterial as ParticleProcessMaterial).Direction = new Vector3(direction.X, direction.Y, 0);
 
 		newDashParticles.GlobalPosition = Main.GlobalPosition + Vector2.Up;
-		Game.Instance.world.AddChild(newDashParticles);
+		Main.world.AddChild(newDashParticles);
 		newDashParticles.Emit();
 	}
 	(RayCast2D ray, bool hasLOS) getHasLOS(Player player)
@@ -166,7 +166,7 @@ public partial class MeleeAttack : Area2D
 		checkRay.SetCollisionMaskValue(2, true);
 		checkRay.HitFromInside = true;
 		checkRay.AddException(Main);
-		Game.Instance.world.AddChild(checkRay);
+		Main.world.AddChild(checkRay);
 		return (checkRay, helpLOS(checkRay, player));
 	}	
 	bool helpLOS(RayCast2D checkRay, Player player)
@@ -180,7 +180,7 @@ public partial class MeleeAttack : Area2D
 			checkRay.AddException(tileMapLayer.shape);
 			return helpLOS(checkRay, player);
 		}
-		else */ if (checkRay.GetCollider() == player)
+		else */ if (checkRay.GetCollider() == player) // TODO: check if this makes it so you can't double kill
 			return true;
 		else
 			return false;

@@ -26,7 +26,7 @@ public partial class PilotWeaponHolder : Node2D
     public override void _Ready()
     {
 		crossAirSprite.Hide();
-		world = Game.Instance.world;
+		world = GetTree().GetFirstNodeInGroup("World") as World;
 		Pilot.playerInput.DropStart += DropWeapon;
     }
 	public override void _Process(double delta)

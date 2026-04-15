@@ -1,5 +1,5 @@
 using Godot;
-using SpaceMages;
+using static SpaceMages.SpaceMagesVars;
 using Microsoft.VisualBasic;
 using System;
 using System.Linq;
@@ -15,7 +15,7 @@ public partial class IndividualScoreCounter : Control
     public override void _Ready()
 	{
 		GD.Print("MY COLOR INDEX IS " + colorIdx);
-		name.Text = SpaceMagesVars.teamColorsDict.Keys.ElementAt(colorIdx);
+		name.Text = teamColorsDict.Keys.ElementAt(colorIdx);
 		animationPlayer.AnimationFinished += OnAnimationFinished;
     }
 

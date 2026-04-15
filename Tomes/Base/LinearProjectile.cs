@@ -24,6 +24,7 @@ public partial class LinearProjectile : Area2D
 	}
 	private Vector2 direction;
 
+	PilotArea pilotArea;
 	public Player owner;
 	public bool isInPilotArea = true;
 	protected float collisionConfirmLength = 24.0f;
@@ -43,9 +44,9 @@ public partial class LinearProjectile : Area2D
 		lifeTimer.Timeout += OnLifeEnd;
 		BodyEntered += OnBodyHit;
 		lifeTimer.Start(lifeTime);
-		if (isDestroyedOutOfZone) Game.Instance.BulletsNodes.Add(this);
-
-		Game.Instance.NewRoundStarted += OnRoundFinished;
+		
+		pilotArea = GetNode<PilotArea>("%PilotArea");
+		isInPilotArea = pilotArea.IsInPilotArea(Position);
 		AreaEntered += OnAreaEntered;
 	}
 
@@ -60,6 +61,8 @@ public partial class LinearProjectile : Area2D
     public override void _PhysicsProcess(double delta)
 	{
 		Position += Direction * speed * (float)delta;
+		//if (isDestroyedOutOfZone) Game.Instance.BulletsNodes.Add(this);
+		CheckPositionPermition();
 	}
 
 	public void SetDirection(float inputRotation)
@@ -113,13 +116,6 @@ public partial class LinearProjectile : Area2D
 		QueueFree();
 	}
 
-	public override void _ExitTree()
-	{
-		base._ExitTree();
-		Game.Instance.NewRoundStarted -= OnRoundFinished;
-		if (isDestroyedOutOfZone) Game.Instance.BulletsNodes.Remove(this);
-	}
-
 	protected virtual void CollisionConfirm()
 	{
 		if (IsQueuedForDeletion()) return;
@@ -162,6 +158,14 @@ public partial class LinearProjectile : Area2D
 		QueueFree();
     }
 
+	void CheckPositionPermition()
+	{
+		if (isDestroyedOutOfZone && isInPilotArea != pilotArea.IsInPilotArea(Position))
+		{
+			QueueFree();
+		}
+
+	}
 
 	void FlipVSprite(Node2D sprite, bool flip)
 	{

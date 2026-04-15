@@ -26,9 +26,8 @@ public partial class ShipController : Controller
 	public override void _Ready()
 	{
 		base._Ready();
-        if (Game.Instance.world !=  null)
-            world = Game.Instance.world;
-        else
+        world = GetTree().GetFirstNodeInGroup("World") as World;
+        if (world == null)
         {
             world = Main.GetParent<Node2D>();
         }

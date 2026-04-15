@@ -74,7 +74,7 @@ public partial class MagicMissileComponent : Node
 	{
 		Vector2 averagePos = Vector2.Zero;
 		int alivePlayerCount = 0;
-		foreach (Player player in Game.Instance.playerNodesByColor.Values)
+		foreach (Player player in Game.Instance.players)
 		{
 			if (!player.IsDead)
 			{

@@ -2,7 +2,6 @@
 
 [ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="1_gh11b"]
 [ext_resource type="Script" uid="uid://dfc37w7c5df0r" path="res://Actors/Player/Player.cs" id="2_30khc"]
-[ext_resource type="PackedScene" uid="uid://by5s8sc2bwo1o" path="res://Actors/Player/Pilot/pilot_ragdol.tscn" id="3_fllei"]
 [ext_resource type="Script" uid="uid://dpajyn7twtmqh" path="res://Actors/Player/Pilot/PilotAttack.cs" id="3_iwrur"]
 [ext_resource type="Script" uid="uid://dxdjuabd4rwra" path="res://Actors/Player/OverHeadDisplay.cs" id="4_0ieod"]
 [ext_resource type="FontFile" uid="uid://c5a2sdgkmsblj" path="res://Fonts/SpaceMagesFontOutlined.png" id="4_jiph2"]
@@ -780,7 +779,6 @@ material = SubResource("ShaderMaterial_jkixf")
 collision_mask = 34
 script = ExtResource("2_30khc")
 HasShield = false
-pilotRagdol = ExtResource("3_fllei")
 effectHandler = NodePath("EffectHandler")
 pilot = NodePath("Pilot Controller")
 ship = NodePath("Ship Controller")

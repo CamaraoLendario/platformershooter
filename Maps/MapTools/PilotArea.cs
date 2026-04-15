@@ -22,19 +22,11 @@ public partial class PilotArea : Node2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		foreach (Player player in Game.Instance.playerNodesByColor.Values)
+		foreach (Player player in Game.Instance.players)
 		{
 			if (!player.IsDead)
 				player.IsInPilotArea = IsInPilotArea(player.GlobalPosition);
 		}
-
-		foreach (LinearProjectile bullet in Game.Instance.BulletsNodes)
-        {
-			if (bullet.isInPilotArea != IsInPilotArea(bullet.GlobalPosition))
-            {
-				bullet.QueueFree();
-            }
-        }
 	}
 	
 	public bool IsInPilotArea(Vector2 playerPos)

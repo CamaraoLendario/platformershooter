@@ -1,5 +1,5 @@
 using Godot;
-using SpaceMages;
+using static SpaceMages.SpaceMagesVars;
 using System;
 using System.Threading.Tasks;
 
@@ -11,10 +11,13 @@ public partial class RoundStartAnnouncer : Control
 	bool isRoundStart = false;
 	
 	Tween tween;
+	World world;
 	public override void _Ready()
 	{
-		Game.Instance.GameStarted += OnNewRound;
-		Game.Instance.NewRoundStarted += OnNewRound;
+		world = GetTree().GetFirstNodeInGroup("World") as World;
+		SignalBus.Instance.GameStarted += OnNewRound;
+		SignalBus.Instance.NewRoundStarted += OnNewRound;
+
 	}
 
 	public override void _Process(double delta)
@@ -59,10 +62,10 @@ public partial class RoundStartAnnouncer : Control
 	public override void _Draw()
 	{
 		if (!isRoundStart) return;
-		foreach (Player player in Game.Instance.playerNodesByColor.Values)
+		foreach (Player player in Game.Instance.players)
 		{
-			Camera2D camera = Game.Instance.world.currentMap.camera;
-			Vector3 playerColor = SpaceMagesVars.teamColors[player.colorIdx];
+			Camera2D camera = world.currentMap.camera;
+			Vector3 playerColor = teamColors[player.colorIdx];
 			Vector2 endPos = player.Position + new Vector2(960.0f, 540.0f) - camera.Position;
 			Vector2 startPos = new Vector2(960.0f, 540.0f);
 			endPos -= (startPos - endPos) * camera.Zoom.X /	4;
@@ -77,8 +80,8 @@ public partial class RoundStartAnnouncer : Control
 
 	public override void _ExitTree()
 	{
-		Game.Instance.GameStarted -= OnNewRound;
-		Game.Instance.NewRoundStarted -= OnNewRound;
+		SignalBus.Instance.GameStarted -= OnNewRound;
+		SignalBus.Instance.NewRoundStarted -= OnNewRound;
 		base._ExitTree();
 	}
 }

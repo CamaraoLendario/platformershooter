@@ -27,9 +27,9 @@ public partial class PlayerDebugComponent : Controller
         Main.playerInput.keyboardKeyword = "Keyboard";
         Main.SetColor(0);
         
-        Game.Instance.playerNodesByColor.Add(Main.colorIdx, Main);
-		Game.Instance.playerNodesByInputIdx.Add(Main.inputIdx, Main);
-        Game.Instance.alivePlayerCount += 1;
+        // Game.Instance.playerNodesByColor.Add(Main.colorIdx, Main);
+		// Game.Instance.playerNodesByInputIdx.Add(Main.inputIdx, Main);
+        // Game.Instance.alivePlayerCount += 1;
 		InputGenerator.Instance.GeneratePlayersInput(Main.inputIdx);
     }
 

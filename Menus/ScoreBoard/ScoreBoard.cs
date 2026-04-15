@@ -8,7 +8,6 @@ using System.Transactions;
 
 public partial class ScoreBoard : Control
 {
-	public Callable HideScoreButton => Callable.From(HideScore);
 	[Export] PackedScene individualScoreCounterScene;
 	[Export] VBoxContainer scoreCountersContainer;
 	Dictionary<int, int> oldTeamsScore = [];
@@ -16,14 +15,7 @@ public partial class ScoreBoard : Control
 
 	public override void _Ready()
 	{
-		Game.Instance.scoreBoard = this;
-		Game.Instance.GameStarted += OnNewGame;
-		Game.Instance.RoundFinished += AddScoreToAll;
-	}
-
-	private void OnNewGame()
-	{
-		oldTeamsScore = Game.Instance.gameMode.teamsScore;
+		SignalBus.Instance.RoundFinished += AddScoreToAll;
 	}
 
 	public void Initialize(Dictionary<int, Player> players)
@@ -38,66 +30,27 @@ public partial class ScoreBoard : Control
 		}
 	}
 
-	public void ShowScore()
-	{
-		Tween tween = CreateShowHideTween();
-		tween.SetEase(Tween.EaseType.Out);
-
-		tween.TweenMethod(Callable.From((float Ypos) => SetPosition(Ypos)), 1000, 0, 1.0f);
-	}
-
-	private void HideScore()
-	{
-		Tween tween = CreateShowHideTween();
-		tween.SetEase(Tween.EaseType.In);
-
-		tween.TweenMethod(Callable.From((float Ypos) => SetPosition(Ypos)), 0, 1000, 1.0f);
-	}
-
 	public void AddScoreToAll()
 	{
-		GameMode gameMode = Game.Instance.gameMode;
-		
-		AddScoreToAll(gameMode.addedTeamsScore);
+		AddScoreToAll(Game.Instance.gamemode.teamScoreDiference);
 	}
 	public async void AddScoreToAll(Dictionary<int, int> scoreToAdd)
 	{
 		(GetTree().GetFirstNodeInGroup("OverWorld") as OverWorld).canPause = false;
-		await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
-		ShowScore();
-		await ToSignal(GetTree().CreateTimer(1f), "timeout");
-		foreach (IndividualScoreCounter counter in scoreCounters)
-		{
-			if (!scoreToAdd.ContainsKey(counter.colorIdx)) continue;
-			counter.AddScore(scoreToAdd[counter.colorIdx]);
-			await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
-		}
-		await ToSignal(GetTree().CreateTimer(1f), "timeout");
-		Game.Instance.gameMode.ResetAddedTeamsScore();
-		HideScore();
-		await ToSignal(GetTree().CreateTimer(1f), "timeout");
+		// (IF NECESSARY) foreach score counter set it to the old score, ready to animate 
+		// Show score animation node animation
+		// ^ await animation finished ^
+		// foreach score counter animate adding its score
+		// ^ await finished signal ^
+		// Hide score animation node animation
+		// ^ await animation finished ^
 		(GetTree().GetFirstNodeInGroup("OverWorld") as OverWorld).canPause = true;
 		Game.Instance.CallDeferred(Game.MethodName.RestartRound);
 	}
 
-	void SetPosition(float Y)
-	{
-		Position = Vector2.Down * Y;
-	}
-
-	Tween CreateShowHideTween()
-	{
-		Tween tween = CreateTween();
-		tween.SetTrans(Tween.TransitionType.Sine);
-
-		return tween;
-	}
-
     public override void _ExitTree()
     {
-		Game.Instance.GameStarted -= OnNewGame;
-		Game.Instance.RoundFinished -= AddScoreToAll;
+		SignalBus.Instance.RoundFinished -= AddScoreToAll;
         base._ExitTree();
     }
-
 }

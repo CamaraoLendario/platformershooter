@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://do4h5sef4ecxp"]
+
+[ext_resource type="Script" uid="uid://b8o7wgtj5j14f" path="res://Maps/MapTools/PilotArea.cs" id="1_r20hl"]
+[ext_resource type="TileSet" uid="uid://cu072ug2gfowi" path="res://Maps/MapAssets/TileMaps/BaseMapTileSet.tres" id="2_cj3h6"]
+[ext_resource type="Script" uid="uid://6gitervwywjh" path="res://Maps/MapTools/InteractableTiles.cs" id="3_sxw6v"]
+[ext_resource type="Script" uid="uid://bpqw0biwsduf2" path="res://Maps/MapTools/MapCamera.cs" id="5_tyxts"]
+[ext_resource type="Script" uid="uid://ckgsusvcdqof8" path="res://Maps/MapTools/MapBorders.cs" id="6_np3hv"]
+[ext_resource type="PackedScene" uid="uid://deavbdxssxkrb" path="res://Maps/MapAssets/Pickups/ShipPowerUpChestSpawner.tscn" id="6_rhrid"]
+
+[node name="StageTemplate" type="Node" unique_id=1729124460]
+
+[node name="PilotArea" type="Node2D" parent="." unique_id=628875697]
+unique_name_in_owner = true
+script = ExtResource("1_r20hl")
+
+[node name="BackgroundTiles" type="Node2D" parent="." unique_id=24110419]
+z_as_relative = false
+
+[node name="Background" type="TileMapLayer" parent="BackgroundTiles" unique_id=829548906]
+self_modulate = Color(0.46, 0.46, 0.46, 1)
+tile_set = ExtResource("2_cj3h6")
+collision_enabled = false
+
+[node name="Foreground" type="TileMapLayer" parent="BackgroundTiles" unique_id=438059760]
+self_modulate = Color(0.46, 0.46, 0.46, 1)
+tile_set = ExtResource("2_cj3h6")
+collision_enabled = false
+
+[node name="InteractableTiles" type="TileMapLayer" parent="." unique_id=221769023]
+tile_set = ExtResource("2_cj3h6")
+script = ExtResource("3_sxw6v")
+
+[node name="DestructibleTiles" type="TileMapLayer" parent="InteractableTiles" unique_id=210973517]
+tile_set = ExtResource("2_cj3h6")
+
+[node name="Camera2D2" type="Camera2D" parent="." unique_id=24568993]
+process_mode = 3
+zoom = Vector2(2.155, 2.155)
+process_callback = 0
+limit_enabled = false
+editor_draw_limits = true
+script = ExtResource("5_tyxts")
+
+[node name="MapBorders" type="Node2D" parent="." unique_id=1079719686]
+script = ExtResource("6_np3hv")
+DrawBorders = true
+CameraEdgeLeway = 32
+
+[node name="Pickups" type="Node" parent="." unique_id=207337743]
+
+[node name="ShipPowerUpChestSpawner" parent="Pickups" unique_id=631959143 instance=ExtResource("6_rhrid")]
+
+[node name="Gamemodes" type="Node" parent="." unique_id=1000462480]

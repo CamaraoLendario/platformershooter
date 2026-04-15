@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="platformershooter"
-run/main_scene="uid://gclokew2nun0"
+run/main_scene="uid://cnm7il8iruiin"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 boot_splash/stretch_mode=0
 boot_splash/use_filter=false
@@ -31,7 +31,6 @@ MasterPreloader="*uid://4j3emd54gri2"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=4
 window/size/initial_position_type=3
 window/stretch/mode="viewport"
 
@@ -43,6 +42,8 @@ project/assembly_name="platformershooter"
 
 World="Main world node that contains the map and players"
 OverWorld=""
+DeletedOnNewRound="objects within this group are deleted whenever a new round starts"
+Projectiles=""
 
 [input]
 

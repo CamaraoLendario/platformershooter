@@ -13,7 +13,6 @@ public partial class ExplosionComponent : Area2D
 	[Export] AudioStreamPlayer2D ExplosionAudio;
 	public float explosionRadius;
 	public Player owner;
-	public int colorIdx = -1;
 	CollisionShape2D shape;
 	RayCast2D checkRay = new();
 
@@ -29,8 +28,8 @@ public partial class ExplosionComponent : Area2D
 		checkRay.CollideWithAreas = true;
 		checkRay.SetCollisionMaskValue(2, true);
 		checkRay.HitFromInside = true;
-
-		Game.Instance.world.CallDeferred(MethodName.AddChild, newExplosionAudio);
+		World world = GetTree().GetFirstNodeInGroup("World") as World;
+		world.CallDeferred(MethodName.AddChild, newExplosionAudio);
 		newExplosionAudio.Finished += () => newExplosionAudio.QueueFree();
 
 		newExplosionAudio.GlobalPosition = GlobalPosition;
@@ -49,8 +48,6 @@ public partial class ExplosionComponent : Area2D
 			if (HasLOS(player))
 				if (owner != null)
 					player.TakeDamage(owner);
-				else if (colorIdx != -1)
-					player.TakeDamage(colorIdx);
 				else
 					player.TakeDamage();
 		}

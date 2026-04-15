@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://blk3xlkdst7il"]
+
+[ext_resource type="Script" uid="uid://ep0pldqcx4sy" path="res://Maps/OverWorld.cs" id="1_tlwt5"]
+[ext_resource type="Script" uid="uid://dv65lm23iaghu" path="res://Maps/World.cs" id="3_aqk2v"]
+[ext_resource type="PackedScene" uid="uid://be0bay5c30jmy" path="res://Menus/ScoreBoard/ScoreHUD.tscn" id="3_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://i7qqi76sh82u" path="res://InGameMenu/InGameMenu.tscn" id="4_aqk2v"]
+
+[node name="OverWorld" type="Node2D" unique_id=582483126 groups=["OverWorld"]]
+process_mode = 3
+editor_description = "world type shit
+"
+script = ExtResource("1_tlwt5")
+
+[node name="HUD" parent="." unique_id=1897452230 instance=ExtResource("3_tlwt5")]
+
+[node name="World" type="Node2D" parent="." unique_id=1758205273 node_paths=PackedStringArray("Hud") groups=["World"]]
+process_mode = 1
+script = ExtResource("3_aqk2v")
+Hud = NodePath("../HUD")
+
+[node name="InGameMenu" parent="." unique_id=188947406 instance=ExtResource("4_aqk2v")]
+
+[node name="ButtonsContainer" parent="InGameMenu" index="0" unique_id=483007492]
+visible = false
+
+[editable path="InGameMenu"]

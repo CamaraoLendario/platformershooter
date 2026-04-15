@@ -4,10 +4,12 @@ using System;
 public partial class ShipPowerUpDualGuns : ShipGunPowerUp
 {
 	int shotCount = 3;
+	World world;
 
     public override void _Ready()
     {
         base._Ready();
+		world = GetTree().GetFirstNodeInGroup("World") as World;
     }
 
     protected override void Shoot()
@@ -18,7 +20,7 @@ public partial class ShipPowerUpDualGuns : ShipGunPowerUp
 		{
 			LinearProjectile newBullet = controller.GetNewBullet();
 			newBullet.Position = marker.GlobalPosition;
-			Game.Instance.world.AddChild(newBullet);
+			world.AddChild(newBullet);
 		}
 
 		shotCount --;

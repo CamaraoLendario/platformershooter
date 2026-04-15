@@ -37,8 +37,8 @@ public partial class MagicMissile : HittableComponent
         }
         direction = (targetPosition - GlobalPosition).Normalized();
         velocity = direction * initialSpeed;
-        Dictionary<int, Player> playerList = Game.Instance.playerNodesByInputIdx.ToDictionary();
-        SetDeferred(PropertyName.target, playerList.ElementAt(GD.RandRange(0, playerList.Count() - 1)).Value);
+        
+        SetDeferred(PropertyName.target, Game.Instance.players.ElementAt(GD.RandRange(0, Game.Instance.players.Count() - 1)));
 
         AddChild(ignoredTargetGraceTimer);
         ignoredTargetGraceTimer.Timeout += () =>
@@ -48,7 +48,7 @@ public partial class MagicMissile : HittableComponent
 
         BodyEntered += OnBodyDetected;
         GotHit += OnGotHit;
-        Game.Instance.NewRoundStarted += OnNewRoundStarted;
+        SignalBus.Instance.NewRoundStarted += OnNewRoundStarted;
     }
 
     public override void _Process(double delta)
@@ -119,21 +119,21 @@ public partial class MagicMissile : HittableComponent
     }
     Player GetRandomPlayer(Player[] excludeArray)
     {
-        Dictionary<int, Player> playerList = Game.Instance.playerNodesByInputIdx.ToDictionary();
+        List<Player> playerList = Game.Instance.players; // might need to duplicate this? not sure :)
         
-        foreach(Player player in Game.Instance.playerNodesByInputIdx.ToDictionary().Values)
+        foreach(Player player in Game.Instance.players)
         {
-            if (player.IsDead) playerList.Remove(player.inputIdx);
+            if (player.IsDead) playerList.Remove(player);
         }
 
         foreach(Player player in excludeArray)
         {     
-            playerList.Remove(player.inputIdx);
+            playerList.Remove(player);
         }
 
         if (playerList.Count <= 0)
         {
-            if (Game.Instance.alivePlayerCount > 0)
+            if (Game.Instance.GetAlivePlayerCount() > 0)
             {    
                 GD.Print("No other players found, returning current target.");
             }
@@ -144,7 +144,7 @@ public partial class MagicMissile : HittableComponent
             }
             return target;
         }
-        return playerList.ElementAt(GD.RandRange(0, playerList.Count() - 1)).Value;
+        return playerList.ElementAt(GD.RandRange(0, playerList.Count() - 1));
     }
 
     void OnNewRoundStarted()
@@ -159,6 +159,6 @@ public partial class MagicMissile : HittableComponent
         BodyEntered -= OnBodyDetected;
         GotHit -= OnGotHit;
         target.died -= OnTargetDead;
-        Game.Instance.NewRoundStarted -= OnNewRoundStarted;
+        SignalBus.Instance.NewRoundStarted -= OnNewRoundStarted;
     }
 }

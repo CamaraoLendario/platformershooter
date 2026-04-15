@@ -29,7 +29,7 @@ public partial class BeamsOfDeath : Node2D
 		};
 
 		SuddenDeathTimer.Start(timeToSuddenDeath);
-		Game.Instance.NewRoundStarted += Reset;
+		SignalBus.Instance.NewRoundStarted += Reset;
     }
 
     public override void _Process(double delta)
@@ -44,7 +44,7 @@ public partial class BeamsOfDeath : Node2D
 			{
 				if (body is not Player player) return;
 
-				player.TakeDamage(player.colorIdx);
+				player.TakeDamage(player);
 			}
 		}
 	}
@@ -61,7 +61,7 @@ public partial class BeamsOfDeath : Node2D
 
     public override void _ExitTree()
     {
-		Game.Instance.NewRoundStarted -= Reset;
+		SignalBus.Instance.NewRoundStarted -= Reset;
         base._ExitTree();
     }
 

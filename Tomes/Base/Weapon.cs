@@ -18,7 +18,7 @@ public partial class Weapon : Node2D
 	public Player owner;
 	protected World world;
 	protected PilotWeaponHolder holder;
-	Map currentMap = Game.Instance.world.currentMap;
+	Map currentMap = Game.Instance.currentMap;
 
 	public override void _Ready()
 	{
@@ -26,7 +26,7 @@ public partial class Weapon : Node2D
 		AddChild(shootCooldownTimer);
 
 		currentAmmo = maxAmmo;
-		world = Game.Instance.world;
+		world = GetTree().GetFirstNodeInGroup("World") as World;
 		holder = GetParent<PilotWeaponHolder>();
 	}
 

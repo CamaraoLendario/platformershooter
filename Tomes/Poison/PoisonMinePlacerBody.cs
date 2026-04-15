@@ -12,13 +12,15 @@ public partial class PoisonMinePlacerBody : CharacterBody2D
 	Vector2 velocity;
 	Map currentMap;
 	bool isInPilotArea = true;
+	World world;
 
     public override void _Ready()
     {
         velocity = direction * speed;
 		sprite.Rotation = direction.Angle();
-		currentMap = Game.Instance.selectedMap;
-		Game.Instance.NewRoundStarted += OnNewRoundStarted;
+		currentMap = Game.Instance.currentMap;
+		SignalBus.Instance.NewRoundStarted += OnNewRoundStarted;
+		world = GetTree().GetFirstNodeInGroup("World") as World;
 	}
 
 	void OnNewRoundStarted()
@@ -58,13 +60,13 @@ public partial class PoisonMinePlacerBody : CharacterBody2D
 		newPoisonMine.Position = collisionInfo.GetPosition();
 		newPoisonMine.owner = owner;
 
-		Game.Instance.world.AddChild(newPoisonMine);
+		world.AddChild(newPoisonMine);
 	}
 
     public override void _ExitTree()
     {
         base._ExitTree();
-		Game.Instance.NewRoundStarted -= OnNewRoundStarted;
+		SignalBus.Instance.NewRoundStarted -= OnNewRoundStarted;
     }
 
 }

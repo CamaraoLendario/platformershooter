@@ -293,6 +293,7 @@ script = ExtResource("3_s2jln")
 playerScene = ExtResource("4_oh5b6")
 
 [node name="PilotArea" type="Node2D" parent="." unique_id=35701636]
+unique_name_in_owner = true
 script = ExtResource("6_mbfa0")
 
 [node name="Polygon2D" type="Polygon2D" parent="PilotArea" unique_id=2107914680]

@@ -1,6 +1,6 @@
 using Godot;
 using System.Collections.Generic;
-using SpaceMages;
+using static SpaceMages.SpaceMagesVars;
 using System.Security.AccessControl;
 using System.IO.Pipes;
 using System.Runtime.CompilerServices;
@@ -38,7 +38,6 @@ public partial class Player : CharacterBody2D
 		}
 	}
 	bool hasShield = true;
-	[Export] PackedScene pilotRagdol;
 	#region Nodes
 	[ExportGroup("Nodes")]
 	[Export] public PlayerEffectHandler effectHandler;
@@ -60,12 +59,13 @@ public partial class Player : CharacterBody2D
 	[Export] public AnimatedSprite2D pilotShield;
 	[Export] public AnimationPlayer pilotShieldFlickerer;
 	[Export] public AnimationPlayer shipShieldFlickerer;
+	public static PackedScene playerScene = GD.Load<PackedScene>("uid://cbmq3xh2bcijs");
 	#endregion
 	public Controller currentController;
 	public int inputIdx = -2;
 	public int colorIdx = -1;
 	public bool isKeyboardControlled = false;
-	World world;
+	public World world;
 	
 	#region Timers
 	Timer shipCooldown = new();
@@ -128,6 +128,7 @@ public partial class Player : CharacterBody2D
 
 	public bool IsInPilotArea
 	{
+
 		get
 		{
 			return isInPilotArea;
@@ -179,18 +180,13 @@ public partial class Player : CharacterBody2D
 	public void SetColor(int colorIdx)
 	{
 
-		(Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
-		(pilotDeathParticles.ProcessMaterial as ShaderMaterial).SetShaderParameter("outlineColor", SpaceMagesVars.teamColors[colorIdx]);
+		(Material as ShaderMaterial).SetShaderParameter("Color", teamColors[colorIdx]);
+		(pilotDeathParticles.ProcessMaterial as ShaderMaterial).SetShaderParameter("outlineColor", teamColors[colorIdx]);
 		
-		(shipShield.Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
-		(pilotShield.Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
+		(shipShield.Material as ShaderMaterial).SetShaderParameter("Color", teamColors[colorIdx]);
+		(pilotShield.Material as ShaderMaterial).SetShaderParameter("Color", teamColors[colorIdx]);
 
 		this.colorIdx = colorIdx;
-	}
-
-	public bool TakeDamage(int ID)
-	{
-		return TakeDamage(Game.Instance.playerNodesByColor[ID]);
 	}
 	public bool TakeDamage(Player damageDealer = null)
 	{
@@ -207,7 +203,6 @@ public partial class Player : CharacterBody2D
 		{
 			Input.StartJoyVibration(inputIdx, 0.8f, 0.8f, 0.6f);
 			IsDead = true;
-			//CreateRagdol(damageDealer);
 			CreateDeathParticles(damageDealer);
 			Position = new Vector2(99999, 99999);
 			EmitSignal(SignalName.died, this, damageDealer);
@@ -256,7 +251,7 @@ public partial class Player : CharacterBody2D
 		
 		//GpuParticles2D newParticlesEmitter = particlesEmitter.Duplicate() as GpuParticles2D;
 		GpuParticles2D newParticlesEmitter = GPUParticlesPool.GetClonedParticles(particlesEmitter);
-		(newParticlesEmitter.Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
+		(newParticlesEmitter.Material as ShaderMaterial).SetShaderParameter("Color", teamColors[colorIdx]);
 		newParticlesEmitter.Position = Position;
 		newParticlesEmitter.OneShot = true;
 		thisissofuckingweirdwhatdemonhaspocessedthisgameatleastitworksIguessbutatwhatcost(newParticlesEmitter);
@@ -305,7 +300,7 @@ public partial class Player : CharacterBody2D
 		isTurningToShip = true;
 		//particles.ProcessMaterial = particles.ProcessMaterial.Duplicate() as ShaderMaterial;
 		(particles.ProcessMaterial as ShaderMaterial).
-		SetShaderParameter("outlineColor", SpaceMagesVars.teamColors[colorIdx]);
+		SetShaderParameter("outlineColor", teamColors[colorIdx]);
 		(particles.ProcessMaterial as ShaderMaterial).
 		SetShaderParameter("initPos", Position);
 		(particles.ProcessMaterial as ShaderMaterial).
@@ -370,23 +365,6 @@ public partial class Player : CharacterBody2D
 		}
 		else GD.Print("try go ship failed..");
 	}
-
-	void CreateRagdol(Player damager)
-	{
-		PilotRagdol newRagdol = pilotRagdol.Instantiate<PilotRagdol>();
-
-		newRagdol.GlobalPosition = GlobalPosition;
-		newRagdol.LinearVelocity = (Position - damager.Position).Normalized() * 250;
-		(newRagdol.Material as ShaderMaterial).SetShaderParameter("Color", SpaceMagesVars.teamColors[colorIdx]);
-		if (effectHandler.isPoisoned) (newRagdol.Material as ShaderMaterial).SetShaderParameter("PoisonBuildup", 1);
-		else (newRagdol.Material as ShaderMaterial).SetShaderParameter("PoisonBuildup", 0); // not sure if this works?
-		if (!isInPilotArea)
-		{
-			newRagdol.LinearVelocity *= 2.5f;
-			newRagdol.IsInPilotArea = false;
-		}
-		Game.Instance.world.CallDeferred(MethodName.AddChild, newRagdol);
-	}
 	void CreateDeathParticles(Player damager)
 	{
 		GpuParticles2D particles = GPUParticlesPool.GetClonedParticles(pilotDeathParticles);
@@ -446,12 +424,6 @@ public partial class Player : CharacterBody2D
 		}
 		else TryGoShip(true);
 	}
-	
-	public override void _ExitTree()
-	{
-		base._ExitTree();
-		Game.Instance.playerNodesByColor.Remove(colorIdx);
-	}
 
 	void SetupTimersVarsAndSignals()
 	{
@@ -460,7 +432,7 @@ public partial class Player : CharacterBody2D
 		
 		GD.Print("MY PLAYER COLOR INDEX IS THIS: " + colorIdx);
 
-		world = Game.Instance.world;
+		world = GetTree().GetFirstNodeInGroup("World") as World;
 
 		foreach (Node node in GetChildren())
 		{

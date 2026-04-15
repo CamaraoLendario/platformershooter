@@ -18,8 +18,8 @@ public partial class ShipPowerUpChest : Node2D
 
     public override void _Ready()
     {
-		map = Game.Instance.selectedMap;
-		world = Game.Instance.world;
+		map = Game.Instance.currentMap;
+		world = GetTree().GetFirstNodeInGroup("World") as World;
 		if (world == null)
 		{
 			world = map;

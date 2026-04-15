@@ -30,6 +30,7 @@ public partial class PoisonMine : Node2D
     }
 	float currentFuseTime = 1f;
 	float explosionRadius = -1;
+	World world;
 
 	public override void _Ready()
 	{
@@ -37,10 +38,11 @@ public partial class PoisonMine : Node2D
 		detectionArea.BodyEntered += OnBodyEntered;
 		collisionArea.AreaEntered += OnAreaCollided;
 		explosionRadius = (GetNode<CollisionShape2D>("ExplosionRadius").Shape as CircleShape2D).Radius;
+		world = GetTree().GetFirstNodeInGroup("World") as World;
 
 		PrepareExplosion();
 		SetDirection();
-		Game.Instance.NewRoundStarted += OnNewRoundStarted;
+		SignalBus.Instance.NewRoundStarted += OnNewRoundStarted;
 	}
 
 	void OnNewRoundStarted()
@@ -56,7 +58,6 @@ public partial class PoisonMine : Node2D
 		explosionComponent.GlobalPosition = GlobalPosition + wallSide * 16; 
 		explosionComponent.SetSize(explosionRadius);
 		explosionComponent.owner = owner;
-		explosionComponent.colorIdx = owner.colorIdx;
 		this.explosionComponent = explosionComponent;
 	}
 
@@ -93,21 +94,21 @@ public partial class PoisonMine : Node2D
 		explosionComponent.GlobalPosition = GlobalPosition;
 		GD.Print(explosionComponent.GlobalPosition);
 		SummonExplosionParticles();
-	    Game.Instance.world.CallDeferred(MethodName.AddChild, explosionComponent);
+	    world.CallDeferred(MethodName.AddChild, explosionComponent);
 		QueueFree();
     }
 	void SummonExplosionParticles()
 	{
 		newExplosionParticles.GlobalPosition = GlobalPosition;
 		newExplosionParticles.SetDeferred(GpuParticles2D.PropertyName.Emitting, true);
-		Game.Instance.world.CallDeferred(MethodName.AddChild, newExplosionParticles);
+		world.CallDeferred(MethodName.AddChild, newExplosionParticles);
 	}
 
     public override void _ExitTree()
     {
         base._ExitTree();
 
-		Game.Instance.NewRoundStarted -= OnNewRoundStarted;
+		SignalBus.Instance.NewRoundStarted -= OnNewRoundStarted;
     }
 
 }

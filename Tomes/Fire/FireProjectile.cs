@@ -11,7 +11,7 @@ public partial class FireProjectile : LinearProjectile
 	Timer waitParticlesTimer = new();
 	ExplosionComponent explosionComponent;
 	float acceleration = 300f;
-
+	World world;
 
     public override void _Ready()
     {
@@ -21,6 +21,7 @@ public partial class FireProjectile : LinearProjectile
 		FireAudio.Finished += () => {FireAudio.Play();};
 		waitParticlesTimer.Timeout += OnParticlesFinished;
 		PrepareExplosionParticles();
+		world = GetTree().GetFirstNodeInGroup("World") as World;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -33,12 +34,11 @@ public partial class FireProjectile : LinearProjectile
 	void PrepareExplosionParticles()
 	{
 		explosionParticles.Finished += () => explosionParticles.QueueFree();
-		explosionParticles.Reparent(Game.Instance.world);
+		explosionParticles.Reparent(world);
 
 		ExplosionComponent explosionComponent = explosionComponentScene.Instantiate<ExplosionComponent>();
 		explosionComponent.SetSize(explosionRadius);
 		explosionComponent.owner = owner;
-		explosionComponent.colorIdx = owner.colorIdx;
 		this.explosionComponent = explosionComponent;
 	}
 
@@ -53,7 +53,7 @@ public partial class FireProjectile : LinearProjectile
 	public override void End()
 	{
 		explosionComponent.Position = Position;
-		Game.Instance.world.CallDeferred(MethodName.AddChild, explosionComponent);
+		world.CallDeferred(MethodName.AddChild, explosionComponent);
 		SummonExplosionParticles();
 		sprite.Hide();
 		trailParticles.Emitting = false;

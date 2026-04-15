@@ -68,7 +68,7 @@ public partial class MapBorders : Node2D
 	
 	void ProcessTeleporting()
     {
-		foreach (Player player in Game.Instance.playerNodesByColor.Values)
+		foreach (Player player in Game.Instance.players)
 		{
 			Vector2 boundsDir = GetOutOfBoundsDir(player.Position);
 			if (boundsDir != Vector2.Zero)
@@ -76,7 +76,7 @@ public partial class MapBorders : Node2D
 				player.Position -= boundsDir * pixelMapSize;
 			}
 		}
-		foreach (Node2D projectile in Game.Instance.BulletsNodes)
+		foreach (Node2D projectile in GetTree().GetNodesInGroup("Projectiles"))
         {
             Vector2 boundsDir = GetOutOfBoundsDir(projectile.Position);
 			if (boundsDir != Vector2.Zero)
@@ -116,7 +116,7 @@ public partial class MapBorders : Node2D
 		int lineThickness = 5;
 		float halfLineThickness = (float)lineThickness / 2;
 
-		Godot.Vector2[] cornersArray = new Godot.Vector2[5]
+		Godot.Vector2[] cornersArray =
 		{
 			cornersCoords.TL + new Vector2(-halfLineThickness, -halfLineThickness),
 			cornersCoords.TR + new Vector2(halfLineThickness, -halfLineThickness),
@@ -125,14 +125,14 @@ public partial class MapBorders : Node2D
 			cornersCoords.TL + new Vector2(-halfLineThickness, -halfLineThickness),
 		};
 
-		Godot.Vector2[] cornersWithLeewayArray = new Godot.Vector2[5]
-		{
-			cornersCoords.TL + new Vector2(-halfLineThickness, -halfLineThickness) + new Vector2(-1, -1) * CameraEdgeLeway,
+		Godot.Vector2[] cornersWithLeewayArray =
+        [
+            cornersCoords.TL + new Vector2(-halfLineThickness, -halfLineThickness) + new Vector2(-1, -1) * CameraEdgeLeway,
 			cornersCoords.TR + new Vector2(halfLineThickness, -halfLineThickness) + new Vector2(1, -1) * CameraEdgeLeway,
 			cornersCoords.BR + new Vector2(halfLineThickness, halfLineThickness) + new Vector2(1, 1) * CameraEdgeLeway,
 			cornersCoords.BL + new Vector2(-halfLineThickness, halfLineThickness) + new Vector2(-1, 1) * CameraEdgeLeway,
 			cornersCoords.TL + new Vector2(-halfLineThickness, -halfLineThickness) + new Vector2(-1, -1) * CameraEdgeLeway,
-		};
+		];
 
 		DrawPolyline(
 			cornersArray,

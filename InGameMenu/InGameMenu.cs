@@ -22,7 +22,7 @@ public partial class InGameMenu : CanvasLayer
 	public override void _Ready()
 	{
 		ConnectSignals();
-		Game.Instance.NewRoundStarted += HideMenu;
+		SignalBus.Instance.NewRoundStarted += HideMenu;
 
 		foreach (Node possibleButton in buttonsContainer.GetChildren())
         {
@@ -88,32 +88,21 @@ public partial class InGameMenu : CanvasLayer
 		inputNode.InGameMenuAccept += OnMenuAccept;
 		inputNode.InGameMenuBack += OnMenuBack;
 		Input.JoyConnectionChanged += OnJoyConnectionChanged;	
-		Game.Instance.PlayerAdded += OnPlayerAdded;
+		SignalBus.Instance.PauseRequest += Pause;
 	}
 
     private void OnJoyConnectionChanged(long device, bool connected)
     {
 		GD.Print("device connection changed: " +  device);
-		for (int i = 0; i < Game.Instance.playerNodesByInputIdx.Count; i++)
-		{
-			int key = Game.Instance.playerNodesByInputIdx.Keys.ToList()[i];
-			GD.Print(key, Game.Instance.playerNodesByInputIdx[key].Name);
-		}
         if (!connected)
 		{
-			Pause(Game.Instance.playerNodesByInputIdx[(int)device], true);
+			Pause(Game.Instance.GetPlayerFromInputIdx((int)device), true);
 		}
 		else if (GetTree().Paused && device == inputIdx)
 		{
 			OnResumePressed();
 		}
     }
-
-    void OnPlayerAdded(Player player)
-	{
-		player.playerInput.PauseRequest += Pause;
-		GD.Print("connected pause to player " + player);
-	}
 
     private void OnMenuWASD(float x, float y)
     {
@@ -155,13 +144,7 @@ public partial class InGameMenu : CanvasLayer
         inputNode.InGameMenuWASD -= OnMenuWASD;
 		inputNode.InGameMenuAccept -= OnMenuAccept;
 		inputNode.InGameMenuBack -= OnMenuBack;
-		Game.Instance.PlayerAdded -= OnPlayerAdded;
-		Game.Instance.NewRoundStarted -= HideMenu;
-		foreach(Player player in Game.Instance.playerNodesByColor.Values)
-		{
-			player.playerInput.PauseRequest -= Pause;
-			GD.Print("connected pause to player " + player);
-		};
+		SignalBus.Instance.NewRoundStarted -= HideMenu;
 		base._ExitTree();
     }
 

@@ -15,9 +15,9 @@ public partial class DestructibleBlockFlag : Area2D
     public override void _Ready()
     {
         tilePos = new Vector2I((int) Position.X/16, (int) Position.Y/16);
-        if (Game.Instance.world !=  null)
-            SpawnParentNode = Game.Instance.world;
-        else
+            
+        SpawnParentNode = GetTree().GetFirstNodeInGroup("World") as World;
+        if(SpawnParentNode == null)
         {
             SpawnParentNode = GetParent<Node2D>();
         }

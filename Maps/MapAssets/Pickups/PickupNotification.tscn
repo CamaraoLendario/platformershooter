@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cfs2cqcfhf2js"]
 
-[ext_resource type="Script" uid="uid://bvfvxy1yqmgi" path="res://ItemPickupNotification.cs" id="1_367km"]
+[ext_resource type="Script" uid="uid://bvfvxy1yqmgi" path="res://Maps/MapAssets/Pickups/ItemPickupNotification.cs" id="1_367km"]
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="2_ech2v"]
 
 [node name="PickupNotification" type="Node2D" unique_id=1247885900]

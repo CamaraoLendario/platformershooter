@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using static SpaceMages.SpaceMagesVars;
 
 public partial class AndTheWinnerIs : Control
 {
@@ -18,7 +19,7 @@ public partial class AndTheWinnerIs : Control
 
 	public void AnnounceWinner(int colorIdx)
 	{
-		(GetNode<TextureRect>("winnerSprite").Material as ShaderMaterial).SetShaderParameter("Color", SpaceMages.SpaceMagesVars.teamColors[colorIdx]);
+		(GetNode<TextureRect>("winnerSprite").Material as ShaderMaterial).SetShaderParameter("Color", teamColors[colorIdx]);
 		colorAnnouncer.Stream = GD.Load<AudioStreamOggVorbis>(announcementColors[colorIdx]);
 		announcingAnimation.Play("Base");
 	}

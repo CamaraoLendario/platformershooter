@@ -25,7 +25,7 @@ public partial class Map : Node2D
 
     public override void _Ready() 
     {
-        Game.Instance.NewRoundStarted += OnNewRoundStarted;
+        SignalBus.Instance.NewRoundStarted += OnNewRoundStarted;
         currentTileMapLayerNode = GetNode<InteractableTiles>("InteractableTiles");
         //ReplicateCollisions();
     }
@@ -69,12 +69,12 @@ public partial class Map : Node2D
 
     void DisconnectSignals()
     {
-        Game.Instance.NewRoundStarted -= OnNewRoundStarted;
+        SignalBus.Instance.NewRoundStarted -= OnNewRoundStarted;
     }
 
     void ReplicateCollisions()
     {
-        foreach(Player player in Game.Instance.playerNodesByColor.Values)
+        foreach(Player player in Game.Instance.players)
         {
             foreach (CollisionShape2D col in player.collisionShapes)
             {

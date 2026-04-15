@@ -7,12 +7,12 @@ public partial class ScoreHUD : CanvasLayer
 
     public override void _Ready()
     {
-        Game.Instance.GameStarted += ConnectSignals;
+        SignalBus.Instance.GameStarted += ConnectSignals;
     }
 
     void ConnectSignals()
     {
-        Game.Instance.gameMode.WinnerDecided += AnnounceWinner;
+        SignalBus.Instance.GameFinished += AnnounceWinner;
     }
 
 	void AnnounceWinner(int colorIdx)
@@ -22,8 +22,8 @@ public partial class ScoreHUD : CanvasLayer
 
     public override void _ExitTree()
     {
-        Game.Instance.GameStarted -= ConnectSignals;
-        Game.Instance.gameMode.WinnerDecided -= AnnounceWinner;
+        SignalBus.Instance.GameStarted -= ConnectSignals;
+        SignalBus.Instance.GameFinished -= AnnounceWinner;
         base._ExitTree();
     }
 
