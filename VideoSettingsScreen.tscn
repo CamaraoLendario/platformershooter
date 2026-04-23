@@ -1,0 +1,223 @@
+[gd_scene format=3 uid="uid://gpgxkiqkcekm"]
+
+[ext_resource type="PackedScene" uid="uid://ha4tbfel1wyp" path="res://Menus/MenuingComponents/MainMenuScreen.tscn" id="1_xkjqq"]
+[ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuItem.cs" id="2_soq18"]
+[ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MainMenuScreenOptions.cs" id="2_yjbg6"]
+[ext_resource type="PackedScene" uid="uid://bme1tdi5j5fup" path="res://Menus/MenuingComponents/horizontalTextAndScroll.tscn" id="3_v6dsd"]
+[ext_resource type="PackedScene" uid="uid://cyx5clmammmqy" path="res://Menus/MenuingComponents/horizontalTextAndText.tscn" id="4_jtep2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xkjqq"]
+font_size = 117
+
+[node name="VideoSettingsScreen" unique_id=1595907082 instance=ExtResource("1_xkjqq")]
+
+[node name="TITLE" type="Label" parent="." index="0" unique_id=807818689]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -415.0
+offset_right = 576.0
+offset_bottom = -298.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Video Settings"
+label_settings = SubResource("LabelSettings_xkjqq")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_soq18")
+
+[node name="MenuItemsContainer" type="Control" parent="." index="1" unique_id=470151210]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -64.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_yjbg6")
+
+[node name="Window Settings" parent="MenuItemsContainer" index="0" unique_id=1906426519 instance=ExtResource("3_v6dsd")]
+layout_mode = 0
+SettingName = "Window"
+Contents = PackedStringArray("Fullscreen", "Windowed", "Borderless window")
+TotalSize = Vector2(1320, 125)
+borderSize = 50.0
+
+[node name="Label" parent="MenuItemsContainer/Window Settings" index="0" unique_id=127801925]
+offset_left = -635.0
+offset_top = -62.5
+offset_right = -86.0
+offset_bottom = 62.5
+text = "Window:"
+
+[node name="Scroller" parent="MenuItemsContainer/Window Settings" index="1" unique_id=1348934665]
+offset_left = 285.0
+offset_right = 285.0
+Contents = PackedStringArray("Fullscreen", "Windowed", "Borderless window")
+
+[node name="MenuSelectorHelper" parent="MenuItemsContainer/Window Settings/Scroller" index="0" unique_id=1724905341]
+offset_left = 358.0
+offset_right = 1058.0
+
+[node name="openSettings" parent="MenuItemsContainer/Window Settings/Scroller/MenuSelectorHelper" index="0" unique_id=1132553144]
+offset_left = -87.0
+offset_right = 613.0
+
+[node name="closedSettings" parent="MenuItemsContainer/Window Settings/Scroller/MenuSelectorHelper" index="1" unique_id=1614133634]
+offset_left = 8.0
+offset_right = 708.0
+
+[node name="Label" parent="MenuItemsContainer/Window Settings/Scroller/scrollingLabels" parent_id_path=PackedInt32Array(1906426519, 1348934665, 940476632) index="0" unique_id=1992009693]
+offset_left = -165.0
+offset_right = 165.0
+text = "Windowed"
+
+[node name="Label2" parent="MenuItemsContainer/Window Settings/Scroller/scrollingLabels" parent_id_path=PackedInt32Array(1906426519, 1348934665, 940476632) index="1" unique_id=1483010365]
+offset_left = -350.0
+offset_right = 350.0
+text = "Borderless window"
+
+[node name="Label3" parent="MenuItemsContainer/Window Settings/Scroller/scrollingLabels" parent_id_path=PackedInt32Array(1906426519, 1348934665, 940476632) index="2" unique_id=917384314]
+offset_left = -60.0
+offset_right = 350.0
+text = "Fullscreen"
+
+[node name="Label4" parent="MenuItemsContainer/Window Settings/Scroller/scrollingLabels" parent_id_path=PackedInt32Array(1906426519, 1348934665, 940476632) index="3" unique_id=1015717041]
+offset_left = -165.0
+offset_right = 165.0
+text = "Windowed"
+
+[node name="MenuSelectorHelper" parent="MenuItemsContainer/Window Settings" index="2" unique_id=596944666]
+offset_left = -660.0
+offset_top = -62.5
+offset_right = 660.0
+offset_bottom = 62.5
+
+[node name="Vsync" parent="MenuItemsContainer" index="1" unique_id=1823274729 instance=ExtResource("4_jtep2")]
+layout_mode = 0
+offset_top = 120.0
+offset_bottom = 120.0
+SettingName = "V-sync"
+Options = PackedStringArray("Enabled", "Disabled")
+TotalSize = Vector2(1320, 125)
+borderSize = 50.0
+
+[node name="leftLabel" parent="MenuItemsContainer/Vsync" index="0" unique_id=127801925]
+offset_left = -635.0
+offset_top = -62.5
+offset_right = -86.0
+offset_bottom = 62.5
+text = "V-sync:"
+
+[node name="rightLabel" parent="MenuItemsContainer/Vsync" index="1" unique_id=2062793766]
+offset_left = 86.0
+offset_top = -62.5
+offset_right = 635.0
+offset_bottom = 62.5
+text = "Enabled"
+
+[node name="MenuSelectorHelper" parent="MenuItemsContainer/Vsync" index="2" unique_id=596944666]
+offset_left = -660.0
+offset_top = -62.5
+offset_right = 660.0
+offset_bottom = 62.5
+
+[node name="do Limit FPS" parent="MenuItemsContainer" index="2" unique_id=1786881336 instance=ExtResource("4_jtep2")]
+layout_mode = 0
+offset_top = 240.0
+offset_bottom = 240.0
+SettingName = "Limit FPS"
+Options = PackedStringArray("Enabled", "Disabled")
+TotalSize = Vector2(1320, 125)
+borderSize = 50.0
+
+[node name="leftLabel" parent="MenuItemsContainer/do Limit FPS" index="0" unique_id=127801925]
+offset_left = -635.0
+offset_top = -62.5
+offset_right = -61.0
+offset_bottom = 62.5
+text = "Limit FPS:"
+
+[node name="rightLabel" parent="MenuItemsContainer/do Limit FPS" index="1" unique_id=2062793766]
+offset_left = 61.0
+offset_top = -62.5
+offset_right = 635.0
+offset_bottom = 62.5
+text = "Enabled"
+
+[node name="MenuSelectorHelper" parent="MenuItemsContainer/do Limit FPS" index="2" unique_id=596944666]
+offset_left = -660.0
+offset_top = -62.5
+offset_right = 660.0
+offset_bottom = 62.5
+
+[node name="FPS Limit" parent="MenuItemsContainer" index="3" unique_id=2067505458 instance=ExtResource("3_v6dsd")]
+layout_mode = 0
+offset_top = 360.0
+offset_bottom = 360.0
+SettingName = "Max FPS"
+Contents = PackedStringArray("120", "144", "200", "240", "30", "50", "60", "75", "100")
+TotalSize = Vector2(1320, 125)
+borderSize = 50.0
+
+[node name="Label" parent="MenuItemsContainer/FPS Limit" index="0" unique_id=127801925]
+offset_left = -635.0
+offset_top = -62.5
+offset_right = -86.0
+offset_bottom = 62.5
+text = "Max FPS:"
+
+[node name="Scroller" parent="MenuItemsContainer/FPS Limit" index="1" unique_id=1348934665]
+offset_left = 575.0
+offset_right = 575.0
+Contents = PackedStringArray("120", "144", "200", "240", "30", "50", "60", "75", "100")
+
+[node name="MenuSelectorHelper" parent="MenuItemsContainer/FPS Limit/Scroller" index="0" unique_id=1724905341]
+offset_left = -209.0
+offset_right = -89.0
+
+[node name="openSettings" parent="MenuItemsContainer/FPS Limit/Scroller/MenuSelectorHelper" index="0" unique_id=1132553144]
+offset_right = 71.0
+
+[node name="closedSettings" parent="MenuItemsContainer/FPS Limit/Scroller/MenuSelectorHelper" index="1" unique_id=1614133634]
+offset_right = 71.0
+
+[node name="Label" parent="MenuItemsContainer/FPS Limit/Scroller/scrollingLabels" parent_id_path=PackedInt32Array(2067505458, 1348934665, 940476632) index="0" unique_id=1992009693]
+offset_left = -40.0
+offset_right = 40.0
+text = "75"
+
+[node name="Label2" parent="MenuItemsContainer/FPS Limit/Scroller/scrollingLabels" parent_id_path=PackedInt32Array(2067505458, 1348934665, 940476632) index="1" unique_id=1483010365]
+offset_left = -60.0
+offset_right = 60.0
+text = "100"
+
+[node name="Label3" parent="MenuItemsContainer/FPS Limit/Scroller/scrollingLabels" parent_id_path=PackedInt32Array(2067505458, 1348934665, 940476632) index="2" unique_id=917384314]
+offset_left = -60.0
+offset_right = 60.0
+text = "120"
+
+[node name="Label4" parent="MenuItemsContainer/FPS Limit/Scroller/scrollingLabels" parent_id_path=PackedInt32Array(2067505458, 1348934665, 940476632) index="3" unique_id=1015717041]
+offset_left = -60.0
+offset_right = 60.0
+text = "144"
+
+[node name="MenuSelectorHelper" parent="MenuItemsContainer/FPS Limit" index="2" unique_id=596944666]
+offset_left = -660.0
+offset_top = -62.5
+offset_right = 660.0
+offset_bottom = 62.5
+
+[editable path="MenuItemsContainer/Window Settings"]
+[editable path="MenuItemsContainer/Window Settings/Scroller"]
+[editable path="MenuItemsContainer/Vsync"]
+[editable path="MenuItemsContainer/do Limit FPS"]
+[editable path="MenuItemsContainer/FPS Limit"]
+[editable path="MenuItemsContainer/FPS Limit/Scroller"]

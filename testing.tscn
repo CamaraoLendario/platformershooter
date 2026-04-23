@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://c182imhkb7ma0" path="res://Menus/MainMenu/MainCard.cs" id="1_ybq6y"]
 [ext_resource type="Texture2D" uid="uid://eu7loh1c4upq" path="res://Banner.png" id="2_11ixh"]
 [ext_resource type="Script" uid="uid://boolela4srvw4" path="res://Menus/MainMenu/GamemodeSettings.cs" id="2_kj3p2"]
-[ext_resource type="Script" uid="uid://dfk4v33q0anh1" path="res://Menus/MainMenu/GamemodeScroll.cs" id="3_lc7k4"]
+[ext_resource type="Script" uid="uid://dfk4v33q0anh1" path="res://Menus/MenuingComponents/MenuScroll.cs" id="3_lc7k4"]
 [ext_resource type="Script" uid="uid://blgnfhtdmevfs" path="res://Menus/MainMenu/Menu.cs" id="4_w078t"]
-[ext_resource type="Script" uid="uid://cbtcwbxma8c3v" path="res://Menus/MainMenu/MainMenuController.cs" id="7_20t1u"]
+[ext_resource type="Script" uid="uid://cbtcwbxma8c3v" path="res://Menus/MenuingComponents/MainMenuController.cs" id="7_20t1u"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fd6ls"]
 font_size = 135

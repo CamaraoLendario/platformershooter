@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cwpfr7adf3u68"]
+
+[ext_resource type="Script" uid="uid://7w2nb8avapyh" path="res://Menus/MenuingComponents/SimpleMenuItemButton.cs" id="1_38x02"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_yd8fi"]
+font_size = 82
+
+[node name="SimpleMenuItemButton" type="Label" unique_id=167338393]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -152.5
+offset_top = -56.5
+offset_right = 152.5
+offset_bottom = 56.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "option1"
+label_settings = SubResource("LabelSettings_yd8fi")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_38x02")

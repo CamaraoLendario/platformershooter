@@ -16,7 +16,7 @@ shader_parameter/pullStrength = 744.885
 shader_parameter/frinctionStrength = 6.13
 shader_parameter/color1 = Color(6.9789587e-07, 0.22117198, 0.46957147, 1)
 shader_parameter/color2 = Color(0, 0.78431374, 0.8666667, 1)
-shader_parameter/color3 = Color(1, 0.9411765, 1, 1)
+shader_parameter/color3 = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y4q54"]
 shader = ExtResource("1_bjy8h")
@@ -28,7 +28,7 @@ shader_parameter/pullStrength = 1117.328
 shader_parameter/frinctionStrength = 6.13
 shader_parameter/color1 = Color(6.9789587e-07, 0.22117198, 0.46957147, 1)
 shader_parameter/color2 = Color(0, 0.78431374, 0.8666667, 1)
-shader_parameter/color3 = Color(1, 0.9411765, 1, 1)
+shader_parameter/color3 = Color(1, 1, 1, 1)
 
 [node name="BlackHole" type="Node2D" unique_id=760288141 node_paths=PackedStringArray("pullArea")]
 script = ExtResource("1_rv61l")

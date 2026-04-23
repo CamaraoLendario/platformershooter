@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://blrhm4bqw0us1"]
+
+[ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_715cd"]
+[ext_resource type="Script" uid="uid://dl2sl2efxfj2i" path="res://HorizontalTextAndSlider.cs" id="1_irv54"]
+[ext_resource type="Script" uid="uid://ck412bnf8kog2" path="res://Menus/MenuingComponents/MenuSelectorHelper.cs" id="3_2xg7s"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_irv54"]
+font_size = 92
+
+[node name="HorizontalTextAndSlider" type="Control" unique_id=1161178196 node_paths=PackedStringArray("panelHelper")]
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("1_715cd")
+script = ExtResource("1_irv54")
+SliderValue = 75
+panelHelper = NodePath("MenuSelectorHelper")
+
+[node name="leftLabel" type="Label" parent="." unique_id=1183137305]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -835.0
+offset_top = -82.5
+offset_right = -286.0
+offset_bottom = 82.5
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0, 0.5)
+text = ":"
+label_settings = SubResource("LabelSettings_irv54")
+vertical_alignment = 1
+
+[node name="Slider" type="ProgressBar" parent="." unique_id=1307486710]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -45.0
+offset_right = 835.0
+offset_bottom = 45.0
+max_value = 1.0
+value = 0.75
+
+[node name="MenuSelectorHelper" type="Control" parent="." unique_id=873022633]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -860.0
+offset_top = -82.5
+offset_right = 860.0
+offset_bottom = 82.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_2xg7s")

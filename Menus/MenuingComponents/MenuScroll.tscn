@@ -1,0 +1,162 @@
+[gd_scene format=3 uid="uid://cn8ap47ih5ejd"]
+
+[ext_resource type="Script" uid="uid://dfk4v33q0anh1" path="res://Menus/MenuingComponents/MenuScroll.cs" id="1_fvdhl"]
+[ext_resource type="FontFile" uid="uid://c5a2sdgkmsblj" path="res://Fonts/SpaceMagesFontOutlined.png" id="2_a8n7i"]
+[ext_resource type="Script" uid="uid://ck412bnf8kog2" path="res://Menus/MenuingComponents/MenuSelectorHelper.cs" id="3_jouls"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bqvs1"]
+font = ExtResource("2_a8n7i")
+font_size = 68
+
+[node name="MenuScroll" type="Control" unique_id=1348934665 node_paths=PackedStringArray("labelsContainer", "Arrows", "panelHelper")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -960.0
+offset_bottom = -540.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.28)
+script = ExtResource("1_fvdhl")
+Separation = 50
+labelsContainer = NodePath("scrollingLabels")
+Arrows = NodePath("")
+panelHelper = NodePath("MenuSelectorHelper")
+
+[node name="MenuSelectorHelper" type="Control" parent="." unique_id=1724905341]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 538.0
+offset_bottom = 340.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_jouls")
+
+[node name="openSettings" type="Control" parent="MenuSelectorHelper" unique_id=1132553144]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -269.0
+offset_top = -53.0
+offset_right = 269.0
+offset_bottom = 53.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="closedSettings" type="Control" parent="MenuSelectorHelper" unique_id=1614133634]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -269.0
+offset_top = -170.0
+offset_right = 269.0
+offset_bottom = 170.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="scrollingLabels" type="Control" parent="." unique_id=940476632]
+unique_name_in_owner = true
+anchors_preset = 0
+
+[node name="Label" type="Label" parent="scrollingLabels" unique_id=1992009693]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -132.5
+offset_right = 170.0
+offset_bottom = -67.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+text = "Option4"
+label_settings = SubResource("LabelSettings_bqvs1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="scrollingLabels" unique_id=1483010365]
+visible = false
+modulate = Color(1, 1, 1, 0.5)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -82.5
+offset_right = 170.0
+offset_bottom = -17.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+text = "Option5"
+label_settings = SubResource("LabelSettings_bqvs1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="scrollingLabels" unique_id=917384314]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -32.500008
+offset_right = 170.0
+offset_bottom = 32.500008
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+text = "Option1"
+label_settings = SubResource("LabelSettings_bqvs1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="scrollingLabels" unique_id=1015717041]
+visible = false
+modulate = Color(1, 1, 1, 0.5)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = 17.499641
+offset_right = 170.0
+offset_bottom = 82.50036
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+text = "Option2"
+label_settings = SubResource("LabelSettings_bqvs1")
+horizontal_alignment = 1
+vertical_alignment = 1

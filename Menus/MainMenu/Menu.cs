@@ -9,69 +9,42 @@ using System.Xml.Serialization;
 
 public partial class Menu : MainMenuScreen
 {
-	PackedScene packedScene;
 	int currentButtonIdx;
 
-	void Play()
+	bool Play()
 	{
-		HideMenu();
-		GamemodeSettings gamemodeSettings = GetNode("%GamemodeSettings") as GamemodeSettings;
-		gamemodeSettings.ShowMenu();
+		return false;
 	}
 
-	void Settings()
+	bool Settings()
 	{
-		HideRight();
-		SettingsMenu settingsMenu = GetNode("%SettingsMenu") as SettingsMenu;
-		settingsMenu.ShowMenu();
+		return false;
 	}
 
-	void Credits()
+	bool Credits()
 	{
-		
+		return false;
 	}
 	
-	void Quit()
+	bool Quit()
 	{
 		GetTree().Quit();
+		return true;
 	}
 
     public override void OnMoveAction(Vector2 dir)
     {
 		currentButtonIdx = menuSelectPanel.Move(dir);
     }
-    public override void OnPositiveAction()
+    public override bool OnPositiveAction()
     {
         switch (currentButtonIdx)
 		{
-			case 0:
-				Play();
-				break;
-			case 1:
-				Settings();
-				break;
-			case 2:
-				Credits();
-				break;
-			case 3:
-				Quit();
-				break;
+			case 0: return Play();
+			case 1: return Settings();
+			case 2: return Credits();
+			case 3: return Quit();
+			default:return false;
 		};
     }
-    public override void OnNegativeAction()
-	{
-		MainMenuAnimator.Play("MainCardPressedAnyKey", -1, -1);
-		mainMenuController.currentScreen = mainMenuController.mainCard;
-	}
-
-	public void HideRight()
-	{
-		SelfAnimator.Play("HideRight");
-	}
-
-	public void ShowRight()
-	{
-		SelfAnimator.Play("ShowFromRight");
-		mainMenuController.currentScreen = this;
-	}
 }

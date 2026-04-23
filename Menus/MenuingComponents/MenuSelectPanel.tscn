@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://4s3fc21oaq4i"]
 
-[ext_resource type="Script" uid="uid://dvhr0pm4b8goc" path="res://Menus/MainMenu/MenuSelectPanel.cs" id="1_2id8t"]
+[ext_resource type="Script" uid="uid://dvhr0pm4b8goc" path="res://Menus/MenuingComponents/MenuSelectPanel.cs" id="1_2id8t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kg5hh"]
 bg_color = Color(0.16862746, 0.16862746, 0.16862746, 0.5019608)
@@ -13,6 +13,7 @@ corner_radius_bottom_left = 25
 z_index = -1
 offset_right = 340.0
 offset_bottom = 125.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_kg5hh")
 script = ExtResource("1_2id8t")
-options = [NodePath(""), NodePath(""), NodePath(""), NodePath("")]
+options = []

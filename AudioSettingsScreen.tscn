@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://cpwa1v1e2byqe"]
+
+[ext_resource type="PackedScene" uid="uid://ha4tbfel1wyp" path="res://Menus/MenuingComponents/MainMenuScreen.tscn" id="1_w8ymq"]
+[ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuItem.cs" id="2_tmxlg"]
+[ext_resource type="Script" uid="uid://b27p12vnimu0l" path="res://AudioSettingsScreen.cs" id="2_u7x5x"]
+[ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MainMenuScreenOptions.cs" id="3_u7x5x"]
+[ext_resource type="PackedScene" uid="uid://blrhm4bqw0us1" path="res://HorizontalTextAndSlider.tscn" id="4_re14l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nvmy7"]
+font_size = 117
+
+[node name="AudioSettingsScreen" unique_id=1595907082 instance=ExtResource("1_w8ymq")]
+script = ExtResource("2_u7x5x")
+
+[node name="TITLE" type="Label" parent="." index="0" unique_id=1295354193]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -415.0
+offset_right = 576.0
+offset_bottom = -298.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Audio Settings"
+label_settings = SubResource("LabelSettings_nvmy7")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_tmxlg")
+
+[node name="MenuItemsContainer" type="Control" parent="." index="1" unique_id=1460505062]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -64.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_u7x5x")
+
+[node name="Master" parent="MenuItemsContainer" index="0" unique_id=1161178196 instance=ExtResource("4_re14l")]
+layout_mode = 0
+SettingName = "Master"
+TotalSize = Vector2(1720, 125)
+
+[node name="leftLabel" parent="MenuItemsContainer/Master" index="0" unique_id=1183137305]
+offset_top = -62.5
+offset_bottom = 62.5
+text = "Master:"
+
+[node name="Slider" parent="MenuItemsContainer/Master" index="1" unique_id=1307486710]
+offset_top = -25.0
+offset_bottom = 25.0
+
+[node name="Music" parent="MenuItemsContainer" index="1" unique_id=1297678539 instance=ExtResource("4_re14l")]
+layout_mode = 0
+offset_top = 120.0
+offset_bottom = 120.0
+SettingName = "Music"
+TotalSize = Vector2(1720, 125)
+
+[node name="SFX" parent="MenuItemsContainer" index="2" unique_id=1614735625 instance=ExtResource("4_re14l")]
+layout_mode = 0
+offset_top = 240.0
+offset_bottom = 240.0
+SettingName = "SFX"
+TotalSize = Vector2(1720, 125)
+
+[editable path="MenuItemsContainer/Master"]

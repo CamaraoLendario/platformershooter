@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://drht5q5hsotk8"]
+
+[ext_resource type="PackedScene" uid="uid://ha4tbfel1wyp" path="res://Menus/MenuingComponents/MainMenuScreen.tscn" id="1_7lcra"]
+[ext_resource type="Script" uid="uid://dnvgf7tskte75" path="res://MainThemeScreen.cs" id="2_6tc60"]
+[ext_resource type="Texture2D" uid="uid://eu7loh1c4upq" path="res://Banner.png" id="2_45qj1"]
+[ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuItem.cs" id="2_k1yqp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_45qj1"]
+font_size = 64
+
+[node name="MainThemeScreen" unique_id=1595907082 node_paths=PackedStringArray("banner") instance=ExtResource("1_7lcra")]
+script = ExtResource("2_6tc60")
+banner = NodePath("TextureRect")
+
+[node name="TextureRect" type="TextureRect" parent="." index="0" unique_id=250649080]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 277.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.1)
+texture = ExtResource("2_45qj1")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." index="1" unique_id=906646064]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -240.0
+offset_top = -273.0
+offset_right = 240.0
+offset_bottom = -187.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press any key to start"
+label_settings = SubResource("LabelSettings_45qj1")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_k1yqp")

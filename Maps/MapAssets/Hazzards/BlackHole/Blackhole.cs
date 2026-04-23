@@ -31,7 +31,7 @@ public partial class Blackhole : Node2D
 			if (node is Player player)
 			{
 				player.pilot.gravityForce *= 0;
-				player.Velocity += pullForce;		
+				player.Velocity += pullForce;	
 			}
 			else if (node is LinearProjectile projectile)
 			{

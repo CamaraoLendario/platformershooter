@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://benx6bkh23wpm"]
+
+[ext_resource type="PackedScene" uid="uid://ha4tbfel1wyp" path="res://Menus/MenuingComponents/MainMenuScreen.tscn" id="1_8iiu4"]
+[ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuItem.cs" id="2_0o71x"]
+[ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MainMenuScreenOptions.cs" id="2_e6v8l"]
+[ext_resource type="PackedScene" uid="uid://cwpfr7adf3u68" path="res://Menus/MenuingComponents/SimpleMenuItemButton.tscn" id="3_11lt3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_e6v8l"]
+font_size = 117
+
+[node name="SettingsScreen" unique_id=1595907082 instance=ExtResource("1_8iiu4")]
+
+[node name="TITLE" type="Label" parent="." index="0" unique_id=1039493745]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -415.0
+offset_right = 576.0
+offset_bottom = -298.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Settings"
+label_settings = SubResource("LabelSettings_e6v8l")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_0o71x")
+
+[node name="MenuItemsContainer" type="Control" parent="." index="1" unique_id=21267787]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -64.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_e6v8l")
+Separation = 125
+
+[node name="SimpleMenuItemButton" parent="MenuItemsContainer" index="0" unique_id=167338393 instance=ExtResource("3_11lt3")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -366.0
+offset_top = 0.0
+offset_right = 366.0
+offset_bottom = 110.0
+grow_horizontal = 1
+grow_vertical = 1
+text = "Video Setings"
+
+[node name="SimpleMenuItemButton2" parent="MenuItemsContainer" index="1" unique_id=683537002 instance=ExtResource("3_11lt3")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -360.0
+offset_top = 125.0
+offset_right = 360.0
+offset_bottom = 235.0
+grow_horizontal = 1
+grow_vertical = 1
+text = "Audio Settings"
+
+[node name="SimpleMenuItemButton3" parent="MenuItemsContainer" index="2" unique_id=1360880791 instance=ExtResource("3_11lt3")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -318.0
+offset_top = 250.0
+offset_right = 318.0
+offset_bottom = 360.0
+grow_horizontal = 1
+grow_vertical = 1
+text = "Accessibility"
+
+[editable path="MenuItemsContainer/SimpleMenuItemButton"]
+[editable path="MenuItemsContainer/SimpleMenuItemButton2"]
+[editable path="MenuItemsContainer/SimpleMenuItemButton3"]
