@@ -1,4 +1,4 @@
-using Godot;
+/* using Godot;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -364,4 +364,4 @@ public partial class MapPreviewsContainer : Control
 			Main.SelectMap(mapIdx); 
 		};
 	}
-}
+} */

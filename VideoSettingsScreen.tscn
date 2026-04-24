@@ -45,12 +45,11 @@ script = ExtResource("2_yjbg6")
 
 [node name="Window Settings" parent="MenuItemsContainer" index="0" unique_id=1906426519 instance=ExtResource("3_v6dsd")]
 layout_mode = 0
-SettingName = "Window"
 Contents = PackedStringArray("Fullscreen", "Windowed", "Borderless window")
+SettingName = "Window"
 TotalSize = Vector2(1320, 125)
-borderSize = 50.0
 
-[node name="Label" parent="MenuItemsContainer/Window Settings" index="0" unique_id=127801925]
+[node name="leftLabel" parent="MenuItemsContainer/Window Settings" index="0" unique_id=127801925]
 offset_left = -635.0
 offset_top = -62.5
 offset_right = -86.0
@@ -58,8 +57,8 @@ offset_bottom = 62.5
 text = "Window:"
 
 [node name="Scroller" parent="MenuItemsContainer/Window Settings" index="1" unique_id=1348934665]
-offset_left = 285.0
-offset_right = 285.0
+offset_left = 635.0
+offset_right = 635.0
 Contents = PackedStringArray("Fullscreen", "Windowed", "Borderless window")
 
 [node name="MenuSelectorHelper" parent="MenuItemsContainer/Window Settings/Scroller" index="0" unique_id=1724905341]
@@ -105,69 +104,24 @@ layout_mode = 0
 offset_top = 120.0
 offset_bottom = 120.0
 SettingName = "V-sync"
-Options = PackedStringArray("Enabled", "Disabled")
 TotalSize = Vector2(1320, 125)
-borderSize = 50.0
-
-[node name="leftLabel" parent="MenuItemsContainer/Vsync" index="0" unique_id=127801925]
-offset_left = -635.0
-offset_top = -62.5
-offset_right = -86.0
-offset_bottom = 62.5
-text = "V-sync:"
-
-[node name="rightLabel" parent="MenuItemsContainer/Vsync" index="1" unique_id=2062793766]
-offset_left = 86.0
-offset_top = -62.5
-offset_right = 635.0
-offset_bottom = 62.5
-text = "Enabled"
-
-[node name="MenuSelectorHelper" parent="MenuItemsContainer/Vsync" index="2" unique_id=596944666]
-offset_left = -660.0
-offset_top = -62.5
-offset_right = 660.0
-offset_bottom = 62.5
 
 [node name="do Limit FPS" parent="MenuItemsContainer" index="2" unique_id=1786881336 instance=ExtResource("4_jtep2")]
 layout_mode = 0
 offset_top = 240.0
 offset_bottom = 240.0
 SettingName = "Limit FPS"
-Options = PackedStringArray("Enabled", "Disabled")
 TotalSize = Vector2(1320, 125)
-borderSize = 50.0
-
-[node name="leftLabel" parent="MenuItemsContainer/do Limit FPS" index="0" unique_id=127801925]
-offset_left = -635.0
-offset_top = -62.5
-offset_right = -61.0
-offset_bottom = 62.5
-text = "Limit FPS:"
-
-[node name="rightLabel" parent="MenuItemsContainer/do Limit FPS" index="1" unique_id=2062793766]
-offset_left = 61.0
-offset_top = -62.5
-offset_right = 635.0
-offset_bottom = 62.5
-text = "Enabled"
-
-[node name="MenuSelectorHelper" parent="MenuItemsContainer/do Limit FPS" index="2" unique_id=596944666]
-offset_left = -660.0
-offset_top = -62.5
-offset_right = 660.0
-offset_bottom = 62.5
 
 [node name="FPS Limit" parent="MenuItemsContainer" index="3" unique_id=2067505458 instance=ExtResource("3_v6dsd")]
 layout_mode = 0
 offset_top = 360.0
 offset_bottom = 360.0
-SettingName = "Max FPS"
 Contents = PackedStringArray("120", "144", "200", "240", "30", "50", "60", "75", "100")
+SettingName = "Max FPS"
 TotalSize = Vector2(1320, 125)
-borderSize = 50.0
 
-[node name="Label" parent="MenuItemsContainer/FPS Limit" index="0" unique_id=127801925]
+[node name="leftLabel" parent="MenuItemsContainer/FPS Limit" index="0" unique_id=127801925]
 offset_left = -635.0
 offset_top = -62.5
 offset_right = -86.0
@@ -175,8 +129,8 @@ offset_bottom = 62.5
 text = "Max FPS:"
 
 [node name="Scroller" parent="MenuItemsContainer/FPS Limit" index="1" unique_id=1348934665]
-offset_left = 575.0
-offset_right = 575.0
+offset_left = 635.0
+offset_right = 635.0
 Contents = PackedStringArray("120", "144", "200", "240", "30", "50", "60", "75", "100")
 
 [node name="MenuSelectorHelper" parent="MenuItemsContainer/FPS Limit/Scroller" index="0" unique_id=1724905341]
@@ -217,7 +171,5 @@ offset_bottom = 62.5
 
 [editable path="MenuItemsContainer/Window Settings"]
 [editable path="MenuItemsContainer/Window Settings/Scroller"]
-[editable path="MenuItemsContainer/Vsync"]
-[editable path="MenuItemsContainer/do Limit FPS"]
 [editable path="MenuItemsContainer/FPS Limit"]
 [editable path="MenuItemsContainer/FPS Limit/Scroller"]

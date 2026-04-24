@@ -30,6 +30,11 @@ public partial class MainMenuScreen : Control
 	
 	public virtual bool OnNegativeAction()
 	{
+		if (currentInteractible == null)
+		{
+			Back();
+			return false;
+		}
 		bool result = currentInteractible.OnNegativeAction();
 		if (!result)
 			Back();

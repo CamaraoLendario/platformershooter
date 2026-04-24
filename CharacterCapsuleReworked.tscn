@@ -1,0 +1,318 @@
+[gd_scene format=3 uid="uid://c381cofkxpuj8"]
+
+[ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_cttp4"]
+[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Sprites/PilotStill.png" id="2_q8q8u"]
+[ext_resource type="Script" uid="uid://b67nuarl5dcl4" path="res://PlayerCapsule.cs" id="2_vm4ge"]
+[ext_resource type="PackedScene" uid="uid://bphnjcidgshy0" path="res://MenuItemsContainer.tscn" id="3_vm4ge"]
+[ext_resource type="PackedScene" uid="uid://cwpfr7adf3u68" path="res://Menus/MenuingComponents/SimpleMenuItemButton.tscn" id="4_exfnu"]
+[ext_resource type="Script" uid="uid://dmwbtwi6t4nnp" path="res://Menus/MainMenu/Character Select Screen/PlayerMenuInput.cs" id="5_6sorm"]
+[ext_resource type="Script" uid="uid://ds6x8fuu45m0w" path="res://Menus/MainMenu/Character Select Screen/PlayerNameKeyboard.cs" id="6_exfnu"]
+[ext_resource type="Texture2D" uid="uid://blnpob3tmnu3n" path="res://Assets/temp/PlayerNameKeyboard.png" id="7_6sorm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sdmhf"]
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_044s5"]
+font_size = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_q8q8u"]
+font_size = 45
+
+[sub_resource type="LabelSettings" id="LabelSettings_sdmhf"]
+font_size = 26
+
+[node name="PlayerCapsule" type="Control" unique_id=2084640090]
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("1_cttp4")
+script = ExtResource("2_vm4ge")
+
+[node name="Panel" type="Panel" parent="." unique_id=2097898094]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -116.0
+offset_top = -291.0
+offset_right = 116.0
+offset_bottom = 291.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sdmhf")
+
+[node name="Player Connected" type="Control" parent="." unique_id=1060720999]
+anchors_preset = 0
+offset_top = 51.0
+offset_bottom = 51.0
+
+[node name="Label" type="Label" parent="Player Connected" unique_id=1932344835]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -312.0
+offset_right = 170.0
+offset_bottom = -247.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Nameless"
+label_settings = SubResource("LabelSettings_044s5")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Player Connected" unique_id=612125025]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -179.0
+offset_top = -226.0
+offset_right = 183.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_q8q8u")
+stretch_mode = 5
+
+[node name="MenuItemsContainer" parent="Player Connected" unique_id=896509972 instance=ExtResource("3_vm4ge")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 51.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+Separation = 56
+
+[node name="SimpleMenuItemButton" parent="Player Connected/MenuItemsContainer" unique_id=167338393 instance=ExtResource("4_exfnu")]
+layout_mode = 1
+offset_left = -103.0
+offset_top = 0.0
+offset_right = 103.0
+offset_bottom = 50.0
+text = "<Purple>"
+label_settings = SubResource("LabelSettings_q8q8u")
+
+[node name="SimpleMenuItemButton2" parent="Player Connected/MenuItemsContainer" unique_id=1584053576 instance=ExtResource("4_exfnu")]
+layout_mode = 1
+offset_left = -93.0
+offset_top = 56.0
+offset_right = 93.0
+offset_bottom = 106.0
+text = "Rename"
+label_settings = SubResource("LabelSettings_q8q8u")
+
+[node name="SimpleMenuItemButton3" parent="Player Connected/MenuItemsContainer" unique_id=879440953 instance=ExtResource("4_exfnu")]
+layout_mode = 1
+offset_left = -81.0
+offset_top = 112.0
+offset_right = 81.0
+offset_bottom = 162.0
+text = "Ready!"
+label_settings = SubResource("LabelSettings_q8q8u")
+
+[node name="Empty Capsule" type="Label" parent="." unique_id=1366210280]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -36.0
+offset_right = 168.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press any key.."
+label_settings = SubResource("LabelSettings_sdmhf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerNameKeyboard" type="VBoxContainer" parent="." unique_id=748452947]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.221
+anchor_right = 0.8
+anchor_bottom = 0.523
+offset_left = -14.0
+offset_top = -22.718002
+offset_right = 14.0
+offset_bottom = 159.966
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(134, 236)
+script = ExtResource("6_exfnu")
+
+[node name="HTextBox" type="HBoxContainer" parent="PlayerNameKeyboard" unique_id=1642088722]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PlayerNameKeyboard/HTextBox" unique_id=703119361]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect2" type="TextureRect" parent="PlayerNameKeyboard/HTextBox" unique_id=1579502253]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect3" type="TextureRect" parent="PlayerNameKeyboard/HTextBox" unique_id=1008425295]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect4" type="TextureRect" parent="PlayerNameKeyboard/HTextBox" unique_id=1850280946]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="HTextBox2" type="HBoxContainer" parent="PlayerNameKeyboard" unique_id=1747200232]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PlayerNameKeyboard/HTextBox2" unique_id=349680901]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect2" type="TextureRect" parent="PlayerNameKeyboard/HTextBox2" unique_id=18734052]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect3" type="TextureRect" parent="PlayerNameKeyboard/HTextBox2" unique_id=1490395068]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect4" type="TextureRect" parent="PlayerNameKeyboard/HTextBox2" unique_id=1934038368]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="HTextBox3" type="HBoxContainer" parent="PlayerNameKeyboard" unique_id=941765236]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PlayerNameKeyboard/HTextBox3" unique_id=387567476]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect2" type="TextureRect" parent="PlayerNameKeyboard/HTextBox3" unique_id=1673216180]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect3" type="TextureRect" parent="PlayerNameKeyboard/HTextBox3" unique_id=1878290485]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect4" type="TextureRect" parent="PlayerNameKeyboard/HTextBox3" unique_id=368945052]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="HTextBox4" type="HBoxContainer" parent="PlayerNameKeyboard" unique_id=1375157282]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PlayerNameKeyboard/HTextBox4" unique_id=1789460902]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect2" type="TextureRect" parent="PlayerNameKeyboard/HTextBox4" unique_id=264099256]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect3" type="TextureRect" parent="PlayerNameKeyboard/HTextBox4" unique_id=1845681770]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect4" type="TextureRect" parent="PlayerNameKeyboard/HTextBox4" unique_id=691876439]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="HTextBox5" type="HBoxContainer" parent="PlayerNameKeyboard" unique_id=577105893]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PlayerNameKeyboard/HTextBox5" unique_id=871173417]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect2" type="TextureRect" parent="PlayerNameKeyboard/HTextBox5" unique_id=254849659]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect3" type="TextureRect" parent="PlayerNameKeyboard/HTextBox5" unique_id=686172284]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect4" type="TextureRect" parent="PlayerNameKeyboard/HTextBox5" unique_id=798244567]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="HTextBox6" type="HBoxContainer" parent="PlayerNameKeyboard" unique_id=966714518]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PlayerNameKeyboard/HTextBox6" unique_id=1179099502]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect2" type="TextureRect" parent="PlayerNameKeyboard/HTextBox6" unique_id=282007632]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect3" type="TextureRect" parent="PlayerNameKeyboard/HTextBox6" unique_id=250375811]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect4" type="TextureRect" parent="PlayerNameKeyboard/HTextBox6" unique_id=656414944]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="HTextBox7" type="HBoxContainer" parent="PlayerNameKeyboard" unique_id=1559099963]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PlayerNameKeyboard/HTextBox7" unique_id=2019771421]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="TextureRect2" type="TextureRect" parent="PlayerNameKeyboard/HTextBox7" unique_id=1981034406]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("7_6sorm")
+
+[node name="PlayerMenuInput" type="Node" parent="." unique_id=880701761]
+script = ExtResource("5_6sorm")
+
+[editable path="Player Connected/MenuItemsContainer/SimpleMenuItemButton"]
+[editable path="Player Connected/MenuItemsContainer/SimpleMenuItemButton2"]
+[editable path="Player Connected/MenuItemsContainer/SimpleMenuItemButton3"]

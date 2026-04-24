@@ -88,6 +88,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_sfclw")
 
 [node name="PlayerConnected" type="VBoxContainer" parent="Character Capsule" unique_id=1214983651]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -197,6 +198,7 @@ text = "Ready"
 horizontal_alignment = 1
 
 [node name="NoPlayerConnected" type="VBoxContainer" parent="Character Capsule" unique_id=664448844]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -218,7 +220,6 @@ text = "Press Any Key.."
 horizontal_alignment = 1
 
 [node name="PlayerNameKeyboard" type="VBoxContainer" parent="Character Capsule" unique_id=356285836 node_paths=PackedStringArray("menuInput", "nameDisplay")]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2

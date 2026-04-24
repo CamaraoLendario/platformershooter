@@ -62,13 +62,4 @@ public partial class MenuSelectorHelper : Control
     {
 		SetPosAndSize(closedSettings.position, closedSettings.size);
     }
-	//TODO idk if this is necessary. if it is I'll eventually find out
-/* 	public void ForceSetPosAndSizeOpen(MenuSelectPanel panel)
-    {
-		panel.ForcePosAndSize(openSettings.position, openSettings.size);
-    }
-	public void ForceSetPosAndSizeClosed(MenuSelectPanel panel)
-    {
-		panel.ForcePosAndSize(closedSettings.position, closedSettings.size);
-    } */
 }

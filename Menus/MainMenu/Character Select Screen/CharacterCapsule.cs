@@ -1,4 +1,4 @@
-using Godot;
+/* using Godot;
 using static SpaceMages.SpaceMagesVars;
 using System.Globalization;
 using System.Linq;
@@ -262,4 +262,4 @@ public partial class CharacterCapsule : Control
 		IsReady = false;
 		GD.Print("Capsule number " + GetIndex() + " has been disabled");
 	}
-}
+} */

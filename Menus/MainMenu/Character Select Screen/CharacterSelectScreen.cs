@@ -1,4 +1,4 @@
-using System;
+/* using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Godot;
@@ -29,24 +29,6 @@ public partial class CharacterSelectScreen : Control
 	{
 		
 	}
-
-/*     public override void _Input(InputEvent @event)
-    {
-		if (@event is InputEventMouse) return;
-		int inputIdx = @event.Device;
-		if (@event is not InputEventJoypadButton || @event is not InputEventJoypadMotion)
-		{
-			inputIdx = -1;
-		}
-		
-		foreach (int directoryInputIdx in inputDirectory.Keys)
-		{
-			if (directoryInputIdx == inputIdx)
-				return;
-		}
-		
-		EnableCapsule(inputIdx);
-    } */
 
 	void EnableCapsule(int inputIdx)
 	{
@@ -124,3 +106,4 @@ public partial class CharacterSelectScreen : Control
     }
 
 }
+ */

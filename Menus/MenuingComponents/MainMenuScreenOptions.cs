@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,6 +19,20 @@ public partial class MainMenuScreenOptions : Control
 		}
 	}
 	int separation = 120;
+	[Export] float Offset
+	{
+		get
+		{
+			return offset;
+		}
+		set
+		{
+			offset = value;
+			ReorganizeItems();
+		}
+	}
+	float offset = 0;
+	[Export] bool horizontal;
 	MenuItem[] menuItems = [];
 
     public override void _Ready()
@@ -30,13 +45,30 @@ public partial class MainMenuScreenOptions : Control
 	void ReorganizeItems()
 	{
 		GetMenuItems();
-		for(int i = 0; i < GetChildCount(); i++)
+		if (horizontal){
+			float childCount = GetChildCount();
+			float offsetValue = (Separation/2f) * (childCount-1);
+			offsetValue += offset;
+
+			for(float i = 0; i < childCount; i++)
+			{
+				Control menuItem = GetChild<Control>((int)i);
+				menuItem.Position = new Vector2(
+					(separation * i) - offsetValue,
+					-menuItem.Size.Y/2f
+				);
+			}
+		}
+		else
 		{
-			Control menuItem = GetChild<Control>(i);
-			menuItem.Position = new Vector2(
-				-menuItem.Size.X/2f,
-				separation * i
-			);
+			for(int i = 0; i < GetChildCount(); i++)
+			{
+				Control menuItem = GetChild<Control>(i);
+				menuItem.Position = new Vector2(
+					-menuItem.Size.X/2f,
+					separation * i
+				);
+			}
 		}	
 	}
 
@@ -54,11 +86,6 @@ public partial class MainMenuScreenOptions : Control
 			}	
 		}
 		menuItems = newMenuItems.ToArray();
-		GD.Print("menu items!!:");
-		foreach(MenuItem child in menuItems)
-		{
-			GD.Print($"{Owner.Name}: menu Item: {child.Name}");
-		}
 		return menuItems;
 	}
 	

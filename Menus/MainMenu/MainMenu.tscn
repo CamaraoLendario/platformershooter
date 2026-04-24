@@ -108,6 +108,7 @@ font_size = 34
 script = ExtResource("1_27cff")
 
 [node name="characterSelectScreen" type="Control" parent="." unique_id=1468191518 node_paths=PackedStringArray("mapSelector")]
+visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -122,6 +123,7 @@ size_flags_vertical = 3
 theme = ExtResource("2_dmlp5")
 script = ExtResource("3_3h5gh")
 mapSelector = NodePath("../Map selector")
+metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="characterSelectScreen" unique_id=2058781130]
 layout_mode = 1
@@ -144,6 +146,7 @@ layout_mode = 2
 alignment = 1
 
 [node name="Map selector" type="Control" parent="." unique_id=482220271 node_paths=PackedStringArray("mapPreviewsContainer")]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -156,9 +159,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_dmlp5")
 script = ExtResource("8_q5agj")
-mapPreviewsContainer = NodePath("MarginContainer/Panel/MapPreviewsContainer")
 pilotTexture = ExtResource("9_lw0wv")
 mapscenes = Array[PackedScene]([ExtResource("10_fx130"), ExtResource("11_2v00x"), ExtResource("12_wacg6"), ExtResource("13_feqme"), ExtResource("14_asv50"), ExtResource("15_ifiha")])
+mapPreviewsContainer = NodePath("MarginContainer/Panel/MapPreviewsContainer")
+metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="Map selector" unique_id=1523777735]
 layout_mode = 1
@@ -216,6 +220,7 @@ visible = false
 anchors_preset = 0
 
 [node name="Experimental Features" type="Control" parent="." unique_id=1719559341 node_paths=PackedStringArray("label")]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -226,6 +231,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("18_ns8wn")
 label = NodePath("Label2")
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Experimental Features" unique_id=1929493087]
 layout_mode = 0
@@ -274,9 +280,9 @@ script = ExtResource("22_ng6d6")
 
 [node name="AudioSettingsScreen" parent="." unique_id=926846599 instance=ExtResource("23_hboen")]
 offset_left = -1920.0
-offset_top = 2256.0
+offset_top = 2160.0
 offset_right = -1920.0
-offset_bottom = 2256.0
+offset_bottom = 2160.0
 
 [node name="MainMenuController" type="Node" parent="." unique_id=1055294723 node_paths=PackedStringArray("currentScreen")]
 unique_name_in_owner = true

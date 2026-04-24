@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://bwbnfqvfglfot"]
+
+[ext_resource type="FontFile" uid="uid://c5a2sdgkmsblj" path="res://Fonts/SpaceMagesFontOutlined.png" id="1_wwofx"]
+[ext_resource type="Script" uid="uid://78ekdr6p7iod" path="res://Menus/MenuingComponents/TextOptions.cs" id="2_rjv27"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gptrt"]
+font = ExtResource("1_wwofx")
+font_size = 68
+
+[node name="Control" type="Control" unique_id=1211617669 node_paths=PackedStringArray("label")]
+layout_mode = 3
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1920.0
+offset_top = -540.0
+offset_right = -1920.0
+offset_bottom = -540.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("2_rjv27")
+label = NodePath("rightLabel")
+
+[node name="rightLabel" type="Label" parent="." unique_id=1253366842]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -82.5
+offset_right = 549.0
+offset_bottom = 82.5
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0, 0.5)
+text = "On"
+label_settings = SubResource("LabelSettings_gptrt")
+horizontal_alignment = 2
+vertical_alignment = 1

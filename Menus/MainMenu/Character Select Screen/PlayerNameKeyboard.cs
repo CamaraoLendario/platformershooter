@@ -56,9 +56,9 @@ public partial class PlayerNameKeyboard : VBoxContainer
     public override void _Ready()
     {
         SetupKeys();
-        menuInput.MenuWASD += OnMenuWASD;
-        menuInput.AcceptStart += OnMenuAccept;
-        menuInput.BackStart += OnMenuBack;
+        //menuInput.MenuWASD += OnMenuWASD;
+        //menuInput.AcceptStart += OnMenuAccept;
+        //menuInput.BackStart += OnMenuBack;
         CurrentButton = GetButton(keyboardPos);
         CurrentButton.SelfModulate = PlayerColor;
     }

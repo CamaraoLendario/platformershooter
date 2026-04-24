@@ -2,15 +2,11 @@
 
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_rr3o8"]
 [ext_resource type="Script" uid="uid://dvrxp7x20ypio" path="res://Menus/MenuingComponents/HorizontalTextAndText.cs" id="2_e1k0t"]
-[ext_resource type="FontFile" uid="uid://c5a2sdgkmsblj" path="res://Fonts/SpaceMagesFontOutlined.png" id="3_rr3o8"]
+[ext_resource type="PackedScene" uid="uid://bwbnfqvfglfot" path="res://Menus/MenuingComponents/TextOptions.tscn" id="3_rr3o8"]
 [ext_resource type="Script" uid="uid://ck412bnf8kog2" path="res://Menus/MenuingComponents/MenuSelectorHelper.cs" id="4_aoudh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l28ro"]
 font_size = 92
-
-[sub_resource type="LabelSettings" id="LabelSettings_gptrt"]
-font = ExtResource("3_rr3o8")
-font_size = 68
 
 [node name="HorizontalTextAndText" type="Control" unique_id=1906426519 node_paths=PackedStringArray("panelHelper")]
 layout_mode = 3
@@ -27,35 +23,30 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -895.0
+offset_left = -845.0
 offset_top = -82.5
-offset_right = -346.0
+offset_right = -296.0
 offset_bottom = 82.5
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0, 0.5)
-text = " :"
+text = ":"
 label_settings = SubResource("LabelSettings_l28ro")
 vertical_alignment = 1
 
-[node name="rightLabel" type="Label" parent="." unique_id=2062793766]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 805.0
-offset_top = -82.5
-offset_right = 895.0
-offset_bottom = 82.5
-grow_horizontal = 0
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0, 0.5)
-text = "On"
-label_settings = SubResource("LabelSettings_gptrt")
-horizontal_alignment = 2
-vertical_alignment = 1
+[node name="textOptions" parent="." unique_id=1253366842 instance=ExtResource("3_rr3o8")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="MenuSelectorHelper" type="Control" parent="." unique_id=596944666]
 unique_name_in_owner = true
