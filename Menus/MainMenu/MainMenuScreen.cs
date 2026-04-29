@@ -9,7 +9,7 @@ public partial class MainMenuScreen : Control
 	[Signal] public delegate void LeftEventHandler();
 	[ExportGroup("Menu Selector Panel settings")]
 	[Export] bool usesSelectorPanel = true;
-	MenuItem[] menuOptions;
+	protected MenuItem[] menuOptions;
 	protected MenuSelectPanel menuSelectPanel;
 	protected MainMenuController mainMenuController;
 	protected MenuItem currentInteractible;
@@ -23,9 +23,19 @@ public partial class MainMenuScreen : Control
 		SpawnMenuSelectPanel();
     }
 
-	public virtual bool OnPositiveAction()
+	public virtual bool OnInteract()
 	{
-		return currentInteractible.OnPositiveAction();
+		return currentInteractible.OnInteract();
+	}
+
+	public virtual bool OnAltInteract()
+	{
+		return currentInteractible.OnAltInteractAction();
+	}
+
+	public virtual bool OnAccept()
+	{
+		return currentInteractible.OnAccept();
 	}
 	
 	public virtual bool OnNegativeAction()
@@ -89,6 +99,7 @@ public partial class MainMenuScreen : Control
 
 		MenuItem[] Nodes = GetScreenNodes().ToArray();
 		int NodesCount = Nodes.Length;
+	
 		Vector2 ScreenSize = new(
 			(float) ProjectSettings.GetSetting("display/window/size/viewport_width"),
 			(float) ProjectSettings.GetSetting("display/window/size/viewport_height")

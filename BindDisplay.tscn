@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://e5boasgha4vo"]
+
+[ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuingComponents/MenuItem.cs" id="1_eqa3u"]
+[ext_resource type="PackedScene" uid="uid://c0jq1fa6bb1ar" path="res://Menus/MenuingComponents/inputIcon.tscn" id="1_up261"]
+[ext_resource type="Texture2D" uid="uid://bmpswyokv23bw" path="res://Menus/MenuingComponents/inputIcons.png" id="2_eqa3u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_51m4m"]
+atlas = ExtResource("2_eqa3u")
+region = Rect2(0, 0, 16, 16)
+
+[node name="Control" type="Control" unique_id=1414918238]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 127.0
+offset_right = 127.0
+offset_bottom = 23.0
+script = ExtResource("1_eqa3u")
+
+[node name="BindDisplay" type="HBoxContainer" parent="." unique_id=2111930320]
+layout_mode = 0
+
+[node name="inputIcon" parent="BindDisplay" unique_id=1683868203 instance=ExtResource("1_up261")]
+layout_mode = 2
+texture = SubResource("AtlasTexture_51m4m")
+
+[node name="Label" type="Label" parent="BindDisplay" unique_id=989482836]
+layout_mode = 2
+text = "ActionName"

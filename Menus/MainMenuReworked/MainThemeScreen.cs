@@ -21,7 +21,7 @@ public partial class MainThemeScreen : MainMenuScreen
 		};
     }
 
-	public override bool OnPositiveAction()
+	public override bool OnInteract()
     {
 		Move(Vector2.Down);
 		ScaleBanner();

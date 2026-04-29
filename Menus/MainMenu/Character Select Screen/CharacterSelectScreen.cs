@@ -1,9 +1,12 @@
-/* using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Godot;
 public partial class CharacterSelectScreen : Control
 {
+	
+}
+/* {
 	[Export] public MapSelector mapSelector;
 	[Export] HBoxContainer playerCapsulesContainer;
 	int maxPlayerCount = 6;

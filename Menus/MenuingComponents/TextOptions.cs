@@ -5,6 +5,7 @@ using static SpaceMages.SpaceMagesVars;
 [Tool]
 public partial class TextOptions : MenuItem
 {
+	[Export] bool usesHorizontalDir = false;
 	[Export] string[] Options
 	{
 		get
@@ -29,11 +30,22 @@ public partial class TextOptions : MenuItem
         label.Text = options[currentOptionIdx];
 	}
 
-    public override bool OnPositiveAction()
+    public override bool OnInteract()
 	{
-		currentOptionIdx = NormalizeIdx(currentOptionIdx + 1, options.Length);
-		label.Text = options[currentOptionIdx];
+		SetOptionIdx(currentOptionIdx + 1);
 		return true;
 	}
 
+    public override bool OnMoveAction(Vector2 dir)
+    {
+		if (!usesHorizontalDir) return false;
+		SetOptionIdx(currentOptionIdx + (int)dir.X);
+        return true;
+    }
+
+	void SetOptionIdx(int index)
+	{
+		currentOptionIdx = NormalizeIdx(index, options.Length);
+		label.Text = options[currentOptionIdx];
+	}
 }

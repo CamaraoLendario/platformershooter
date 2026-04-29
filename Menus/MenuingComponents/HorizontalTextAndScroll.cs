@@ -40,9 +40,9 @@ public partial class HorizontalTextAndScroll : HorizontalMenu
 		originalPosition = Position;
     }
 
-    public override bool OnPositiveAction()
+    public override bool OnInteract()
     {
-        return menuScroll.OnPositiveAction();
+        return menuScroll.OnInteract();
     }
 
     public override bool OnNegativeAction()

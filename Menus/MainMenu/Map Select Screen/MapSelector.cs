@@ -1,4 +1,4 @@
-	/* using Godot;
+	using Godot;
 	using static SpaceMages.SpaceMagesVars;
 	using System;
 	using System.Collections.Generic;
@@ -8,7 +8,8 @@
 	using System.Text.RegularExpressions;
 
 	public partial class MapSelector : Control
-	{
+	{}
+	/* {
 		[Export] MapPreviewsContainer mapPreviewsContainer;
 		[Export] Texture2D pilotTexture; // TODO find a better way to store the pilot sprites, there are gonna be multiple different pilots
 		Shader pixelOutlineShader = GD.Load("uid://cywx8daesh6uu") as Shader;

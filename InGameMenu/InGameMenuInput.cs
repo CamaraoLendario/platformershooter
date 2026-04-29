@@ -5,7 +5,7 @@ using System;
 public partial class InGameMenuInput : Node
 {
 	[Signal] public delegate void InGameMenuWASDEventHandler(float x, float y);
-	[Signal] public delegate void InGameMenuAcceptEventHandler();
+	[Signal] public delegate void InGameMenuInteractEventHandler();
 	[Signal] public delegate void InGameMenuBackEventHandler();
 	InGameMenu Main;
     public override void _Ready()
@@ -29,9 +29,9 @@ public partial class InGameMenuInput : Node
 		if (Input.IsActionJustPressed("MenuRight" +  Main.keyboardKeyword + Main.inputIdx))
 			{EmitSignal(SignalName.InGameMenuWASD, 1, 0);	return;}
 
-		if (Input.IsActionJustPressed("MenuAccept" +  Main.keyboardKeyword + Main.inputIdx))
+		if (Input.IsActionJustPressed("MenuInteract" +  Main.keyboardKeyword + Main.inputIdx))
         {
-			EmitSignal(SignalName.InGameMenuAccept);
+			EmitSignal(SignalName.InGameMenuInteract);
             return;
         }
 		

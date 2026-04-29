@@ -1,14 +1,16 @@
 [gd_scene format=3 uid="uid://benx6bkh23wpm"]
 
 [ext_resource type="PackedScene" uid="uid://ha4tbfel1wyp" path="res://Menus/MenuingComponents/MainMenuScreen.tscn" id="1_8iiu4"]
-[ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuItem.cs" id="2_0o71x"]
+[ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuingComponents/MenuItem.cs" id="2_0o71x"]
 [ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MainMenuScreenOptions.cs" id="2_e6v8l"]
+[ext_resource type="Script" uid="uid://dpgn05hmr1a2c" path="res://Menus/MainMenuReworked/SettingsScreen.cs" id="2_r04u4"]
 [ext_resource type="PackedScene" uid="uid://cwpfr7adf3u68" path="res://Menus/MenuingComponents/SimpleMenuItemButton.tscn" id="3_11lt3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_e6v8l"]
 font_size = 117
 
 [node name="SettingsScreen" unique_id=1595907082 instance=ExtResource("1_8iiu4")]
+script = ExtResource("2_r04u4")
 
 [node name="TITLE" type="Label" parent="." index="0" unique_id=1039493745]
 layout_mode = 1
@@ -18,9 +20,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -576.0
-offset_top = -415.0
+offset_top = -466.0
 offset_right = 576.0
-offset_bottom = -298.0
+offset_bottom = -349.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Settings"
@@ -36,12 +38,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_top = -64.0
-offset_bottom = -64.0
+offset_top = -79.0
+offset_bottom = -79.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_e6v8l")
-Separation = 125
+Separation = 150
 
 [node name="SimpleMenuItemButton" parent="MenuItemsContainer" index="0" unique_id=167338393 instance=ExtResource("3_11lt3")]
 layout_mode = 0
@@ -66,9 +68,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = -360.0
-offset_top = 125.0
+offset_top = 150.0
 offset_right = 360.0
-offset_bottom = 235.0
+offset_bottom = 260.0
 grow_horizontal = 1
 grow_vertical = 1
 text = "Audio Settings"
@@ -81,9 +83,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = -318.0
-offset_top = 250.0
+offset_top = 300.0
 offset_right = 318.0
-offset_bottom = 360.0
+offset_bottom = 410.0
 grow_horizontal = 1
 grow_vertical = 1
 text = "Accessibility"

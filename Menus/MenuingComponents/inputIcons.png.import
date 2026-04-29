@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dptyfmjqxu1fx"
-path="res://.godot/imported/SpaceMagesFontNormalized.png-0fa8777fcfa524231d1afc4686d52c34.ctex"
+uid="uid://bmpswyokv23bw"
+path="res://.godot/imported/inputIcons.png-baca566bd5d5498643f3a288b6975b2b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Menus/SpaceMagesFontNormalized.png"
-dest_files=["res://.godot/imported/SpaceMagesFontNormalized.png-0fa8777fcfa524231d1afc4686d52c34.ctex"]
+source_file="res://Menus/MenuingComponents/inputIcons.png"
+dest_files=["res://.godot/imported/inputIcons.png-baca566bd5d5498643f3a288b6975b2b.ctex"]
 
 [params]
 

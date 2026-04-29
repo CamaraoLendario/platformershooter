@@ -159,7 +159,7 @@ public partial class MenuScroll : MenuItem
 		}	
 	}
 
-    public override bool OnPositiveAction()
+    public override bool OnInteract()
     {
 		if (isActivated)
 		{

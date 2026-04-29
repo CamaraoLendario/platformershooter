@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+[Tool]
 public partial class PlayerMenuInput : Node
 {
     [Export] PlayerCapsule playerCapsule;
@@ -31,31 +32,37 @@ public partial class PlayerMenuInput : Node
     // TODO: add analog stick support for menu WASD 
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (@event is InputEventMouseMotion ||
-			!playerCapsule.isEnabled||
-			@event.IsReleased()) 
-			return;
+        // if (@event is InputEventMouseMotion ||
+		// 	//!playerCapsule.isEnabled||
+		// 	@event.IsReleased()) 
+		// 	return;
 		
-		if(inputIdx == -1 && !isKeyboardControlled) return;
+		// if(inputIdx == -1 && !isKeyboardControlled) return;
 
-        if (Input.IsActionJustPressed("MenuUp" +  keyboardKeyword + inputIdx)){
+        if (Input.IsActionJustPressed("MenuUpKeyboard")){// +  keyboardKeyword + inputIdx)){
+            GD.Print("MenuUp");
             playerCapsule.OnMoveAction(new Vector2(0, -1)); return;
         }
-        if (Input.IsActionJustPressed("MenuDown" +  keyboardKeyword + inputIdx)){
+        if (Input.IsActionJustPressed("MenuDownKeyboard")){// +  keyboardKeyword + inputIdx)){
+            GD.Print("MenuDown");
             playerCapsule.OnMoveAction(new Vector2(0, 1)); return;
         }
-        if (Input.IsActionJustPressed("MenuLeft" +  keyboardKeyword + inputIdx)){
+        if (Input.IsActionJustPressed("MenuLeftKeyboard")){// +  keyboardKeyword + inputIdx)){
+            GD.Print("MenuLeft");
             playerCapsule.OnMoveAction(new Vector2(-1, 0)); return;
         }
-        if (Input.IsActionJustPressed("MenuRight" +  keyboardKeyword + inputIdx)){
+        if (Input.IsActionJustPressed("MenuRightKeyboard")){// +  keyboardKeyword + inputIdx)){
+            GD.Print("MenuRight");
             playerCapsule.OnMoveAction(new Vector2(1, 0)); return;
         }
 
-		if (Input.IsActionJustPressed("MenuAccept" +  keyboardKeyword + inputIdx)){
-            playerCapsule.OnPositiveAction(); return;
+		if (Input.IsActionJustPressed("MenuInteractKeyboard")){// +  keyboardKeyword + inputIdx)){
+            GD.Print("MenuInteract");
+            playerCapsule.OnInteract(); return;
         }
 		
-		if (Input.IsActionJustPressed("MenuBack" +  keyboardKeyword + inputIdx)){
+		if (Input.IsActionJustPressed("MenuBackKeyboard")){// +  keyboardKeyword + inputIdx)){
+            GD.Print("MenuBack");
             playerCapsule.OnNegativeAction(); return;
         }
     }

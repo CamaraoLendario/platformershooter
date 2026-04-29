@@ -4,9 +4,9 @@ using System;
 [Tool]
 public partial class SettingsScreen : MainMenuScreen
 {
-    public override bool OnPositiveAction()
+    public override bool OnInteract()
     {
-		switch (menuSelectPanel.GetSelectedNodeIdx())
+		switch (menuSelectPanel.GetCurrentNodeIdx())
 		{
 			case 0:
 				VideoSettings();

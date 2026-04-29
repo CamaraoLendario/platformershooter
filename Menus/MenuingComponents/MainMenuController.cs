@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection.PortableExecutable;
 
+[Tool]
 public partial class MainMenuController : Node
 {
 	[Export] public MainMenuScreen currentScreen; // Mannualy set this export to the first screen that's supposed to be selected. Otherwise the first one found will be selected
@@ -22,6 +23,7 @@ public partial class MainMenuController : Node
 
 	public override void _Ready()
 	{
+		if (Engine.IsEditorHint()) return;	
 		foreach (Node node in GetParent().GetChildren())
 		{
 			if (node is not MainMenuScreen mainMenuScreen) continue;
@@ -59,8 +61,14 @@ public partial class MainMenuController : Node
 		}
 		UpdateInputVec(newInputVec);
 
+		if (Input.IsActionJustPressed("MenuInteract") || Input.IsActionJustPressed("MenuInteractKeyboard")){
+			currentScreen.OnInteract();
+		}
+		if (Input.IsActionJustPressed("MenuAltInteract") || Input.IsActionJustPressed("MenuAltInteractKeyboard")){
+			currentScreen.OnAltInteract();
+		}
 		if (Input.IsActionJustPressed("MenuAccept") || Input.IsActionJustPressed("MenuAcceptKeyboard")){
-			currentScreen.OnPositiveAction();
+			currentScreen.OnAccept();
 		}
 		if (Input.IsActionJustPressed("MenuBack") || Input.IsActionJustPressed("MenuBackKeyboard")){
 			currentScreen.OnNegativeAction();

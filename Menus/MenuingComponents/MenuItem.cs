@@ -5,6 +5,7 @@ using System.ComponentModel;
 [Tool]
 public partial class MenuItem : Control
 {
+	[Export] bool Selectable = true;
 	[Export] public MenuSelectorHelper panelHelper;
 	public bool isActivated = false;
 	public Vector2 originalPosition;
@@ -40,7 +41,17 @@ public partial class MenuItem : Control
 		panelHelper.CallDeferred(MenuSelectorHelper.MethodName.SetPosAndSizeClosed);
 	}
 
-	public virtual bool OnPositiveAction()
+	public virtual bool OnInteract()
+	{
+		return false;
+	}
+	
+	public virtual bool OnAltInteractAction()
+	{
+		return false;
+	}
+
+	public virtual bool OnAccept()
 	{
 		return false;
 	}

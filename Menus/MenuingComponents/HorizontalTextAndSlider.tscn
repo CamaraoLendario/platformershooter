@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://blrhm4bqw0us1"]
 
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_715cd"]
-[ext_resource type="Script" uid="uid://dl2sl2efxfj2i" path="res://HorizontalTextAndSlider.cs" id="1_irv54"]
+[ext_resource type="Script" uid="uid://dl2sl2efxfj2i" path="res://Menus/MenuingComponents/HorizontalTextAndSlider.cs" id="1_irv54"]
 [ext_resource type="Script" uid="uid://ck412bnf8kog2" path="res://Menus/MenuingComponents/MenuSelectorHelper.cs" id="3_2xg7s"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_irv54"]

@@ -5,6 +5,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+[Tool]
 public partial class PlayerNameKeyboard : VBoxContainer
 {
     [ExportGroup("Nodes")]
@@ -57,7 +58,7 @@ public partial class PlayerNameKeyboard : VBoxContainer
     {
         SetupKeys();
         //menuInput.MenuWASD += OnMenuWASD;
-        //menuInput.AcceptStart += OnMenuAccept;
+        //menuInput.InteractStart += OnMenuStart;
         //menuInput.BackStart += OnMenuBack;
         CurrentButton = GetButton(keyboardPos);
         CurrentButton.SelfModulate = PlayerColor;
@@ -90,7 +91,7 @@ public partial class PlayerNameKeyboard : VBoxContainer
         keyboardPos = newKeyboardPos;
     }
 
-    private void OnMenuAccept()
+    private void OnMenuStart()
     {
         if (!Visible) return;
         if (CurrentName.Length >= maxNameLength) return;

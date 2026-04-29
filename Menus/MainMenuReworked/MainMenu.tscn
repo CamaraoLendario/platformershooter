@@ -4,27 +4,17 @@
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="2_dmlp5"]
 [ext_resource type="Script" uid="uid://bsjkxeovrpjgv" path="res://Menus/MainMenu/Character Select Screen/CharacterSelectScreen.cs" id="3_3h5gh"]
 [ext_resource type="Script" uid="uid://duglw13cthfre" path="res://Menus/MainMenu/Map Select Screen/MapSelector.cs" id="8_q5agj"]
-[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Sprites/PilotStill.png" id="9_lw0wv"]
-[ext_resource type="PackedScene" uid="uid://cck3f1axqqkvm" path="res://Maps/PlayableMaps/BaseMap.tscn" id="10_fx130"]
-[ext_resource type="PackedScene" uid="uid://coklf46qo3sam" path="res://Maps/PlayableMaps/PilotOnlyMap.tscn" id="11_2v00x"]
-[ext_resource type="PackedScene" uid="uid://ckjbxccmrmhmb" path="res://Maps/PlayableMaps/PilotOnlySmall.tscn" id="12_wacg6"]
-[ext_resource type="PackedScene" uid="uid://cjg0yfrc2mlc0" path="res://Maps/PlayableMaps/PoisonRiddenMap.tscn" id="13_feqme"]
-[ext_resource type="PackedScene" uid="uid://tw7pvvfcnrf1" path="res://Maps/PlayableMaps/TallPilotZone.tscn" id="14_asv50"]
-[ext_resource type="PackedScene" uid="uid://dxgxqieibdi5n" path="res://Maps/PlayableMaps/CaveMap.tscn" id="15_ifiha"]
-[ext_resource type="Script" uid="uid://cmb0restvfi4b" path="res://Menus/MainMenu/MainMenuMainScreen.cs" id="16_kg5hh"]
-[ext_resource type="PackedScene" uid="uid://cgrxul4hhxyue" path="res://Menus/MainMenu/MainMenuMainScreen.tscn" id="16_nig8x"]
+[ext_resource type="PackedScene" uid="uid://cv7ev1h883cal" path="res://Menus/MainMenuReworked/CharacterSelectScreen.tscn" id="9_drcce"]
+[ext_resource type="PackedScene" uid="uid://cgrxul4hhxyue" path="res://Menus/MainMenuReworked/MainMenuMainScreen.tscn" id="16_nig8x"]
 [ext_resource type="Script" uid="uid://cy6c3nppft3ww" path="res://Menus/MainMenu/Map Select Screen/MapPreviewsContainer.cs" id="16_x2tkk"]
-[ext_resource type="PackedScene" uid="uid://benx6bkh23wpm" path="res://SettingsScreen.tscn" id="17_mq73h"]
-[ext_resource type="PackedScene" uid="uid://xv8st3liernv" path="res://Menus/MainMenu/GamemodeSelectScreen.tscn" id="17_wq6lk"]
+[ext_resource type="PackedScene" uid="uid://benx6bkh23wpm" path="res://Menus/MainMenuReworked/SettingsScreen.tscn" id="17_mq73h"]
+[ext_resource type="PackedScene" uid="uid://xv8st3liernv" path="res://Menus/MainMenuReworked/GamemodeSelectScreen.tscn" id="17_wq6lk"]
 [ext_resource type="AudioStream" uid="uid://bw61s6dcjwa4o" path="res://Assets/Audio/Menuing/menubeep.wav" id="17_ydqxt"]
-[ext_resource type="Script" uid="uid://vo4id53omwrv" path="res://Menus/MainMenu/GamemodeSelectScreen.cs" id="18_bqvs1"]
-[ext_resource type="PackedScene" uid="uid://gpgxkiqkcekm" path="res://VideoSettingsScreen.tscn" id="18_kg5hh"]
+[ext_resource type="PackedScene" uid="uid://gpgxkiqkcekm" path="res://Menus/MainMenuReworked/VideoSettingsScreen.tscn" id="18_kg5hh"]
 [ext_resource type="Script" uid="uid://bdifliwwvf4qk" path="res://Menus/MainMenu/ExperimentalFeatures.cs" id="18_ns8wn"]
-[ext_resource type="Script" uid="uid://dpgn05hmr1a2c" path="res://SettingsScreen.cs" id="20_ng6d6"]
 [ext_resource type="Script" uid="uid://cbtcwbxma8c3v" path="res://Menus/MenuingComponents/MainMenuController.cs" id="21_ng6d6"]
-[ext_resource type="Script" uid="uid://cuyrifhpg3ib3" path="res://VideoSettingsScreen.cs" id="22_ng6d6"]
-[ext_resource type="PackedScene" uid="uid://cpwa1v1e2byqe" path="res://AudioSettingsScreen.tscn" id="23_hboen"]
-[ext_resource type="PackedScene" uid="uid://drht5q5hsotk8" path="res://MainThemeScreen.tscn" id="25_4o14v"]
+[ext_resource type="PackedScene" uid="uid://cpwa1v1e2byqe" path="res://Menus/MainMenuReworked/AudioSettingsScreen.tscn" id="23_hboen"]
+[ext_resource type="PackedScene" uid="uid://drht5q5hsotk8" path="res://Menus/MainMenuReworked/MainThemeScreen.tscn" id="25_4o14v"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ka12w"]
 bg_color = Color(0, 0, 0, 0.32941177)
@@ -107,7 +97,7 @@ font_size = 34
 [node name="MainMenu" type="CanvasLayer" unique_id=1509971223]
 script = ExtResource("1_27cff")
 
-[node name="characterSelectScreen" type="Control" parent="." unique_id=1468191518 node_paths=PackedStringArray("mapSelector")]
+[node name="characterSelectScreen" type="Control" parent="." unique_id=1468191518]
 visible = false
 layout_mode = 3
 anchors_preset = 8
@@ -122,7 +112,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("2_dmlp5")
 script = ExtResource("3_3h5gh")
-mapSelector = NodePath("../Map selector")
 metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="characterSelectScreen" unique_id=2058781130]
@@ -145,7 +134,7 @@ alignment = 1
 layout_mode = 2
 alignment = 1
 
-[node name="Map selector" type="Control" parent="." unique_id=482220271 node_paths=PackedStringArray("mapPreviewsContainer")]
+[node name="Map selector" type="Control" parent="." unique_id=482220271]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -159,9 +148,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_dmlp5")
 script = ExtResource("8_q5agj")
-pilotTexture = ExtResource("9_lw0wv")
-mapscenes = Array[PackedScene]([ExtResource("10_fx130"), ExtResource("11_2v00x"), ExtResource("12_wacg6"), ExtResource("13_feqme"), ExtResource("14_asv50"), ExtResource("15_ifiha")])
-mapPreviewsContainer = NodePath("MarginContainer/Panel/MapPreviewsContainer")
 metadata/_edit_use_anchors_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="Map selector" unique_id=1523777735]
@@ -181,7 +167,7 @@ layout_direction = 2
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ka12w")
 
-[node name="MapPreviewsContainer" type="Control" parent="Map selector/MarginContainer/Panel" unique_id=1069101090 node_paths=PackedStringArray("characterSelectScreen", "unavaliableMapsNode", "menuBeepPlayer", "selectMapTimer")]
+[node name="MapPreviewsContainer" type="Control" parent="Map selector/MarginContainer/Panel" unique_id=1069101090]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -189,10 +175,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("16_x2tkk")
-characterSelectScreen = NodePath("../../../../characterSelectScreen")
-unavaliableMapsNode = NodePath("../../../UnavaliableMaps")
-menuBeepPlayer = NodePath("../../../AudioStreamPlayer")
-selectMapTimer = NodePath("../../../Label/mapSelectTimerAnimator")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Map selector" unique_id=1185412501]
 stream = ExtResource("17_ydqxt")
@@ -251,42 +233,40 @@ text = "Magic missiles: true
 Interval: 10s"
 label_settings = SubResource("LabelSettings_ueajk")
 
-[node name="MainThemeScreen" parent="." unique_id=656148760 instance=ExtResource("25_4o14v")]
-offset_top = 1.0
-offset_bottom = 1.0
-usesSelectorPanel = false
-
-[node name="MainMenuMainScreen" parent="." unique_id=1595907082 instance=ExtResource("16_nig8x")]
-offset_top = 1081.0
-offset_bottom = 1081.0
-script = ExtResource("16_kg5hh")
-
-[node name="GamemodeSelectScreen" parent="." unique_id=884276173 instance=ExtResource("17_wq6lk")]
-offset_left = 1921.0
-offset_right = 1921.0
-script = ExtResource("18_bqvs1")
-
-[node name="SettingsScreen" parent="." unique_id=395835562 instance=ExtResource("17_mq73h")]
-offset_left = -1920.0
-offset_right = -1920.0
-script = ExtResource("20_ng6d6")
-
-[node name="VideoSettingsScreen" parent="." unique_id=661163297 instance=ExtResource("18_kg5hh")]
-offset_left = -1920.0
-offset_top = 1080.0
-offset_right = -1920.0
-offset_bottom = 1080.0
-script = ExtResource("22_ng6d6")
-
-[node name="AudioSettingsScreen" parent="." unique_id=926846599 instance=ExtResource("23_hboen")]
+[node name="AudioSettingsScreen" parent="." unique_id=1595907082 instance=ExtResource("23_hboen")]
 offset_left = -1920.0
 offset_top = 2160.0
 offset_right = -1920.0
 offset_bottom = 2160.0
 
+[node name="GamemodeSelectScreen" parent="." unique_id=979982142 instance=ExtResource("17_wq6lk")]
+offset_left = 1921.0
+offset_top = 1.0
+offset_right = 1921.0
+offset_bottom = 1.0
+
+[node name="MainMenuMainScreen" parent="." unique_id=335065166 instance=ExtResource("16_nig8x")]
+offset_top = 1080.0
+offset_bottom = 1080.0
+
+[node name="SettingsScreen" parent="." unique_id=1574523183 instance=ExtResource("17_mq73h")]
+offset_left = -1920.0
+offset_right = -1920.0
+
+[node name="VideoSettingsScreen" parent="." unique_id=1438917172 instance=ExtResource("18_kg5hh")]
+offset_left = -1920.0
+offset_top = 1080.0
+offset_right = -1920.0
+offset_bottom = 1080.0
+
+[node name="MainThemeScreen" parent="." unique_id=656148760 instance=ExtResource("25_4o14v")]
+usesSelectorPanel = false
+
+[node name="NewCharacterSelectScreen" parent="." unique_id=354511115 instance=ExtResource("9_drcce")]
+offset_left = 3840.0
+offset_right = 3840.0
+
 [node name="MainMenuController" type="Node" parent="." unique_id=1055294723 node_paths=PackedStringArray("currentScreen")]
 unique_name_in_owner = true
 script = ExtResource("21_ng6d6")
 currentScreen = NodePath("../MainThemeScreen")
-
-[editable path="MainThemeScreen"]

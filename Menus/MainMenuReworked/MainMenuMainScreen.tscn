@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://cgrxul4hhxyue"]
 
 [ext_resource type="PackedScene" uid="uid://ha4tbfel1wyp" path="res://Menus/MenuingComponents/MainMenuScreen.tscn" id="1_2kky6"]
+[ext_resource type="Script" uid="uid://cmb0restvfi4b" path="res://Menus/MainMenuReworked/MainMenuMainScreen.cs" id="2_l2hpl"]
 [ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MainMenuScreenOptions.cs" id="2_vd4nu"]
 [ext_resource type="PackedScene" uid="uid://cwpfr7adf3u68" path="res://Menus/MenuingComponents/SimpleMenuItemButton.tscn" id="3_bctjq"]
 
 [node name="MainMenuMainScreen" unique_id=1595907082 instance=ExtResource("1_2kky6")]
+script = ExtResource("2_l2hpl")
 
 [node name="MenuItemsContainer" type="Control" parent="." index="0" unique_id=2096724121]
 layout_mode = 1

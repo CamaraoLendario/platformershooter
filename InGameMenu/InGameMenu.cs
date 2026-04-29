@@ -85,7 +85,7 @@ public partial class InGameMenu : CanvasLayer
 	private void ConnectSignals()
 	{
 		inputNode.InGameMenuWASD += OnMenuWASD;
-		inputNode.InGameMenuAccept += OnMenuAccept;
+		inputNode.InGameMenuInteract += OnMenuInteract;
 		inputNode.InGameMenuBack += OnMenuBack;
 		Input.JoyConnectionChanged += OnJoyConnectionChanged;	
 		SignalBus.Instance.PauseRequest += Pause;
@@ -134,7 +134,7 @@ public partial class InGameMenu : CanvasLayer
         OnResumePressed();
     }
 
-    private void OnMenuAccept()
+    private void OnMenuInteract()
     {
         currentlyAvaliableButtons[currentlySelectedButtonIdx].EmitSignal(Button.SignalName.Pressed);
     }
@@ -142,7 +142,7 @@ public partial class InGameMenu : CanvasLayer
     public override void _ExitTree()
     {
         inputNode.InGameMenuWASD -= OnMenuWASD;
-		inputNode.InGameMenuAccept -= OnMenuAccept;
+		inputNode.InGameMenuInteract -= OnMenuInteract;
 		inputNode.InGameMenuBack -= OnMenuBack;
 		SignalBus.Instance.NewRoundStarted -= HideMenu;
 		base._ExitTree();

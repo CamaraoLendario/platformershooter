@@ -41,12 +41,21 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+offset_left = 296.0
+offset_top = -82.5
+offset_right = 845.0
+offset_bottom = 82.5
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="rightLabel" parent="textOptions" index="0" unique_id=1253366842]
+anchors_preset = 4
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 0.0
+offset_right = 549.0
+grow_horizontal = 1
+horizontal_alignment = 2
 
 [node name="MenuSelectorHelper" type="Control" parent="." unique_id=596944666]
 unique_name_in_owner = true
@@ -63,3 +72,5 @@ offset_bottom = 82.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_aoudh")
+
+[editable path="textOptions"]

@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 [Tool]
 public partial class MainMenuMainScreen : MainMenuScreen
 {
-    public override bool OnPositiveAction()
+    public override bool OnInteract()
     {
-		switch (menuSelectPanel.GetSelectedNodeIdx())
+		switch (menuSelectPanel.GetCurrentNodeIdx())
 		{
 			case 0:
 				Play();

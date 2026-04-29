@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c0jq1fa6bb1ar"]
+
+[ext_resource type="Texture2D" uid="uid://bmpswyokv23bw" path="res://Menus/MenuingComponents/inputIcons.png" id="1_bfu5r"]
+[ext_resource type="Script" uid="uid://bdrqk1juhnrsi" path="res://Menus/MenuingComponents/InputIcon.cs" id="2_ycw53"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfu5r"]
+atlas = ExtResource("1_bfu5r")
+region = Rect2(0, 0, 16, 16)
+
+[node name="inputIcon" type="TextureRect" unique_id=1683868203]
+offset_right = 16.0
+offset_bottom = 16.0
+texture = SubResource("AtlasTexture_bfu5r")
+expand_mode = 2
+stretch_mode = 4
+script = ExtResource("2_ycw53")

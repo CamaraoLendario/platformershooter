@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cpwa1v1e2byqe"]
 
 [ext_resource type="PackedScene" uid="uid://ha4tbfel1wyp" path="res://Menus/MenuingComponents/MainMenuScreen.tscn" id="1_w8ymq"]
-[ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuItem.cs" id="2_tmxlg"]
-[ext_resource type="Script" uid="uid://b27p12vnimu0l" path="res://AudioSettingsScreen.cs" id="2_u7x5x"]
+[ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuingComponents/MenuItem.cs" id="2_tmxlg"]
+[ext_resource type="Script" uid="uid://b27p12vnimu0l" path="res://Menus/MainMenuReworked/AudioSettingsScreen.cs" id="2_u7x5x"]
 [ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MainMenuScreenOptions.cs" id="3_u7x5x"]
-[ext_resource type="PackedScene" uid="uid://blrhm4bqw0us1" path="res://HorizontalTextAndSlider.tscn" id="4_re14l"]
+[ext_resource type="PackedScene" uid="uid://blrhm4bqw0us1" path="res://Menus/MenuingComponents/HorizontalTextAndSlider.tscn" id="4_re14l"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nvmy7"]
 font_size = 117
@@ -38,11 +38,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_top = -64.0
-offset_bottom = -64.0
+offset_top = -42.0
+offset_bottom = -42.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_u7x5x")
+Separation = 175
 
 [node name="Master" parent="MenuItemsContainer" index="0" unique_id=1161178196 instance=ExtResource("4_re14l")]
 layout_mode = 0
@@ -60,15 +61,15 @@ offset_bottom = 25.0
 
 [node name="Music" parent="MenuItemsContainer" index="1" unique_id=1297678539 instance=ExtResource("4_re14l")]
 layout_mode = 0
-offset_top = 120.0
-offset_bottom = 120.0
+offset_top = 175.0
+offset_bottom = 175.0
 SettingName = "Music"
 TotalSize = Vector2(1720, 125)
 
 [node name="SFX" parent="MenuItemsContainer" index="2" unique_id=1614735625 instance=ExtResource("4_re14l")]
 layout_mode = 0
-offset_top = 240.0
-offset_bottom = 240.0
+offset_top = 350.0
+offset_bottom = 350.0
 SettingName = "SFX"
 TotalSize = Vector2(1720, 125)
 

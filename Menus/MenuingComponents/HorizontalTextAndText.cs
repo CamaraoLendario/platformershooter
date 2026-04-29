@@ -16,9 +16,9 @@ public partial class HorizontalTextAndText : HorizontalMenu
 		originalPosition = Position;
     }
 
-    public override bool OnPositiveAction()
+    public override bool OnInteract()
     {
-		return TextOptions.OnPositiveAction();
+		return TextOptions.OnInteract();
     }
 	protected override void DoFormatting()
 	{

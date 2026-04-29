@@ -56,11 +56,11 @@ public partial class MenuSelectPanel : Panel
 		AnimateSelectedButton(newParent, oldParent);
 		return newParent;
     }
-	public MenuItem GetSelectedNode()
+	public MenuItem GetCurrentNode()
 	{
 		return options[currentOptionIdx];
 	}
-	public int GetSelectedNodeIdx()
+	public int GetCurrentNodeIdx()
 	{
 		return currentOptionIdx;
 	}

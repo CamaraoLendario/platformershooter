@@ -36,7 +36,7 @@ public partial class Menu : MainMenuScreen
     {
 		currentButtonIdx = menuSelectPanel.Move(dir);
     }
-    public override bool OnPositiveAction()
+    public override bool OnInteract()
     {
         switch (currentButtonIdx)
 		{
