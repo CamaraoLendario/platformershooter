@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://dl55e24nxatwp"]
+
+[ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_67a4m"]
+[ext_resource type="Script" uid="uid://5s78bfgusg32" path="res://Menus/RenameKeyboard.cs" id="1_3327o"]
+[ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuingComponents/MenuItem.cs" id="3_gj84v"]
+[ext_resource type="Script" uid="uid://dpcm1jyqfesik" path="res://Menus/MenuingComponents/MenuItemsGridContainer.cs" id="5_ixon0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gj84v"]
+font_size = 37
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ekf7s"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[node name="RenameKeyboard" type="Control" unique_id=1616403939 node_paths=PackedStringArray("optionsContainer")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 640.0
+offset_top = 391.0
+offset_right = 640.0
+offset_bottom = 391.0
+theme = ExtResource("1_67a4m")
+script = ExtResource("1_3327o")
+letterSettings = SubResource("LabelSettings_gj84v")
+optionsContainer = NodePath("Control")
+menuItemScript = ExtResource("3_gj84v")
+
+[node name="Panel" type="Panel" parent="." unique_id=1564469652]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.72003
+offset_top = -291.0
+offset_right = 116.27997
+offset_bottom = 291.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ekf7s")
+
+[node name="Control" type="Control" parent="." unique_id=1207637741]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -140.0
+offset_right = 80.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_ixon0")

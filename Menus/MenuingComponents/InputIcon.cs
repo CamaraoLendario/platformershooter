@@ -1,7 +1,5 @@
 using Godot;
-using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+using static SpaceMages.SpaceMagesVars;
 
 [Tool]
 public partial class InputIcon : TextureRect
@@ -16,14 +14,13 @@ public partial class InputIcon : TextureRect
 	AtlasTexture texture;
 	bool isPressed = false;
 	ControllerUsed currentControllerUsed = ControllerUsed.Xbox;
-	
 
     public override void _Ready()
     {
 		this.Texture = this.Texture.Duplicate() as AtlasTexture; 
     	texture = Texture as AtlasTexture;
-
-		SetDisplayedButton(action, 0, false);
+		SetInputIdx(-2);
+		SetDisplayedButton(GetStringAndInt(action).main, 0, false, ControllerUsed.Xbox);
     }
 
     public override void _Input(InputEvent @event)
@@ -31,14 +28,14 @@ public partial class InputIcon : TextureRect
 		string oldAction = action;
 		bool oldIsPressed = isPressed;
 		ControllerUsed oldControllerUsed = currentControllerUsed;
-		if (@event is InputEventKey && !action.EndsWith("Keyboard")){
+		(string mainAction, string inputIdx) actionSegments = GetStringAndInt(action);
+		if (@event is InputEventKey && !actionSegments.mainAction.Contains("Keyboard")){
 			GD.Print("keyboard detected!!");
-			action += "Keyboard";
+			action = actionSegments.mainAction + "Keyboard" + actionSegments.inputIdx;
 		}
 		else if(@event is InputEventJoypadButton|| @event is InputEventJoypadMotion){
-			if(action.EndsWith("Keyboard"))
-				action = action.Remove(action.Length - 8);
-
+			if(actionSegments.mainAction.Contains("Keyboard"))
+				action = actionSegments.mainAction.Remove(actionSegments.mainAction.Length - 8) + actionSegments.inputIdx;
 			string controllerName = (string)Input.GetJoyInfo(@event.Device)["raw_name"];
 
 			if (controllerName.Contains("PS"))
@@ -50,6 +47,9 @@ public partial class InputIcon : TextureRect
 			else currentControllerUsed = ControllerUsed.Xbox;
 		}
 
+		if (!InputMap.HasAction(action))
+			return;
+		
 		if (Input.IsActionPressed(action)){
 			isPressed = true;
 		}
@@ -62,6 +62,8 @@ public partial class InputIcon : TextureRect
 	}
 	public void SetDisplayedButton(string action, int eventIdx = 0, bool pressed = false, ControllerUsed controllerUsed = ControllerUsed.Xbox)
 	{
+		if (!InputMap.HasAction(action))
+			return;
 		SetDisplayedButton(InputMap.ActionGetEvents(action)[eventIdx], pressed, controllerUsed);
 	}
 	public void SetDisplayedButton(InputEvent inputEvent, bool pressed = false, ControllerUsed controllerUsed = ControllerUsed.Xbox)
@@ -71,6 +73,11 @@ public partial class InputIcon : TextureRect
 		else if(inputEvent is InputEventJoypadButton inputjoybutton)
 			texture.Region = GetInputIconPos(inputjoybutton.ButtonIndex, pressed, controllerUsed);
 		return;
+	}
+
+	public void SetInputIdx(int givenInputIdx){
+		action = GetStringAndInt(action).main + givenInputIdx;
+		SetDisplayedButton(action, 0, false);
 	}
 
     Rect2 GetInputIconPos(JoyButton input, bool pressed = false, ControllerUsed controllerUsed = ControllerUsed.Xbox){

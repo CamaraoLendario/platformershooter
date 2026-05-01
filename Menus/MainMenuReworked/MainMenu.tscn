@@ -94,6 +94,54 @@ _data = {
 [sub_resource type="LabelSettings" id="LabelSettings_ueajk"]
 font_size = 34
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_drcce"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jaaa6"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tng7p"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7vuah"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_adr3e"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7p68l"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
 [node name="MainMenu" type="CanvasLayer" unique_id=1509971223]
 script = ExtResource("1_27cff")
 
@@ -265,8 +313,51 @@ usesSelectorPanel = false
 [node name="NewCharacterSelectScreen" parent="." unique_id=354511115 instance=ExtResource("9_drcce")]
 offset_left = 3840.0
 offset_right = 3840.0
+usesSelectorPanel = false
+
+[node name="PlayerCapsule" parent="NewCharacterSelectScreen/MenuItemsContainer" parent_id_path=PackedInt32Array(354511115, 896509972) index="0" unique_id=2084640090]
+offset_left = -655.0
+offset_right = -655.0
+pannelTheme = SubResource("StyleBoxFlat_drcce")
+
+[node name="PlayerCapsule2" parent="NewCharacterSelectScreen/MenuItemsContainer" parent_id_path=PackedInt32Array(354511115, 896509972) index="1" unique_id=576386248]
+offset_left = -393.0
+offset_top = 0.0
+offset_right = -393.0
+offset_bottom = 0.0
+pannelTheme = SubResource("StyleBoxFlat_jaaa6")
+
+[node name="PlayerCapsule3" parent="NewCharacterSelectScreen/MenuItemsContainer" parent_id_path=PackedInt32Array(354511115, 896509972) index="2" unique_id=1083298842]
+offset_left = -131.0
+offset_top = 0.0
+offset_right = -131.0
+offset_bottom = 0.0
+pannelTheme = SubResource("StyleBoxFlat_tng7p")
+
+[node name="PlayerCapsule4" parent="NewCharacterSelectScreen/MenuItemsContainer" parent_id_path=PackedInt32Array(354511115, 896509972) index="3" unique_id=1936989822]
+offset_left = 131.0
+offset_top = 0.0
+offset_right = 131.0
+offset_bottom = 0.0
+pannelTheme = SubResource("StyleBoxFlat_7vuah")
+
+[node name="PlayerCapsule5" parent="NewCharacterSelectScreen/MenuItemsContainer" parent_id_path=PackedInt32Array(354511115, 896509972) index="4" unique_id=1769632314]
+offset_left = 393.0
+offset_top = 0.0
+offset_right = 393.0
+offset_bottom = 0.0
+pannelTheme = SubResource("StyleBoxFlat_adr3e")
+
+[node name="PlayerCapsule6" parent="NewCharacterSelectScreen/MenuItemsContainer" parent_id_path=PackedInt32Array(354511115, 896509972) index="5" unique_id=1694529882]
+offset_left = 655.0
+offset_top = 0.0
+offset_right = 655.0
+offset_bottom = 0.0
+pannelTheme = SubResource("StyleBoxFlat_7p68l")
 
 [node name="MainMenuController" type="Node" parent="." unique_id=1055294723 node_paths=PackedStringArray("currentScreen")]
 unique_name_in_owner = true
 script = ExtResource("21_ng6d6")
 currentScreen = NodePath("../MainThemeScreen")
+
+[editable path="NewCharacterSelectScreen"]

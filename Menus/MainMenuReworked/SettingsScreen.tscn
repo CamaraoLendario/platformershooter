@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://ha4tbfel1wyp" path="res://Menus/MenuingComponents/MainMenuScreen.tscn" id="1_8iiu4"]
 [ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuingComponents/MenuItem.cs" id="2_0o71x"]
-[ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MainMenuScreenOptions.cs" id="2_e6v8l"]
+[ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MenuItemsListContainer.cs" id="2_e6v8l"]
 [ext_resource type="Script" uid="uid://dpgn05hmr1a2c" path="res://Menus/MainMenuReworked/SettingsScreen.cs" id="2_r04u4"]
 [ext_resource type="PackedScene" uid="uid://cwpfr7adf3u68" path="res://Menus/MenuingComponents/SimpleMenuItemButton.tscn" id="3_11lt3"]
 

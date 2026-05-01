@@ -51,9 +51,8 @@ public partial class MainMenuMainScreen : MainMenuScreen
 
     public override void Back()
 	{
-		MainThemeScreen mainThemeScreen = GetParent().GetNode<MainThemeScreen>("MainThemeScreen");
-		GetNode<MainMenuController>("%MainMenuController").currentScreen = mainThemeScreen;
-		base.Move(Vector2.Down);
-		mainThemeScreen.Move(Vector2.Down, true);
+		ChangeScreen(
+            GetParent().GetNode<MainThemeScreen>("MainThemeScreen"),
+            Vector2.Down, Vector2.Down);
 	}
 }

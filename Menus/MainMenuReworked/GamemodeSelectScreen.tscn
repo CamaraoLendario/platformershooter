@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ha4tbfel1wyp" path="res://Menus/MenuingComponents/MainMenuScreen.tscn" id="1_8dao0"]
 [ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuingComponents/MenuItem.cs" id="2_32erb"]
 [ext_resource type="Script" uid="uid://vo4id53omwrv" path="res://Menus/MainMenuReworked/GamemodeSelectScreen.cs" id="2_fljgf"]
-[ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MainMenuScreenOptions.cs" id="2_ma1w6"]
+[ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MenuItemsListContainer.cs" id="2_ma1w6"]
 [ext_resource type="PackedScene" uid="uid://bme1tdi5j5fup" path="res://Menus/MenuingComponents/horizontalTextAndScroll.tscn" id="3_7ynpa"]
 [ext_resource type="PackedScene" uid="uid://cyx5clmammmqy" path="res://Menus/MenuingComponents/horizontalTextAndText.tscn" id="4_32erb"]
 

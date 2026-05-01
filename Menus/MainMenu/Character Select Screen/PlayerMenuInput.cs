@@ -1,69 +1,83 @@
 using Godot;
 using System;
+using System.Data.Common;
 
 [Tool]
 public partial class PlayerMenuInput : Node
 {
     [Export] PlayerCapsule playerCapsule;
-	public int inputIdx = -2;
-	public bool IsKeyboardControlled
-    {
-        get
-        {
-            return isKeyboardControlled;
-        }
-        set
-        {
-            isKeyboardControlled = value;
-			if (value)
-            {
-                keyboardKeyword = "Keyboard";
-            }
-			else keyboardKeyword = "";
-        }
-    }
-	private bool isKeyboardControlled = false;
+	int inputIdx = -2;
 	string keyboardKeyword = "";
-    public override void _Ready()
-    {
+    public override void _Ready(){
 		playerCapsule = GetParent() as PlayerCapsule;
     }
-
     // TODO: add analog stick support for menu WASD 
     public override void _UnhandledInput(InputEvent @event)
     {
-        // if (@event is InputEventMouseMotion ||
-		// 	//!playerCapsule.isEnabled||
-		// 	@event.IsReleased()) 
-		// 	return;
+        if (@event is InputEventMouseMotion ||
+            !playerCapsule.isEnabled||
+            @event.IsReleased()) 
+            return;
 		
-		// if(inputIdx == -1 && !isKeyboardControlled) return;
 
-        if (Input.IsActionJustPressed("MenuUpKeyboard")){// +  keyboardKeyword + inputIdx)){
+        if (Input.IsActionJustPressed("MenuUp" +  keyboardKeyword + inputIdx)){
             GD.Print("MenuUp");
-            playerCapsule.OnMoveAction(new Vector2(0, -1)); return;
+            if (playerCapsule.OnMoveAction(new Vector2(0, -1)))
+                GetViewport().SetInputAsHandled();
+            return;
         }
-        if (Input.IsActionJustPressed("MenuDownKeyboard")){// +  keyboardKeyword + inputIdx)){
+        if (Input.IsActionJustPressed("MenuDown" +  keyboardKeyword + inputIdx)){
             GD.Print("MenuDown");
-            playerCapsule.OnMoveAction(new Vector2(0, 1)); return;
+            if (playerCapsule.OnMoveAction(new Vector2(0, 1)))
+                GetViewport().SetInputAsHandled();
+            return;
         }
-        if (Input.IsActionJustPressed("MenuLeftKeyboard")){// +  keyboardKeyword + inputIdx)){
+        if (Input.IsActionJustPressed("MenuLeft" +  keyboardKeyword + inputIdx)){
             GD.Print("MenuLeft");
-            playerCapsule.OnMoveAction(new Vector2(-1, 0)); return;
+            if (playerCapsule.OnMoveAction(new Vector2(-1, 0)))
+                GetViewport().SetInputAsHandled();
+            return;
         }
-        if (Input.IsActionJustPressed("MenuRightKeyboard")){// +  keyboardKeyword + inputIdx)){
+        if (Input.IsActionJustPressed("MenuRight" +  keyboardKeyword + inputIdx)){
             GD.Print("MenuRight");
-            playerCapsule.OnMoveAction(new Vector2(1, 0)); return;
+            if (playerCapsule.OnMoveAction(new Vector2(1, 0)))
+                GetViewport().SetInputAsHandled();
+            return;
         }
-
-		if (Input.IsActionJustPressed("MenuInteractKeyboard")){// +  keyboardKeyword + inputIdx)){
+		if (Input.IsActionJustPressed("MenuInteract" +  keyboardKeyword + inputIdx)){
             GD.Print("MenuInteract");
-            playerCapsule.OnInteract(); return;
+            if (playerCapsule.OnInteract())
+                GetViewport().SetInputAsHandled();
+            return;
         }
-		
-		if (Input.IsActionJustPressed("MenuBackKeyboard")){// +  keyboardKeyword + inputIdx)){
+        if (Input.IsActionJustPressed("MenuAltInteract" +  keyboardKeyword + inputIdx)){
+            GD.Print("MenuAltInteract");
+            if (playerCapsule.OnAltInteract())
+                GetViewport().SetInputAsHandled();
+            return;
+        }
+		if (Input.IsActionJustPressed("MenuBack" +  keyboardKeyword + inputIdx)){
             GD.Print("MenuBack");
-            playerCapsule.OnNegativeAction(); return;
+            if (playerCapsule.OnNegativeAction())
+                GetViewport().SetInputAsHandled();
+            return;
         }
+    }
+    public int GetInputIdx()
+    {
+        return inputIdx;
+    }
+    public void SetInputIdx(int newIdx)
+    {
+        if (newIdx < -1)
+            InputGenerator.Instance.RemovePlayerMenuInput(inputIdx);
+        
+        inputIdx = newIdx;
+
+        if (inputIdx == -1)
+            keyboardKeyword = "Keyboard";
+        else
+            keyboardKeyword = "";
+        
     }
 }

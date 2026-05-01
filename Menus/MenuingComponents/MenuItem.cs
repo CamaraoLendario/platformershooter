@@ -46,7 +46,7 @@ public partial class MenuItem : Control
 		return false;
 	}
 	
-	public virtual bool OnAltInteractAction()
+	public virtual bool OnAltInteract()
 	{
 		return false;
 	}
@@ -64,5 +64,14 @@ public partial class MenuItem : Control
 	public virtual bool OnMoveAction(Vector2 dir)
 	{
 		return false;
+	}
+	
+	public void SetOriginalPosition()
+	{
+		originalPosition = Position;
+	}
+	public void SetOriginalPosition(Vector2 newOriginalPosition)
+	{
+		originalPosition = newOriginalPosition;
 	}
 }

@@ -23,25 +23,23 @@ public partial class SettingsScreen : MainMenuScreen
     }
 	void VideoSettings()
 	{
-		Move(Vector2.Up);
-		VideoSettingsScreen videoSettingsScreen = GetParent().GetNode<VideoSettingsScreen>("VideoSettingsScreen");
-		videoSettingsScreen.Move(Vector2.Down, true);
-		GetNode<MainMenuController>("%MainMenuController").currentScreen = videoSettingsScreen;
+		ChangeScreen(
+            GetParent().GetNode<VideoSettingsScreen>("VideoSettingsScreen"),
+            Vector2.Up, Vector2.Down);
 	}
 	void AudioSettings()
     {
+		ChangeScreen(
+            GetParent().GetNode<AudioSettingsScreen>("AudioSettingsScreen"),
+            Vector2.Up, Vector2.Down);
 		Move(Vector2.Up);
-		AudioSettingsScreen audioSettingsScreen = GetParent().GetNode<AudioSettingsScreen>("AudioSettingsScreen");
-		audioSettingsScreen.Move(Vector2.Down, true);
-		GetNode<MainMenuController>("%MainMenuController").currentScreen = audioSettingsScreen;
     }
 	void Accessibility(){}
 
     public override void Back()
     {
-        Move(Vector2.Left);
-		MainMenuMainScreen mainMenuMain = GetParent().GetNode<MainMenuMainScreen>("MainMenuMainScreen");
-		mainMenuMain.Move(Vector2.Right, true);
-		GetNode<MainMenuController>("%MainMenuController").currentScreen = mainMenuMain;
+		ChangeScreen(
+            GetParent().GetNode<MainMenuMainScreen>("MainMenuMainScreen"),
+            Vector2.Left, Vector2.Right);
     }
 }

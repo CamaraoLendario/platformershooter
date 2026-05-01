@@ -13,21 +13,30 @@ public partial class PlayerCapsule : MenuItem
 	[Signal] public delegate void DisabledEventHandler(PlayerCapsule playerCapsule);
 	#region Exports
 	[ExportGroup("Nodes and References")]
-	[Export] MainMenuScreenOptions menuScreenOptions;
+	[Export] MenuItemsListContainer menuScreenOptions;
 	[Export] Label nameLabel;
 	[Export] TextureRect pilotTexture;
 	[Export] Control enabledCapsule;
 	[Export] Control disabledCapsule;
-	[Export] public PlayerMenuInput menuInput;
+	[Export] public PlayerMenuInput inputNode;
 	[Export] ShaderMaterial pilotOutlineShaderMaterial;
 	[Export] StyleBoxFlat pannelTheme;
 	[Export] Color readyBGcolor = new Color(0.161f, 1.0f, 0.161f, 0.396f);
 	[Export] Color unreadyBGcolor = new Color(0.161f, 0.161f, 0.161f, 0.396f);
+	[Export] InputIcon RenameInputIcon;
+	[Export] InputIcon ReadyUpInputIcon;
 	#endregion
 	public NewCharacterSelectScreen characterSelectScreen;
 	public bool isEnabled = false;
 	public bool isReady = false;
 	public int colorIdx = -1;
+
+    public override void _Ready()
+    {
+        base._Ready();
+		Disable();
+    }
+
 
 	void SetPlayerName(string newName)
 	{
@@ -38,14 +47,11 @@ public partial class PlayerCapsule : MenuItem
 	{
 		return nameLabel.Text;
 	}
-	void SetColor(int idx)
+	public void SetColor(int idx)
 	{
-		if (idx < 0)
-		{
-			pilotTexture.Material = null;
-			colorIdx = -1;
-			return;
-		}
+		GD.Print("Setting color..");
+		GD.Print("Current color: ", colorIdx);
+		GD.Print("Setting color to: ", idx);
 		if (pilotTexture.Material == null) 
 			pilotTexture.Material = pilotOutlineShaderMaterial.Duplicate() as ShaderMaterial;
 		int dir = 1;
@@ -53,12 +59,21 @@ public partial class PlayerCapsule : MenuItem
 		for (int i = 0; i < teamColors.Length; i++)
 		{
 			int currentColoridx = NormalizeIdx(idx + (i*dir), teamColors.Length);
+			GD.Print("trying to set color to: ", idx);
 			if (characterSelectScreen.IsColorAvaliable(currentColoridx)){
 				Vector3 newColor = teamColors[currentColoridx];
 				(pilotTexture.Material as ShaderMaterial).SetShaderParameter("Color", newColor);
+				colorIdx = currentColoridx;
+				break;
 			}
 		}
-		colorIdx = idx;
+		GD.Print($"Color set to {colorIdx}!");
+	}
+	void ClearColor()
+	{
+		pilotTexture.Material = null;
+		colorIdx = -1;
+		return;
 	}
 	public void Enable(int inputIdx)
 	{
@@ -69,28 +84,26 @@ public partial class PlayerCapsule : MenuItem
 		disabledCapsule.Hide();
 		isEnabled = true;
 		SetColor(0);
-		menuInput.inputIdx = inputIdx;
+		InputGenerator.Instance.GeneratePlayerMenuInput(inputIdx);
+		SetInputIdx(inputIdx);
 	}
-	void Disable()
+	public void Disable()
 	{
 		if (!isEnabled)
 			GD.PrintErr(this.Name, " is already disabled!");
-
-		SetColor(-1);
-		if(!Engine.IsEditorHint()) InputGenerator.Instance.ClearMenuInput(menuInput.inputIdx);
+		UnReady();
+		ClearColor();
 		disabledCapsule.Show();
 		enabledCapsule.Hide();
 		isEnabled = false;
-		menuInput.inputIdx = -2;
 		EmitSignal(SignalName.Disabled, this);
+		SetInputIdx(-2);
 	}
 
 	bool ReadyUp() // Note: name can't be "Ready" cuz of Node.Ready
 	{ 
-		if (!isReady){
-			GD.PrintErr(this.Name, " is already ready!");
+		if (isReady)
 			return false;
-		}
 		isReady = true;
 		pannelTheme.BgColor = readyBGcolor;
 		menuScreenOptions.Hide();
@@ -98,31 +111,49 @@ public partial class PlayerCapsule : MenuItem
 
 		return true;
 	}
-	void UnReady()
+	bool UnReady()
 	{
-		if (!isReady){
-			GD.PrintErr(this.Name, " is already NOT ready!");
-			return;
-		}
+		if (!isReady)
+			return false;
 		isReady = false;
 		pannelTheme.BgColor = unreadyBGcolor;
+		menuScreenOptions.Show();
 		EmitSignal(SignalName.UnReadied, this);
+		return true;
 	}
 
     public override bool OnInteract()
 	{
 		return ReadyUp();
 	}
+    public override bool OnAltInteract()
+    {
+		if (isReady) return false;
+        return base.OnAltInteract();
+    }
+    public override bool OnMoveAction(Vector2 dir)
+	{
+		if (isReady) return false;
+		if (dir.X == 0)
+			return false;
+		SetColor(colorIdx + (int)dir.X);
+		return true;
+	}
 
     public override bool OnNegativeAction()
     {
-        if (isReady)
-			UnReady();
-		else
-		{
-			//goback to gamemode select screen
-		}
-		return true;	
+      	if (UnReady()) return true;
+		Disable();
+		return true;
 	}
-
+	public int GetInputIdx()
+	{
+		return inputNode.GetInputIdx();
+	}
+	void SetInputIdx(int newInputIdx)
+	{
+		inputNode.SetInputIdx(newInputIdx);
+		RenameInputIcon.SetInputIdx(newInputIdx);
+		ReadyUpInputIcon.SetInputIdx(newInputIdx);
+	}
 }

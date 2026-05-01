@@ -6,9 +6,8 @@ public partial class VideoSettingsScreen : MainMenuScreen
 {
     public override void Back()
     {
-        Move(Vector2.Down);
-		SettingsScreen settingsScreen = GetParent().GetNode<SettingsScreen>("SettingsScreen");
-		settingsScreen.Move(Vector2.Up, true);
-		GetNode<MainMenuController>("%MainMenuController").currentScreen = settingsScreen;
+        ChangeScreen(
+            GetParent().GetNode<SettingsScreen>("SettingsScreen"),
+            Vector2.Down, Vector2.Up);
     }
 }

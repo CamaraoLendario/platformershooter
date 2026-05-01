@@ -1,10 +1,8 @@
 using Godot;
 using Godot.Collections;
-using GodotPlugins.Game;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+using static SpaceMages.SpaceMagesVars;
 
 public partial class InputGenerator : Node
 {
@@ -77,7 +75,7 @@ public partial class InputGenerator : Node
         }
     }
 
-	public void GeneratePlayersMenuInput(int inputIdx)
+	public void GeneratePlayerMenuInput(int inputIdx)
 	{
 		foreach (StringName action in actionList)
 		{
@@ -99,7 +97,7 @@ public partial class InputGenerator : Node
 		}
 	}
 
-	public void ClearMenuInput(int inputIdx)
+	public void RemovePlayerMenuInput(int inputIdx)
     {
 		var tempNewActions = newActions.ToArray();
         foreach (StringName action in tempNewActions)
@@ -116,21 +114,6 @@ public partial class InputGenerator : Node
 					GD.Print("Erased Action: " + action);
 				}
             }
-        }
-    }
-
-	bool StringEndsWithInt(string str)
-    {
-		if (str == "") return false;
-		
-		try
-        {
-            int Number = str[^1].ToString().ToInt();
-			return true;
-        }
-        catch
-        {
-            return false;
         }
     }
 

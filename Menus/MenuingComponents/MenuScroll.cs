@@ -102,7 +102,7 @@ public partial class MenuScroll : MenuItem
 		AnimateFlushPositioning(currentLabel, initialLabelPos, finalLabelPos);
 	}
 
-	public async void Close()
+	public void Close()
 	{
 		for(int i = 0; i < 4; i++)
 		{

@@ -92,7 +92,7 @@ public partial class MenuSelectPanel : Panel
 		Vector2 scaleDifference = Vector2.Zero;
 		Vector2 initialScale = Scale;
 		
-		if(GetParent<MenuItem>().GetParent() is MainMenuScreenOptions screenOptions)
+		if(GetParent<MenuItem>().GetParent() is MenuItemsListContainer screenOptions)
 		{
 			scaleDifference = screenOptions.Scale - Scale;
 			initialScale = Scale / screenOptions.Scale;

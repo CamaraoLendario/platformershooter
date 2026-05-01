@@ -9,6 +9,54 @@
 [sub_resource type="LabelSettings" id="LabelSettings_64c5m"]
 font_size = 117
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2fy3"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l55ax"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64c5m"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c3afc"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q8jyd"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k4is1"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
 [node name="NewCharacterSelectScreen" type="Control" unique_id=354511115]
 layout_mode = 3
 anchors_preset = 15
@@ -32,7 +80,7 @@ offset_right = 576.0
 offset_bottom = -364.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Gamemode Select"
+text = "Character Select"
 label_settings = SubResource("LabelSettings_64c5m")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -54,28 +102,34 @@ horizontal = true
 layout_mode = 0
 offset_left = -655.0
 offset_right = -655.0
+pannelTheme = SubResource("StyleBoxFlat_j2fy3")
 
 [node name="PlayerCapsule2" parent="MenuItemsContainer" unique_id=576386248 instance=ExtResource("3_0bj3m")]
 layout_mode = 0
 offset_left = -393.0
 offset_right = -393.0
+pannelTheme = SubResource("StyleBoxFlat_l55ax")
 
 [node name="PlayerCapsule3" parent="MenuItemsContainer" unique_id=1083298842 instance=ExtResource("3_0bj3m")]
 layout_mode = 0
 offset_left = -131.0
 offset_right = -131.0
+pannelTheme = SubResource("StyleBoxFlat_64c5m")
 
 [node name="PlayerCapsule4" parent="MenuItemsContainer" unique_id=1936989822 instance=ExtResource("3_0bj3m")]
 layout_mode = 0
 offset_left = 131.0
 offset_right = 131.0
+pannelTheme = SubResource("StyleBoxFlat_c3afc")
 
 [node name="PlayerCapsule5" parent="MenuItemsContainer" unique_id=1769632314 instance=ExtResource("3_0bj3m")]
 layout_mode = 0
 offset_left = 393.0
 offset_right = 393.0
+pannelTheme = SubResource("StyleBoxFlat_q8jyd")
 
 [node name="PlayerCapsule6" parent="MenuItemsContainer" unique_id=1694529882 instance=ExtResource("3_0bj3m")]
 layout_mode = 0
 offset_left = 655.0
 offset_right = 655.0
+pannelTheme = SubResource("StyleBoxFlat_k4is1")

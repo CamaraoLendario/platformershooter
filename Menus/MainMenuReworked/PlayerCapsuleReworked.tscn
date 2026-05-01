@@ -17,7 +17,8 @@ shader_parameter/Color = Color(0.8, 0.8, 0, 1)
 shader_parameter/outlineThickness = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sdmhf"]
-bg_color = Color(0.16078432, 1, 0.16078432, 0.39607844)
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
 corner_radius_top_left = 40
 corner_radius_top_right = 40
 corner_radius_bottom_right = 40
@@ -26,27 +27,21 @@ corner_radius_bottom_left = 40
 [sub_resource type="LabelSettings" id="LabelSettings_044s5"]
 font_size = 40
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_slkfj"]
-shader = ExtResource("3_tvjsv")
-shader_parameter/PoisonBuildup = 0.0
-shader_parameter/Color = Color(0.8, 0.8, 0, 1)
-shader_parameter/outlineThickness = 1
-
 [sub_resource type="LabelSettings" id="LabelSettings_q8q8u"]
 font_size = 45
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jv8gs"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_slkfj"]
 atlas = ExtResource("8_jv8gs")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_slkfj"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wy61a"]
 atlas = ExtResource("8_jv8gs")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_sdmhf"]
 font_size = 22
 
-[node name="PlayerCapsule" type="Control" unique_id=2084640090 node_paths=PackedStringArray("menuScreenOptions", "nameLabel", "pilotTexture", "enabledCapsule", "disabledCapsule", "menuInput")]
+[node name="PlayerCapsule" type="Control" unique_id=2084640090 node_paths=PackedStringArray("menuScreenOptions", "nameLabel", "pilotTexture", "enabledCapsule", "disabledCapsule", "inputNode", "RenameInputIcon", "ReadyUpInputIcon")]
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_ewlji")
@@ -56,9 +51,11 @@ nameLabel = NodePath("Player Connected/Name")
 pilotTexture = NodePath("Player Connected/TextureRect")
 enabledCapsule = NodePath("Player Connected")
 disabledCapsule = NodePath("Empty Capsule")
-menuInput = NodePath("Node")
+inputNode = NodePath("Node")
 pilotOutlineShaderMaterial = SubResource("ShaderMaterial_l54is")
 pannelTheme = SubResource("StyleBoxFlat_sdmhf")
+RenameInputIcon = NodePath("Player Connected/MenuItemsContainer/Rename/RenameInputIcon")
+ReadyUpInputIcon = NodePath("Player Connected/MenuItemsContainer/ReadyUp/ReadyUpInputIcon")
 Selectable = false
 
 [node name="Panel" type="Panel" parent="." unique_id=2097898094]
@@ -77,6 +74,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_sdmhf")
 
 [node name="Player Connected" type="Control" parent="." unique_id=1060720999]
+visible = false
 anchors_preset = 0
 offset_top = 51.0
 offset_right = 232.0
@@ -101,7 +99,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="Player Connected" unique_id=612125025]
-material = SubResource("ShaderMaterial_slkfj")
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -164,7 +161,7 @@ label_settings = SubResource("LabelSettings_q8q8u")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Player Connected/MenuItemsContainer" unique_id=1635362832]
+[node name="Rename" type="HBoxContainer" parent="Player Connected/MenuItemsContainer" unique_id=1635362832]
 layout_mode = 0
 offset_left = -211.5
 offset_top = 60.0
@@ -173,17 +170,17 @@ offset_bottom = 110.0
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="inputIcon" parent="Player Connected/MenuItemsContainer/HBoxContainer" unique_id=1683868203 instance=ExtResource("10_wy61a")]
+[node name="RenameInputIcon" parent="Player Connected/MenuItemsContainer/Rename" unique_id=1683868203 instance=ExtResource("10_wy61a")]
 layout_mode = 2
-texture = SubResource("AtlasTexture_jv8gs")
-action = "MenuAltInteract"
+texture = SubResource("AtlasTexture_slkfj")
+action = "MenuAltInteract-2"
 
-[node name="Label" type="Label" parent="Player Connected/MenuItemsContainer/HBoxContainer" unique_id=1924376721]
+[node name="RenameLabel" type="Label" parent="Player Connected/MenuItemsContainer/Rename" unique_id=1924376721]
 layout_mode = 2
 text = "Rename"
 label_settings = SubResource("LabelSettings_q8q8u")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Player Connected/MenuItemsContainer" unique_id=2068099430]
+[node name="ReadyUp" type="HBoxContainer" parent="Player Connected/MenuItemsContainer" unique_id=2068099430]
 layout_mode = 0
 offset_left = -211.5
 offset_top = 120.0
@@ -192,12 +189,12 @@ offset_bottom = 170.0
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="inputIcon" parent="Player Connected/MenuItemsContainer/HBoxContainer2" unique_id=339985318 instance=ExtResource("10_wy61a")]
+[node name="ReadyUpInputIcon" parent="Player Connected/MenuItemsContainer/ReadyUp" unique_id=339985318 instance=ExtResource("10_wy61a")]
 layout_mode = 2
-texture = SubResource("AtlasTexture_slkfj")
-action = "MenuInteract"
+texture = SubResource("AtlasTexture_wy61a")
+action = "MenuInteract-2"
 
-[node name="Label" type="Label" parent="Player Connected/MenuItemsContainer/HBoxContainer2" unique_id=940726143]
+[node name="ReadyUpLabel" type="Label" parent="Player Connected/MenuItemsContainer/ReadyUp" unique_id=940726143]
 layout_mode = 2
 text = "Ready"
 label_settings = SubResource("LabelSettings_q8q8u")

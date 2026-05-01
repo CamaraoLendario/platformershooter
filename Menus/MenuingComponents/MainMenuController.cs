@@ -29,19 +29,24 @@ public partial class MainMenuController : Node
 			if (node is not MainMenuScreen mainMenuScreen) continue;
 			mainMenuScreen.Position *= 0;
 			if (mainMenuScreen != currentScreen)
-				mainMenuScreen.CallDeferred(MainMenuScreen.MethodName.Move, Vector2.Right, false, true);
+				mainMenuScreen.CallDeferred(MainMenuScreen.MethodName.Move, Vector2.Right, false, false, true);
 		}
 		AddChild(inputSpammerDelay);
 		inputSpammerDelay.Timeout += OnSpammerDelayTimeout;
 	}
 
 
-	public override void _Input(InputEvent @event)
+	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (@event is InputEventMouse || @event is InputEventJoypadMotion) return;
 
+		if (currentScreen is MainThemeScreen mainThemeScreen && !@event.IsReleased())
+		{
+			mainThemeScreen.OnInteract();
+			return;
+		}
+
 		Vector2 newInputVec = inputVec;
-		GD.Print(@event.AsText());
 		foreach(string inputName in dirInputsController)
 		{
 			if (Input.IsActionJustPressed(inputName) || Input.IsActionJustReleased(inputName))
@@ -59,19 +64,28 @@ public partial class MainMenuController : Node
 				break;
 			}
 		}
+		
 		UpdateInputVec(newInputVec);
 
 		if (Input.IsActionJustPressed("MenuInteract") || Input.IsActionJustPressed("MenuInteractKeyboard")){
-			currentScreen.OnInteract();
+			if(currentScreen.OnInteract())
+				GetViewport().SetInputAsHandled();
+			return;
 		}
 		if (Input.IsActionJustPressed("MenuAltInteract") || Input.IsActionJustPressed("MenuAltInteractKeyboard")){
-			currentScreen.OnAltInteract();
+			if(currentScreen.OnAltInteract())
+				GetViewport().SetInputAsHandled();
+			return;
 		}
 		if (Input.IsActionJustPressed("MenuAccept") || Input.IsActionJustPressed("MenuAcceptKeyboard")){
-			currentScreen.OnAccept();
+			if(currentScreen.OnAccept())
+				GetViewport().SetInputAsHandled();
+			return;
 		}
 		if (Input.IsActionJustPressed("MenuBack") || Input.IsActionJustPressed("MenuBackKeyboard")){
-			currentScreen.OnNegativeAction();
+			if(currentScreen.OnNegativeAction())
+				GetViewport().SetInputAsHandled();
+			return;
 		}
 	}
 

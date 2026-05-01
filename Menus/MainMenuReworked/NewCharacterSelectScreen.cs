@@ -15,6 +15,7 @@ public partial class NewCharacterSelectScreen : MainMenuScreen
     public override void _Ready()
     {
         base._Ready();
+        
         foreach(PlayerCapsule playerCapsule in GetPlayerCapsules())
         {
             playerCapsule.Disabled += OnCapsuleDisabled;
@@ -24,8 +25,8 @@ public partial class NewCharacterSelectScreen : MainMenuScreen
         }
     }
 
-    public override void _Input(InputEvent @event)
-    {
+    public override void _UnhandledInput(InputEvent @event)
+    {        
         if (@event.IsReleased() || @event is InputEventMouse || GetMenuController().currentScreen != this) return;
 
         int inputIdx = @event.Device;
@@ -33,19 +34,25 @@ public partial class NewCharacterSelectScreen : MainMenuScreen
             inputIdx = -1;
 
         if (inputIdxs.Contains(inputIdx)){
-            GD.PrintErr($"Input index already registered! ({inputIdx})");
             return;
         }
+
+        if (Input.IsActionJustPressed("MenuBack") || Input.IsActionJustPressed("MenuBackKeyboard")){
+            Back();
+            return;
+        }
+
         if (!inputIdxs.Contains(-2))
         {
             GD.PrintErr("Max player count reached!");
             return;
         }
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < inputIdxs.Length; i++)
         {
             if (inputIdxs[i] == -2){
                 inputIdxs[i] = inputIdx;
+                break;
             }
         }
 
@@ -54,10 +61,11 @@ public partial class NewCharacterSelectScreen : MainMenuScreen
     PlayerCapsule GetFirstDisabledCapsule()
     {
         PlayerCapsule capsule = null;
-        foreach (MenuItem menuItem in menuOptions)
+        foreach (MenuItem menuItem in GetOptions())
         {
             if (menuItem is not PlayerCapsule playerCapsule || playerCapsule.isEnabled) continue;
             capsule = playerCapsule;
+            break;
         }
         if (capsule == null)
         {
@@ -68,7 +76,7 @@ public partial class NewCharacterSelectScreen : MainMenuScreen
 	PlayerCapsule[] GetPlayerCapsules()
     {
         PlayerCapsule[] capsules = [];
-        foreach (MenuItem menuItem in menuOptions)
+        foreach (MenuItem menuItem in GetOptions())
         {
             if (menuItem is not PlayerCapsule playerCapsule) continue;
             capsules = capsules.Append(playerCapsule).ToArray();
@@ -78,28 +86,56 @@ public partial class NewCharacterSelectScreen : MainMenuScreen
     PlayerCapsule[] GetEnabledPlayerCapsules()
     {
         PlayerCapsule[] capsules = [];
-        foreach (MenuItem menuItem in menuOptions)
+        foreach (MenuItem menuItem in GetOptions())
         {
             if (menuItem is not PlayerCapsule playerCapsule || !playerCapsule.isEnabled) continue;
-            capsules = (PlayerCapsule[])capsules.Append(playerCapsule);
+            capsules = capsules.Append(playerCapsule).ToArray();
         }
         return capsules;
     }
-    void OnCapsuleDisabled(PlayerCapsule playerCapsule){
+    void OnCapsuleDisabled(PlayerCapsule capsule){
+        GD.Print(capsule.Name ," was disabled!!");
         for(int i = 0; i < inputIdxs.Length; i++){
-            if (inputIdxs[i] == playerCapsule.menuInput.inputIdx){
+            if (inputIdxs[i] == capsule.GetInputIdx()){
                 inputIdxs[i] = -2;
+                capsule.MoveToFront();
                 return;
             }
         }
     }
     void OnCapsuleReady(PlayerCapsule playerCapsule){
         colorUnavaliability[playerCapsule.colorIdx] = true;
+        foreach(PlayerCapsule capsule in GetPlayerCapsules())
+        {
+            if (capsule.isEnabled && !capsule.isReady && capsule.colorIdx == playerCapsule.colorIdx)
+            {
+                capsule.SetColor(capsule.colorIdx+1);
+            }
+        }
     }
     void OnCapsuleUnReady(PlayerCapsule playerCapsule){
         colorUnavaliability[playerCapsule.colorIdx] = false;
     }
     public bool IsColorAvaliable(int colorIdx){
         return !colorUnavaliability[colorIdx];
+    }
+
+    public override bool OnNegativeAction()
+    {
+        return false;
+    }
+    public override void OnMoveAction(Vector2 dir)
+    {
+        return;
+    }
+
+    public override void Back()
+    {
+        foreach(PlayerCapsule capsule in GetEnabledPlayerCapsules())
+            capsule.Disable();
+
+        ChangeScreen(
+            GetParent().GetNode<MainMenuScreen>("GamemodeSelectScreen"),
+            Vector2.Right, Vector2.Left, true);
     }
 }

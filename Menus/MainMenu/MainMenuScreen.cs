@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +17,7 @@ public partial class MainMenuScreen : Control
     public override void _Ready()
     {
 		if (!usesSelectorPanel) return;
-		menuOptions = GetNode<MainMenuScreenOptions>("MenuItemsContainer").GetMenuItems();
+		menuOptions = GetNode<MenuItemsListContainer>("MenuItemsContainer").GetMenuItems();
 		if (menuOptions.Length > 0)
 			currentInteractible = menuOptions[0];
 		mainMenuController = GetNode<MainMenuController>("%MainMenuController");
@@ -25,19 +26,25 @@ public partial class MainMenuScreen : Control
 
 	public virtual bool OnInteract()
 	{
-		return currentInteractible.OnInteract();
+		if (currentInteractible != null)
+			return currentInteractible.OnInteract();
+		else return false;
 	}
 
 	public virtual bool OnAltInteract()
 	{
-		return currentInteractible.OnAltInteractAction();
+		if (currentInteractible != null)
+			return currentInteractible.OnAltInteract();
+		else return false;
 	}
 
 	public virtual bool OnAccept()
 	{
-		return currentInteractible.OnAccept();
+		if (currentInteractible != null)
+			return currentInteractible.OnAccept();
+		else return false;
 	}
-	
+		
 	public virtual bool OnNegativeAction()
 	{
 		if (currentInteractible == null)
@@ -53,7 +60,7 @@ public partial class MainMenuScreen : Control
 
 	public virtual void OnMoveAction(Vector2 dir)
 	{
-		if (currentInteractible.OnMoveAction(dir)) return;
+		if (currentInteractible != null && currentInteractible.OnMoveAction(dir)) return;
 		
 		if (usesSelectorPanel)
 		{
@@ -80,10 +87,10 @@ public partial class MainMenuScreen : Control
 
 	protected void MenuError(string errorMessage)
 	{
-		GD.PrintErr("Menu Error at ", GetParent().Name, ": ", errorMessage);
+		GD.PrintErr("Menu Error at ", Name, ": ", errorMessage);
 	}
 
-	public virtual async void Move(Vector2 dir, bool reverse = false, bool skipAnimation = false)
+	public virtual async void Move(Vector2 dir, bool reverse = false, bool isReverseOrder = false, bool skipAnimation = false)
 	{	
 		if (!reverse)
 			EmitSignal(SignalName.Entered);
@@ -113,7 +120,7 @@ public partial class MainMenuScreen : Control
 			for(int i = 0; i < NodesCount; i++)
 			{
 				MenuItem node;
-				if (dir.Y > 0 && !reverse || dir.Y < 0 && reverse) node = Nodes[i];
+				if ((dir.Y > 0 && !reverse || dir.Y < 0 && reverse) == !isReverseOrder) node = Nodes[i];
 				else  node = Nodes[NodesCount - 1 - i];
 				float tempTweenedValue = Mathf.Clamp((tweenedValue * 1.5f) - ((1-((i + 1)/((float)NodesCount)))*0.5f), 0 ,1);
 				tempTweenedValue = (Mathf.Sin((tempTweenedValue-.5f) * 2 * (Mathf.Pi/2)) + 1)/2;
@@ -121,6 +128,14 @@ public partial class MainMenuScreen : Control
 				node.Position = node.originalPosition + (dir * tempTweenedValue * ScreenSize);
 			}
 		}), 0f, 1f, animationTime);
+	}
+
+	protected void ChangeScreen(MainMenuScreen screenTo, Vector2 mainDir, Vector2 screenToDir, bool mainIsReverseOrder = false, bool screenToIsReverseOrder = false)
+	{
+		Move(mainDir, false, mainIsReverseOrder);
+		MainMenuScreen mainMenuScreen = screenTo;
+		mainMenuScreen.Move(screenToDir, true, screenToIsReverseOrder);
+		GetNode<MainMenuController>("%MainMenuController").currentScreen = mainMenuScreen;
 	}
 
 	List<MenuItem> GetScreenNodes()
@@ -135,7 +150,7 @@ public partial class MainMenuScreen : Control
 		{
 			if (child is MenuItem menuItem)
 				newMenuItems.Add(menuItem);
-			else if (child is MainMenuScreenOptions screenOptions){
+			else if (child is MenuItemsListContainer screenOptions){
 				foreach (MenuItem nestedMenuItem in screenOptions.GetMenuItems())
 					newMenuItems.Add(nestedMenuItem);
 			}	
@@ -153,4 +168,10 @@ public partial class MainMenuScreen : Control
 
 		return mainMenuController;
 	}
+
+	protected MenuItem[] GetOptions()
+    {
+        menuOptions = GetNode<MenuItemsListContainer>("MenuItemsContainer").GetMenuItems();
+		return menuOptions;
+    }
 }

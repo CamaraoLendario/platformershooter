@@ -23,16 +23,12 @@ public partial class MainThemeScreen : MainMenuScreen
 
 	public override bool OnInteract()
     {
-		Move(Vector2.Down);
-		ScaleBanner();
-		MainMenuMainScreen mainMenuMain = GetParent().GetNode<MainMenuMainScreen>("MainMenuMainScreen");
-		mainMenuMain.Move(Vector2.Down, true);
-		GetNode<MainMenuController>("%MainMenuController").currentScreen = mainMenuMain;
-
+		ChangeScreen(
+            GetParent().GetNode<MainMenuMainScreen>("MainMenuMainScreen"),
+            Vector2.Down, Vector2.Down);
 		return true;
     }
-
-    public override void Move(Vector2 dir, bool reverse = false, bool skipAnimation = false)
+    public override void Move(Vector2 dir, bool reverse = false, bool reverseOrder = false, bool skipAnimation = false)
     {
 		ScaleBanner(!reverse);
 

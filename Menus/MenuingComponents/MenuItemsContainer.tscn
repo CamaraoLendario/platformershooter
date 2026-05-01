@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bphnjcidgshy0"]
 
-[ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MainMenuScreenOptions.cs" id="1_m32o5"]
+[ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MenuItemsListContainer.cs" id="1_m32o5"]
 
 [node name="MenuItemsContainer" type="Control" unique_id=896509972]
 layout_mode = 3

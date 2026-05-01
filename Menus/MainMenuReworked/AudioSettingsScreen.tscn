@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ha4tbfel1wyp" path="res://Menus/MenuingComponents/MainMenuScreen.tscn" id="1_w8ymq"]
 [ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuingComponents/MenuItem.cs" id="2_tmxlg"]
 [ext_resource type="Script" uid="uid://b27p12vnimu0l" path="res://Menus/MainMenuReworked/AudioSettingsScreen.cs" id="2_u7x5x"]
-[ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MainMenuScreenOptions.cs" id="3_u7x5x"]
+[ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MenuItemsListContainer.cs" id="3_u7x5x"]
 [ext_resource type="PackedScene" uid="uid://blrhm4bqw0us1" path="res://Menus/MenuingComponents/HorizontalTextAndSlider.tscn" id="4_re14l"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nvmy7"]

@@ -7,6 +7,19 @@ namespace SpaceMages
 {
 	public partial class SpaceMagesVars : Node
 	{
+		enum dirKeyMenu
+		{
+			UpKeyMen,
+			DownKeyMen,
+			RightKeyMen,
+			LeftKeyMen,
+		}
+		string[] directionalInputsKeyboardMenu = [
+			"MenuUpKeyboard",
+			"MenuDownKeyboard",
+			"MenuRightKeyboard",
+			"MenuLeftKeyboard",
+		];
 		public static Dictionary<string, Vector3> teamColorsDict
 		 = new Dictionary<string, Vector3>()
 		 {
@@ -33,7 +46,41 @@ namespace SpaceMages
 			Vector2.Left,
 			Vector2.Up,
 		];
-
+		public static bool StringEndsWithInt(string str)
+		{
+			if (str == "") return false;
+			
+			try
+			{
+				int Number = str[^1].ToString().ToInt();
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+		public static (string main, string inputIdx) GetStringAndInt(string givenAction)
+		{
+			if (givenAction == "")
+			{
+				GD.PrintErr("givenAction is empty!");
+				return (givenAction, "");
+			}
+			(string main, string inputIdx) segments = (givenAction, "");
+			if (StringEndsWithInt(givenAction))
+			{
+				string intlessString = givenAction;
+				while(StringEndsWithInt(intlessString) || intlessString[^1] == "-"[0]){
+					if (segments.inputIdx.Length > 0)
+						segments.inputIdx = segments.inputIdx.Insert(0, intlessString[^1].ToString());
+					else segments.inputIdx += intlessString[^1].ToString();
+					intlessString = intlessString.Remove(NormalizeIdx(-1, intlessString.Length));
+				}
+				segments.main = intlessString;
+			}
+			return segments;
+		}
 		public static int NormalizeIdx(int idx, int collectionSize)
 		{
 			if (collectionSize == 0)
