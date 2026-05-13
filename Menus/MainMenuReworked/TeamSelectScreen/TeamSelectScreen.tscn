@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://dxarxssua6mlj"]
+
+[ext_resource type="PackedScene" uid="uid://ha4tbfel1wyp" path="res://Menus/MenuingComponents/MainMenuScreen.tscn" id="1_2cci3"]
+[ext_resource type="Script" uid="uid://i1rbiisn08tx" path="res://Menus/MainMenuReworked/TeamSelectScreen/TeamSelectScreen.cs" id="2_sewge"]
+[ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MenuItemsListContainer.cs" id="2_twfpd"]
+[ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuingComponents/MenuItem.cs" id="3_88bbw"]
+
+[node name="TeamSelectScreen" unique_id=1595907082 node_paths=PackedStringArray("playersContainer") instance=ExtResource("1_2cci3")]
+script = ExtResource("2_sewge")
+playersContainer = NodePath("Players")
+usesSelectorPanel = false
+
+[node name="TeamsRects" type="Control" parent="." index="0" unique_id=1808354739]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_twfpd")
+Separation = 700
+horizontal = true
+
+[node name="ColorRect" type="ColorRect" parent="TeamsRects" index="0" unique_id=1001453481]
+layout_mode = 0
+offset_left = -650.0
+offset_top = -459.0
+offset_right = -350.0
+offset_bottom = 459.0
+color = Color(1, 0, 0, 0.49803922)
+script = ExtResource("3_88bbw")
+
+[node name="ColorRect2" type="ColorRect" parent="TeamsRects" index="1" unique_id=1295600925]
+layout_mode = 0
+offset_left = 350.0
+offset_top = -459.0
+offset_right = 650.0
+offset_bottom = 459.0
+color = Color(0, 0, 1, 0.49803922)
+script = ExtResource("3_88bbw")
+
+[node name="Players" type="Control" parent="." index="1" unique_id=436942173]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_twfpd")
+Separation = 10
+childrenAreScreenAnimated = false

@@ -20,7 +20,7 @@ public partial class BeamsOfDeath : Node2D
         beams.Add((beamLeft, beamLeft.Position));
 		beams.Add((beamRight, beamRight.Position));
 
-		currentMap = GetParent<Map>();
+		currentMap = Game.Instance.currentMap;
 		AddChild(SuddenDeathTimer);
 		SuddenDeathTimer.OneShot = true; 
 		SuddenDeathTimer.Timeout += () =>

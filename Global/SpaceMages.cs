@@ -7,31 +7,23 @@ namespace SpaceMages
 {
 	public partial class SpaceMagesVars : Node
 	{
-		enum dirKeyMenu
-		{
+		enum dirKeyMenu{
 			UpKeyMen,
 			DownKeyMen,
 			RightKeyMen,
 			LeftKeyMen,
 		}
-		string[] directionalInputsKeyboardMenu = [
-			"MenuUpKeyboard",
-			"MenuDownKeyboard",
-			"MenuRightKeyboard",
-			"MenuLeftKeyboard",
-		];
-		public static Dictionary<string, Vector3> teamColorsDict
-		 = new Dictionary<string, Vector3>()
-		 {
-			 ["Red"] = new Vector3(0.9f, 0.0f, 0.0f),
-			 ["Purple"] = new Vector3(0.8f, 0.0f, 0.8f),
-			 ["Blue"] = new Vector3(0.2f, 0.2f, 0.9f),
-			 ["Green"] = new Vector3(0.0f, 0.8f, 0.0f),
-			 ["Yellow"] = new Vector3(0.8f, 0.8f, 0.0f),
-			 ["Orange"] = new Vector3(0.9f, 0.5f, 0.0f),
-		 };
-		public static Vector3[] teamColors =
-		{	
+		public static string[] menuDirs = [
+			"MenuLeft", "MenuRight", "MenuUp", "MenuDown"];
+		public static Dictionary<string, Vector3> teamColorsDict = new Dictionary<string, Vector3>(){
+			["Red"] = new Vector3(0.9f, 0.0f, 0.0f),
+			["Purple"] = new Vector3(0.8f, 0.0f, 0.8f),
+			["Blue"] = new Vector3(0.2f, 0.2f, 0.9f),
+			["Green"] = new Vector3(0.0f, 0.8f, 0.0f),
+			["Yellow"] = new Vector3(0.8f, 0.8f, 0.0f),
+			["Orange"] = new Vector3(0.9f, 0.5f, 0.0f),
+		};
+		public static Vector3[] teamColors = {	
 			teamColorsDict["Red"],
 			teamColorsDict["Purple"],
 			teamColorsDict["Blue"],
@@ -98,6 +90,14 @@ namespace SpaceMages
 				return idx % collectionSize;
 			}
 			return idx;
+		}
+
+		public static Vector2 GetScreenRez()
+		{
+			return new Vector2(
+			(float) ProjectSettings.GetSetting("display/window/size/viewport_width"),
+			(float) ProjectSettings.GetSetting("display/window/size/viewport_height")
+			);
 		}
 	}
 }

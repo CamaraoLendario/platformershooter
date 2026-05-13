@@ -27,6 +27,7 @@ public partial class Map : Node2D
     {
         SignalBus.Instance.NewRoundStarted += OnNewRoundStarted;
         currentTileMapLayerNode = GetNode<InteractableTiles>("InteractableTiles");
+        //Do Gamemode logic 
         //ReplicateCollisions();
     }
     

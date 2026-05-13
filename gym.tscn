@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://415raywue47"]
+
+[ext_resource type="PackedScene" uid="uid://ilj6u5qbe2db" path="res://DEBUGTEST/DebugPlayer.tscn" id="1_gk1jr"]
+[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="2_rgj0q"]
+[ext_resource type="PackedScene" uid="uid://cck3f1axqqkvm" path="res://Maps/PlayableMaps/BaseMap.tscn" id="3_n5wjn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_alsom"]
+resource_local_to_scene = true
+shader = ExtResource("2_rgj0q")
+shader_parameter/Color = Color(0.9019608, 0, 0, 1)
+shader_parameter/outlineThickness = 1
+
+[node name="Node2D" type="Node2D" unique_id=1607516632]
+
+[node name="DebugPlayer" parent="." unique_id=2096548899 instance=ExtResource("1_gk1jr")]
+material = SubResource("ShaderMaterial_alsom")
+
+[node name="TestMap" parent="." unique_id=1273173820 instance=ExtResource("3_n5wjn")]

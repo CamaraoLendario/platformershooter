@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cw1x6mgwv0ove"]
 
 [ext_resource type="Script" uid="uid://lpaqgojg6byq" path="res://Tomes/Poison/PoisonMine.cs" id="1_2pjne"]
-[ext_resource type="PackedScene" uid="uid://c6gpkqe1yquou" path="res://Tomes/explosion_component.tscn" id="2_5i22y"]
+[ext_resource type="PackedScene" uid="uid://c6gpkqe1yquou" path="res://Tomes/TomesComponents/explosion_component.tscn" id="2_5i22y"]
 [ext_resource type="Texture2D" uid="uid://jxttkygiuo0l" path="res://Tomes/TomeAssets/Poison/PoisonMine.png" id="2_jtwu7"]
 [ext_resource type="AudioStream" uid="uid://befsxwhbucufv" path="res://Tomes/Fire/Audio/fireExplosion.wav" id="3_loy0m"]
 [ext_resource type="Texture2D" uid="uid://cw0mcwp3fsiht" path="res://Assets/Particles/explosion particle.png" id="5_wdsbh"]

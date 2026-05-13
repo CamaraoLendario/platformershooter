@@ -16,7 +16,7 @@ public partial class MenuSelectorHelper : Control
 
 		if (openSettingsNode == null || closedSettingsNode == null)
 		{
-			GD.Print(this.Owner.Name, ": open and closed settings not found");
+			//GD.Print(this.Owner.Name, ": open and closed settings not found");
 			openSettings = (Position, Size);
 			closedSettings = openSettings;
 			return;

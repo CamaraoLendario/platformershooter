@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://gclokew2nun0"]
+
+[ext_resource type="Script" uid="uid://b46kjk7tqqjcc" path="res://Menus/MainMenuReworked/MainMenu.cs" id="1_kiq52"]
+[ext_resource type="PackedScene" uid="uid://cpwa1v1e2byqe" path="res://Menus/MainMenuReworked/Audio Settings Screen/AudioSettingsScreen.tscn" id="2_cvum7"]
+[ext_resource type="PackedScene" uid="uid://xv8st3liernv" path="res://Menus/MainMenuReworked/Gamemode Select Screen/GamemodeSelectScreen.tscn" id="3_5jasj"]
+[ext_resource type="PackedScene" uid="uid://cgrxul4hhxyue" path="res://Menus/MainMenuReworked/Main Card Screen/MainMenuMainScreen.tscn" id="4_5fm1k"]
+[ext_resource type="PackedScene" uid="uid://benx6bkh23wpm" path="res://Menus/MainMenuReworked/Settings Screen/SettingsScreen.tscn" id="5_pw0gi"]
+[ext_resource type="PackedScene" uid="uid://gpgxkiqkcekm" path="res://Menus/MainMenuReworked/Video Settings Screen/VideoSettingsScreen.tscn" id="6_jnqve"]
+[ext_resource type="PackedScene" uid="uid://cv7ev1h883cal" path="res://Menus/MainMenuReworked/Character Select Screen/CharacterSelectScreen.tscn" id="7_oylgq"]
+[ext_resource type="PackedScene" uid="uid://dxarxssua6mlj" path="res://Menus/MainMenuReworked/TeamSelectScreen/TeamSelectScreen.tscn" id="8_1tdrq"]
+[ext_resource type="Script" uid="uid://cbtcwbxma8c3v" path="res://Menus/MenuingComponents/MainMenuController.cs" id="9_n4hhb"]
+
+[node name="MainMenu" type="CanvasLayer" unique_id=1509971223]
+script = ExtResource("1_kiq52")
+
+[node name="AudioSettingsScreen" parent="." unique_id=1595907082 instance=ExtResource("2_cvum7")]
+offset_left = -1920.0
+offset_top = 2160.0
+offset_right = -1920.0
+offset_bottom = 2160.0
+
+[node name="GamemodeSelectScreen" parent="." unique_id=979982142 instance=ExtResource("3_5jasj")]
+offset_left = 1921.0
+offset_top = 1.0
+offset_right = 1921.0
+offset_bottom = 1.0
+
+[node name="MainMenuMainScreen" parent="." unique_id=335065166 instance=ExtResource("4_5fm1k")]
+offset_left = 1.0
+offset_right = 1.0
+
+[node name="SettingsScreen" parent="." unique_id=1574523183 instance=ExtResource("5_pw0gi")]
+offset_left = -1920.0
+offset_right = -1920.0
+
+[node name="VideoSettingsScreen" parent="." unique_id=1438917172 instance=ExtResource("6_jnqve")]
+offset_left = -1920.0
+offset_top = 1080.0
+offset_right = -1920.0
+offset_bottom = 1080.0
+
+[node name="NewCharacterSelectScreen" parent="." unique_id=354511115 instance=ExtResource("7_oylgq")]
+offset_left = 3840.0
+offset_right = 3840.0
+usesSelectorPanel = false
+
+[node name="TeamSelectScreen" parent="." unique_id=1625672190 instance=ExtResource("8_1tdrq")]
+offset_left = 5760.0
+offset_right = 5760.0
+
+[node name="MainMenuController" type="Node" parent="." unique_id=1055294723 node_paths=PackedStringArray("currentScreen")]
+unique_name_in_owner = true
+script = ExtResource("9_n4hhb")
+currentScreen = NodePath("../MainMenuMainScreen")

@@ -11,10 +11,10 @@ public partial class MenuItemsGridContainer : MenuItemsContainer
 	[Export] int columnLength = 4;
 	[Export] bool usesColumn = false;
 
-    public override void _Ready()
+    /* public override void _Ready()
 	{
 		CallDeferred(MethodName.ReorganizeItems);
-	}
+	} */
 
 	protected override void ReorganizeItems()
 	{

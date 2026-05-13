@@ -18,4 +18,9 @@ public partial class SignalBus : Node
 	{
 		Instance ??= this;
 	}
+	static public Variant Emit(string signal)
+	{
+		SignalBus.Instance.EmitSignal(signal);
+		return 1;
+	}
 }

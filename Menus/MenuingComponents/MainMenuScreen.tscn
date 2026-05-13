@@ -1,11 +1,6 @@
 [gd_scene format=3 uid="uid://ha4tbfel1wyp"]
 
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_7p3y8"]
-[ext_resource type="Script" uid="uid://dt6oqn354ef0g" path="res://Menus/MainMenu/MainMenuScreen.cs" id="1_wbtf0"]
-
-[sub_resource type="Curve" id="Curve_7p3y8"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
 
 [node name="MainMenuScreen" type="Control" unique_id=1595907082]
 layout_mode = 3
@@ -15,5 +10,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_7p3y8")
-script = ExtResource("1_wbtf0")
-curve = SubResource("Curve_7p3y8")

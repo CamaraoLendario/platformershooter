@@ -1,0 +1,147 @@
+[gd_scene format=3 uid="uid://cgrxul4hhxyue"]
+
+[ext_resource type="PackedScene" uid="uid://ha4tbfel1wyp" path="res://Menus/MenuingComponents/MainMenuScreen.tscn" id="1_2kky6"]
+[ext_resource type="Script" uid="uid://cmb0restvfi4b" path="res://Menus/MainMenuReworked/Main Card Screen/MainMenuMainScreen.cs" id="2_l2hpl"]
+[ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MenuItemsListContainer.cs" id="2_vd4nu"]
+[ext_resource type="PackedScene" uid="uid://cwpfr7adf3u68" path="res://Menus/MenuingComponents/SimpleMenuItemButton.tscn" id="3_bctjq"]
+[ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="5_tatmo"]
+[ext_resource type="Texture2D" uid="uid://eu7loh1c4upq" path="res://Banner.png" id="7_lw05v"]
+[ext_resource type="Shader" uid="uid://cq53yv3sm7bqh" path="res://Menus/MainMenuReworked/flashingEffect.gdshader" id="7_opcg3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tatmo"]
+shader = ExtResource("7_opcg3")
+shader_parameter/flashPerSec = 1.0
+shader_parameter/maxAlpha = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_45qj1"]
+font_size = 64
+
+[node name="MainMenuMainScreen" unique_id=1595907082 instance=ExtResource("1_2kky6")]
+script = ExtResource("2_l2hpl")
+
+[node name="MenuItemsContainer" type="Control" parent="." index="0" unique_id=2096724121]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 214.0
+offset_bottom = 214.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_vd4nu")
+Separation = -10
+horizontal = false
+
+[node name="SimpleMenuItemButton" parent="MenuItemsContainer" index="0" unique_id=167338393 instance=ExtResource("3_bctjq")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -121.0
+offset_top = -205.0
+offset_right = 121.0
+offset_bottom = -95.0
+grow_horizontal = 1
+grow_vertical = 1
+text = "Play"
+
+[node name="SimpleMenuItemButton2" parent="MenuItemsContainer" index="1" unique_id=1273791387 instance=ExtResource("3_bctjq")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -207.0
+offset_top = -105.0
+offset_right = 207.0
+offset_bottom = 5.0
+grow_horizontal = 1
+grow_vertical = 1
+text = "Settings"
+
+[node name="SimpleMenuItemButton3" parent="MenuItemsContainer" index="2" unique_id=506595567 instance=ExtResource("3_bctjq")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -179.0
+offset_top = -5.0
+offset_right = 179.0
+offset_bottom = 105.0
+grow_horizontal = 1
+grow_vertical = 1
+text = "Credits"
+
+[node name="SimpleMenuItemButton4" parent="MenuItemsContainer" index="3" unique_id=406465780 instance=ExtResource("3_bctjq")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -111.0
+offset_top = 95.0
+offset_right = 111.0
+offset_bottom = 205.0
+grow_horizontal = 1
+grow_vertical = 1
+text = "Quit"
+
+[node name="themeCard" type="Control" parent="." index="1" unique_id=1658830702]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 960.0
+offset_right = -960.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_tatmo")
+
+[node name="banner" type="TextureRect" parent="themeCard" index="0" unique_id=250649080]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 277.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.1)
+texture = ExtResource("7_lw05v")
+stretch_mode = 5
+
+[node name="pressAnyKey" type="Label" parent="themeCard" index="1" unique_id=906646064]
+material = SubResource("ShaderMaterial_tatmo")
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -252.5
+offset_top = -245.0
+offset_right = 252.5
+offset_bottom = -159.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press any key"
+label_settings = SubResource("LabelSettings_45qj1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[editable path="MenuItemsContainer/SimpleMenuItemButton"]
+[editable path="MenuItemsContainer/SimpleMenuItemButton2"]
+[editable path="MenuItemsContainer/SimpleMenuItemButton3"]
+[editable path="MenuItemsContainer/SimpleMenuItemButton4"]

@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://fi88ocyqxvqn" path="res://Tomes/Base/LinearProjectileTemplate.tscn" id="1_y17ak"]
 [ext_resource type="Script" uid="uid://bbrco4fxfp2xx" path="res://Tomes/Fire/FireProjectile.cs" id="2_saxex"]
 [ext_resource type="Texture2D" uid="uid://dcpbsslhj7cj5" path="res://Tomes/TomeAssets/BulletsSpriteSheet.png" id="2_v674n"]
-[ext_resource type="PackedScene" uid="uid://c6gpkqe1yquou" path="res://Tomes/explosion_component.tscn" id="3_hmg7v"]
+[ext_resource type="PackedScene" uid="uid://c6gpkqe1yquou" path="res://Tomes/TomesComponents/explosion_component.tscn" id="3_hmg7v"]
 [ext_resource type="Material" uid="uid://biflh5l4gvpao" path="res://Tomes/Fire/Materials/FireProjectileTrailParticles.tres" id="5_s51s0"]
 [ext_resource type="AudioStream" uid="uid://bh5nclrms46nb" path="res://Tomes/Fire/Audio/FireBallExisting2.ogg" id="6_dw3gq"]
 [ext_resource type="Texture2D" uid="uid://cw0mcwp3fsiht" path="res://Assets/Particles/explosion particle.png" id="7_5ttp6"]

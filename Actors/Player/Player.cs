@@ -113,7 +113,7 @@ public partial class Player : CharacterBody2D
 			else
 			{
 				Show();
-				if (world.currentMap.IsPositionInPilotArea(Position))
+				if (Game.GetMap().IsPositionInPilotArea(Position))
 				{
 					GoPilot();
 				}
@@ -418,7 +418,7 @@ public partial class Player : CharacterBody2D
 			timer.Stop();
 		}
 
-		if (world.currentMap.IsPositionInPilotArea(Position))
+		if (Game.GetMap().IsPositionInPilotArea(Position))
 		{
 			GoPilot();
 		}

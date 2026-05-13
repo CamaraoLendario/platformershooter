@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cnm7il8iruiin"]
 
-[ext_resource type="PackedScene" uid="uid://gclokew2nun0" path="res://Menus/MainMenuReworked/MainMenu.tscn" id="1_4plmu"]
+[ext_resource type="PackedScene" uid="uid://gclokew2nun0" path="res://Menus/MainMenuReworked/Main Card Screen/MainMenu.tscn" id="1_4plmu"]
 [ext_resource type="Script" uid="uid://dkdd2s4lt1ic2" path="res://Global/Main.cs" id="1_xoayq"]
 
 [node name="Main" type="Node" unique_id=1873790456]
 script = ExtResource("1_xoayq")
 
-[node name="MainMenu" parent="." unique_id=1509971223 instance=ExtResource("1_4plmu")]
+[node name="MainMenu" parent="." unique_id=1509971223 groups=["MainMenu"] instance=ExtResource("1_4plmu")]

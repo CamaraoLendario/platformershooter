@@ -25,6 +25,7 @@ public partial class InputIcon : TextureRect
 
     public override void _Input(InputEvent @event)
 	{
+		if (GetStringAndInt(action).inputIdx.ToInt() < -1) return;
 		string oldAction = action;
 		bool oldIsPressed = isPressed;
 		ControllerUsed oldControllerUsed = currentControllerUsed;

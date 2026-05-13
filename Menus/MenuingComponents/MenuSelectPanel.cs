@@ -49,13 +49,18 @@ public partial class MenuSelectPanel : Panel
     }
 	public MenuItem MoveGetSelectedNode(Vector2 dir)
     {
+		return SetGetSelectedNode(currentOptionIdx + (int) dir.Y);
+    }
+	public MenuItem SetGetSelectedNode(int Pos)
+	{
 		MenuItem oldParent = options[currentOptionIdx];
-		currentOptionIdx = NormalizeIdx(currentOptionIdx + (int) dir.Y, options.Length);
+		if (Pos == currentOptionIdx) return oldParent;
+		currentOptionIdx = NormalizeIdx(Pos, options.Length);
 		MenuItem newParent = options[currentOptionIdx];
         Reparent(newParent, true);
 		AnimateSelectedButton(newParent, oldParent);
 		return newParent;
-    }
+	}
 	public MenuItem GetCurrentNode()
 	{
 		return options[currentOptionIdx];

@@ -11,31 +11,39 @@ public partial class Game : Node
 	public static Game Instance { get; private set; }
 	public Main main;
 	public MainMenu mainMenu;
-	public Map currentMap;
-	public List<Dictionary<string, int>> playerInfoList;
+	public Map currentMap = GD.Load<PackedScene>("uid://cck3f1axqqkvm").Instantiate<Map>();
+	public Dictionary<string, int>[] playersInfo = [];
 	public List<Player> players;
 	public ExperimentalFeatures experimentalFeatures;
 	public Gamemode gamemode;
-
-    public override void _Ready()
+	public enum GamemodeIdxs {
+		FreeForAll,
+		TEAMS,
+		CaptureTheFlag
+	}
+	public Gamemode[] Gamemodes
 	{
+		
+	}
+
+    public override void _Ready(){
 		Instance ??= this;
 	}
 
-	public void StartGame(List<Dictionary<string, int>> playerInfoList, Map map)
+	public void StartGame(Dictionary<string, int>[] newPlayersInfo, Map map)
 	{
-		this.playerInfoList = playerInfoList;
-		this.currentMap = map;
+		playersInfo = newPlayersInfo;
+		currentMap = map;
 		GeneratePlayerInputs();
-
-		// delete main menu
-		// spawn map
+		(GetTree().GetFirstNodeInGroup("Main") as Main).StartGame();
+		
 	}
 	
 	public void AddPlayer(Player player)
 	{
 		players.Add(player);
 	}
+
 	public void BackToMapSelector()
 	{
 		
@@ -50,7 +58,7 @@ public partial class Game : Node
 	{
 		List<int> inputIdxs = [];
 
-		foreach (Dictionary<string, int> player in playerInfoList)
+		foreach (Dictionary<string, int> player in playersInfo)
 		{
 			inputIdxs.Add(player["inputIdx"]);
 		}
@@ -83,7 +91,7 @@ public partial class Game : Node
 		{
 			if (player.inputIdx == inputIdx) return player;
 		}
-		GD.PrintErr($"no player was fount with the requested inputIdx ({inputIdx}). returning null");
+		GD.PrintErr($"No player was found with the requested inputIdx ({inputIdx}). returning null");
 		return null;
 	}
 
@@ -96,5 +104,14 @@ public partial class Game : Node
 				aliveCount ++;
 		}
 		return aliveCount;
+	}
+	public static Map GetMap()
+	{
+		return Game.Instance.currentMap;
+	}
+
+	Gamemode GetGamemode(GamemodeIdxs gamemodeIdx)
+	{
+		
 	}
 }

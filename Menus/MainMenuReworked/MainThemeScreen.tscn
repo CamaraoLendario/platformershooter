@@ -1,16 +1,13 @@
 [gd_scene format=3 uid="uid://drht5q5hsotk8"]
 
 [ext_resource type="PackedScene" uid="uid://ha4tbfel1wyp" path="res://Menus/MenuingComponents/MainMenuScreen.tscn" id="1_7lcra"]
-[ext_resource type="Script" uid="uid://dnvgf7tskte75" path="res://Menus/MainMenuReworked/MainThemeScreen.cs" id="2_6tc60"]
 [ext_resource type="Texture2D" uid="uid://eu7loh1c4upq" path="res://Banner.png" id="2_45qj1"]
 [ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuingComponents/MenuItem.cs" id="2_k1yqp"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_45qj1"]
 font_size = 64
 
-[node name="MainThemeScreen" unique_id=1595907082 node_paths=PackedStringArray("banner") instance=ExtResource("1_7lcra")]
-script = ExtResource("2_6tc60")
-banner = NodePath("TextureRect")
+[node name="MainThemeScreen" unique_id=1595907082 instance=ExtResource("1_7lcra")]
 
 [node name="TextureRect" type="TextureRect" parent="." index="0" unique_id=250649080]
 layout_mode = 1

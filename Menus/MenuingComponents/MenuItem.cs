@@ -24,11 +24,6 @@ public partial class MenuItem : Control
 	
 	void OnChildEnteredTree(Node node)
 	{
-		GD.Print(Owner.Name);
-		GD.Print("child entered");
-		GD.Print("is select panel", node is not MenuSelectPanel);
-		GD.Print("has panel", panelHelper.HasPanel());
-
 		if (node is not MenuSelectPanel selectPanel) return;
 		if (selectPanel.oldParent == this || selectPanel.oldParent == panelHelper) return;
 

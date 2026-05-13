@@ -44,7 +44,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jkixf"]
 resource_local_to_scene = true
 shader = ExtResource("1_gh11b")
-shader_parameter/PoisonBuildup = 0.0
 shader_parameter/Color = Color(0.9019608, 0, 0, 1)
 shader_parameter/outlineThickness = 1
 
@@ -873,6 +872,7 @@ z_index = 1
 use_parent_material = true
 sprite_frames = ExtResource("6_alwmy")
 animation = &"Running"
+frame_progress = 0.37927574
 script = ExtResource("7_tko72")
 controller = NodePath("../Pilot Controller")
 Main = NodePath("..")
@@ -989,6 +989,7 @@ shape = SubResource("CircleShape2D_o4arb")
 disabled = true
 
 [node name="ShipSprite" type="AnimatedSprite2D" parent="." unique_id=675688146 node_paths=PackedStringArray("controller", "Main")]
+visible = false
 z_index = 1
 use_parent_material = true
 sprite_frames = ExtResource("8_2i0nn")

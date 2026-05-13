@@ -64,7 +64,7 @@ public partial class RoundStartAnnouncer : Control
 		if (!isRoundStart) return;
 		foreach (Player player in Game.Instance.players)
 		{
-			Camera2D camera = world.currentMap.camera;
+			Camera2D camera = Game.GetMap().camera;
 			Vector3 playerColor = teamColors[player.colorIdx];
 			Vector2 endPos = player.Position + new Vector2(960.0f, 540.0f) - camera.Position;
 			Vector2 startPos = new Vector2(960.0f, 540.0f);

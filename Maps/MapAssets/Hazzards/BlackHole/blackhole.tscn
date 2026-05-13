@@ -36,6 +36,7 @@ baseGravityForce = 5000.0
 pullArea = NodePath("PullArea")
 
 [node name="PullArea" type="Area2D" parent="." unique_id=61996743]
+visible = false
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PullArea" unique_id=808402503]

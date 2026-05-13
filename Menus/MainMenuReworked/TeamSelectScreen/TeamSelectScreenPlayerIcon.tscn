@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://bm3c06itcq1v7"]
+
+[ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_468ue"]
+[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Sprites/PilotStill.png" id="1_c11dk"]
+[ext_resource type="Script" uid="uid://bd35ubqs1hnm4" path="res://Menus/MainMenuReworked/TeamSelectScreen/TeamSelectScreenPlayerIcon.cs" id="1_vp7pl"]
+[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="2_468ue"]
+[ext_resource type="Script" uid="uid://dmwbtwi6t4nnp" path="res://Menus/MainMenuReworked/Character Select Screen/PlayerMenuInput.cs" id="5_c35dp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c11dk"]
+resource_local_to_scene = true
+bg_color = Color(0, 0, 0, 0.28235295)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0, 0.05490196, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_xjqhb"]
+font_size = 24
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c35dp"]
+resource_local_to_scene = true
+shader = ExtResource("2_468ue")
+shader_parameter/Color = Color(0.8, 0, 0, 1)
+shader_parameter/outlineThickness = 1
+
+[node name="TeamSelectScreenPlayerIcon" type="Control" unique_id=503132883 node_paths=PackedStringArray("pilotStill", "nameLabel", "inputNode")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 165.0
+offset_bottom = 130.0
+theme = ExtResource("1_468ue")
+script = ExtResource("1_vp7pl")
+panelStyleBox = SubResource("StyleBoxFlat_c11dk")
+pilotStill = NodePath("TextureRect")
+nameLabel = NodePath("Panel/Name")
+inputNode = NodePath("PlayerIconInput")
+
+[node name="Panel" type="Panel" parent="." unique_id=348978326]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.5
+offset_top = -65.0
+offset_right = 82.5
+offset_bottom = 65.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_c11dk")
+
+[node name="Name" type="Label" parent="Panel" unique_id=1472389634]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.0
+offset_top = -54.0
+offset_right = 34.0
+offset_bottom = -31.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Nameless"
+label_settings = SubResource("LabelSettings_xjqhb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1509045138]
+material = SubResource("ShaderMaterial_c35dp")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.5
+offset_top = -24.0
+offset_right = 40.5
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_c11dk")
+
+[node name="PlayerIconInput" type="Node" parent="." unique_id=635628753]
+script = ExtResource("5_c35dp")

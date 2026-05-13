@@ -11,27 +11,15 @@ public partial class SpawnPoints : Node
 
 	public override void _Ready()
 	{
-		ScrambleSpawnPoints();
-		SpawnPlayers();
+		SignalBus.Instance.GameStarted += OnGameStarted;
 		SignalBus.Instance.NewRoundStarted += OnNewRoundStarted;
 	}
-	void SpawnPlayers()
-	{
-		foreach (Dictionary<string, int> playerInfo in Game.Instance.playerInfoList)
-		{
-			Player newPlayer = Player.playerScene.Instantiate<Player>();
-			newPlayer.Name = playerInfo.Keys.First();
-			newPlayer.NameLabel.Text = newPlayer.Name;
-			newPlayer.inputIdx = playerInfo["inputIdx"];
-			if (newPlayer.inputIdx == -1) newPlayer.isKeyboardControlled = true;
-			newPlayer.SetColor(playerInfo["colorIdx"]);
-			newPlayer.Position = spawnPoints[newPlayer.colorIdx].Position;
-
-			Game.Instance.AddPlayer(newPlayer);
-			newPlayer.CallDeferred("Reset");
-		}
-		SignalBus.Instance.EmitSignal(SignalBus.SignalName.FinishedSpawningPlayers);
-	}
+	
+    private void OnGameStarted()
+    {
+		ScrambleSpawnPoints();
+		SpawnPlayers();
+    }
 	void OnNewRoundStarted()
 	{
 		ScrambleSpawnPoints();
@@ -56,6 +44,24 @@ public partial class SpawnPoints : Node
 			spawnPoints.RemoveAt(randIdx);
 			spawnPoints.Add(heldNode);
 		}
+	}
+
+    void SpawnPlayers()
+	{
+		foreach (Dictionary<string, int> playerInfo in Game.Instance.playersInfo)
+		{
+			Player newPlayer = Player.playerScene.Instantiate<Player>();
+			newPlayer.Name = playerInfo.Keys.First();
+			newPlayer.NameLabel.Text = newPlayer.Name;
+			newPlayer.inputIdx = playerInfo["inputIdx"];
+			if (newPlayer.inputIdx == -1) newPlayer.isKeyboardControlled = true;
+			newPlayer.SetColor(playerInfo["colorIdx"]);
+			newPlayer.Position = spawnPoints[newPlayer.colorIdx].Position;
+
+			Game.Instance.AddPlayer(newPlayer);
+			newPlayer.CallDeferred("Reset");
+		}
+		SignalBus.Instance.EmitSignal(SignalBus.SignalName.FinishedSpawningPlayers);
 	}
 
 	public override void _ExitTree()
