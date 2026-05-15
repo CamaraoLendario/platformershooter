@@ -73,16 +73,11 @@ _data = {
 [node name="IndividualScoreCounter" type="Control" unique_id=781488971 node_paths=PackedStringArray("name", "scoreCount", "addedScore", "animationPlayer")]
 custom_minimum_size = Vector2(400, 200)
 layout_mode = 3
-anchor_left = 0.44400004
-anchor_top = 0.44900003
-anchor_right = 0.55600005
-anchor_bottom = 0.551
-offset_left = -0.4880371
-offset_top = 0.047973633
-offset_right = 0.48791504
-offset_bottom = -0.04800415
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 400.0
+offset_bottom = 200.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme = ExtResource("1_c015y")
 script = ExtResource("1_6iebm")
 name = NodePath("Panel/VBoxContainer/PlayerName")
@@ -91,12 +86,9 @@ addedScore = NodePath("Panel/addedScore")
 animationPlayer = NodePath("AnimationPlayer")
 
 [node name="Panel" type="Panel" parent="." unique_id=40575644]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 200.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_6iebm")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=710388440]
@@ -133,7 +125,7 @@ layout_mode = 0
 offset_left = 92.0
 offset_top = 96.0
 offset_right = 273.0
-offset_bottom = 213.00058
+offset_bottom = 213.00064
 text = "+1"
 label_settings = SubResource("LabelSettings_6iebm")
 horizontal_alignment = 1

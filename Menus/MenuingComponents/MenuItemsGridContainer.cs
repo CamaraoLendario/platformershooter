@@ -10,6 +10,8 @@ public partial class MenuItemsGridContainer : MenuItemsContainer
 	[Export] int lineLength = 4;
 	[Export] int columnLength = 4;
 	[Export] bool usesColumn = false;
+	[Export] Vector2 padding = Vector2.Zero;
+	[Export] bool centered = false;
 
     /* public override void _Ready()
 	{
@@ -34,25 +36,34 @@ public partial class MenuItemsGridContainer : MenuItemsContainer
 		for (int i = 0; i < controlNodes.Length; i++)
 		{
 			Control menuItem = controlNodes[i];
+			Vector2 itemSize = menuItem.Size + padding;
 			menuItem.Position = nextPos;
-			TotalSizeX = Mathf.Max(TotalSizeX, menuItem.Position.X + menuItem.Size.X);
-			TotalSizeY = Mathf.Max(TotalSizeY, menuItem.Position.Y + menuItem.Size.Y);
+			TotalSizeX = Mathf.Max(TotalSizeX, menuItem.Position.X + itemSize.X);
+			TotalSizeY = Mathf.Max(TotalSizeY, menuItem.Position.Y + itemSize.Y);
 
-			if ((menuItem.Size * growDir).LengthSquared() > maxOffset.LengthSquared()){
-                maxOffset = menuItem.Size * growDir;
+			if ((itemSize * growDir).LengthSquared() > maxOffset.LengthSquared()){
+                maxOffset = itemSize * growDir;
             }
 			
-			if(i % limiter == limiter - 1){
+			if(i % limiter == limiter - 1) {
 				nextPos += maxOffset;
 				nextPos *= growDir;
 				maxOffset = Vector2.Zero;
 			}
 			else {
-				nextPos += menuItem.Size * altGrowDir;
+				nextPos += itemSize * altGrowDir;
 			}
 		}
-		Vector2 totalSize = new Vector2(TotalSizeX, TotalSizeY);
-		Size = totalSize;
+		Vector2 totalSize = new Vector2(TotalSizeX, TotalSizeY) - padding;
+		if (!centered) Size = totalSize;
+		else Size *= 0;
+
+		for (int i = 0; i < controlNodes.Length; i++)
+		{
+			Control menuItem = controlNodes[i];
+			menuItem.Position -= totalSize/2;
+		}
+
 	}
 
 	Control[] GetControlNodes()

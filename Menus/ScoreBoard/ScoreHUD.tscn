@@ -211,7 +211,7 @@ _data = {
 script = ExtResource("1_d47xt")
 scoreBoard = NodePath("ScoreBoard")
 
-[node name="ScoreBoard" type="Control" parent="." unique_id=461983097 node_paths=PackedStringArray("scoreCountersContainer")]
+[node name="ScoreBoard" type="Control" parent="." unique_id=461983097]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -225,13 +225,60 @@ size_flags_vertical = 3
 theme = ExtResource("2_un3ay")
 script = ExtResource("1_7cg30")
 individualScoreCounterScene = ExtResource("1_8o2op")
-scoreCountersContainer = NodePath("")
 
 [node name="Control" type="Control" parent="ScoreBoard" unique_id=1034221901]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 967.0
+offset_top = -452.0
+offset_right = 967.0
+offset_bottom = -452.0
 script = ExtResource("5_ux58e")
+lineLength = 3
+columnLength = 2
+padding = Vector2(100, 100)
+centered = true
+
+[node name="IndividualScoreCounter" parent="ScoreBoard/Control" unique_id=781488971 instance=ExtResource("1_8o2op")]
+layout_mode = 0
+offset_left = -700.0
+offset_top = -250.0
+offset_right = -300.0
+offset_bottom = -50.0
+
+[node name="IndividualScoreCounter2" parent="ScoreBoard/Control" unique_id=195669124 instance=ExtResource("1_8o2op")]
+layout_mode = 0
+offset_left = -200.0
+offset_top = -250.0
+offset_right = 200.0
+offset_bottom = -50.0
+
+[node name="IndividualScoreCounter3" parent="ScoreBoard/Control" unique_id=979976113 instance=ExtResource("1_8o2op")]
+layout_mode = 0
+offset_left = 300.0
+offset_top = -250.0
+offset_right = 700.0
+offset_bottom = -50.0
+
+[node name="IndividualScoreCounter4" parent="ScoreBoard/Control" unique_id=124952677 instance=ExtResource("1_8o2op")]
+layout_mode = 0
+offset_left = -700.0
+offset_top = 50.0
+offset_right = -300.0
+offset_bottom = 250.0
+
+[node name="IndividualScoreCounter5" parent="ScoreBoard/Control" unique_id=1812394604 instance=ExtResource("1_8o2op")]
+layout_mode = 0
+offset_left = -200.0
+offset_top = 50.0
+offset_right = 200.0
+offset_bottom = 250.0
+
+[node name="IndividualScoreCounter6" parent="ScoreBoard/Control" unique_id=1253570960 instance=ExtResource("1_8o2op")]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 50.0
+offset_right = 700.0
+offset_bottom = 250.0
 
 [node name="READY GO" type="Control" parent="." unique_id=1508956759 node_paths=PackedStringArray("readyGoLabel", "READY", "GO")]
 layout_mode = 3
