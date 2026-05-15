@@ -93,7 +93,6 @@ public partial class MagicMissile : HittableComponent
         }
         else if (hitter is MeleeAttack melee)
         {
-            GD.Print(hitter);
             velocity = -velocity.Normalized()  * maxSpeed;
         }
         else velocity = (hitter.GlobalPosition - GlobalPosition).Normalized() * maxSpeed;
@@ -119,7 +118,7 @@ public partial class MagicMissile : HittableComponent
     }
     Player GetRandomPlayer(Player[] excludeArray)
     {
-        List<Player> playerList = Game.Instance.players; // might need to duplicate this? not sure :)
+        List<Player> playerList = Game.Instance.players.ToList(); // might need to duplicate this? not sure :)
         
         foreach(Player player in Game.Instance.players)
         {

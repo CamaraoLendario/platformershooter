@@ -18,6 +18,7 @@ public partial class Pickup : Area2D
 		notification.Setup(itemName, itemColor);
 
 		notification.Position = player.Position;
+		world = GetTree().GetFirstNodeInGroup("World") as World;
 		world.AddChild(notification);
 	}
 }

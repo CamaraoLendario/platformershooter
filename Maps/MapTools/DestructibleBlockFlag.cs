@@ -29,7 +29,7 @@ public partial class DestructibleBlockFlag : Area2D
         if (IsQueuedForDeletion()) return false;
         DestructionParticles.Emitting = true;
         tileMapLayer.SetCell(tilePos, -1); // deletes tile
-        GD.Print("destroyed tile at position" + tilePos);
+        //GD.Print("destroyed tile at position" + tilePos);
         QueueFree();
         return true;
     }

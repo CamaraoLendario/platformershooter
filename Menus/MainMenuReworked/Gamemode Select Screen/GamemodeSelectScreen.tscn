@@ -6,12 +6,14 @@
 [ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MenuItemsListContainer.cs" id="2_ma1w6"]
 [ext_resource type="PackedScene" uid="uid://bme1tdi5j5fup" path="res://Menus/MenuingComponents/horizontalTextAndScroll.tscn" id="3_7ynpa"]
 [ext_resource type="PackedScene" uid="uid://cyx5clmammmqy" path="res://Menus/MenuingComponents/horizontalTextAndText.tscn" id="4_32erb"]
+[ext_resource type="Script" uid="uid://vql2txkoh72n" path="res://Menus/MenuingComponents/GamemodeSelectScroll.cs" id="6_ln1ds"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8dao0"]
 font_size = 117
 
-[node name="GamemodeSelectScreen" unique_id=1595907082 instance=ExtResource("1_8dao0")]
+[node name="GamemodeSelectScreen" unique_id=1595907082 node_paths=PackedStringArray("gamemodescroll") instance=ExtResource("1_8dao0")]
 script = ExtResource("2_fljgf")
+gamemodescroll = NodePath("MenuItemsContainer/gamemode choice/Scroller")
 
 [node name="TITLE" type="Label" parent="." index="0" unique_id=273214668]
 layout_mode = 1
@@ -45,7 +47,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_ma1w6")
 Separation = 360
-horizontal = false
 
 [node name="gamemode choice" parent="MenuItemsContainer" index="0" unique_id=1906426519 instance=ExtResource("3_7ynpa")]
 layout_mode = 0
@@ -60,8 +61,9 @@ offset_right = -254.0
 text = "Gamemode:"
 
 [node name="Scroller" parent="MenuItemsContainer/gamemode choice" index="1" unique_id=1348934665]
-offset_left = 515.0
-offset_right = 515.0
+offset_left = 835.0
+offset_right = 835.0
+script = ExtResource("6_ln1ds")
 Contents = PackedStringArray("Free for All", "Team Deathmatch", "Capture the Flag")
 
 [node name="MenuSelectorHelper" parent="MenuItemsContainer/gamemode choice/Scroller" index="0" unique_id=1724905341]
@@ -101,7 +103,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_ma1w6")
 Separation = 175
-horizontal = false
 
 [node name="game length choice" parent="MenuItemsContainer/MenuItemsContainer" index="0" unique_id=1242646730 instance=ExtResource("3_7ynpa")]
 layout_mode = 0
@@ -118,8 +119,8 @@ offset_right = -28.0
 text = "Game length:"
 
 [node name="Scroller" parent="MenuItemsContainer/MenuItemsContainer/game length choice" index="1" unique_id=1348934665]
-offset_left = 615.0
-offset_right = 615.0
+offset_left = 735.0
+offset_right = 735.0
 Contents = PackedStringArray("Medium", "Long", "Short")
 
 [node name="MenuSelectorHelper" parent="MenuItemsContainer/MenuItemsContainer/game length choice/Scroller" index="0" unique_id=1724905341]

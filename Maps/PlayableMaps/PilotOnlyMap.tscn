@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://coklf46qo3sam"]
 
-[ext_resource type="PackedScene" uid="uid://dcln4npgljx4k" path="res://Maps/MapTemplate.tscn" id="1_8fn65"]
+[ext_resource type="PackedScene" uid="uid://dcln4npgljx4k" path="res://Maps/PlayableMaps/MapTemplate.tscn" id="1_8fn65"]
 [ext_resource type="Shader" uid="uid://cx67s33dt1lle" path="res://Maps/MapAssets/Background/Parallax/HomemadeParallax.gdshader" id="3_2k4nt"]
 [ext_resource type="PackedScene" uid="uid://bw7vmyeb1ymu6" path="res://Maps/MapAssets/Pickups/WeaponPickups/weapon_pickup.tscn" id="3_3c23f"]
 [ext_resource type="Script" uid="uid://cacu8rejhbrse" path="res://Maps/MapAssets/Hazzards/MagicMissile/MagicMissileComponent.cs" id="4_343av"]

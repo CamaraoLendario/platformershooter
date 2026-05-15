@@ -92,11 +92,16 @@ public partial class TeamSelectScreen : MainMenuScreen
 	}
 	void MoveIcon(Vector2 dir, TeamSelectScreenPlayerIcon icon)
 	{
+		if (dir.X > 0) 
+			Game.Instance.playerTeams.Add(icon.GetInputIdx(), (int)TeamIdxs.BLUE);
+		else 
+			Game.Instance.playerTeams.Add(icon.GetInputIdx(), (int)TeamIdxs.RED);
+
 		Tween tween = CreateTween();
 		tween.SetTrans(Tween.TransitionType.Sine);
 		tween.SetEase(Tween.EaseType.InOut);
 		Vector2 initialPosition = icon.Position;
-		Vector2 finalPosition = (dir * 500f) - (icon.Size * Vector2.Right/2) + initialPosition * Vector2.Down;
+		Vector2 finalPosition = (dir * 500f) - (icon.Size * Vector2.Right / 2) + initialPosition * Vector2.Down;
 		Vector2 posDiff = finalPosition - initialPosition;
 		tween.TweenMethod(Callable.From((float tweenedValue) =>
 		{
@@ -106,7 +111,7 @@ public partial class TeamSelectScreen : MainMenuScreen
     public override void Back()
 	{
 		RemovePlayerContainers();
-		NewCharacterSelectScreen characterSelectScreen = GetParent().GetNode<NewCharacterSelectScreen>("NewCharacterSelectScreen"); 
+		CharacterSelectScreen characterSelectScreen = GetParent().GetNode<CharacterSelectScreen>("NewCharacterSelectScreen"); 
 		characterSelectScreen.Reconstruct();
 		ChangeScreen(characterSelectScreen,
 			Vector2.Right, Vector2.Left, false, true

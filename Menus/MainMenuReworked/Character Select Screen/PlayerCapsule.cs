@@ -28,7 +28,7 @@ public partial class PlayerCapsule : MenuItem
 	[Export] Color unreadyBGcolor = new Color(0.161f, 0.161f, 0.161f, 0.396f);
 	#endregion
 	InputIcon[] inputIcons = [];
-	public NewCharacterSelectScreen characterSelectScreen;
+	public CharacterSelectScreen characterSelectScreen;
 	public bool isEnabled = false;
 	public bool isReady = false;
 	public int colorIdx = -1;
@@ -65,7 +65,7 @@ public partial class PlayerCapsule : MenuItem
 		for (int i = 0; i < teamColors.Length; i++)
 		{
 			int currentColoridx = NormalizeIdx(idx + (i*dir), teamColors.Length);
-			GD.Print("trying to set color to: ", idx);
+			//GD.Print("trying to set color to: ", idx);
 			if (characterSelectScreen.IsColorAvaliable(currentColoridx)){
 				Vector3 newColor = teamColors[currentColoridx];
 				(pilotTexture.Material as ShaderMaterial).SetShaderParameter("Color", newColor);
@@ -73,7 +73,7 @@ public partial class PlayerCapsule : MenuItem
 				break;
 			}
 		}
-		GD.Print($"Color set to {colorIdx}!");
+		//GD.Print($"Color set to {colorIdx}!");
 	}
 	void ClearColor()
 	{
@@ -83,8 +83,8 @@ public partial class PlayerCapsule : MenuItem
 	}
 	public void Enable(int inputIdx)
 	{
-		if(isEnabled)
-			GD.Print(this.Name, " is already enabled!");
+		// if(isEnabled)
+		// 	GD.Print(this.Name, " is already enabled!");
 
 		enabledCapsule.Show();
 		disabledCapsule.Hide();
@@ -97,8 +97,8 @@ public partial class PlayerCapsule : MenuItem
 	}
 	public void Disable()
 	{
-		if (!isEnabled)
-			GD.Print(this.Name, " is already disabled!");
+		// if (!isEnabled)
+		// 	GD.Print(this.Name, " is already disabled!");
 		UnReady();
 		SetPlayerName("");
 		ClearColor();

@@ -20,7 +20,6 @@ public partial class OverHeadDisplay : VBoxContainer
 
 	void UpdateAmmoHUD()
 	{
-		GD.Print("updating ammo");
 		for(int i = 0; i < ShipAttack.MAXAMMO; i++)
 		{
 			AtlasTexture textureRectAtlas = ammoHud.GetChild<TextureRect>(i).Texture as AtlasTexture;

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cv7ev1h883cal"]
 
-[ext_resource type="Script" uid="uid://du2j8iynfh7wq" path="res://Menus/MainMenuReworked/Character Select Screen/NewCharacterSelectScreen.cs" id="1_hili5"]
+[ext_resource type="Script" uid="uid://du2j8iynfh7wq" path="res://Menus/MainMenuReworked/Character Select Screen/CharacterSelectScreen.cs" id="1_hili5"]
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_j2fy3"]
 [ext_resource type="PackedScene" uid="uid://bphnjcidgshy0" path="res://Menus/MenuingComponents/MenuItemsContainer.tscn" id="2_dsg1c"]
 [ext_resource type="PackedScene" uid="uid://c381cofkxpuj8" path="res://Menus/MainMenuReworked/Character Select Screen/PlayerCapsuleReworked.tscn" id="3_0bj3m"]
@@ -173,7 +173,7 @@ alignment = 1
 use_parent_material = true
 layout_mode = 2
 texture = SubResource("AtlasTexture_gi7yw")
-action = "MenuInteract-2"
+action = "MenuStart-2"
 
 [node name="StartGameLabel" type="Label" parent="StartGame" unique_id=1288403193]
 use_parent_material = true

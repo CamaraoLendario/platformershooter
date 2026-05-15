@@ -10,6 +10,7 @@ public partial class Map : Node2D
     [Export] public MapBorders MapBordersNode;
     [Export] public PilotArea pilotArea;
     [Export] public MapCamera camera;
+    [Export] public Node gamemodesContainer;
     InteractableTiles currentTileMapLayerNode;
     public Vector2 PixelsMapSize
     {
@@ -27,7 +28,7 @@ public partial class Map : Node2D
     {
         SignalBus.Instance.NewRoundStarted += OnNewRoundStarted;
         currentTileMapLayerNode = GetNode<InteractableTiles>("InteractableTiles");
-        //Do Gamemode logic 
+        //set gamemode
         //ReplicateCollisions();
     }
     
@@ -58,7 +59,6 @@ public partial class Map : Node2D
                     shipPowerupChest.Despawn();
                 }
             }
-
         }
     }
 

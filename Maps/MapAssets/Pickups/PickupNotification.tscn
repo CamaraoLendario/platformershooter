@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://bvfvxy1yqmgi" path="res://Maps/MapAssets/Pickups/ItemPickupNotification.cs" id="1_367km"]
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="2_ech2v"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_367km"]
+
 [node name="PickupNotification" type="Node2D" unique_id=1247885900]
 script = ExtResource("1_367km")
 
@@ -20,5 +22,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_ech2v")
 text = "+ Ice Tome"
+label_settings = SubResource("LabelSettings_367km")
 horizontal_alignment = 1
 vertical_alignment = 1

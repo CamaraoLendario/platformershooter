@@ -13,8 +13,11 @@ public partial class Main : Node
 		Game.Instance.mainMenu.QueueFree();
         PackedScene overWorld = GD.Load<PackedScene>("uid://blk3xlkdst7il");
         AddChild(overWorld.Instantiate<OverWorld>());
-		// set map gamemode
 
-        CallDeferred(MethodName.EmitSignal, SignalBus.Emit((string)SignalBus.SignalName.GameStarted));
+        CallDeferred(MethodName.EmitGameStart);
 	}
+    void EmitGameStart()
+    {
+        SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameStarted);
+    }
 }

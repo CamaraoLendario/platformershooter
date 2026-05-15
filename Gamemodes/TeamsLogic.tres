@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="TeamsLogic" format=3 uid="uid://jbg7icuafwb0"]
+
+[ext_resource type="Script" uid="uid://7lqdurvenj2g" path="res://Gamemodes/TeamsLogic.cs" id="1_joxo0"]
+
+[resource]
+script = ExtResource("1_joxo0")
+INDEX = 1
+pointsToWin = PackedInt32Array(2, 4, 6)
+metadata/_custom_type_script = "uid://7lqdurvenj2g"

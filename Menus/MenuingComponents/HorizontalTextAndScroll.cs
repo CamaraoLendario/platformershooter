@@ -33,8 +33,7 @@ public partial class HorizontalTextAndScroll : HorizontalMenu
     {
         base._Ready();
 		menuScroll = GetNode<MenuScroll>("Scroller");
-		menuScroll.Contents = Contents;
-
+        menuScroll.Contents = Contents;
 		menuScroll.UpdateHelperMinimumSize();
 		DoFormatting();
 		originalPosition = Position;

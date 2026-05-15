@@ -16,19 +16,20 @@ public partial class MagicMissileComponent : Node
 		OneShot = true,
 	};
 
-	public override void _Ready()
-	{
-		if (!Game.Instance.experimentalFeatures.isActivated)
+	public override void _Ready() {
+		if (Game.Instance.experimentalFeatures != null)
 		{
-			QueueFree();
-			return;
+			if (!Game.Instance.experimentalFeatures.isActivated)
+			{
+				QueueFree();
+				return;
+			}
+			spawnTime = Game.Instance.experimentalFeatures.interval;
 		}
-		spawnTime = Game.Instance.experimentalFeatures.interval;
 		AddChild(SpawnTimer);
 		SpawnTimer.Timeout += OnSpawnTimerTimeout;
 		SpawnTimer.Start(spawnTime);
 	}
-
 
 	void OnSpawnTimerTimeout()
 	{

@@ -24,7 +24,6 @@ public partial class PoisonMine : Node2D
         set
         {
             currentFuseTime = value;
-			GD.Print(value);
 			if (value == 0) Explode();
         }
     }
@@ -92,7 +91,6 @@ public partial class PoisonMine : Node2D
 	void Explode()
     {
 		explosionComponent.GlobalPosition = GlobalPosition;
-		GD.Print(explosionComponent.GlobalPosition);
 		SummonExplosionParticles();
 	    world.CallDeferred(MethodName.AddChild, explosionComponent);
 		QueueFree();

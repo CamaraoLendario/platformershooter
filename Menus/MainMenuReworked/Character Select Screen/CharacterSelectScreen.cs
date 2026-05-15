@@ -5,7 +5,7 @@ using System.Linq;
 using static SpaceMages.SpaceMagesVars;
 
 [Tool]
-public partial class NewCharacterSelectScreen : MainMenuScreen
+public partial class CharacterSelectScreen : MainMenuScreen
 {
     int[] inputIdxs = [
         -2, -2, -2, -2, -2, -2
@@ -118,7 +118,6 @@ public partial class NewCharacterSelectScreen : MainMenuScreen
         return capsule;
     }
     void OnCapsuleDisabled(PlayerCapsule capsule){
-        GD.Print(capsule.Name ," was disabled!!");
         for(int i = 0; i < inputIdxs.Length; i++){
             if (inputIdxs[i] == capsule.GetInputIdx()){
                 inputIdxs[i] = -2;
@@ -146,11 +145,19 @@ public partial class NewCharacterSelectScreen : MainMenuScreen
     public override bool OnAccept()
     {
         if (!startGame.Visible) return false;
-        TeamSelectScreen teamSelectScreen = GetParent().GetNode<TeamSelectScreen>("TeamSelectScreen");
-        teamSelectScreen.Initialize(GetPlayersInfo());
-        ChangeScreen(
-            teamSelectScreen,
-            Vector2.Left, Vector2.Right);
+        startGame.Hide();
+        if (Game.GetGamemodeLogic().isTeamed)
+        {
+            TeamSelectScreen teamSelectScreen = GetParent().GetNode<TeamSelectScreen>("TeamSelectScreen");
+            teamSelectScreen.Initialize(GetPlayersInfo());
+            ChangeScreen(
+                teamSelectScreen,
+                Vector2.Left, Vector2.Right);
+        }
+        else
+        {
+            Game.StartGame(GetPlayersInfo(), GD.Load<PackedScene>("uid://cck3f1axqqkvm").Instantiate() as Map);
+        }
         return true;
     }
     void OnCapsuleUnReady(PlayerCapsule playerCapsule){

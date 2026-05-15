@@ -1,3 +1,4 @@
+
 using Godot;
 using System.Collections.Generic;
 using static SpaceMages.SpaceMagesVars;
@@ -43,7 +44,7 @@ public partial class Player : CharacterBody2D
 	[Export] public PlayerEffectHandler effectHandler;
 	[Export] public PilotAttack pilot;
 	[Export] public ShipAttack ship;
-	[Export] public PlayerInput playerInput;
+	[Export] public PlayerInput inputComponent;
 	[Export] public Label NameLabel;
 	[Export] PilotWeaponHolder pilotWeaponHolder;
 	[Export] MeleeAttack pilotMeleeAttack;
@@ -62,8 +63,7 @@ public partial class Player : CharacterBody2D
 	public static PackedScene playerScene = GD.Load<PackedScene>("uid://cbmq3xh2bcijs");
 	#endregion
 	public Controller currentController;
-	public int inputIdx = -2;
-	public int colorIdx = -1;
+	public int colorIdx = -1; // this will eventually be class instead
 	public bool isKeyboardControlled = false;
 	public World world;
 	
@@ -195,17 +195,18 @@ public partial class Player : CharacterBody2D
 
 		if (HasShield)
 		{
-			Input.StartJoyVibration(inputIdx, 0.3f, 0.3f, 0.2f);
+			Input.StartJoyVibration(GetInputIdx(), 0.3f, 0.3f, 0.2f);
 			Shake(0.5f, 3);
 			HasShield = false;
 		}
 		else if (isPilot)
 		{
-			Input.StartJoyVibration(inputIdx, 0.8f, 0.8f, 0.6f);
+			Input.StartJoyVibration(GetInputIdx(), 0.8f, 0.8f, 0.6f);
 			IsDead = true;
 			CreateDeathParticles(damageDealer);
 			Position = new Vector2(99999, 99999);
 			EmitSignal(SignalName.died, this, damageDealer);
+			SignalBus.Instance.EmitSignal(SignalBus.SignalName.playerDied, this, damageDealer);
 			pilotDeadAudio.PitchScale = 1 + (float) GD.RandRange(-0.1, 0.1);
 			pilotDeadAudio.Play();
 			GD.Print(this, " was killed by ", damageDealer);
@@ -215,7 +216,7 @@ public partial class Player : CharacterBody2D
 			GpuParticles2D newShipExplosionParticles = GPUParticlesPool.GetClonedParticles(shipExplosionParticles);
 			newShipExplosionParticles.Position = Position;
 			newShipExplosionParticles.Emitting = true;
-			Input.StartJoyVibration(inputIdx, 0.6f, 0.6f, 0.4f);
+			Input.StartJoyVibration(GetInputIdx(), 0.6f, 0.6f, 0.4f);
 			Shake(0.5f, 5);
 			shipCooldown.Start(SHIPCOOLDOWNTIME);
 			GoPilot();
@@ -289,7 +290,7 @@ public partial class Player : CharacterBody2D
 
 	void PlayParticlesForTryGoShip()
 	{
-		GD.Print("Playing Particles For Ship Reconstruction...");
+		//GD.Print("Playing Particles For Ship Reconstruction...");
 		if (isTurningToShip) return;
 		GpuParticles2D particles = GPUParticlesPool.GetClonedParticles(shipReconstructionParticles);
 		currentShipReconstructionParticles = particles;
@@ -322,7 +323,7 @@ public partial class Player : CharacterBody2D
 
 	void OnShipRebuiltFinished()
 	{
-		GD.Print("rebuildFinished");
+		//GD.Print("rebuildFinished");
 		isTurningToShip = false;
 		RemoveParticles(currentShipReconstructionParticles);
 		TryGoShip();
@@ -353,10 +354,10 @@ public partial class Player : CharacterBody2D
 	}
 	public void TryGoShip(bool forced)
 	{
-		GD.Print("trying to go ship...");
+		//GD.Print("trying to go ship...");
 		if ((goShipTimer.IsStopped() && shipCooldown.IsStopped() && !isInPilotArea) || !shipPardonTimer.IsStopped() || forced)
 		{
-			GD.Print("Succeded!");
+			//GD.Print("Succeded!");
 			shipPardonTimer.Stop();
 			isPilot = false;
 			ship.Start();
@@ -427,8 +428,8 @@ public partial class Player : CharacterBody2D
 
 	void SetupTimersVarsAndSignals()
 	{
-		playerInput.AimStart += OnAimStart;
-		playerInput.AimEnd += OnAimEnd;
+		inputComponent.AimStart += OnAimStart;
+		inputComponent.AimEnd += OnAimEnd;
 		
 		GD.Print("MY PLAYER COLOR INDEX IS THIS: " + colorIdx);
 
@@ -458,5 +459,13 @@ public partial class Player : CharacterBody2D
 			shipShieldFlickerer.Play("shieldRegeneration");
 		};
 		timers = [shipCooldown, goShipTimer, shieldCooldownTimer];
+	}
+	public void SetInputIdx(int newInputIdx)
+	{
+		inputComponent.inputIdx = newInputIdx;
+	}
+	public int GetInputIdx()
+	{
+		return inputComponent.inputIdx;
 	}
 }

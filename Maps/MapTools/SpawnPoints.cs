@@ -46,26 +46,25 @@ public partial class SpawnPoints : Node
 		}
 	}
 
-    void SpawnPlayers()
-	{
+    void SpawnPlayers() {
 		foreach (Dictionary<string, int> playerInfo in Game.Instance.playersInfo)
 		{
 			Player newPlayer = Player.playerScene.Instantiate<Player>();
-			newPlayer.Name = playerInfo.Keys.First();
+			//newPlayer.Name = playerInfo.Keys.First();
 			newPlayer.NameLabel.Text = newPlayer.Name;
-			newPlayer.inputIdx = playerInfo["inputIdx"];
-			if (newPlayer.inputIdx == -1) newPlayer.isKeyboardControlled = true;
+			newPlayer.SetInputIdx(playerInfo["inputIdx"]);
+			if (newPlayer.GetInputIdx() == -1) newPlayer.isKeyboardControlled = true;
 			newPlayer.SetColor(playerInfo["colorIdx"]);
 			newPlayer.Position = spawnPoints[newPlayer.colorIdx].Position;
 
+			Game.GetOverworld().AddChild(newPlayer);
 			Game.Instance.AddPlayer(newPlayer);
 			newPlayer.CallDeferred("Reset");
 		}
 		SignalBus.Instance.EmitSignal(SignalBus.SignalName.FinishedSpawningPlayers);
 	}
 
-	public override void _ExitTree()
-	{
+	public override void _ExitTree() {
 		SignalBus.Instance.NewRoundStarted -= OnNewRoundStarted;
 		base._ExitTree();
 	}

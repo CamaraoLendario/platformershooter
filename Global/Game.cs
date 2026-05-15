@@ -8,40 +8,42 @@ public partial class Game : Node
 {
 	[Signal] public delegate void PausedGameEventHandler();	
 	[Signal] public delegate void UnPausedGameEventHandler();
+	public Dictionary<int, int> playerTeams; //inputIdx, teamIdx
 	public static Game Instance { get; private set; }
 	public Main main;
 	public MainMenu mainMenu;
 	public Map currentMap = GD.Load<PackedScene>("uid://cck3f1axqqkvm").Instantiate<Map>();
 	public Dictionary<string, int>[] playersInfo = [];
-	public List<Player> players;
+	public Player[] players = [];
 	public ExperimentalFeatures experimentalFeatures;
-	public Gamemode gamemode;
 	public enum GamemodeIdxs {
 		FreeForAll,
 		TEAMS,
 		CaptureTheFlag
 	}
-	public Gamemode[] Gamemodes
-	{
-		
-	}
+	public GamemodeLogic currentGamemode;
+	string[] gamemodeUIDs = [
+		"uid://dfnsondfrbd6", // FreeForAll
+		"uid://jbg7icuafwb0", // TEAMS
+		"uid://jbg7icuafwb0", // supposed to be CaptureTheFlag, also representing teams for now, this gamemode will probably not even exist 
+    ];
 
     public override void _Ready(){
 		Instance ??= this;
 	}
 
-	public void StartGame(Dictionary<string, int>[] newPlayersInfo, Map map)
+	public static void StartGame(Dictionary<string, int>[] newPlayersInfo, Map map)
 	{
-		playersInfo = newPlayersInfo;
-		currentMap = map;
-		GeneratePlayerInputs();
-		(GetTree().GetFirstNodeInGroup("Main") as Main).StartGame();
-		
+		Instance.playersInfo = newPlayersInfo;
+		Instance.currentMap = map;
+		//map.SetGamemode();
+		Instance.GeneratePlayerInputs();
+		GetMain().StartGame();	
 	}
-	
+
 	public void AddPlayer(Player player)
 	{
-		players.Add(player);
+		players = players.Append(player).ToArray();
 	}
 
 	public void BackToMapSelector()
@@ -89,7 +91,7 @@ public partial class Game : Node
 	{
 		foreach (Player player in players)
 		{
-			if (player.inputIdx == inputIdx) return player;
+			if (player.GetInputIdx() == inputIdx) return player;
 		}
 		GD.PrintErr($"No player was found with the requested inputIdx ({inputIdx}). returning null");
 		return null;
@@ -107,11 +109,28 @@ public partial class Game : Node
 	}
 	public static Map GetMap()
 	{
-		return Game.Instance.currentMap;
+		return Instance.currentMap;
 	}
 
-	Gamemode GetGamemode(GamemodeIdxs gamemodeIdx)
+	public static void SetGamemode(GamemodeIdxs idx)
 	{
-		
+		Instance.currentGamemode = GD.Load<GamemodeLogic>(Instance.gamemodeUIDs[(int)idx]);
+	}
+	public static GamemodeLogic GetGamemodeLogic()
+	{
+		return Instance.currentGamemode;
+	}
+	public static Player[] GetPlayers()
+	{
+		return Instance.players;
+	}
+
+    public static Main GetMain()
+	{
+		return Instance.GetTree().GetFirstNodeInGroup("Main") as Main;
+	}
+	public static OverWorld GetOverworld()
+	{
+		return Instance.GetTree().GetFirstNodeInGroup("OverWorld") as OverWorld;
 	}
 }

@@ -55,4 +55,8 @@ public partial class TeamSelectScreenPlayerIcon : MenuItem
 	{
 		inputNode.SetInputIdx(inputIdx);
 	}
+	public int GetInputIdx()
+	{
+		return inputNode.GetInputIdx();
+	}
 }

@@ -43,7 +43,7 @@ public partial class InputGenerator : Node
 			{
 				InputEvent currentInput = input.Duplicate(true) as InputEvent;
 				currentInput.Device = inputIdx;
-				GD.Print(currentAction);
+				//GD.Print("action added: ", currentAction);
 				InputMap.ActionAddEvent(currentAction, currentInput);
 				newActions.Add(currentAction);
 			}
@@ -60,16 +60,16 @@ public partial class InputGenerator : Node
 		
 		foreach(StringName action in tempNewActions)
         {
-			GD.Print("Trying to erase Action: " + action);
+			//GD.Print("Trying to erase Action: " + action);
 			if (!includeMenuInput && action.ToString().StartsWith("Menu"))
             {
-                GD.Print("not deleting menu actions!");
+                //GD.Print("not deleting menu actions!");
 				continue;
             }
 			if (InputMap.HasAction(action))
 			{
 				InputMap.EraseAction(action);
-				GD.Print("Erased Action: " + action);
+				//GD.Print("Erased Action: " + action);
 				newActions.Remove(action);
 			}
         }
@@ -90,7 +90,7 @@ public partial class InputGenerator : Node
 			{
 				InputEvent currentInput = input.Duplicate(true) as InputEvent;
 				currentInput.Device = inputIdx;
-				GD.Print(currentAction);
+				//GD.Print(currentAction);
 				InputMap.ActionAddEvent(currentAction, currentInput);
 				newActions.Add(currentAction);
 			}
@@ -103,7 +103,7 @@ public partial class InputGenerator : Node
         foreach (StringName action in tempNewActions)
         {
             string strAction = action.ToString();
-			GD.Print("InputIdx of " + inputIdx + " Is trying to erase menu action: " + action);
+			//GD.Print("InputIdx of " + inputIdx + " Is trying to erase menu action: " + action);
 			int actionInt = GetLastNumOnString(strAction);
 			if (strAction.StartsWith("Menu") && actionInt == inputIdx)
             {
@@ -111,7 +111,7 @@ public partial class InputGenerator : Node
 				{
 					InputMap.EraseAction(action);
 					newActions.Remove(action);
-					GD.Print("Erased Action: " + action);
+					//GD.Print("Erased Action: " + action);
 				}
             }
         }
@@ -126,7 +126,7 @@ public partial class InputGenerator : Node
 			Char currentChar = inputStr[strLength - i - 1];
 			if (Char.IsNumber(currentChar))
 			{
-				GD.Print("is number ", currentChar);
+				//GD.Print("is number ", currentChar);
 				integerStrReversed += currentChar;
 			}
 			else

@@ -30,7 +30,7 @@ public partial class MapCamera : Camera2D
 		PixelMapSize = GetParent<Map>().PixelsMapSize;
         baseMinZoom = base.Zoom.X;
 		maxZoom = 1 / (minimumScreenSize / screenSize.X);
-		GD.Print("maxZoom = " + maxZoom);
+		//GD.Print("maxZoom = " + maxZoom);
     }
 
 	public void SetLeeway(int leeway)
@@ -38,7 +38,7 @@ public partial class MapCamera : Camera2D
         boardersLeeway = leeway;
 		PixelMapSize += Vector2.One * boardersLeeway;
 		minZoom = baseMinZoom - (boardersLeeway * 2)/screenSize.Y;
-		GD.Print("minZoom = " + minZoom);
+		//GD.Print("minZoom = " + minZoom);
     }
 
 	public override void _PhysicsProcess(double delta)

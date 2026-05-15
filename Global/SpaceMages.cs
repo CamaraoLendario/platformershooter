@@ -7,11 +7,15 @@ namespace SpaceMages
 {
 	public partial class SpaceMagesVars : Node
 	{
-		enum dirKeyMenu{
-			UpKeyMen,
-			DownKeyMen,
-			RightKeyMen,
-			LeftKeyMen,
+		public enum TeamIdxs{
+			BLUE,
+			RED,
+		}
+		public enum dirKeyMenu{
+			Left,
+			Right,
+			Up,
+			Down,
 		}
 		public static string[] menuDirs = [
 			"MenuLeft", "MenuRight", "MenuUp", "MenuDown"];

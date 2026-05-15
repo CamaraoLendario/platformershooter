@@ -54,7 +54,7 @@ public partial class ExplosionComponent : Area2D
     }
 	void OnAreaEntered(Area2D area)
 	{
-		GD.Print("Checking: ", area, "at ", area.GlobalPosition);
+		//GD.Print("Checking: ", area, "at ", area.GlobalPosition);
 		if (area is DestructibleBlockFlag destructible)
 		{
 			if (HasLOS(destructible))
@@ -63,7 +63,7 @@ public partial class ExplosionComponent : Area2D
 	}
 	bool HasLOS(Node2D losTo)
     {
-		GD.Print("checking LOS to: ", losTo);
+		//GD.Print("checking LOS to: ", losTo);
 		foreach(Node child in losTo.GetChildren())
 		{
 			if (child is CollisionShape2D colShape && colShape.Shape is RectangleShape2D)
@@ -96,7 +96,7 @@ public partial class ExplosionComponent : Area2D
 		if (!checkRay.IsColliding()) return true;
 
 		var collider = checkRay.GetCollider();
-		GD.Print("collider found: ", collider);
+		//GD.Print("collider found: ", collider);
 		//Vector2 collisionPoint = checkRay.GetCollisionPoint();
 
 		if (collider != losTo)

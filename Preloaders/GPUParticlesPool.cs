@@ -119,7 +119,7 @@ public partial class GPUParticlesPool : Node2D
 
 	public static void NormalizePoolCountToPlayerCount()
 	{
-		int playerCount = Game.Instance.players.Count;
+		int playerCount = Game.Instance.players.Length;
 		int necessaryGeneral = (playerCount - (Instance.GetChildCount() / particleObjectsPerPlayer)) * particleObjectsPerPlayer;
 		for (int i = 0; i < necessaryGeneral; i++)
 		{

@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://bwh5qxwryxau6" path="res://Menus/ScoreBoard/ScoreHUD.cs" id="1_d47xt"]
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="2_un3ay"]
 [ext_resource type="Script" uid="uid://bm7eaxcx3wkcr" path="res://Menus/ScoreBoard/RoundStartAnnouncer.cs" id="4_6wo6e"]
+[ext_resource type="Script" uid="uid://dpcm1jyqfesik" path="res://Menus/MenuingComponents/MenuItemsGridContainer.cs" id="5_ux58e"]
 [ext_resource type="AudioStream" uid="uid://dibbos5harqhb" path="res://Assets/Audio/READY!.wav" id="6_q0m6a"]
 [ext_resource type="FontFile" uid="uid://c5a2sdgkmsblj" path="res://Fonts/SpaceMagesFontOutlined.png" id="6_w8ut1"]
 [ext_resource type="AudioStream" uid="uid://cig1jhkfbumhs" path="res://Assets/Audio/GO!.wav" id="7_ww1s6"]
@@ -24,8 +25,8 @@ shadow_offset = Vector2(18, 9)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3npgx"]
 shader = ExtResource("8_wgo8s")
-shader_parameter/PoisonBuildup = 0.0
 shader_parameter/Color = Color(0.8, 0.8, 0, 1)
+shader_parameter/outlineThickness = 1
 
 [sub_resource type="LabelSettings" id="LabelSettings_8boj2"]
 font = ExtResource("6_w8ut1")
@@ -224,35 +225,13 @@ size_flags_vertical = 3
 theme = ExtResource("2_un3ay")
 script = ExtResource("1_7cg30")
 individualScoreCounterScene = ExtResource("1_8o2op")
-scoreCountersContainer = NodePath("VBoxContainer")
+scoreCountersContainer = NodePath("")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScoreBoard" unique_id=1253188426]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -632.0
-offset_top = -216.0
-offset_right = 632.0
-offset_bottom = 216.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 32
-alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ScoreBoard/VBoxContainer" unique_id=1423391292]
-custom_minimum_size = Vector2(1018.22, 0)
-layout_mode = 2
-theme_override_constants/separation = 32
-alignment = 1
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="ScoreBoard/VBoxContainer" unique_id=1934060629]
-custom_minimum_size = Vector2(1018.22, 0)
-layout_mode = 2
-theme_override_constants/separation = 32
-alignment = 1
+[node name="Control" type="Control" parent="ScoreBoard" unique_id=1034221901]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_ux58e")
 
 [node name="READY GO" type="Control" parent="." unique_id=1508956759 node_paths=PackedStringArray("readyGoLabel", "READY", "GO")]
 layout_mode = 3

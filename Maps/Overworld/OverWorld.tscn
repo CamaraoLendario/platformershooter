@@ -20,6 +20,9 @@ Hud = NodePath("../HUD")
 
 [node name="InGameMenu" parent="." unique_id=188947406 instance=ExtResource("4_aqk2v")]
 
+[node name="ButtonsContainer" parent="InGameMenu" index="0" unique_id=483007492]
+visible = false
+
 [node name="Label" parent="InGameMenu" index="2" unique_id=517269953]
 offset_left = -135.0
 offset_right = 129.0

@@ -22,15 +22,15 @@ public partial class PlayerDebugComponent : Controller
 
     void PrepareForGameOverride()
     {
-        Main.inputIdx = -1;
+        Main.SetInputIdx(-1);
         Main.isKeyboardControlled = true;
-        Main.playerInput.keyboardKeyword = "Keyboard";
+        Main.inputComponent.keyboardKeyword = "Keyboard";
         Main.SetColor(0);
         
         // Game.Instance.playerNodesByColor.Add(Main.colorIdx, Main);
-		// Game.Instance.playerNodesByInputIdx.Add(Main.inputIdx, Main);
+		// Game.Instance.playerNodesByInputIdx.Add(Main.GetInputIdx(), Main);
         // Game.Instance.alivePlayerCount += 1;
-		InputGenerator.Instance.GeneratePlayersInput(Main.inputIdx);
+		InputGenerator.Instance.GeneratePlayersInput(Main.GetInputIdx());
     }
 
     public override void ProcessPhysics(double delta)
@@ -105,7 +105,7 @@ public partial class PlayerDebugComponent : Controller
 
 		foreach(string input in debugInputs)
 		{
-			int inputIndex = GetParent<Player>().inputIdx;
+			int inputIndex = GetParent<Player>().GetInputIdx();
 			if (Input.IsActionJustPressed(input + "Keyboard" + inputIndex))
 			{
                 Call(input + "Start");

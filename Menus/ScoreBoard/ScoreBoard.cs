@@ -32,12 +32,20 @@ public partial class ScoreBoard : Control
 
 	public void AddScoreToAll()
 	{
-		AddScoreToAll(Game.Instance.gamemode.teamScoreDiference);
+		//TODO: fix add scrore to all
+		//AddScoreToAll(Game.Instance.gamemode.teamScoreDiference);
 	}
 	public async void AddScoreToAll(Dictionary<int, int> scoreToAdd)
 	{
 		(GetTree().GetFirstNodeInGroup("OverWorld") as OverWorld).canPause = false;
-		// (IF NECESSARY) foreach score counter set it to the old score, ready to animate 
+		Tween tween = CreateTween();
+		tween.TweenMethod(Callable.From((float tweenedValue)=>
+		{
+			foreach (IndividualScoreCounter counter in scoreCounters)
+			{
+			}
+		
+		}), 0f, 1f, 1f);
 		// Show score animation node animation
 		// ^ await animation finished ^
 		// foreach score counter animate adding its score

@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://dxgxqieibdi5n"]
 
-[ext_resource type="PackedScene" uid="uid://dcln4npgljx4k" path="res://Maps/MapTemplate.tscn" id="1_pgqvb"]
+[ext_resource type="PackedScene" uid="uid://dcln4npgljx4k" path="res://Maps/PlayableMaps/MapTemplate.tscn" id="1_pgqvb"]
 [ext_resource type="PackedScene" uid="uid://d2381diivxfax" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/ShipPowerUpChest.tscn" id="2_f7j6o"]
 [ext_resource type="Shader" uid="uid://cx67s33dt1lle" path="res://Maps/MapAssets/Background/Parallax/HomemadeParallax.gdshader" id="2_fbscr"]
 [ext_resource type="PackedScene" uid="uid://bxienc218xiot" path="res://Maps/MapAssets/Hazzards/BlackHole/blackhole.tscn" id="4_fbscr"]

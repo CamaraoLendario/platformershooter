@@ -18,7 +18,6 @@ public partial class MenuItemsGridContainer : MenuItemsContainer
 
 	protected override void ReorganizeItems()
 	{
-
 		Control[] controlNodes = GetControlNodes();
 		Vector2 growDir = Vector2.Down;
 		Vector2 altGrowDir = Vector2.Right;
@@ -43,8 +42,7 @@ public partial class MenuItemsGridContainer : MenuItemsContainer
                 maxOffset = menuItem.Size * growDir;
             }
 			
-
-			if(i%limiter == limiter-1){
+			if(i % limiter == limiter - 1){
 				nextPos += maxOffset;
 				nextPos *= growDir;
 				maxOffset = Vector2.Zero;

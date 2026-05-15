@@ -774,7 +774,7 @@ shader_parameter/color_value = Color(1, 1, 1, 1)
 shader_parameter/gravity = Vector3(0, 0, 0)
 shader_parameter/color_ramp = SubResource("GradientTexture1D_f6sss")
 
-[node name="Player" type="CharacterBody2D" unique_id=2096548899 node_paths=PackedStringArray("effectHandler", "pilot", "ship", "playerInput", "NameLabel", "pilotWeaponHolder", "pilotMeleeAttack", "shipExplosionParticles", "shipReconstructionParticles", "pilotDeathParticles", "shipDeadAudio", "pilotDeadAudio", "pilotSprite", "shipSprite", "shipShield", "pilotShield", "pilotShieldFlickerer", "shipShieldFlickerer")]
+[node name="Player" type="CharacterBody2D" unique_id=2096548899 node_paths=PackedStringArray("effectHandler", "pilot", "ship", "inputComponent", "NameLabel", "pilotWeaponHolder", "pilotMeleeAttack", "shipExplosionParticles", "shipReconstructionParticles", "pilotDeathParticles", "shipDeadAudio", "pilotDeadAudio", "pilotSprite", "shipSprite", "shipShield", "pilotShield", "pilotShieldFlickerer", "shipShieldFlickerer")]
 material = SubResource("ShaderMaterial_jkixf")
 collision_mask = 34
 script = ExtResource("2_30khc")
@@ -782,7 +782,7 @@ HasShield = false
 effectHandler = NodePath("EffectHandler")
 pilot = NodePath("Pilot Controller")
 ship = NodePath("Ship Controller")
-playerInput = NodePath("PlayerInput")
+inputComponent = NodePath("PlayerInput")
 NameLabel = NodePath("OverHeadDisplay/NameLabel")
 pilotWeaponHolder = NodePath("pilotWeaponHolder")
 pilotMeleeAttack = NodePath("MeleeAttack")

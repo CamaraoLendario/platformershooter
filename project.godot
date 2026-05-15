@@ -28,6 +28,7 @@ config/icon="uid://de15nxjq8mt4s"
 Global="*res://Global/Game.cs"
 InputGenerator="*res://Global/InputGenerator.cs"
 MasterPreloader="*uid://4j3emd54gri2"
+SignalBus="*uid://cbe2bxnxu3e56"
 
 [display]
 

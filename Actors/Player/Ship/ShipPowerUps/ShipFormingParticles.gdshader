@@ -65,6 +65,7 @@ void start() {
 }
 
 void process() {
+	
 	if(RESTART){
 		uint alt_seed = hash(NUMBER + uint(1.) + RANDOM_SEED);
 		float angle = rand_from_seed(alt_seed)*PI*2.;

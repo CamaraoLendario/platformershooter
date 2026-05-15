@@ -31,7 +31,7 @@ public partial class InputIcon : TextureRect
 		ControllerUsed oldControllerUsed = currentControllerUsed;
 		(string mainAction, string inputIdx) actionSegments = GetStringAndInt(action);
 		if (@event is InputEventKey && !actionSegments.mainAction.Contains("Keyboard")){
-			GD.Print("keyboard detected!!");
+			//GD.Print("keyboard detected!!");
 			action = actionSegments.mainAction + "Keyboard" + actionSegments.inputIdx;
 		}
 		else if(@event is InputEventJoypadButton|| @event is InputEventJoypadMotion){

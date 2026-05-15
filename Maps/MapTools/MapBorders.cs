@@ -20,8 +20,25 @@ public partial class MapBorders : Node2D
 		}
 	}
 	private bool drawBorders;
-	[Export]
-	public Vector2I MapSize // Map size in tiles
+	public enum StandardSizes {
+		Size16by9,
+		Size32by18,
+		Size48by27,
+		Size64by36,
+		Size80by45
+	}
+
+	[Export] public StandardSizes StandardSize{
+		get{
+			return standardSize;
+		}
+		set{
+			standardSize = value;
+			MapSize = ((int)value+1) * new Vector2I(16, 9);
+		}
+	}
+	private StandardSizes standardSize = StandardSizes.Size48by27;
+	[Export] public Vector2I MapSize // Map size in tiles
 	{
 		get
 		{

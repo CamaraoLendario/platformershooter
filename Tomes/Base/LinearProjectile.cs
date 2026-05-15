@@ -45,16 +45,16 @@ public partial class LinearProjectile : Area2D
 		BodyEntered += OnBodyHit;
 		lifeTimer.Start(lifeTime);
 		
-		pilotArea = GetNode<PilotArea>("%PilotArea");
+		pilotArea = Game.GetMap().GetNode<PilotArea>("%PilotArea");
 		isInPilotArea = pilotArea.IsInPilotArea(Position);
 		AreaEntered += OnAreaEntered;
 	}
 
     private void OnAreaEntered(Area2D area)
     {
-		GD.Print("Area found: " + area);
+		//GD.Print("Area found: " + area);
 		if (area is not DestructibleBlockFlag destructibleBlockFlag) return;
-		GD.Print("Destroying " + area);
+		//GD.Print("Destroying " + area);
 		destructibleBlockFlag.Destroy();
     }
 

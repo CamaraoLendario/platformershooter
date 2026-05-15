@@ -14,7 +14,7 @@ public partial class IndividualScoreCounter : Control
 
     public override void _Ready()
 	{
-		GD.Print("MY COLOR INDEX IS " + colorIdx);
+		//GD.Print("MY COLOR INDEX IS " + colorIdx);
 		name.Text = teamColorsDict.Keys.ElementAt(colorIdx);
 		animationPlayer.AnimationFinished += OnAnimationFinished;
     }

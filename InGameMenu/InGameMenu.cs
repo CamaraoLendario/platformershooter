@@ -30,13 +30,12 @@ public partial class InGameMenu : CanvasLayer
 
 			currentlyAvaliableButtons.Add(possibleButton as Button);
         }
-		GD.Print("ingamemenu is now ready");
 		currentlyAvaliableButtons[currentlySelectedButtonIdx].AddThemeStyleboxOverride("normal", hoveredStyleBox);
 	}
 
 	void Pause(Player playerPausedBy, bool triggeredByDisconnect = false)
 	{
-		inputIdx = playerPausedBy.inputIdx;
+		inputIdx = playerPausedBy.GetInputIdx();
 		if (playerPausedBy.isKeyboardControlled) keyboardKeyword = "Keyboard";
 		else keyboardKeyword = "";
 		
@@ -124,7 +123,6 @@ public partial class InGameMenu : CanvasLayer
             currentlySelectedButtonIdx = 0;
         }
 
-		GD.Print(currentlySelectedButtonIdx);
 		Button newSelectedButton = currentlyAvaliableButtons[currentlySelectedButtonIdx];
 		newSelectedButton.AddThemeStyleboxOverride("normal", hoveredStyleBox);
     }

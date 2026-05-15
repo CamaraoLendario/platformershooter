@@ -15,7 +15,6 @@ public partial class ShipAmmoPowerUp : ShipPowerUp
 	void OnShoot()
 	{
 		currentAmmo -= 1;
-		GD.Print(currentAmmo);	
 		if (currentAmmo <= 0)
 		{
 			End();

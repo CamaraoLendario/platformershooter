@@ -58,7 +58,7 @@ public partial class WeaponPickup : Pickup
 		PilotAttack playerPilot = (body as Player).pilot;
 
 		playerPilot.SetWeapon(weapons[chosenWeapon].Instantiate<Weapon>());
-		SummonNotification((body as Player));
+		SummonNotification(body as Player);
 		EnterCooldown();
 	}
 

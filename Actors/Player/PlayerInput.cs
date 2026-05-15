@@ -24,6 +24,7 @@ public partial class PlayerInput : Node
 	[Signal] public delegate void SpecialEndEventHandler(); 
 #endregion
 	protected Player Main = null;
+	public int inputIdx = -2;
 	public string keyboardKeyword = "";
 	List<string> inputs = new List<string>()
 	{
@@ -41,7 +42,6 @@ public partial class PlayerInput : Node
 			Instance = this; */
 		if (Main == null){
 			Main = GetParentOrNull<Player>();
-			GD.Print(Main);
 		}
 		if (Main.isKeyboardControlled) keyboardKeyword = "Keyboard";
 	}
@@ -51,13 +51,12 @@ public partial class PlayerInput : Node
 		if (!GodotObject.IsInstanceValid(Main))
     		return;
 		if (@event is InputEventMouseMotion) return;
-		int inputIndex = Main.inputIdx;
 		
 		float X, Y;
 
 		if (Main.isKeyboardControlled)
 		{
-			inputIndex = -1;
+			inputIdx = -1;
 			X = Input.GetAxis("LeftKeyboard", "RightKeyboard");
 			Y = Input.GetAxis("UpKeyboard", "DownKeyboard");
 			EmitSignal(SignalName.InputDirChanged, X, Y);
@@ -65,25 +64,25 @@ public partial class PlayerInput : Node
 		}
 		else
 		{
-			X = Input.GetJoyAxis(Main.inputIdx, JoyAxis.LeftX);
-			Y = Input.GetJoyAxis(Main.inputIdx, JoyAxis.LeftY);
+			X = Input.GetJoyAxis(inputIdx, JoyAxis.LeftX);
+			Y = Input.GetJoyAxis(inputIdx, JoyAxis.LeftY);
 			EmitSignal(SignalName.InputDirChanged, X, Y);
 		}
 
 		foreach(string input in inputs)
 		{
-			if (Input.IsActionJustPressed(input + keyboardKeyword + inputIndex))
+			if (Input.IsActionJustPressed(input + keyboardKeyword + inputIdx))
 			{
 				EmitSignal(input + "Start");
 			}
 			
-			if (Input.IsActionJustReleased(input + keyboardKeyword + inputIndex))
+			if (Input.IsActionJustReleased(input + keyboardKeyword + inputIdx))
 			{
 				EmitSignal(input + "End");
 			}
 		}
 
-		if (Input.IsActionJustPressed("Pause" + keyboardKeyword + inputIndex))
+		if (Input.IsActionJustPressed("Pause" + keyboardKeyword + inputIdx))
 		{
 			SignalBus.Instance.EmitSignal(SignalBus.SignalName.PauseRequest, Main, false);
 		}

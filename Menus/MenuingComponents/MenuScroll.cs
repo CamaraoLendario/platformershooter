@@ -34,7 +34,7 @@ public partial class MenuScroll : MenuItem
 			if (labelsContainer != null) SetLabels(1);
 		}
 	}
-	private string[] contents = [
+	protected string[] contents = [
 		"Option1",
 		"Option2",
 		"Option3",
@@ -58,7 +58,7 @@ public partial class MenuScroll : MenuItem
 	[ExportGroup("Nodes")]
 	[Export] Control labelsContainer;
 
-	int currentIdx = 0;
+	protected int currentIdx {get; private set;}= 0;
 	int labelShowing = 2;
 	Tween tween;
 
@@ -202,7 +202,7 @@ public partial class MenuScroll : MenuItem
 		return panelHelper.openSettings;
 	}
 
-	void Scroll(int direction, bool skipAnimation = false)
+	public virtual void Scroll(int direction, bool skipAnimation = false)
 	{
 		bool scrollDown = true;
 		labelShowing = 1;

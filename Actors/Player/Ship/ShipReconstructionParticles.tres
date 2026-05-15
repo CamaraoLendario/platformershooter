@@ -9,5 +9,5 @@ shader = ExtResource("1_lydl0")
 shader_parameter/mainTexture = ExtResource("2_ur1o3")
 shader_parameter/outlineColor = Color(1, 0, 0, 1)
 shader_parameter/initPos = Vector2(0, 0)
-shader_parameter/newPos = Vector2(0, 0)
-shader_parameter/rotation = 93.485
+shader_parameter/newPos = Vector2(23, -17)
+shader_parameter/rotation = 96.72

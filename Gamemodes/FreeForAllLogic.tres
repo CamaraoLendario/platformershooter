@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="FreeForAllLogic" format=3 uid="uid://dfnsondfrbd6"]
+
+[ext_resource type="Script" uid="uid://qrt86oa7grny" path="res://Gamemodes/FreeForAllLogic.cs" id="1_o6122"]
+
+[resource]
+script = ExtResource("1_o6122")
+isTeamed = false
+metadata/_custom_type_script = "uid://qrt86oa7grny"

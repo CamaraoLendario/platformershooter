@@ -28,31 +28,31 @@ public partial class PlayerMenuInput : MenuController
 		foreach(string inputName in menuDirs)
 		{
 			if (Input.IsActionJustPressed(inputName + inputSufix) || Input.IsActionJustReleased(inputName + inputSufix)){
-				GD.Print(inputName + inputSufix);
+				//GD.Print(inputName + inputSufix);
 				UpdateInputVec(GetInputVectorNotNormalized(
-				menuDirs[0] + inputSufix, 
-				menuDirs[1] + inputSufix, 
-				menuDirs[2] + inputSufix, 
-				menuDirs[3] + inputSufix));
+				menuDirs[(int)dirKeyMenu.Left] + inputSufix, 
+				menuDirs[(int)dirKeyMenu.Right] + inputSufix, 
+				menuDirs[(int)dirKeyMenu.Up] + inputSufix, 
+				menuDirs[(int)dirKeyMenu.Down] + inputSufix));
 				GetViewport().SetInputAsHandled();
 				return;
 			}
 		}
 		if (@event.IsReleased()) return;
 		if (Input.IsActionJustPressed("MenuInteract" + inputSufix)){
-			GD.Print("MenuInteract" + inputSufix);
+			//GD.Print("MenuInteract" + inputSufix);
 			EmitSignal(SignalName.Interact);
 			GetViewport().SetInputAsHandled();
 			return;
 		}
 		if (Input.IsActionJustPressed("MenuAltInteract" + inputSufix)){
-			GD.Print("MenuAltInteract" + inputSufix);
+			//GD.Print("MenuAltInteract" + inputSufix);
 			EmitSignal(SignalName.AltInteract);
 			GetViewport().SetInputAsHandled();
 			return;
 		}
 		if (Input.IsActionJustPressed("MenuBack" + inputSufix)){
-			GD.Print("MenuBack" + inputSufix);
+			//GD.Print("MenuBack" + inputSufix);
 			EmitSignal(SignalName.NegativeAction);
 			GetViewport().SetInputAsHandled();
 			return;

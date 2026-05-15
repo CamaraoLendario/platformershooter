@@ -161,7 +161,7 @@ public partial class DDRInputsParent : Node2D
 		{
 			foreach((JoyButton button, Vector2 inputVec) action in actions)
 			{
-				if (Input.IsJoyButtonPressed(frozenPlayer.inputIdx, action.button))
+				if (Input.IsJoyButtonPressed(frozenPlayer.GetInputIdx(), action.button))
 				{				
 					CheckInput(action.inputVec);
 					return;

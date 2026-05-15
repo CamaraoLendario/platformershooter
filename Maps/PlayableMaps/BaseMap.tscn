@@ -5,7 +5,6 @@
 [ext_resource type="Shader" uid="uid://cx67s33dt1lle" path="res://Maps/MapAssets/Background/Parallax/HomemadeParallax.gdshader" id="2_oauj1"]
 [ext_resource type="Texture2D" uid="uid://bh42upheoaqhe" path="res://Maps/MapAssets/Background/SpaceBackground.png" id="2_rdlog"]
 [ext_resource type="Script" uid="uid://45hks3jabd4y" path="res://Maps/MapTools/SpawnPoints.cs" id="3_p5beq"]
-[ext_resource type="PackedScene" uid="uid://cbmq3xh2bcijs" path="res://Actors/Player/Player.tscn" id="4_xtlx7"]
 [ext_resource type="TileSet" uid="uid://cu072ug2gfowi" path="res://Maps/MapAssets/TileMaps/BaseMapTileSet.tres" id="5_ywp2v"]
 [ext_resource type="Script" uid="uid://6gitervwywjh" path="res://Maps/MapTools/InteractableTiles.cs" id="8_ofbdr"]
 [ext_resource type="Script" uid="uid://bpqw0biwsduf2" path="res://Maps/MapTools/MapCamera.cs" id="8_rdlog"]
@@ -17,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://dd6up0jcu0f6j" path="res://Maps/MapAssets/SuddenDeath/BeamOfDeath.png" id="15_44myo"]
 [ext_resource type="PackedScene" uid="uid://deavbdxssxkrb" path="res://Maps/MapAssets/Pickups/ShipPowerUpChestSpawner.tscn" id="16_44myo"]
 [ext_resource type="PackedScene" uid="uid://d2381diivxfax" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/ShipPowerUpChest.tscn" id="17_dat1j"]
-[ext_resource type="Script" uid="uid://cacu8rejhbrse" path="res://Maps/MapAssets/Hazzards/MagicMissile/MagicMissileComponent.cs" id="19_dyhce"]
+[ext_resource type="Script" uid="uid://cpwngqagm5edb" path="res://Maps/Stages/Gamemode.cs" id="18_4tert"]
 [ext_resource type="PackedScene" uid="uid://800ei3re6rhl" path="res://Maps/MapAssets/Hazzards/Spikes/Spikes.tscn" id="20_q5udb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nl7gd"]
@@ -349,7 +348,6 @@ camera = NodePath("Camera2D")
 
 [node name="SpawnPoints" type="Node" parent="." unique_id=216319539]
 script = ExtResource("3_p5beq")
-playerScene = ExtResource("4_xtlx7")
 
 [node name="SpawnPoint1" type="Node2D" parent="SpawnPoints" unique_id=1615231403]
 position = Vector2(-288, -88)
@@ -628,8 +626,7 @@ rotation = 1.5707964
 [node name="Right Marker" parent="Spikes/SpikesSprite" parent_id_path=PackedInt32Array(603614567, 1241953219) index="1" unique_id=1512692051]
 position = Vector2(75, 0)
 
-[node name="MagicMissileComponent" type="Node" parent="." unique_id=298868526 node_paths=PackedStringArray("mapNode")]
-script = ExtResource("19_dyhce")
-mapNode = NodePath("..")
+[node name="Node" type="Node" parent="." unique_id=2139473531]
+script = ExtResource("18_4tert")
 
 [editable path="Spikes"]

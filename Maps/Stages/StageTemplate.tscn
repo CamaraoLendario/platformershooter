@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bpqw0biwsduf2" path="res://Maps/MapTools/MapCamera.cs" id="5_tyxts"]
 [ext_resource type="Script" uid="uid://ckgsusvcdqof8" path="res://Maps/MapTools/MapBorders.cs" id="6_np3hv"]
 [ext_resource type="PackedScene" uid="uid://deavbdxssxkrb" path="res://Maps/MapAssets/Pickups/ShipPowerUpChestSpawner.tscn" id="6_rhrid"]
+[ext_resource type="Script" uid="uid://cpwngqagm5edb" path="res://Maps/Stages/Gamemode.cs" id="7_1t6en"]
 
 [node name="StageTemplate" type="Node" unique_id=1729124460]
 
@@ -51,3 +52,4 @@ CameraEdgeLeway = 32
 [node name="ShipPowerUpChestSpawner" parent="Pickups" unique_id=631959143 instance=ExtResource("6_rhrid")]
 
 [node name="Gamemodes" type="Node" parent="." unique_id=1000462480]
+script = ExtResource("7_1t6en")

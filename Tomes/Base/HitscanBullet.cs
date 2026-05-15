@@ -41,8 +41,8 @@ public partial class HitscanBullet : RayCast2D
 				if (CheckHitBody(collider as Node2D))
 					break;
 			}
-			GD.Print(collider);
-			GD.Print((GetCollisionPoint() - GlobalPosition).Length());
+			//GD.Print(collider);
+			//GD.Print((GetCollisionPoint() - GlobalPosition).Length());
 			ForceRaycastUpdate();
 			collider = GetCollider();
 		}
@@ -104,7 +104,7 @@ public partial class HitscanBullet : RayCast2D
 	}
 	protected virtual void Hit(StaticBody2D body)
 	{
-		GD.Print(body);
+		//GD.Print(body);
 	}
 	
 	public virtual void Hit(TileMapLayer mapLayer)

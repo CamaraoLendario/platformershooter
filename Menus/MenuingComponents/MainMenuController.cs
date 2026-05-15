@@ -9,10 +9,11 @@ using System.Reflection.PortableExecutable;
 public partial class MainMenuController : MenuController
 {
 	[Export] public MainMenuScreen currentScreen;
-
+	bool enabled = true;
 	public override void _Ready()
 	{
 		base._Ready();
+		SignalBus.Instance.GameStarted += () => {enabled = false;};
 		if (Engine.IsEditorHint()) return;
 		foreach (Node node in GetParent().GetChildren())
 		{
@@ -25,7 +26,7 @@ public partial class MainMenuController : MenuController
 
 	public override void _Input(InputEvent @event)
 	{
-		if (@event is InputEventMouse) return;
+		if (!enabled || @event is InputEventMouse) return;
 
 		if (currentScreen is MainMenuMainScreen mainMenuMainScreen && @event is not InputEventJoypadMotion && !@event.IsReleased())
 		{
@@ -46,23 +47,23 @@ public partial class MainMenuController : MenuController
 			if (Input.IsActionJustPressed(inputName + "Keyboard") || Input.IsActionJustReleased(inputName + "Keyboard"))
 			{
 				newInputVec = GetInputVectorNotNormalized(
-				menuDirs[0] + "Keyboard", 
-				menuDirs[1] + "Keyboard", 
-				menuDirs[2] + "Keyboard", 
-				menuDirs[3] + "Keyboard");
+				menuDirs[(int)dirKeyMenu.Left] + "Keyboard", 
+				menuDirs[(int)dirKeyMenu.Right] + "Keyboard", 
+				menuDirs[(int)dirKeyMenu.Up] + "Keyboard", 
+				menuDirs[(int)dirKeyMenu.Down] + "Keyboard");
 				break;
 			}
 			if (Input.IsActionJustPressed(inputName) || Input.IsActionJustReleased(inputName))
 			{
 				newInputVec = GetInputVectorNotNormalized(
-				menuDirs[0], 
-				menuDirs[1], 
-				menuDirs[2], 
-				menuDirs[3]);
+				menuDirs[(int)dirKeyMenu.Left], 
+				menuDirs[(int)dirKeyMenu.Right], 
+				menuDirs[(int)dirKeyMenu.Up], 
+				menuDirs[(int)dirKeyMenu.Down]);
 				break;
 			}
 		}
-		GD.Print(newInputVec);		
+		
 		UpdateInputVec(newInputVec);
 
 		if ((Input.IsActionJustPressed("MenuInteract") || Input.IsActionJustPressed("MenuInteractKeyboard")) && currentScreen.OnInteract()){

@@ -188,6 +188,6 @@ public partial class MeleeAttack : Area2D
 
 	public int GetIdx()
 	{
-		return Main.inputIdx;
+		return Main.GetInputIdx();
 	}
 }

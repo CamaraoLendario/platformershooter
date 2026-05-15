@@ -19,6 +19,7 @@ process_material = ExtResource("1_two45")
 
 [node name="ShipReconstructionParticles" type="GPUParticles2D" parent="." unique_id=832438993]
 z_index = 2
+position = Vector2(23, -17)
 amount = 1024
 lifetime = 1.87
 explosiveness = 1.0

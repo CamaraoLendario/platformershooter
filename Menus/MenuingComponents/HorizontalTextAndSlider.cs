@@ -31,7 +31,6 @@ public partial class HorizontalTextAndSlider : HorizontalMenu
 	{
 		if (dir.X == 0) return false;
 		
-		GD.Print(dir);
 		SliderValue += (int)dir.X;
 		return true;
 	}
