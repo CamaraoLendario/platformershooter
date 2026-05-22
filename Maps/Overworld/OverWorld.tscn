@@ -6,12 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://i7qqi76sh82u" path="res://InGameMenu/InGameMenu.tscn" id="4_aqk2v"]
 
 [node name="OverWorld" type="Node2D" unique_id=582483126 groups=["OverWorld"]]
-process_mode = 3
+process_mode = 1
 editor_description = "world type shit
 "
 script = ExtResource("1_tlwt5")
 
 [node name="HUD" parent="." unique_id=1897452230 instance=ExtResource("3_tlwt5")]
+process_mode = 3
 
 [node name="World" type="Node2D" parent="." unique_id=1758205273 node_paths=PackedStringArray("Hud") groups=["World"]]
 process_mode = 1

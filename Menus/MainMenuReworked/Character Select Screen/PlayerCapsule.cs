@@ -1,9 +1,5 @@
 using Godot;
-using Microsoft.VisualBasic;
-using SpaceMages;
-using System;
-using System.Linq;
-using System.Threading;
+using System.Collections.Generic;
 using static SpaceMages.SpaceMagesVars;
 
 [Tool]
@@ -89,6 +85,7 @@ public partial class PlayerCapsule : MenuItem
 		enabledCapsule.Show();
 		disabledCapsule.Hide();
 		renameKeyboard.Close();
+		UnReady();
 		isEnabled = true;
 		inputNode.isEnabled = true;
 		SetColor(0);
@@ -208,14 +205,14 @@ public partial class PlayerCapsule : MenuItem
 	}
 	InputIcon[] GetInputIcons(Node from)
 	{
-		InputIcon[] inputIcons = [];
+		List<InputIcon> inputIcons = [];
 		foreach (Node node in from.GetChildren())
 		{
 			if (node is InputIcon inputIcon)
-				inputIcons = inputIcons.Append(inputIcon).ToArray();
+				inputIcons.Add(inputIcon);
             foreach (InputIcon nestedInputIcon in GetInputIcons(node))
-                inputIcons = inputIcons.Append(nestedInputIcon).ToArray();
+                inputIcons.Add(nestedInputIcon);
 		}
-		return inputIcons;
+		return inputIcons.ToArray();
 	}
 }

@@ -1,135 +1,62 @@
-[gd_scene format=3 uid="uid://c2q477nhb4j0p"]
+[gd_scene format=3 uid="uid://fg3evf2er64m"]
 
 [ext_resource type="Script" uid="uid://cw8w6rias5p3w" path="res://Menus/ScoreBoard/IndividualScoreCounter.cs" id="1_6iebm"]
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_c015y"]
+[ext_resource type="Shader" uid="uid://bq8tmomgpke7r" path="res://ScoreCounter.gdshader" id="1_lvm1b"]
+[ext_resource type="Texture2D" uid="uid://2iluydhfwvgn" path="res://Menus/ScoreBoard/sprites/fansCrowd.png" id="4_gya7y"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6iebm"]
-bg_color = Color(0, 0, 0, 0.2901961)
-corner_radius_top_left = 32
-corner_radius_top_right = 32
-corner_radius_bottom_right = 32
-corner_radius_bottom_left = 32
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pvc30"]
+resource_local_to_scene = true
+shader = ExtResource("1_lvm1b")
+shader_parameter/teamColor = Color(1, 1, 1, 1)
+shader_parameter/Scale = 2.0
+shader_parameter/pointsValue = 0.0
+shader_parameter/separation = 0.4
+shader_parameter/offsetStrength = 0.01372843980789184
+shader_parameter/RandHOffset = 0.53
+shader_parameter/animationSpeed = 2.0
 
-[sub_resource type="LabelSettings" id="LabelSettings_6iebm"]
-font_size = 58
+[sub_resource type="LabelSettings" id="LabelSettings_qluyh"]
+font_size = 28
 
-[sub_resource type="Animation" id="Animation_6iebm"]
-resource_name = "AddScore"
-length = 0.5
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Panel/addedScore:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(200, -0.25, 0, 0.25, 0, 70, -0.25, 0, 0, 0),
-"times": PackedFloat32Array(0, 0.5)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Panel/addedScore:modulate:a")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.5)
-}
-
-[sub_resource type="Animation" id="Animation_c015y"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Panel/addedScore:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(96, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Panel/addedScore:modulate:a")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lvm1b"]
-_data = {
-&"AddScore": SubResource("Animation_6iebm"),
-&"RESET": SubResource("Animation_c015y")
-}
-
-[node name="IndividualScoreCounter" type="Control" unique_id=781488971 node_paths=PackedStringArray("name", "scoreCount", "addedScore", "animationPlayer")]
-custom_minimum_size = Vector2(400, 200)
+[node name="Control" type="Control" unique_id=584216654]
+material = SubResource("ShaderMaterial_pvc30")
+custom_minimum_size = Vector2(201, 516)
 layout_mode = 3
-anchors_preset = 0
-offset_right = 400.0
-offset_bottom = 200.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme = ExtResource("1_c015y")
-script = ExtResource("1_6iebm")
-name = NodePath("Panel/VBoxContainer/PlayerName")
-scoreCount = NodePath("Panel/VBoxContainer/Score")
-addedScore = NodePath("Panel/addedScore")
-animationPlayer = NodePath("AnimationPlayer")
-
-[node name="Panel" type="Panel" parent="." unique_id=40575644]
-layout_mode = 0
-offset_right = 400.0
-offset_bottom = 200.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_6iebm")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=710388440]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -170.0
-offset_top = -54.0
-offset_right = 170.0
-offset_bottom = 54.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1719.0
+offset_bottom = -564.0
 grow_horizontal = 2
 grow_vertical = 2
-alignment = 1
+theme = ExtResource("1_c015y")
+script = ExtResource("1_6iebm")
 
-[node name="PlayerName" type="Label" parent="Panel/VBoxContainer" unique_id=1286508398]
-layout_mode = 2
-text = "PlayerName"
-label_settings = SubResource("LabelSettings_6iebm")
-horizontal_alignment = 1
-
-[node name="Score" type="Label" parent="Panel/VBoxContainer" unique_id=755896319]
-layout_mode = 2
-text = "0"
-label_settings = SubResource("LabelSettings_6iebm")
-horizontal_alignment = 1
-
-[node name="addedScore" type="Label" parent="Panel" unique_id=1324386165]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(69, 17)
+[node name="nameLabel" type="Label" parent="." unique_id=185323799]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(67, 0)
 layout_mode = 0
-offset_left = 92.0
-offset_top = 96.0
-offset_right = 273.0
-offset_bottom = 213.00064
-text = "+1"
-label_settings = SubResource("LabelSettings_6iebm")
+offset_right = 201.0
+offset_bottom = 60.0
+label_settings = SubResource("LabelSettings_qluyh")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1546575423]
-libraries/ = SubResource("AnimationLibrary_lvm1b")
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1802638884]
+clip_children = 2
+layout_mode = 0
+offset_top = 60.0
+offset_right = 201.0
+offset_bottom = 516.0
+color = Color(0, 0, 0.09803922, 1)
+
+[node name="crowdTexture" type="TextureRect" parent="ColorRect" unique_id=536548461]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_pvc30")
+layout_mode = 0
+offset_left = -47.0
+offset_top = 5.0
+offset_right = 54.0
+offset_bottom = 81.0
+texture = ExtResource("4_gya7y")

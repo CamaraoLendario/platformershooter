@@ -52,14 +52,17 @@ font = ExtResource("4_jiph2")
 font_size = 6
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ieod"]
+resource_local_to_scene = true
 atlas = ExtResource("5_4sko0")
 region = Rect2(0, 0, 4, 4)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jhh7x"]
+resource_local_to_scene = true
 atlas = ExtResource("5_4sko0")
 region = Rect2(0, 0, 4, 4)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e3tbv"]
+resource_local_to_scene = true
 atlas = ExtResource("5_4sko0")
 region = Rect2(0, 0, 4, 4)
 
@@ -908,11 +911,11 @@ libraries/ = SubResource("AnimationLibrary_aao0a")
 z_index = 1
 material = SubResource("CanvasItemMaterial_f6sss")
 emitting = false
-amount = 272
+amount = 288
 lifetime = 3.0
 one_shot = true
-speed_scale = 1.8
 explosiveness = 1.0
+fixed_fps = 60
 local_coords = true
 process_material = ExtResource("13_f6sss")
 
@@ -1049,6 +1052,7 @@ dualGunsIcon = NodePath("../OverHeadDisplay/PowerUpIcons/DualGunsIcon")
 controller = NodePath("../Ship Controller")
 
 [node name="PlayerInput" type="Node" parent="." unique_id=181455471]
+process_mode = 1
 script = ExtResource("15_n45d6")
 
 [node name="EffectHandler" type="Node" parent="." unique_id=611864569]

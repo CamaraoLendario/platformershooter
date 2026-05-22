@@ -26,13 +26,12 @@ public partial class Map : Node2D
 
     public override void _Ready() 
     {
-        SignalBus.Instance.NewRoundStarted += OnNewRoundStarted;
+        SignalBus.Instance.NewRoundStart += OnNewRoundStart;
         currentTileMapLayerNode = GetNode<InteractableTiles>("InteractableTiles");
-        //set gamemode
         //ReplicateCollisions();
     }
     
-    void OnNewRoundStarted()
+    void OnNewRoundStart()
     {
         currentTileMapLayerNode.Reset();
         ForcePickupsReset();
@@ -70,7 +69,7 @@ public partial class Map : Node2D
 
     void DisconnectSignals()
     {
-        SignalBus.Instance.NewRoundStarted -= OnNewRoundStarted;
+        SignalBus.Instance.NewRoundStart -= OnNewRoundStart;
     }
 
     void ReplicateCollisions()

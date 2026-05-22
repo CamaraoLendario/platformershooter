@@ -13,7 +13,7 @@ public partial class Game : Node
 	public Main main;
 	public MainMenu mainMenu;
 	public Map currentMap = GD.Load<PackedScene>("uid://cck3f1axqqkvm").Instantiate<Map>();
-	public Dictionary<string, int>[] playersInfo = [];
+	public PlayerInfo[] playersInfo = [];
 	public Player[] players = [];
 	public ExperimentalFeatures experimentalFeatures;
 	public enum GamemodeIdxs {
@@ -32,7 +32,7 @@ public partial class Game : Node
 		Instance ??= this;
 	}
 
-	public static void StartGame(Dictionary<string, int>[] newPlayersInfo, Map map)
+	public static void StartGame(PlayerInfo[] newPlayersInfo, Map map)
 	{
 		Instance.playersInfo = newPlayersInfo;
 		Instance.currentMap = map;
@@ -41,17 +41,7 @@ public partial class Game : Node
 		GetMain().StartGame();	
 	}
 
-	public void AddPlayer(Player player)
-	{
-		players = players.Append(player).ToArray();
-	}
-
 	public void BackToMapSelector()
-	{
-		
-	}
-
-	public void RestartRound()
 	{
 		
 	}
@@ -60,9 +50,9 @@ public partial class Game : Node
 	{
 		List<int> inputIdxs = [];
 
-		foreach (Dictionary<string, int> player in playersInfo)
+		foreach (PlayerInfo playerInfo in playersInfo)
 		{
-			inputIdxs.Add(player["inputIdx"]);
+			inputIdxs.Add(playerInfo.inputIdx);
 		}
 
 		InputGenerator.Instance.GeneratePlayersInput(inputIdxs);
@@ -77,15 +67,15 @@ public partial class Game : Node
 		UnPauseGame();
 	}
 
-	public void PauseGame()
+	public static void PauseGame()
 	{
-		GetTree().Paused = true;
-		EmitSignal(SignalName.PausedGame);
+		Instance.GetTree().Paused = true;
+		Instance.EmitSignal(SignalName.PausedGame);
 	}
-	public void UnPauseGame()
+	public static void UnPauseGame()
 	{
-		GetTree().Paused = false;
-		EmitSignal(SignalName.UnPausedGame);
+		Instance.GetTree().Paused = false;
+		Instance.EmitSignal(SignalName.UnPausedGame);
 	}
 	public Player GetPlayerFromInputIdx(int inputIdx)
 	{
@@ -124,7 +114,10 @@ public partial class Game : Node
 	{
 		return Instance.players;
 	}
-
+	public static PlayerInfo[] GetPlayersInfo()
+	{
+		return Instance.playersInfo;
+	}
     public static Main GetMain()
 	{
 		return Instance.GetTree().GetFirstNodeInGroup("Main") as Main;

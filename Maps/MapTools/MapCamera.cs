@@ -43,17 +43,18 @@ public partial class MapCamera : Camera2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (Engine.IsEditorHint()) return;
-		//screenSize = DisplayServer.WindowGetSize();
-		targetPos = GetCenter();
-		SetZoom();
-		ProcessZoom();
+		#if !TOOLS
+			//screenSize = DisplayServer.WindowGetSize();
+			targetPos = GetCenter();
+			SetZoom();
+			ProcessZoom();
 
-		targetPos = StayWithinBounds();
-		EasePos();
-		
-		if (shakeForce > 0) ProcessCameraShake();
-        RenderingServer.GlobalShaderParameterSet("cameraDistFromOrigin", GlobalPosition);
+			targetPos = StayWithinBounds();
+			EasePos();
+			
+			if (shakeForce > 0) ProcessCameraShake();
+			RenderingServer.GlobalShaderParameterSet("cameraDistFromOrigin", GlobalPosition);
+		#endif
 	}
 
 

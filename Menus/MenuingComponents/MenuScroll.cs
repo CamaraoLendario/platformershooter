@@ -56,9 +56,9 @@ public partial class MenuScroll : MenuItem
 	}
 	int separation;
 	[ExportGroup("Nodes")]
-	[Export] Control labelsContainer;
+	[Export] protected Control labelsContainer;
 
-	protected int currentIdx {get; private set;}= 0;
+	[Export] protected int currentIdx {get; private set;} = 0;
 	int labelShowing = 2;
 	Tween tween;
 
@@ -66,7 +66,7 @@ public partial class MenuScroll : MenuItem
 	{
 		base._Ready();
 		labelsContainer = GetNode<Control>("%scrollingLabels");
-		currentIdx = -1;
+		currentIdx --;
 		Scroll(1, true);
 		CallDeferred(MethodName.UpdateHelperMinimumSize);
 		CallDeferred(MethodName.Close);
@@ -145,7 +145,7 @@ public partial class MenuScroll : MenuItem
 		return labelsContainer.GetChild<Label>(labelShowing);
 	}
 
-	void SetLabels(int dir)
+	protected virtual void SetLabels(int dir)
 	{
 		for(int i = 0; i < 4; i++)
 		{
@@ -202,7 +202,7 @@ public partial class MenuScroll : MenuItem
 		return panelHelper.openSettings;
 	}
 
-	public virtual void Scroll(int direction, bool skipAnimation = false)
+	public void Scroll(int direction, bool skipAnimation = false)
 	{
 		bool scrollDown = true;
 		labelShowing = 1;

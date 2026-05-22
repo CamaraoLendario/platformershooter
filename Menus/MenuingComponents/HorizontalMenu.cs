@@ -25,10 +25,10 @@ public partial class HorizontalMenu : MenuItem
 		set
 		{
 			totalSize = value;
-			if (Engine.IsEditorHint())
-			{
+			# if TOOLS
+				if (Engine.IsEditorHint()) return;
+			#endif
 				CallDeferred(MethodName.DoFormatting);
-			}
 		}
 	}
 	Vector2 totalSize = new Vector2(

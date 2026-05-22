@@ -45,7 +45,7 @@ public partial class RenameKeyboard : Control
 			if (node is not Panel && node is not MenuItemsListContainer) node.QueueFree();
 		}
 
-		Node[] newLetters = [];
+		Node[] newLetters = new Node[letters.Length];
 		for(int i = 0; i < letters.Length; i++)
 		{
 			Control control = new Control()
@@ -60,7 +60,7 @@ public partial class RenameKeyboard : Control
 				HorizontalAlignment = HorizontalAlignment.Center,
 				VerticalAlignment = VerticalAlignment.Center,
 			};
-			newLetters = newLetters.Append(control).ToArray(); 
+			newLetters[i] = control; 
 			//optionsContainer.CallDeferred(MethodName.AddChild, control);
 			control.CallDeferred(MethodName.SetScript, menuItemScript);
 			control.CallDeferred(MethodName.AddChild, newLetterButton);

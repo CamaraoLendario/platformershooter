@@ -19,11 +19,11 @@ public partial class PoisonMinePlacerBody : CharacterBody2D
         velocity = direction * speed;
 		sprite.Rotation = direction.Angle();
 		currentMap = Game.Instance.currentMap;
-		SignalBus.Instance.NewRoundStarted += OnNewRoundStarted;
+		SignalBus.Instance.NewRoundStart += OnNewRoundStart;
 		world = GetTree().GetFirstNodeInGroup("World") as World;
 	}
 
-	void OnNewRoundStarted()
+	void OnNewRoundStart()
 	{
 		QueueFree();
 	}
@@ -66,7 +66,7 @@ public partial class PoisonMinePlacerBody : CharacterBody2D
     public override void _ExitTree()
     {
         base._ExitTree();
-		SignalBus.Instance.NewRoundStarted -= OnNewRoundStarted;
+		SignalBus.Instance.NewRoundStart -= OnNewRoundStart;
     }
 
 }

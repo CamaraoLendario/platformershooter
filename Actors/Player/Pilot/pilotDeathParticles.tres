@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://cuu7ef3oi50rv"]
 
-[ext_resource type="Shader" uid="uid://cnr3u2i0u1fwl" path="res://Actors/Player/Pilot/PilotExplosion.gdshader" id="1_1t66e"]
+[ext_resource type="Shader" uid="uid://bq163qjda65hj" path="res://test/NewPilotExplosion.gdshader" id="1_1t66e"]
 [ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Sprites/PilotStill.png" id="2_piuy8"]
 
 [resource]

@@ -41,10 +41,10 @@ public partial class PoisonMine : Node2D
 
 		PrepareExplosion();
 		SetDirection();
-		SignalBus.Instance.NewRoundStarted += OnNewRoundStarted;
+		SignalBus.Instance.NewRoundStart += OnNewRoundStart;
 	}
 
-	void OnNewRoundStarted()
+	void OnNewRoundStart()
 	{
 		QueueFree();
 	}
@@ -106,7 +106,7 @@ public partial class PoisonMine : Node2D
     {
         base._ExitTree();
 
-		SignalBus.Instance.NewRoundStarted -= OnNewRoundStarted;
+		SignalBus.Instance.NewRoundStart -= OnNewRoundStart;
     }
 
 }

@@ -22,7 +22,7 @@ public partial class InGameMenu : CanvasLayer
 	public override void _Ready()
 	{
 		ConnectSignals();
-		SignalBus.Instance.NewRoundStarted += HideMenu;
+		SignalBus.Instance.NewRoundStart += HideMenu;
 
 		foreach (Node possibleButton in buttonsContainer.GetChildren())
         {
@@ -36,7 +36,7 @@ public partial class InGameMenu : CanvasLayer
 	void Pause(Player playerPausedBy, bool triggeredByDisconnect = false)
 	{
 		inputIdx = playerPausedBy.GetInputIdx();
-		if (playerPausedBy.isKeyboardControlled) keyboardKeyword = "Keyboard";
+		if (playerPausedBy.GetInputIdx() == -1) keyboardKeyword = "Keyboard";
 		else keyboardKeyword = "";
 		
 		GD.Print("GAME PAUSED");
@@ -44,12 +44,12 @@ public partial class InGameMenu : CanvasLayer
 		else gamePausedBy.Text = playerPausedBy.Name + "'s Controller Disconnected";
 		buttonsContainer.Show();
 		isHidden = false;
-		Game.Instance.PauseGame();
+		Game.PauseGame();
 	}
 
 	void UnPause()
     {
-        Game.Instance.UnPauseGame();
+        Game.UnPauseGame();
     }
 	
 	void OnResumePressed()
@@ -142,7 +142,7 @@ public partial class InGameMenu : CanvasLayer
         inputNode.InGameMenuWASD -= OnMenuWASD;
 		inputNode.InGameMenuInteract -= OnMenuInteract;
 		inputNode.InGameMenuBack -= OnMenuBack;
-		SignalBus.Instance.NewRoundStarted -= HideMenu;
+		SignalBus.Instance.NewRoundStart -= HideMenu;
 		base._ExitTree();
     }
 

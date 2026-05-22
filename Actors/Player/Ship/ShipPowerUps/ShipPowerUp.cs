@@ -12,7 +12,7 @@ public partial class ShipPowerUp : Node2D
     {
         holder = GetParent<ShipPowerUpsHolder>();
         controller = holder.controller;
-        SignalBus.Instance.NewRoundStarted += End;
+        SignalBus.Instance.NewRoundStart += End;
     }
 
     public virtual void End()
@@ -23,7 +23,7 @@ public partial class ShipPowerUp : Node2D
     public override void _ExitTree()
     {
         base._ExitTree();
-        SignalBus.Instance.NewRoundStarted -= End;
+        SignalBus.Instance.NewRoundStart -= End;
     }
 
 }

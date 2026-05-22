@@ -12,7 +12,6 @@ public partial class PlayerMenuInput : MenuController
 	int inputIdx = -2;
 	string keyboardKeyword = "";
 
-	// TODO: add analog stick support for menu WASD 
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (inputIdx < -1 ||

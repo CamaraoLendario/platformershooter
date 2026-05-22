@@ -60,11 +60,10 @@ public partial class Player : CharacterBody2D
 	[Export] public AnimatedSprite2D pilotShield;
 	[Export] public AnimationPlayer pilotShieldFlickerer;
 	[Export] public AnimationPlayer shipShieldFlickerer;
-	public static PackedScene playerScene = GD.Load<PackedScene>("uid://cbmq3xh2bcijs");
+	public const string playerSceneUID = "uid://cbmq3xh2bcijs";
 	#endregion
 	public Controller currentController;
 	public int colorIdx = -1; // this will eventually be class instead
-	public bool isKeyboardControlled = false;
 	public World world;
 	
 	#region Timers
@@ -190,6 +189,7 @@ public partial class Player : CharacterBody2D
 	}
 	public bool TakeDamage(Player damageDealer = null)
 	{
+		//TODO somewhere somehow you can take damage at the start of the round wtf is going on
 		if (isDead || isInvulnerable || godMode) return false;
 		if (damageDealer == null) damageDealer = this;
 
@@ -430,8 +430,12 @@ public partial class Player : CharacterBody2D
 	{
 		inputComponent.AimStart += OnAimStart;
 		inputComponent.AimEnd += OnAimEnd;
+		Game.Instance.UnPausedGame += () =>
+		{
+			isAiming = Input.IsActionJustPressed("Aim" + inputComponent.keyboardKeyword + GetInputIdx());	
+		};
 		
-		GD.Print("MY PLAYER COLOR INDEX IS THIS: " + colorIdx);
+		//GD.Print("MY PLAYER COLOR INDEX IS THIS: " + colorIdx);
 
 		world = GetTree().GetFirstNodeInGroup("World") as World;
 
@@ -450,8 +454,8 @@ public partial class Player : CharacterBody2D
 		shipCooldown.OneShot = true;
 		AddChild(shipPardonTimer);
 		shipPardonTimer.OneShot = true;
-		pilotWeaponHolder.WeaponShot += () => shipPardonTimer.Stop();
-		pilotMeleeAttack.meleed += () => shipPardonTimer.Stop();
+		pilotWeaponHolder.WeaponShot += shipPardonTimer.Stop;
+		pilotMeleeAttack.meleed += shipPardonTimer.Stop;
 		AddChild(shieldCooldownTimer);
 		shieldCooldownTimer.Timeout  += () =>
 		{
@@ -467,5 +471,24 @@ public partial class Player : CharacterBody2D
 	public int GetInputIdx()
 	{
 		return inputComponent.inputIdx;
+	}
+	public void SetPlayerName(string newName)
+	{
+		Name = $"Player: {newName}";
+		NameLabel.Text = newName;
+	}
+	public static Player New(PlayerInfo playerInfo)
+	{
+		return New(playerInfo.Name, playerInfo.colorIdx, playerInfo.inputIdx);
+	}
+	public static Player New(string newName, int colorIdx, int inputIdx)
+	{
+		Player player = GD.Load<PackedScene>(playerSceneUID).Instantiate<Player>();
+
+		player.SetPlayerName(newName);
+		player.SetColor(colorIdx);
+		player.SetInputIdx(inputIdx);
+
+		return player;
 	}
 }

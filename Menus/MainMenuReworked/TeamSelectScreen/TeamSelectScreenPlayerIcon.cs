@@ -10,6 +10,7 @@ public partial class TeamSelectScreenPlayerIcon : MenuItem
 	[Export] TextureRect pilotStill;
 	[Export] Label nameLabel;
 	[Export] PlayerMenuInput inputNode;
+	public int currentTeam = -1;
 
     public override void _Ready()
 	{

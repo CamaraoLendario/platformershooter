@@ -23,7 +23,6 @@ public partial class PlayerDebugComponent : Controller
     void PrepareForGameOverride()
     {
         Main.SetInputIdx(-1);
-        Main.isKeyboardControlled = true;
         Main.inputComponent.keyboardKeyword = "Keyboard";
         Main.SetColor(0);
         

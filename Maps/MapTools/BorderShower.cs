@@ -16,10 +16,9 @@ public partial class BorderShower : ColorRect
     {
         shaderMaterial.SetShaderParameter("position", Position);
 
-		if (Engine.IsEditorHint())
-        { 
+		#if TOOLS
         	shaderMaterial.SetShaderParameter("rectSize", Size);
-        }
+        # endif
     }
 
 }

@@ -9,14 +9,12 @@ public partial class FreeForAllLogic : GamemodeLogic
 
 	public override void OnGameStarted()
 	{
-		int i = 0;
-		foreach(Player player in Game.Instance.players)
+		base.OnGameStarted();
+		Player[] players = Game.Instance.players;
+		for(int i = 0; i < players.Length; i++)
 		{
-			playerTeam.Add(player, i);
-			teamPoints.Add(i, 0);
-			i++;
+			RegisterTeam(players[i], i);
 		}
 	}
 
-	
 }	

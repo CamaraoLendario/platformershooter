@@ -4,7 +4,6 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 
-//TODO: make particlesNodesCount scale with player count
 public partial class GPUParticlesPool : Node2D
 {
 	public static GPUParticlesPool Instance = null;
@@ -170,7 +169,8 @@ public partial class GPUParticlesPool : Node2D
 		from.ProcessMaterial = to.ProcessMaterial;
 		from.Material = to.Material;
 		from.ZIndex = GetAbsoluteZindex(to);
-		//from.ZAsRelative = false;
+		from.ZAsRelative = to.ZAsRelative;
+		from.ProcessMode = ProcessModeEnum.Pausable;
 	}
 
 	public static void Return(GpuParticles2D particles)

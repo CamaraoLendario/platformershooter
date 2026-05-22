@@ -4,6 +4,21 @@
 [ext_resource type="Script" uid="uid://i1rbiisn08tx" path="res://Menus/MainMenuReworked/TeamSelectScreen/TeamSelectScreen.cs" id="2_sewge"]
 [ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MenuItemsListContainer.cs" id="2_twfpd"]
 [ext_resource type="Script" uid="uid://dhewsc5ayax3f" path="res://Menus/MenuingComponents/MenuItem.cs" id="3_88bbw"]
+[ext_resource type="Shader" uid="uid://cq53yv3sm7bqh" path="res://Menus/MainMenuReworked/flashingEffect.gdshader" id="5_i854h"]
+[ext_resource type="PackedScene" uid="uid://c0jq1fa6bb1ar" path="res://Menus/MenuingComponents/inputIcon.tscn" id="6_ojgc1"]
+[ext_resource type="Texture2D" uid="uid://bmpswyokv23bw" path="res://Menus/MenuingComponents/inputIcons.png" id="7_kdlg7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vfffu"]
+shader = ExtResource("5_i854h")
+shader_parameter/flashPerSec = 2.0
+shader_parameter/maxAlpha = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tgdw4"]
+atlas = ExtResource("7_kdlg7")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ojtpg"]
+font_size = 77
 
 [node name="TeamSelectScreen" unique_id=1595907082 node_paths=PackedStringArray("playersContainer") instance=ExtResource("1_2cci3")]
 script = ExtResource("2_sewge")
@@ -25,19 +40,19 @@ horizontal = true
 
 [node name="ColorRect" type="ColorRect" parent="TeamsRects" index="0" unique_id=1001453481]
 layout_mode = 0
-offset_left = -650.0
-offset_top = -459.0
-offset_right = -350.0
-offset_bottom = 459.0
+offset_left = -150.0
+offset_top = -1268.0
+offset_right = 150.0
+offset_bottom = -350.0
 color = Color(1, 0, 0, 0.49803922)
 script = ExtResource("3_88bbw")
 
 [node name="ColorRect2" type="ColorRect" parent="TeamsRects" index="1" unique_id=1295600925]
 layout_mode = 0
-offset_left = 350.0
-offset_top = -459.0
-offset_right = 650.0
-offset_bottom = 459.0
+offset_left = -150.0
+offset_top = 350.0
+offset_right = 150.0
+offset_bottom = 1268.0
 color = Color(0, 0, 1, 0.49803922)
 script = ExtResource("3_88bbw")
 
@@ -53,3 +68,33 @@ grow_vertical = 2
 script = ExtResource("2_twfpd")
 Separation = 10
 childrenAreScreenAnimated = false
+
+[node name="StartGame" type="HBoxContainer" parent="." index="2" unique_id=639292042]
+visible = false
+material = SubResource("ShaderMaterial_vfffu")
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -211.0
+offset_top = -105.0
+offset_right = 212.0
+offset_bottom = -55.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="StartGameInputIcon" parent="StartGame" index="0" unique_id=1683868203 instance=ExtResource("6_ojgc1")]
+use_parent_material = true
+layout_mode = 2
+texture = SubResource("AtlasTexture_tgdw4")
+action = "MenuStart-2"
+
+[node name="StartGameLabel" type="Label" parent="StartGame" index="1" unique_id=1411985521]
+use_parent_material = true
+layout_mode = 2
+text = "start game"
+label_settings = SubResource("LabelSettings_ojtpg")

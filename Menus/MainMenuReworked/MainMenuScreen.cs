@@ -1,8 +1,11 @@
 using Godot;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using static SpaceMages.SpaceMagesVars;
 
 [Tool]
@@ -103,40 +106,15 @@ public partial class MainMenuScreen : Control
 		if (screenMoveTween is not null && screenMoveTween.IsRunning()){
 			screenMoveTween.Kill();
 		}
+		screenMoveTween = CreateTween();
 
 		float animationTime = 0.6f;
 		if (skipAnimation) animationTime *= 0;
 	
 		MenuItem[] Nodes = GetScreenNodes().ToArray();
-		int NodesCount = Nodes.Length;
-	
-		Vector2 ScreenSize = GetScreenRez();
+		float delay = reverse ? 0.1f : 0f;
 		
-		float reverseTweenValue = 0;
-		float delay = 0f;
-		if (reverse){
-			reverseTweenValue = 1;
-			delay = 0.1f;
-		}
-
-		screenMoveTween = CreateTween();
-		screenMoveTween.TweenMethod(Callable.From((float tweenedValue) =>{
-			for(int i = 0; i < NodesCount; i++)
-			{
-				MenuItem node;
-				if ((dir.Y > 0 && !reverse || dir.Y < 0 && reverse) == !isReverseOrder) node = Nodes[i];
-				else  node = Nodes[NodesCount - 1 - i];
-				float tempTweenedValue = Mathf.Max(0, tweenedValue)/0.6f;
-				
-				if (reverse){
-					tempTweenedValue = Mathf.Max(0, tempTweenedValue);
-				}
-				tempTweenedValue = Mathf.Clamp((tempTweenedValue * 1.5f) - ((1-((i + 1)/((float)NodesCount)))*0.5f), 0 ,1);
-				tempTweenedValue = (Mathf.Sin((tempTweenedValue-.5f) * 2 * (Mathf.Pi/2)) + 1)/2;
-				tempTweenedValue = Mathf.Abs(reverseTweenValue - tempTweenedValue);
-				node.Position = node.originalPosition + (dir * tempTweenedValue * ScreenSize);
-			}
-		}), -delay, 0.6, animationTime + delay);
+		ScreenAnimateNodes(screenMoveTween, Nodes, dir, animationTime, reverse, isReverseOrder, delay);
 	}
 
 	protected void ChangeScreen(MainMenuScreen screenTo, Vector2 mainDir, Vector2 screenToDir, bool mainIsReverseOrder = false, bool screenToIsReverseOrder = false)

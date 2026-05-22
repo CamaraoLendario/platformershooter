@@ -12,7 +12,7 @@ public partial class SpawnPoints : Node
 	public override void _Ready()
 	{
 		SignalBus.Instance.GameStarted += OnGameStarted;
-		SignalBus.Instance.NewRoundStarted += OnNewRoundStarted;
+		SignalBus.Instance.NewRoundStart += OnNewRoundStart;
 	}
 	
     private void OnGameStarted()
@@ -20,7 +20,7 @@ public partial class SpawnPoints : Node
 		ScrambleSpawnPoints();
 		SpawnPlayers();
     }
-	void OnNewRoundStarted()
+	void OnNewRoundStart()
 	{
 		ScrambleSpawnPoints();
 		foreach (Player player in Game.Instance.players)
@@ -47,25 +47,23 @@ public partial class SpawnPoints : Node
 	}
 
     void SpawnPlayers() {
-		foreach (Dictionary<string, int> playerInfo in Game.Instance.playersInfo)
+		Player[] players = new Player[Game.Instance.playersInfo.Length];
+		for(int i = 0; i < players.Length; i++)
 		{
-			Player newPlayer = Player.playerScene.Instantiate<Player>();
-			//newPlayer.Name = playerInfo.Keys.First();
-			newPlayer.NameLabel.Text = newPlayer.Name;
-			newPlayer.SetInputIdx(playerInfo["inputIdx"]);
-			if (newPlayer.GetInputIdx() == -1) newPlayer.isKeyboardControlled = true;
-			newPlayer.SetColor(playerInfo["colorIdx"]);
+			PlayerInfo playerInfo = Game.Instance.playersInfo[i];
+			Player newPlayer = Player.New(playerInfo);
 			newPlayer.Position = spawnPoints[newPlayer.colorIdx].Position;
 
-			Game.GetOverworld().AddChild(newPlayer);
-			Game.Instance.AddPlayer(newPlayer);
+			Game.GetOverworld().CallDeferred(MethodName.AddChild, newPlayer);
 			newPlayer.CallDeferred("Reset");
+			players[i] = newPlayer;
 		}
+		Game.Instance.players = players;
 		SignalBus.Instance.EmitSignal(SignalBus.SignalName.FinishedSpawningPlayers);
 	}
 
 	public override void _ExitTree() {
-		SignalBus.Instance.NewRoundStarted -= OnNewRoundStarted;
+		SignalBus.Instance.NewRoundStart -= OnNewRoundStart;
 		base._ExitTree();
 	}
 

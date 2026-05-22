@@ -35,7 +35,7 @@ public partial class ShipPowerUpPickup : Pickup
 		
 		itemName = weaponNamesArray[HeldPowerup];
 		BodyEntered += OnBodyEntered;
-		SignalBus.Instance.NewRoundStarted += QueueFree;
+		SignalBus.Instance.NewRoundStart += QueueFree;
 		GetNode<AnimatedSprite2D>("PowerUpSprite").Animation = weaponNamesArray[HeldPowerup];
 	}
 
@@ -55,7 +55,7 @@ public partial class ShipPowerUpPickup : Pickup
     public override void _ExitTree()
     {
 		BodyEntered -= OnBodyEntered;
-		SignalBus.Instance.NewRoundStarted -= QueueFree;
+		SignalBus.Instance.NewRoundStart -= QueueFree;
         base._ExitTree();
     }
 

@@ -16,7 +16,7 @@ public partial class RoundStartAnnouncer : Control
 	{
 		world = GetTree().GetFirstNodeInGroup("World") as World;
 		SignalBus.Instance.GameStarted += OnNewRound;
-		SignalBus.Instance.NewRoundStarted += OnNewRound;
+		SignalBus.Instance.NewRoundStart += OnNewRound;
 
 	}
 
@@ -34,6 +34,7 @@ public partial class RoundStartAnnouncer : Control
 
 	async void AnimateReadyGo()
 	{
+		Game.PauseGame();
 		readyGoLabel.Text = "READY!!";
 		READY.Play();
 		tween = GetEasedTween();
@@ -42,7 +43,7 @@ public partial class RoundStartAnnouncer : Control
 		await ToSignal(GetTree().CreateTimer(2f), "timeout");
 		readyGoLabel.Text = "GO!!";
 		GO.Play();
-		Game.Instance.UnPauseGame();
+		Game.UnPauseGame();
 		isRoundStart = false;
 		tween = GetEasedTween();
 		tween.SetEase(Tween.EaseType.In);
@@ -81,7 +82,7 @@ public partial class RoundStartAnnouncer : Control
 	public override void _ExitTree()
 	{
 		SignalBus.Instance.GameStarted -= OnNewRound;
-		SignalBus.Instance.NewRoundStarted -= OnNewRound;
+		SignalBus.Instance.NewRoundStart -= OnNewRound;
 		base._ExitTree();
 	}
 }

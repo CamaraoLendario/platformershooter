@@ -23,10 +23,11 @@ public partial class MenuSelectorHelper : Control
 		}
 
         openSettings = (openSettingsNode.Position, openSettingsNode.Size);
-		if(!Engine.IsEditorHint()) openSettingsNode.Free();
 		closedSettings = (closedSettingsNode.Position, closedSettingsNode.Size);
-		if(!Engine.IsEditorHint()) closedSettingsNode.Free();
-
+		#if !TOOLS
+			openSettingsNode.Free();
+			closedSettingsNode.Free();
+		#endif
 		CallDeferred(MethodName.SetPosAndSizeClosed);
     }
 

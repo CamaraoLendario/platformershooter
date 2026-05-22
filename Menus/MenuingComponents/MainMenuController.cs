@@ -14,7 +14,11 @@ public partial class MainMenuController : MenuController
 	{
 		base._Ready();
 		SignalBus.Instance.GameStarted += () => {enabled = false;};
-		if (Engine.IsEditorHint()) return;
+		
+		# if TOOLS
+			if (Engine.IsEditorHint()) return;
+		# endif
+		
 		foreach (Node node in GetParent().GetChildren())
 		{
 			if (node is not MainMenuScreen mainMenuScreen) continue;

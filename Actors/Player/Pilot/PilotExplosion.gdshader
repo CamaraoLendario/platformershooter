@@ -52,12 +52,12 @@ vec2 RotateVec(vec2 inputVec, float angle){
 }
 
 void start() {
-	vec2 textureS = vec2(16, 17);
+	vec2 textureS = vec2(textureSize(mainTexture, 0));
 	float y = floor(float(INDEX)/textureS.y);
 	float x = floor(float(INDEX) - textureS.y*y);
 	vec2 pixelCoord = vec2(x, y);
-	COLOR = texture(mainTexture, (pixelCoord+vec2(0.5)) / vec2(textureSize(mainTexture, 0)));
-	COLOR = getOutlines((pixelCoord+vec2(0.5)) / vec2(textureSize(mainTexture, 0)));
+	COLOR = texture(mainTexture, (pixelCoord + vec2(0.5)) / vec2(textureSize(mainTexture, 0)));
+	COLOR = getOutlines((pixelCoord + vec2(0.5)) / vec2(textureSize(mainTexture, 0)));
 	TRANSFORM[3].xy = pixelCoord - textureS/2.;
 	TRANSFORM[3].xy = RotateVec(TRANSFORM[3].xy, rotation);
 	VELOCITY.xy = vec2(0.);
@@ -80,6 +80,13 @@ void process() {
 		USERDATA1.w = 10.;
 		//COLOR.rgb = vec3(1., 0., 0.);
 		USERDATA1.xy = TRANSFORM[3].xy;
+	
+	vec2 normalizedVel = normalize(VELOCITY.xy);
+	float currentRotation = atan(normalizedVel.y/normalizedVel.x);// * value;
+	float c = cos(-currentRotation);
+	float s = sin(-currentRotation);
+	TRANSFORM[0].xyz = vec3(c, -s, 0.0);
+	TRANSFORM[1].xyz = vec3(s,  c, 0.0);
 	}
 
 	if (USERDATA1.w == 10. && COLOR.a > 0.){// && dot(normalize(USERDATA1.xy), normalize(TRANSFORM[3].xy)) < 0.){

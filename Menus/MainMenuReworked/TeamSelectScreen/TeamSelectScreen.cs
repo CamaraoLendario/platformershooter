@@ -10,13 +10,18 @@ using static SpaceMages.SpaceMagesVars;
 public partial class TeamSelectScreen : MainMenuScreen
 {
 	[Export] MenuItemsListContainer playersContainer;
+	HBoxContainer startGame;
 	PackedScene playerIcon = GD.Load<PackedScene>("uid://bm3c06itcq1v7");
-	Control[] Containers = [];
+	TeamSelectScreenPlayerIcon[] Containers = [];
 	Tween playerIconTweener;
 
-	public void Initialize(Dictionary<string, int>[] playersInfo)
+    public override void _Ready()
 	{
-		RemovePlayerContainers();
+		startGame = GetNode<HBoxContainer>("StartGame");
+	}
+
+	public void Initialize(PlayerInfo[] playersInfo)
+	{
 		SpawnPlayerContainers(playersInfo);
 	}
 	void RemovePlayerContainers()
@@ -32,13 +37,16 @@ public partial class TeamSelectScreen : MainMenuScreen
 		} 
 		Containers = [];
 	}
-	void SpawnPlayerContainers(Dictionary<string, int>[] playersInfo)
+	void SpawnPlayerContainers(PlayerInfo[] playersInfo)
 	{
-		foreach (Dictionary<string, int> playerInfo in playersInfo){
+		RemovePlayerContainers();
+		Containers = new TeamSelectScreenPlayerIcon[playersInfo.Length];
+		for (int i = 0; i < playersInfo.Length; i++) {
+			PlayerInfo playerInfo = playersInfo[i];
 			TeamSelectScreenPlayerIcon newPlayerContainer = playerIcon.Instantiate<TeamSelectScreenPlayerIcon>();
-			newPlayerContainer.Setup(playerInfo.Keys.First(), playerInfo["inputIdx"], playerInfo["colorIdx"]);
+			newPlayerContainer.Setup(playerInfo.Name, playerInfo.inputIdx, playerInfo.colorIdx);
 			//newPlayerContainer.Hide();
-			Containers = Containers.Append(newPlayerContainer).ToArray();
+			Containers[i] = newPlayerContainer;
 			newPlayerContainer.moveLeft += MoveIcon;
 			newPlayerContainer.moveRight += MoveIcon;
 		}
@@ -47,8 +55,10 @@ public partial class TeamSelectScreen : MainMenuScreen
     public override void Move(Vector2 dir, bool reverse = false, bool isReverseOrder = false, bool skipAnimation = false)
     {
         base.Move(dir, reverse, isReverseOrder, skipAnimation);
-		if (!reverse)
+		if (!reverse){
 			EmitSignal(SignalName.Entered);
+			CheckAllChose();
+		}
 		else
 			EmitSignal(SignalName.Left);
 
@@ -90,13 +100,15 @@ public partial class TeamSelectScreen : MainMenuScreen
 			}
 		}), -delay, 0.6, animationTime + delay);
 	}
-	void MoveIcon(Vector2 dir, TeamSelectScreenPlayerIcon icon)
+	async void MoveIcon(Vector2 dir, TeamSelectScreenPlayerIcon icon)
 	{
+		if (dir.X == 0) return;
 		if (dir.X > 0) 
 			Game.Instance.playerTeams.Add(icon.GetInputIdx(), (int)TeamIdxs.BLUE);
 		else 
 			Game.Instance.playerTeams.Add(icon.GetInputIdx(), (int)TeamIdxs.RED);
-
+		icon.currentTeam = (int)((dir.X + 1)/2);
+		CheckAllChose();
 		Tween tween = CreateTween();
 		tween.SetTrans(Tween.TransitionType.Sine);
 		tween.SetEase(Tween.EaseType.InOut);
@@ -107,6 +119,7 @@ public partial class TeamSelectScreen : MainMenuScreen
 		{
 			icon.Position = initialPosition + (posDiff * tweenedValue);
 		}), 0f, 1f, 0.2);
+
 	}
     public override void Back()
 	{
@@ -117,14 +130,29 @@ public partial class TeamSelectScreen : MainMenuScreen
 			Vector2.Right, Vector2.Left, false, true
 		);
 	}
-
 	MenuItem[] GetPlayerIcons()
 	{
-		MenuItem[] menuItems = [];
+		List<MenuItem> menuItems = [];
 		foreach (Node node in playersContainer.GetChildren()){
 			if (node is MenuItem menuItem)
-				menuItems = menuItems.Append(menuItem).ToArray();
+				menuItems.Add(menuItem);
 		}
-		return menuItems;
+		return menuItems.ToArray();
+	}
+	void CheckAllChose()
+	{
+		if (Containers.Length == 0){ 
+			startGame.Hide();
+			return;
+		}	
+		foreach(TeamSelectScreenPlayerIcon icon in Containers)
+		{
+			if (icon.currentTeam != 0 && icon.currentTeam != -1)
+			{
+				startGame.Hide();
+				return;	
+			}
+		}
+		startGame.Show();
 	}
 }

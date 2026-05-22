@@ -1,15 +1,21 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 [Tool]
 public partial class GamemodeSelectScreen : MainMenuScreen
 {
-    [Export] GamemodeSelectScroll gamemodescroll;
+    [Export] GamemodeSelectScroll gamemodeScroll;
+    [Export] GameLengthScroll gameLengthScroll;
+    [Export] string[] lengths = Enum.GetNames(typeof(GamemodeLogic.GameLength));
     //TODO: make a visual representation of press start to continue
     public override bool OnAccept()
     {
-        gamemodescroll.SetGamemode();
+        gamemodeScroll.SetGamemode();
+        gameLengthScroll.SetGamemodeLength();
+        Game.GetGamemodeLogic().CurrentGameLength = GamemodeLogic.GameLength.Short;
+
         Move(Vector2.Left);
         CharacterSelectScreen characterSelectScreen = GetParent().GetNode<CharacterSelectScreen>("NewCharacterSelectScreen");
         characterSelectScreen.Move(Vector2.Right, true);

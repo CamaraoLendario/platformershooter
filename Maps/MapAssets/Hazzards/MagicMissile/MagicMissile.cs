@@ -48,7 +48,7 @@ public partial class MagicMissile : HittableComponent
 
         BodyEntered += OnBodyDetected;
         GotHit += OnGotHit;
-        SignalBus.Instance.NewRoundStarted += OnNewRoundStarted;
+        SignalBus.Instance.NewRoundStart += OnNewRoundStart;
     }
 
     public override void _Process(double delta)
@@ -146,7 +146,7 @@ public partial class MagicMissile : HittableComponent
         return playerList.ElementAt(GD.RandRange(0, playerList.Count() - 1));
     }
 
-    void OnNewRoundStarted()
+    void OnNewRoundStart()
     {
         End();
     }
@@ -158,6 +158,6 @@ public partial class MagicMissile : HittableComponent
         BodyEntered -= OnBodyDetected;
         GotHit -= OnGotHit;
         target.died -= OnTargetDead;
-        SignalBus.Instance.NewRoundStarted -= OnNewRoundStarted;
+        SignalBus.Instance.NewRoundStart -= OnNewRoundStart;
     }
 }

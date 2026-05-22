@@ -29,7 +29,7 @@ public partial class BeamsOfDeath : Node2D
 		};
 
 		SuddenDeathTimer.Start(timeToSuddenDeath);
-		SignalBus.Instance.NewRoundStarted += Reset;
+		SignalBus.Instance.NewRoundStart += Reset;
     }
 
     public override void _Process(double delta)
@@ -61,7 +61,7 @@ public partial class BeamsOfDeath : Node2D
 
     public override void _ExitTree()
     {
-		SignalBus.Instance.NewRoundStarted -= Reset;
+		SignalBus.Instance.NewRoundStart -= Reset;
         base._ExitTree();
     }
 

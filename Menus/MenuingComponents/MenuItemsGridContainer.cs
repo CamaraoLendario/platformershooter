@@ -1,6 +1,8 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using static SpaceMages.SpaceMagesVars;
 
 [Tool]
 public partial class MenuItemsGridContainer : MenuItemsContainer
@@ -12,11 +14,6 @@ public partial class MenuItemsGridContainer : MenuItemsContainer
 	[Export] bool usesColumn = false;
 	[Export] Vector2 padding = Vector2.Zero;
 	[Export] bool centered = false;
-
-    /* public override void _Ready()
-	{
-		CallDeferred(MethodName.ReorganizeItems);
-	} */
 
 	protected override void ReorganizeItems()
 	{
@@ -68,12 +65,18 @@ public partial class MenuItemsGridContainer : MenuItemsContainer
 
 	Control[] GetControlNodes()
 	{
-		Control[] controlNodes = [];
+		List<Control> controlNodes = [];
 		foreach(Node child in GetChildren()){
 			if (child is Control controlNode){
-				controlNodes = controlNodes.Append(controlNode).ToArray();
+				controlNodes.Add(controlNode);
 			}
 		}
-		return controlNodes;
+		return controlNodes.ToArray();
 	}
+
+	void ScreenAnimateMenuItems(Vector2 dir, float animationTime, bool reverse, bool isReverseOrder, float delay)
+	{
+		ScreenAnimateNodes(CreateTween(), GetMenuItems(), dir, animationTime, reverse, isReverseOrder, delay);
+	}
+
 }

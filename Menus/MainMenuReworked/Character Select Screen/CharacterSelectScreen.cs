@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using static SpaceMages.SpaceMagesVars;
 
 [Tool]
@@ -26,7 +27,7 @@ public partial class CharacterSelectScreen : MainMenuScreen
             playerCapsule.characterSelectScreen = this;
         }
     }
-    public void Reconstruct(Dictionary<string, int>[] playersInfo = null)
+    public void Reconstruct(PlayerInfo[] playersInfo = null)
     {
         if (playersInfo == null) playersInfo = Game.Instance.playersInfo;
         PlayerCapsule[] playerCapsules = GetAllPlayerCapsules();
@@ -38,12 +39,12 @@ public partial class CharacterSelectScreen : MainMenuScreen
         }
         for(int i = 0; i < playersInfo.Length; i++)
         {
-            Dictionary<string, int> playerInfo = playersInfo[i];
+            PlayerInfo playerInfo = playersInfo[i];
             PlayerCapsule playerCapsule = playerCapsules[i];
             
-            EnableCapsule(playerCapsule, playerInfo["inputIdx"]);
-            playerCapsule.SetPlayerName(playerInfo.Keys.First());
-            playerCapsule.SetColor(playerInfo["colorIdx"]);
+            EnableCapsule(playerCapsule, playerInfo.inputIdx);
+            playerCapsule.SetPlayerName(playerInfo.Name);
+            playerCapsule.SetColor(playerInfo.colorIdx);
         }
     }
     public override void _UnhandledInput(InputEvent @event)
@@ -81,26 +82,27 @@ public partial class CharacterSelectScreen : MainMenuScreen
             }
         }
         capsule.Enable(inputIdx);
+        startGame.Visible = false;
     }
 	PlayerCapsule[] GetAllPlayerCapsules() 
     {
-        PlayerCapsule[] capsules = [];
+        List<PlayerCapsule> capsules = [];
         foreach (MenuItem menuItem in GetOptions())
         {
             if (menuItem is not PlayerCapsule playerCapsule) continue;
-            capsules = capsules.Append(playerCapsule).ToArray();
+            capsules.Add(playerCapsule);
         }
-        return capsules;
+        return capsules.ToArray();
     }
     PlayerCapsule[] GetEnabledPlayerCapsules()
     {
-        PlayerCapsule[] capsules = [];
+        List<PlayerCapsule> capsules = [];
         foreach (MenuItem menuItem in GetOptions())
         {
             if (menuItem is not PlayerCapsule playerCapsule || !playerCapsule.isEnabled) continue;
-            capsules = capsules.Append(playerCapsule).ToArray();
+            capsules.Add(playerCapsule);
         }
-        return capsules;
+        return capsules.ToArray();
     }
     PlayerCapsule GetFirstDisabledCapsule()
     {
@@ -171,10 +173,7 @@ public partial class CharacterSelectScreen : MainMenuScreen
     {
         return false;
     }
-    public override void OnMoveAction(Vector2 dir)
-    {
-        return;
-    }
+
     public override void Back()
     {
         foreach(PlayerCapsule capsule in GetEnabledPlayerCapsules())
@@ -184,25 +183,41 @@ public partial class CharacterSelectScreen : MainMenuScreen
             GetParent().GetNode<MainMenuScreen>("GamemodeSelectScreen"),
             Vector2.Right, Vector2.Left, true);
     }
-    Dictionary<string, int>[] GetPlayersInfo()
+    PlayerInfo[] GetPlayersInfo()
     {
-        Dictionary<string, int>[] playersInfo = [];
+        PlayerCapsule[] capsules = GetEnabledPlayerCapsules();
+        PlayerInfo[] playersInfo = new PlayerInfo[capsules.Length];
 
-        foreach (PlayerCapsule capsule in GetEnabledPlayerCapsules())
+        for (int i = 0; i < capsules.Length; i++)
         {
+            PlayerCapsule capsule = capsules[i];
+            
             if (!capsule.isReady)
                 GD.PrintErr(capsule.GetPlayerName(), " is not ready! getting info anyways");
             
-            Dictionary<string, int> playerInfo = new()
+            PlayerInfo playerInfo = new()
             {
-                {capsule.GetPlayerName(), 0},
-                {"inputIdx", capsule.GetInputIdx()},
-                {"colorIdx", capsule.GetColorIdx()}
+                Name = capsule.GetPlayerName(),
+                inputIdx = capsule.GetInputIdx(),
+                colorIdx =  capsule.GetColorIdx()
             };
 
-            playersInfo = playersInfo.Append(playerInfo).ToArray();
+            playersInfo[i] = playerInfo;
         }
         Game.Instance.playersInfo = playersInfo;
         return playersInfo;
+    }
+    public override void Move(Vector2 dir, bool reverse = false, bool isReverseOrder = false, bool skipAnimation = false)
+    {
+        
+        if (reverse){
+            Label startGameLabel = startGame.GetNode<Label>("StartGameLabel");
+            if (Game.GetGamemodeLogic() != null)
+            if (Game.GetGamemodeLogic().isTeamed)
+                startGameLabel.Text = "Select Teams";
+            else
+                startGameLabel.Text = "Start Game";
+        }
+        base.Move(dir, reverse, isReverseOrder, skipAnimation);
     }
 }

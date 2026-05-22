@@ -42,6 +42,30 @@ namespace SpaceMages
 			Vector2.Left,
 			Vector2.Up,
 		];
+		public static void ScreenAnimateNodes(Tween screenMoveTween, MenuItem[] Nodes, Vector2 dir, float animationTime, bool reverse = false, bool isReverseOrder = false, float delay = 0)
+		{
+			int NodesCount = Nodes.Length;
+			Vector2 ScreenSize = GetScreenRez();
+			float reverseTweenValue = reverse ? 1 : 0;
+
+			screenMoveTween.TweenMethod(Callable.From((float tweenedValue) =>{
+				for(int i = 0; i < NodesCount; i++)
+				{
+					MenuItem node;
+					if ((dir.Y > 0 && !reverse || dir.Y < 0 && reverse) == !isReverseOrder) node = Nodes[i];
+					else  node = Nodes[NodesCount - 1 - i];
+					float tempTweenedValue = Mathf.Max(0, tweenedValue);
+					
+					if (reverse){
+						tempTweenedValue = Mathf.Max(0, tempTweenedValue);
+					}
+					tempTweenedValue = Mathf.Clamp((tempTweenedValue * 1.5f) - ((1-((i + 1)/((float)NodesCount)))*0.5f), 0 ,1);
+					tempTweenedValue = (Mathf.Sin((tempTweenedValue-.5f) * 2 * (Mathf.Pi/2)) + 1)/2;
+					tempTweenedValue = Mathf.Abs(reverseTweenValue - tempTweenedValue);
+					node.Position = node.originalPosition + (dir * tempTweenedValue * ScreenSize);
+				}
+			}), -delay, 1f, animationTime + delay);
+		}
 		public static bool StringEndsWithInt(string str)
 		{
 			if (str == "") return false;

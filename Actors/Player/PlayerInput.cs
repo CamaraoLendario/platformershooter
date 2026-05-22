@@ -43,7 +43,7 @@ public partial class PlayerInput : Node
 		if (Main == null){
 			Main = GetParentOrNull<Player>();
 		}
-		if (Main.isKeyboardControlled) keyboardKeyword = "Keyboard";
+		if (Main.GetInputIdx() == -1) keyboardKeyword = "Keyboard";
 	}
 
 	public override void _Input(InputEvent @event)
@@ -54,7 +54,7 @@ public partial class PlayerInput : Node
 		
 		float X, Y;
 
-		if (Main.isKeyboardControlled)
+		if (Main.GetInputIdx() == -1)
 		{
 			inputIdx = -1;
 			X = Input.GetAxis("LeftKeyboard", "RightKeyboard");

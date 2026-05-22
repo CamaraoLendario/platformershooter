@@ -145,7 +145,7 @@ public partial class DDRInputsParent : Node2D
 
     public override void _Input(InputEvent @event)
     {
-		if (frozenPlayer.isKeyboardControlled)
+		if (frozenPlayer.GetInputIdx() == -1)
 		{
 			string[] keyboardDirInputs = {"Up", "Right", "Down", "Left"};
 			for(int i = 0; i < 4; i++)

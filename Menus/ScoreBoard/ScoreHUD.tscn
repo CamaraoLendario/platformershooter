@@ -1,11 +1,10 @@
 [gd_scene format=3 uid="uid://be0bay5c30jmy"]
 
 [ext_resource type="Script" uid="uid://107i6dmx81bu" path="res://Menus/ScoreBoard/ScoreBoard.cs" id="1_7cg30"]
-[ext_resource type="PackedScene" uid="uid://c2q477nhb4j0p" path="res://Menus/ScoreBoard/IndividualScoreCounter.tscn" id="1_8o2op"]
 [ext_resource type="Script" uid="uid://bwh5qxwryxau6" path="res://Menus/ScoreBoard/ScoreHUD.cs" id="1_d47xt"]
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="2_un3ay"]
 [ext_resource type="Script" uid="uid://bm7eaxcx3wkcr" path="res://Menus/ScoreBoard/RoundStartAnnouncer.cs" id="4_6wo6e"]
-[ext_resource type="Script" uid="uid://dpcm1jyqfesik" path="res://Menus/MenuingComponents/MenuItemsGridContainer.cs" id="5_ux58e"]
+[ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MenuItemsListContainer.cs" id="5_40t86"]
 [ext_resource type="AudioStream" uid="uid://dibbos5harqhb" path="res://Assets/Audio/READY!.wav" id="6_q0m6a"]
 [ext_resource type="FontFile" uid="uid://c5a2sdgkmsblj" path="res://Fonts/SpaceMagesFontOutlined.png" id="6_w8ut1"]
 [ext_resource type="AudioStream" uid="uid://cig1jhkfbumhs" path="res://Assets/Audio/GO!.wav" id="7_ww1s6"]
@@ -216,69 +215,29 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 1000.0
-offset_bottom = 1000.00024
+offset_bottom = 0.00024414063
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("2_un3ay")
 script = ExtResource("1_7cg30")
-individualScoreCounterScene = ExtResource("1_8o2op")
 
-[node name="Control" type="Control" parent="ScoreBoard" unique_id=1034221901]
-anchors_preset = 0
-offset_left = 967.0
-offset_top = -452.0
-offset_right = 967.0
-offset_bottom = -452.0
-script = ExtResource("5_ux58e")
-lineLength = 3
-columnLength = 2
-padding = Vector2(100, 100)
-centered = true
-
-[node name="IndividualScoreCounter" parent="ScoreBoard/Control" unique_id=781488971 instance=ExtResource("1_8o2op")]
-layout_mode = 0
-offset_left = -700.0
-offset_top = -250.0
-offset_right = -300.0
-offset_bottom = -50.0
-
-[node name="IndividualScoreCounter2" parent="ScoreBoard/Control" unique_id=195669124 instance=ExtResource("1_8o2op")]
-layout_mode = 0
-offset_left = -200.0
-offset_top = -250.0
-offset_right = 200.0
-offset_bottom = -50.0
-
-[node name="IndividualScoreCounter3" parent="ScoreBoard/Control" unique_id=979976113 instance=ExtResource("1_8o2op")]
-layout_mode = 0
-offset_left = 300.0
-offset_top = -250.0
-offset_right = 700.0
-offset_bottom = -50.0
-
-[node name="IndividualScoreCounter4" parent="ScoreBoard/Control" unique_id=124952677 instance=ExtResource("1_8o2op")]
-layout_mode = 0
-offset_left = -700.0
-offset_top = 50.0
-offset_right = -300.0
-offset_bottom = 250.0
-
-[node name="IndividualScoreCounter5" parent="ScoreBoard/Control" unique_id=1812394604 instance=ExtResource("1_8o2op")]
-layout_mode = 0
-offset_left = -200.0
-offset_top = 50.0
-offset_right = 200.0
-offset_bottom = 250.0
-
-[node name="IndividualScoreCounter6" parent="ScoreBoard/Control" unique_id=1253570960 instance=ExtResource("1_8o2op")]
-layout_mode = 0
-offset_left = 300.0
-offset_top = 50.0
-offset_right = 700.0
-offset_bottom = 250.0
+[node name="scoreContainers" type="Control" parent="ScoreBoard" unique_id=1034221901]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 960.0
+offset_top = 540.0
+offset_right = -960.0
+offset_bottom = -540.00024
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_40t86")
+Separation = 20
+horizontal = true
 
 [node name="READY GO" type="Control" parent="." unique_id=1508956759 node_paths=PackedStringArray("readyGoLabel", "READY", "GO")]
 layout_mode = 3

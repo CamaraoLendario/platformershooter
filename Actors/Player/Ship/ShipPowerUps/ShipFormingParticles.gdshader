@@ -73,7 +73,6 @@ void process() {
 		
 		ivec2 size = textureSize(mainTexture, 0)/2;
 		TRANSFORM[3].xy = -normalize(USERDATA1.xy - initPos) * 30. + vec2(cos(angle), sin(angle)) * dist * 30.;
-		
 		USERDATA1.zw = TRANSFORM[3].xy + initPos; //initialPos
 		TRANSFORM[3].z = 0.;
 	}
