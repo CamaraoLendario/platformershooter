@@ -30,6 +30,7 @@ public partial class MapCamera : Camera2D
 		PixelMapSize = GetParent<Map>().PixelsMapSize;
         baseMinZoom = base.Zoom.X;
 		maxZoom = 1 / (minimumScreenSize / screenSize.X);
+		CallDeferred(MethodName.MakeCurrent);
 		//GD.Print("maxZoom = " + maxZoom);
     }
 
@@ -43,18 +44,16 @@ public partial class MapCamera : Camera2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		#if !TOOLS
-			//screenSize = DisplayServer.WindowGetSize();
-			targetPos = GetCenter();
-			SetZoom();
-			ProcessZoom();
+		//screenSize = DisplayServer.WindowGetSize();
+		targetPos = GetCenter();
+		SetZoom();
+		ProcessZoom();
 
-			targetPos = StayWithinBounds();
-			EasePos();
-			
-			if (shakeForce > 0) ProcessCameraShake();
-			RenderingServer.GlobalShaderParameterSet("cameraDistFromOrigin", GlobalPosition);
-		#endif
+		targetPos = StayWithinBounds();
+		EasePos();
+		
+		if (shakeForce > 0) ProcessCameraShake();
+		RenderingServer.GlobalShaderParameterSet("cameraDistFromOrigin", GlobalPosition);
 	}
 
 
@@ -62,21 +61,36 @@ public partial class MapCamera : Camera2D
 
 	Vector2 StayWithinBounds()
 	{
-		if (targetPos.X + ((screenSize.X / 2) / base.Zoom.X) > (PixelMapSize.X) / 2)
+		Vector2 trueSize = screenSize / Zoom;
+		if (trueSize.X >= PixelMapSize.X)
 		{
-			targetPos = new Vector2(PixelMapSize.X / 2 - ((screenSize.X / 2) / base.Zoom.X), targetPos.Y);
+			targetPos = new Vector2(0, targetPos.Y);
 		}
-		if (targetPos.X - ((screenSize.X / 2) / base.Zoom.X) < -(PixelMapSize.X) / 2)
+		else
 		{
-			targetPos = new Vector2(-PixelMapSize.X / 2 + ((screenSize.X / 2) / base.Zoom.X), targetPos.Y);
+			if (targetPos.X + ((screenSize.X / 2) / base.Zoom.X) > (PixelMapSize.X) / 2)
+			{
+				targetPos = new Vector2(PixelMapSize.X / 2 - ((screenSize.X / 2) / base.Zoom.X), targetPos.Y);
+			}
+			if (targetPos.X - ((screenSize.X / 2) / base.Zoom.X) < -(PixelMapSize.X) / 2)
+			{
+				targetPos = new Vector2(-PixelMapSize.X / 2 + ((screenSize.X / 2) / base.Zoom.X), targetPos.Y);
+			}
 		}
-		if (targetPos.Y + ((screenSize.Y / 2) / base.Zoom.X) > (PixelMapSize.Y) / 2)
+		if (trueSize.Y >= PixelMapSize.Y)
 		{
-			targetPos = new Vector2(targetPos.X, PixelMapSize.Y / 2 - ((screenSize.Y / 2) / base.Zoom.X));
+			targetPos = new Vector2(targetPos.X, 0);
 		}
-		if (targetPos.Y - ((screenSize.Y / 2) / base.Zoom.X) < -(PixelMapSize.Y) / 2)
+		else
 		{
-			targetPos = new Vector2(targetPos.X, -PixelMapSize.Y / 2 + ((screenSize.Y / 2) / base.Zoom.X));
+			if (targetPos.Y + ((screenSize.Y / 2) / base.Zoom.X) > (PixelMapSize.Y) / 2)
+			{
+				targetPos = new Vector2(targetPos.X, PixelMapSize.Y / 2 - ((screenSize.Y / 2) / base.Zoom.X));
+			}
+			if (targetPos.Y - ((screenSize.Y / 2) / base.Zoom.X) < -(PixelMapSize.Y) / 2)
+			{
+				targetPos = new Vector2(targetPos.X, -PixelMapSize.Y / 2 + ((screenSize.Y / 2) / base.Zoom.X));
+			}
 		}
 
 		return targetPos;
@@ -88,7 +102,7 @@ public partial class MapCamera : Camera2D
 
 		foreach (Player player in Game.Instance.players)
 		{
-			if (player.IsDead) continue;
+			if (player.isDead) continue;
 			medianPos += player.GlobalPosition / Game.Instance.GetAlivePlayerCount();
 		}
 

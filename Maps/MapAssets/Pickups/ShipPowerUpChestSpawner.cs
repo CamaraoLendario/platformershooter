@@ -49,8 +49,7 @@ public partial class ShipPowerUpChestSpawner : Node2D
 		GD.Print("a new chest has been spawned");
 		
 
-		if (brokenChests.Count >= 2 && spawnCooldownTimer.IsStopped())
-		{
+		if (brokenChests.Count >= 2 && spawnCooldownTimer.IsStopped()) {
 			spawnCooldownTimer.Start(spawnCooldowntime);
 		} 
 	}

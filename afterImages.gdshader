@@ -1,8 +1,11 @@
 shader_type canvas_item;
+#include "res://test/usefulFuncs.gdshaderinc"
+
 uniform vec2 texSize = vec2(16,16);
 uniform float scale = 3.; 
 uniform int imagesCount = 5;
 uniform vec2[5] afterImagePos;
+uniform float[5] rotation;
 
 void vertex() {
 	VERTEX -= texSize/2.;
@@ -23,10 +26,10 @@ void fragment() {
 	for(int i = 0; i < 5; i++){
 		vec2 tUV = uv + afterImagePos[i] * normalizedScale/2.;
 		if (abs(tUV.x) < 1. && abs(tUV.y) < 1.){
-			vec4 newColor = texture(TEXTURE, ((tUV)+vec2(1))/2.);
+			vec4 newColor = texture(TEXTURE, (RotateVec(tUV, rotation[i])+vec2(1))/2.);
 			if (newColor.a != 0.){
-				COLOR.rgb = newColor.rgb;
-				COLOR.a = (float(i+1))/6.;
+				newColor.a = (float(i+1))/6.;
+				COLOR = newColor;
 			}
 		}
 	}

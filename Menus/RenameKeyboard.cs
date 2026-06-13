@@ -22,21 +22,21 @@ public partial class RenameKeyboard : Control
 	}
 	int lineLength = 4;
 	[ExportGroup("References")]
-	[Export] Label affectedLabel;
+	[Export] public Label affectedLabel;
 	[Export] LabelSettings letterSettings;
 	MenuItemsGridContainer optionsContainer;
 	Script menuItemScript = GD.Load<Script>("uid://dhewsc5ayax3f");
 	public bool keyboardControlled = false;
 	MenuSelectPanel menuSelectPanel;
-	string typedString = "";
+	public string typedString = "";
 	string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+	public bool used = false;
     public override void _Ready()
 	{
 		optionsContainer = GetNode<MenuItemsGridContainer>("OptionsContainer");
 		Refresh();
 		CallDeferred(MethodName.SpawnMenuSelectPanel);
-		if (affectedLabel != null) typedString = affectedLabel.Text;
-		
+		if (affectedLabel != null) typedString = affectedLabel.Text;	
 	}
 	void Refresh()
 	{
@@ -67,6 +67,14 @@ public partial class RenameKeyboard : Control
 		}
 
 		optionsContainer.QueueMassAddChildren(newLetters);
+	}
+	public void Restart()
+	{
+		Close();
+		typedString = "";
+		if (affectedLabel != null)
+			affectedLabel.Text = "";
+		used = false;
 	}
 	protected void SpawnMenuSelectPanel()
 	{
@@ -147,14 +155,18 @@ public partial class RenameKeyboard : Control
 	{
 		if (affectedLabel != null)
 			affectedLabel.Text += letter;
-		return typedString + letter;
+		typedString = affectedLabel.Text;
+		used = true;
+		return typedString;// + letter;
 	}
 	string RemoveLetter()
 	{
 		if (affectedLabel != null && affectedLabel.Text != "")
 			affectedLabel.Text = affectedLabel.Text.Remove(affectedLabel.Text.Length - 1);
-		if (typedString != "") 
-			typedString = typedString.Remove(typedString.Length - 1);
+		typedString = affectedLabel.Text;
+		used = true;
+		// if (typedString != "") 
+		// 	typedString = typedString.Remove(typedString.Length - 1);
 		return typedString;
 	}
 }

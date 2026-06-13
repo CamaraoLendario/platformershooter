@@ -3,7 +3,9 @@ using System;
 
 public partial class PilotSprite : PlayerSprite
 {
+	// TODO use mix() to transition from ship rotation to pilot rotation like it was before while still taking velocity tilt into concideration
 	[Export] protected PilotAttack controller;
+	afterimagesCPUpart afterimages;
 
 	bool isJumping = false;
 
@@ -12,6 +14,18 @@ public partial class PilotSprite : PlayerSprite
 		Play();
 		controller.Jumped += OnJump;
 		AnimationFinished += onAnimationEnd;
+		foreach(Node child in GetChildren())
+		{
+			if (child is afterimagesCPUpart afterimagesCPUpart)
+			{
+				afterimages = afterimagesCPUpart;
+				controller.Melee.dashed += () => {
+					if (!Main.IsOnFloor())
+						afterimages.EnableForTime(0.3f);
+				};
+				controller.Ended += afterimages.Disable;
+			}
+		}
 	}
 
 	public override void _Process(double delta)
@@ -25,7 +39,9 @@ public partial class PilotSprite : PlayerSprite
 				Animation = "Idle";
 			return;
         }
-		else Rotation = 0 + (controller.Velocity.X / PilotAttack.SOFTMAXHSPEED)* (Mathf.Pi / 16);
+		else Rotation = 0 + (controller.Velocity.X / PilotAttack.SOFTMAXHSPEED) * (Mathf.Pi / 16);
+
+
 
 		if (controller.facing < 0) FlipH = true;
 		else FlipH = false;
@@ -34,6 +50,7 @@ public partial class PilotSprite : PlayerSprite
 		{
 			isJumping = false;
 			Animation = "OnWall";
+			afterimages.Disable();
 			return;
 		}
 
@@ -46,6 +63,7 @@ public partial class PilotSprite : PlayerSprite
 
 		if (Main.IsOnFloor())
 		{
+			afterimages.Disable();
 			if (controller.Velocity.X != 0)
 				Animation = "Running";
 			else

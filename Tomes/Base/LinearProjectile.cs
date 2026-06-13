@@ -1,15 +1,30 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata;
+using System.Text.RegularExpressions;
 
 public partial class LinearProjectile : Area2D
 {
 	[Export] public float speed = 500f;
 	[Export] public float lifeTime = 10f;
 	[Export] bool isDestroyedOutOfZone = true;
+	[Flags]
+	public enum ReasonFlags
+	{
+		EndsToDestructible = 1 << 0,
+		EndsToGeometry = 1 << 1,
+		EndsToPlayer = 1 << 2,
+		TimesOut = 1 << 3,
+	}
+
+	[Export]
+	public ReasonFlags CanEndBy = (ReasonFlags)15;
 	[ExportGroup("Nodes")]
 	[Export] public Node2D sprite;
 	[Export] Node2D confirmRaysNode;
+
 	public Vector2 Direction
 	{
 		get
@@ -23,21 +38,28 @@ public partial class LinearProjectile : Area2D
 		}
 	}
 	private Vector2 direction;
-
+	
 	PilotArea pilotArea;
 	public Player owner;
 	public bool isInPilotArea = true;
 	protected float collisionConfirmLength = 24.0f;
 	protected Timer lifeTimer = new Timer();
-	bool used = false;
-
+	protected bool ending = false;
+	protected bool isColiding = false;
+	public enum EndingReason
+	{
+		HITDESTRUCTIBLE,
+		HITGEOMETRY,
+		HITPLAYER,
+		TIMEOUT,
+	}
+	
 	public override void _Ready()
 	{
 		sprite.Rotation = Direction.Angle();
 	
 		if (sprite.Rotation > Mathf.Pi/2 || sprite.Rotation < -Mathf.Pi/2)
 			FlipVSprite(sprite, true);
-
 
 		lifeTimer.OneShot = true;
 		AddChild(lifeTimer);
@@ -47,25 +69,50 @@ public partial class LinearProjectile : Area2D
 		
 		pilotArea = Game.GetMap().GetNode<PilotArea>("%PilotArea");
 		isInPilotArea = pilotArea.IsInPilotArea(Position);
-		AreaEntered += OnAreaEntered;
-	}
+		SignalBus.Instance.RoundFinished += OnRoundFinished;
 
-    private void OnAreaEntered(Area2D area)
-    {
-		//GD.Print("Area found: " + area);
-		if (area is not DestructibleBlockFlag destructibleBlockFlag) return;
-		//GD.Print("Destroying " + area);
-		destructibleBlockFlag.Destroy();
-    }
+		AreaExited += (Area2D area) =>
+		{
+			if (Monitoring)
+			if (!HasOverlappingAreas() && !HasOverlappingBodies()) isColiding = false;
+		};
+		BodyExited += (Node2D area) =>
+		{
+			if (Monitoring)
+			if (!HasOverlappingAreas() && !HasOverlappingBodies()) isColiding = false;
+		};
+	}
 
     public override void _PhysicsProcess(double delta)
 	{
-		Position += Direction * speed * (float)delta;
-		//if (isDestroyedOutOfZone) Game.Instance.BulletsNodes.Add(this);
-		CheckPositionPermition();
+		if (ending) return;
+		Move(delta);
 	}
 
-	public void SetDirection(float inputRotation)
+	int checkCount = 0;
+    protected void CheckForDestroyTiles()
+    {
+		if(!Monitoring) return;
+		checkCount ++;
+		if (!HasOverlappingAreas()) return;
+		isColiding = true;
+		foreach (Area2D overlappingArea in GetOverlappingAreas())
+		{
+			GD.Print("Area found: " + overlappingArea.Name);
+			if (overlappingArea is DestructibleBlockFlag destructibleBlockFlag) {
+				GD.Print("Destroying " + overlappingArea.Name);
+				destructibleBlockFlag.Destroy();
+				End(EndingReason.HITDESTRUCTIBLE);
+			}
+		}
+    }
+	
+	protected virtual void Move(double delta)
+	{
+		Position += Direction * speed * (float)delta;
+	}
+
+    public void SetDirection(float inputRotation)
 	{
 		if (inputRotation < 0)
 		{
@@ -84,36 +131,57 @@ public partial class LinearProjectile : Area2D
 
 	protected virtual void OnBodyHit(Node2D body)
 	{
-		if (used) return;
-		if (body is TileMapLayer tileMapLayer) End(tileMapLayer);
-		if (!(body is Player) || ((body is Player) && ((body as Player).colorIdx == owner.colorIdx))) return;
+		if ((body is Player) && ((body as Player).colorIdx == owner.colorIdx)) return;
+		isColiding = true;
+		if (body is TileMapLayer tileMapLayer)
+		{
+			CallDeferred(MethodName.CheckForDestroyTiles);
+			End(EndingReason.HITGEOMETRY);
+			return;
+		}
+		if (!(body is Player)) return;
 
 		Player player = body as Player;
 
+		End(EndingReason.HITPLAYER);
 		player.TakeDamage(owner);
-		used = true;
-		QueueFree();
 	}
 	
 	public virtual void OnLifeEnd()
     {
-		End();
+		End(EndingReason.TIMEOUT);
     }
-
-	public virtual void End(TileMapLayer tileMapLayer)
+	public virtual bool End(EndingReason endingReason, bool allowFreeing = true, bool forceFreeing = false)
 	{
-		foreach(Area2D area in GetOverlappingAreas())
-        {
-			if (area is not DestructibleBlockFlag destructibleBlockFlag) continue;
-			
-			destructibleBlockFlag.Destroy();
-        }
-
-		End();
-	}
-	public virtual void End()
-	{
-		QueueFree();
+		if (ending) return true;
+		switch (endingReason)
+		{
+			case EndingReason.HITDESTRUCTIBLE:
+				if ((CanEndBy & ReasonFlags.EndsToDestructible) != 0)
+					ending = true;
+				break;
+			case EndingReason.HITGEOMETRY:
+				if ((CanEndBy & ReasonFlags.EndsToGeometry) != 0)
+					ending = true;
+				break;
+			case EndingReason.HITPLAYER:
+				if ((CanEndBy & ReasonFlags.EndsToPlayer) != 0)
+					ending = true;
+				break;
+			case EndingReason.TIMEOUT:
+				if ((CanEndBy & ReasonFlags.TimesOut) != 0)
+					ending = true;
+				break;
+		}
+		
+		if (forceFreeing)
+			QueueFree();
+		
+		if (!ending) return false;
+		//CheckForDestroyTiles();
+		if (allowFreeing)
+			QueueFree();
+		return true;
 	}
 
 	protected virtual void CollisionConfirm()
@@ -158,15 +226,6 @@ public partial class LinearProjectile : Area2D
 		QueueFree();
     }
 
-	void CheckPositionPermition()
-	{
-		if (isDestroyedOutOfZone && isInPilotArea != pilotArea.IsInPilotArea(Position))
-		{
-			QueueFree();
-		}
-
-	}
-
 	void FlipVSprite(Node2D sprite, bool flip)
 	{
 		if(sprite is Sprite2D Sprite)
@@ -176,4 +235,9 @@ public partial class LinearProjectile : Area2D
 		else if (sprite is AnimatedSprite2D animatedSprite)
 			animatedSprite.FlipV = flip;
 	}
+    public override void _ExitTree()
+    {
+		SignalBus.Instance.RoundFinished -= OnRoundFinished;
+    }
+
 }

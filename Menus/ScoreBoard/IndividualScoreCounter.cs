@@ -53,7 +53,7 @@ public partial class IndividualScoreCounter : MenuItem
     void SetScore(int score)
 	{
 		currentScore = score;
-		material.SetShaderParameter("pointsValue", (float)score/Game.GetGamemodeLogic().GetNecessaryScore());
+		material.SetShaderParameter("pointsValue", (float)score/Game.GetGamemodeLogic().GetWinningScore());
 	}
 	void RemoveScore()
 	{
@@ -65,7 +65,7 @@ public partial class IndividualScoreCounter : MenuItem
 	}
 	public void AddScore(int score)
 	{
-		int necessaryScore = Game.GetGamemodeLogic().GetNecessaryScore();
+		int necessaryScore = Game.GetGamemodeLogic().GetWinningScore();
 	
 		currentScore += score;
 		Tween tween = CreateTween();

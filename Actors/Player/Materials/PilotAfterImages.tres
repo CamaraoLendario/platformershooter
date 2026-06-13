@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b440sqhrft0wb"]
+
+[ext_resource type="Shader" uid="uid://c22204m6t74uu" path="res://test/afterImagesRetry.gdshader" id="1_67ba6"]
+[ext_resource type="Texture2D" uid="uid://b1y4dm1w0puo2" path="res://Actors/Player/Pilot/Textures/Sprites/Pilot.png" id="2_67ba6"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_67ba6")
+shader_parameter/textureSheet = ExtResource("2_67ba6")
+shader_parameter/texSize = Vector2(18, 18)
+shader_parameter/sheetSize = Vector2(6, 1)
+shader_parameter/scale = 3.0
+shader_parameter/imagesCount = 5
+shader_parameter/pixelsOffset = PackedVector2Array(10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000)
+shader_parameter/rotations = PackedFloat32Array(0, 0, 0, 0, 0)
+shader_parameter/frames = PackedInt32Array(0, 0, 0, 0, 0)
+shader_parameter/flip = Array[bool]([false, false, false, false, false])

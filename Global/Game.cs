@@ -12,7 +12,8 @@ public partial class Game : Node
 	public static Game Instance { get; private set; }
 	public Main main;
 	public MainMenu mainMenu;
-	public Map currentMap = GD.Load<PackedScene>("uid://cck3f1axqqkvm").Instantiate<Map>();
+	public Map currentMap;
+	public MapPlaylist mapPlaylist;
 	public PlayerInfo[] playersInfo = [];
 	public Player[] players = [];
 	public ExperimentalFeatures experimentalFeatures;
@@ -27,31 +28,29 @@ public partial class Game : Node
 		"uid://jbg7icuafwb0", // TEAMS
 		"uid://jbg7icuafwb0", // supposed to be CaptureTheFlag, also representing teams for now, this gamemode will probably not even exist 
     ];
+	// public bool isGamePaused = false;
 
     public override void _Ready(){
 		Instance ??= this;
 	}
 
-	public static void StartGame(PlayerInfo[] newPlayersInfo, Map map)
+	public static void StartGame(PlayerInfo[] newPlayersInfo, MapPlaylist playlist, int mapIdx = 0)
 	{
+		Main main = GetMain();
+		//await main.ToSignal(main.constantOverlay.FadeOut(), Tween.SignalName.Finished);
 		Instance.playersInfo = newPlayersInfo;
-		Instance.currentMap = map;
+		Instance.mapPlaylist = playlist;
+		Instance.currentMap = playlist.GetMap(mapIdx);
 		//map.SetGamemode();
 		Instance.GeneratePlayerInputs();
-		GetMain().StartGame();	
-	}
-
-	public void BackToMapSelector()
-	{
-		
+		main.StartGame();
 	}
 
 	void GeneratePlayerInputs()
 	{
 		List<int> inputIdxs = [];
 
-		foreach (PlayerInfo playerInfo in playersInfo)
-		{
+		foreach (PlayerInfo playerInfo in playersInfo) {
 			inputIdxs.Add(playerInfo.inputIdx);
 		}
 
@@ -69,12 +68,20 @@ public partial class Game : Node
 
 	public static void PauseGame()
 	{
+		GD.Print("Paused Game");
+		if(Instance.GetTree().Paused) return;
 		Instance.GetTree().Paused = true;
+		// if(Instance.isGamePaused) return;
+		// Instance.isGamePaused = true;
 		Instance.EmitSignal(SignalName.PausedGame);
 	}
 	public static void UnPauseGame()
 	{
+		GD.Print("UnPaused Game");
+		if(!Instance.GetTree().Paused) return;
 		Instance.GetTree().Paused = false;
+		// if(!Instance.isGamePaused) return;
+		// Instance.isGamePaused = false;
 		Instance.EmitSignal(SignalName.UnPausedGame);
 	}
 	public Player GetPlayerFromInputIdx(int inputIdx)
@@ -92,19 +99,23 @@ public partial class Game : Node
 		int aliveCount = 0;
 		foreach (Player player in players)
 		{
-			if (!player.IsDead)
+			if (!player.isDead)
 				aliveCount ++;
 		}
 		return aliveCount;
 	}
 	public static Map GetMap()
 	{
-		return Instance.currentMap;
+		return Instance.mapPlaylist.GetCurrentMap();
+	}
+	public static MapPlaylist GetMapPlaylist()
+	{
+		return Instance.mapPlaylist;
 	}
 
 	public static void SetGamemode(GamemodeIdxs idx)
 	{
-		Instance.currentGamemode = GD.Load<GamemodeLogic>(Instance.gamemodeUIDs[(int)idx]);
+		Instance.currentGamemode = GD.Load<GamemodeLogic>(Instance.gamemodeUIDs[(int)idx]).Duplicate() as GamemodeLogic;
 	}
 	public static GamemodeLogic GetGamemodeLogic()
 	{
@@ -126,4 +137,36 @@ public partial class Game : Node
 	{
 		return Instance.GetTree().GetFirstNodeInGroup("OverWorld") as OverWorld;
 	}
+
+	public static void ClearPlayerInfo()
+	{
+		Instance.players = [];
+		//Instance.playersInfo = [];
+		Instance.currentMap = null;
+		Instance.mapPlaylist = null;
+	}
+
+    public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventKey eventKey)
+		{
+			if (Input.IsKeyPressed(Key.Ctrl))
+			{
+				if (Input.IsKeyPressed(Key.I))
+				{
+					foreach (StringName action in InputMap.GetActions())
+					{
+						if (action.ToString().StartsWith("ui")) continue;
+						GD.Print($"Action: {action}");
+						foreach (InputEvent key in InputMap.ActionGetEvents(action))
+						{
+							GD.Print(key.AsText());
+						}
+					}
+				}
+			}
+		}
+	}
+
+
 }

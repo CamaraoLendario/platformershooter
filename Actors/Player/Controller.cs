@@ -73,14 +73,16 @@ public partial class Controller : Node
 
 	public virtual void Start()
 	{
-		if (Main.IsDead) return;
+		if (Main.isDead) return;
+		sprite.SelfModulate = new Color(sprite.SelfModulate.R, sprite.SelfModulate.G, sprite.SelfModulate.B, 1f);
+		sprite.UseParentMaterial = true;
 		EmitSignal(SignalName.Started);
-		sprite.Visible = true;
 		collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, false);
 	}
 	public virtual void End()
 	{
-		sprite.Visible = false;
+		sprite.SelfModulate = new Color(sprite.SelfModulate.R, sprite.SelfModulate.G, sprite.SelfModulate.B, 0);
+		sprite.UseParentMaterial = false;
 		EmitSignal(SignalName.Ended);
 		collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
 	}
@@ -164,13 +166,15 @@ public partial class Controller : Node
 
 	public bool IsAllowed()
 	{
-		if (Main.isPilot != isPilotController || Main.IsDead || forceDisallow)
+		if (Main.isPilot != isPilotController || Main.isDead || forceDisallow)
 			return false;
 		return true;
 	}
 
 	public virtual void Reset()
 	{
+		if (Main == null)
+			Main = GetParent<Player>();
 		inputVector *= 0;
 		Main.isAiming = false;
 		foreach(Timer timer in timers)

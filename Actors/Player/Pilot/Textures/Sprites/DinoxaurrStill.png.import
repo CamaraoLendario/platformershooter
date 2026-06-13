@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5440b3wlhm0"
-path="res://.godot/imported/pilotShieldParticles.png-aa11dbc75aecd7293a30fae85f72d0f4.ctex"
+uid="uid://nlcey2h7ycho"
+path="res://.godot/imported/DinoxaurrStill.png-22f341798f14b0d4e2d311e149f9559c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Actors/Player/Pilot/Sprites/pilotShieldParticles.png"
-dest_files=["res://.godot/imported/pilotShieldParticles.png-aa11dbc75aecd7293a30fae85f72d0f4.ctex"]
+source_file="res://Actors/Player/Pilot/Textures/Sprites/DinoxaurrStill.png"
+dest_files=["res://.godot/imported/DinoxaurrStill.png-22f341798f14b0d4e2d311e149f9559c.ctex"]
 
 [params]
 

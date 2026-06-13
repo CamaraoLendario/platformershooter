@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://b8o7wgtj5j14f" path="res://Maps/MapTools/PilotArea.cs" id="4_u3exd"]
 [ext_resource type="Script" uid="uid://bpqw0biwsduf2" path="res://Maps/MapTools/MapCamera.cs" id="5_gbevh"]
 [ext_resource type="Script" uid="uid://ckgsusvcdqof8" path="res://Maps/MapTools/MapBorders.cs" id="6_j1m6l"]
-[ext_resource type="PackedScene" uid="uid://bw7vmyeb1ymu6" path="res://Maps/MapAssets/Pickups/WeaponPickups/weapon_pickup.tscn" id="7_jm6sq"]
+[ext_resource type="PackedScene" uid="uid://bw7vmyeb1ymu6" path="res://Maps/MapAssets/Pickups/WeaponPickups/WeaponPickup.tscn" id="7_jm6sq"]
 [ext_resource type="PackedScene" uid="uid://deavbdxssxkrb" path="res://Maps/MapAssets/Pickups/ShipPowerUpChestSpawner.tscn" id="8_ifviu"]
 [ext_resource type="PackedScene" uid="uid://d2381diivxfax" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/ShipPowerUpChest.tscn" id="9_obpc4"]
 [ext_resource type="Script" uid="uid://x4dnw7pvkhwb" path="res://Maps/MapAssets/SuddenDeath/BeamsOfDeath.cs" id="10_h2xtr"]

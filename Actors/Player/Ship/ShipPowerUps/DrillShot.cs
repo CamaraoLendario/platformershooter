@@ -4,18 +4,28 @@ using System.Net;
 
 public partial class DrillShot : LinearProjectile
 {
-    public override void End(TileMapLayer tileMapLayer)
-    {
-		if(tileMapLayer is InteractableTiles)
-		{
-			End();
-			return;	
-		}
+	const int MAXSPEED = 500;
 
-		foreach(Area2D area in GetOverlappingAreas())
-        {
-			if (area is not DestructibleBlockFlag destructibleBlockFlag) continue;
-			destructibleBlockFlag.Destroy();
-        }
+    public override void _PhysicsProcess(double delta)
+    {
+		CheckForDestroyTiles();
+        base._PhysicsProcess(delta);
     }
+
+	protected override void Move(double delta)
+    {
+		if (isColiding)
+		{
+			speed = MAXSPEED/4;
+		}
+		else
+		{
+			speed += (float)delta * MAXSPEED;
+			if (speed < MAXSPEED)
+				speed = MAXSPEED;
+		}
+		
+		base.Move(delta);
+    }
+
 }

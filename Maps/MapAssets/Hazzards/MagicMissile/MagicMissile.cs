@@ -33,7 +33,7 @@ public partial class MagicMissile : HittableComponent
         if (target != null)
         {
             targetPosition = target.GlobalPosition;        
-            target.died += OnTargetDead;
+            target.Died += OnTargetDead;
         }
         direction = (targetPosition - GlobalPosition).Normalized();
         velocity = direction * initialSpeed;
@@ -60,7 +60,7 @@ public partial class MagicMissile : HittableComponent
     {
         velocity -= velocity.Normalized() * acceleration/5 * (float)delta;
         
-        if (target != null && !target.IsDead)
+        if (target != null && !target.isDead)
             targetPosition = target.Position;
         
         velocity += (targetPosition - GlobalPosition).Normalized() * acceleration * (float)delta;
@@ -97,9 +97,9 @@ public partial class MagicMissile : HittableComponent
         }
         else velocity = (hitter.GlobalPosition - GlobalPosition).Normalized() * maxSpeed;
 
-        target.died -= OnTargetDead;
+        target.Died -= OnTargetDead;
         target = GetRandomPlayer(target);
-        target.died += OnTargetDead;
+        target.Died += OnTargetDead;
 
         maxSpeed *= 1.1f;
         acceleration *= 1.1f;
@@ -107,9 +107,9 @@ public partial class MagicMissile : HittableComponent
 
     void OnTargetDead(Player player, Player killer)
     {
-        target.died -= OnTargetDead;
+        target.Died -= OnTargetDead;
         target = GetRandomPlayer(target);
-        target.died += OnTargetDead;
+        target.Died += OnTargetDead;
     }
 
     Player GetRandomPlayer(Player exclude)
@@ -118,11 +118,12 @@ public partial class MagicMissile : HittableComponent
     }
     Player GetRandomPlayer(Player[] excludeArray)
     {
-        List<Player> playerList = Game.Instance.players.ToList(); // might need to duplicate this? not sure :)
+        List<Player> playerList = Game.Instance.players.ToList();
+        if(IsQueuedForDeletion()) return playerList[0];
         
         foreach(Player player in Game.Instance.players)
         {
-            if (player.IsDead) playerList.Remove(player);
+            if (player.isDead) playerList.Remove(player);
         }
 
         foreach(Player player in excludeArray)
@@ -139,7 +140,8 @@ public partial class MagicMissile : HittableComponent
             else
             {
                 GD.Print("All Players are Dead. running off stage..");
-                targetPosition = GlobalPosition * 10000;
+                //TODO this causes an error. trying to get a magic missile that doesn't exist? happens at the end of rounds
+                targetPosition = /* Global */Position * 10000;
             }
             return target;
         }
@@ -154,10 +156,20 @@ public partial class MagicMissile : HittableComponent
     void End()
     {
         QueueFree();
+    }
 
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        DisconnectSignals();
+    }
+
+    void DisconnectSignals()
+    {
         BodyEntered -= OnBodyDetected;
         GotHit -= OnGotHit;
-        target.died -= OnTargetDead;
+        target.Died -= OnTargetDead;
         SignalBus.Instance.NewRoundStart -= OnNewRoundStart;
     }
+
 }

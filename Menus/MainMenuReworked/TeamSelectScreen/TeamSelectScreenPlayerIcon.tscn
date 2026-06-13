@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bm3c06itcq1v7"]
 
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_468ue"]
-[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Sprites/PilotStill.png" id="1_c11dk"]
+[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Textures/Sprites/PilotStill.png" id="1_c11dk"]
 [ext_resource type="Script" uid="uid://bd35ubqs1hnm4" path="res://Menus/MainMenuReworked/TeamSelectScreen/TeamSelectScreenPlayerIcon.cs" id="1_vp7pl"]
 [ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="2_468ue"]
 [ext_resource type="Script" uid="uid://dmwbtwi6t4nnp" path="res://Menus/MainMenuReworked/Character Select Screen/PlayerMenuInput.cs" id="5_c35dp"]

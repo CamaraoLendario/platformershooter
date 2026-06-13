@@ -36,6 +36,11 @@ public partial class ShipController : Controller
 		
 		dashTimer.Timeout += dashEnd;
 	}
+    public override void Reset()
+    {
+        base.Reset();
+		sprite.LookAt(Vector2.Zero);
+    }
 
 	public override void ProcessWASD(float X, float Y)
 	{

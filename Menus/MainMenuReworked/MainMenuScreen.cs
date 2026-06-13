@@ -11,8 +11,8 @@ using static SpaceMages.SpaceMagesVars;
 [Tool]
 public partial class MainMenuScreen : Control
 {
-	[Signal] public delegate void EnteredEventHandler();
-	[Signal] public delegate void LeftEventHandler();
+	[Signal] public delegate void EnteredEventHandler(bool skip);
+	[Signal] public delegate void LeftEventHandler(bool skip);
 	[ExportGroup("Menu Selector Panel settings")]
 	[Export] bool usesSelectorPanel = true;
 	protected MenuItem[] menuOptions;
@@ -63,6 +63,19 @@ public partial class MainMenuScreen : Control
 			Back();
 		return result;
 	}
+	public virtual bool OnInteractReleased() {
+		return false;
+	}
+	public virtual bool OnAltInteractReleased() {
+		return false;
+	}
+	public virtual bool OnAcceptReleased() {
+		return false;
+	}
+	public virtual bool OnNegativeActionReleased() {
+		return false;
+	}
+
 
 	public virtual void OnMoveAction(Vector2 dir)
 	{
@@ -77,8 +90,6 @@ public partial class MainMenuScreen : Control
 			}
 			currentInteractible = menuSelectPanel.MoveGetSelectedNode(dir);
 		}
-		else		
-			MenuError("Cannot move without a panel");
 	}
 
 	public virtual void Back()
@@ -96,24 +107,23 @@ public partial class MainMenuScreen : Control
 		GD.PrintErr("Menu Error at ", Name, ": ", errorMessage);
 	}
 
-	public virtual async void Move(Vector2 dir, bool reverse = false, bool isReverseOrder = false, bool skipAnimation = false)
+	public virtual void Move(Vector2 dir, bool reverse = false, bool isReverseOrder = false, bool skipAnimation = false)
 	{	
-		if (!reverse)
-			EmitSignal(SignalName.Entered);
+		if (reverse)
+			EmitSignal(SignalName.Entered, skipAnimation);
 		else
-			EmitSignal(SignalName.Left);
+			EmitSignal(SignalName.Left, skipAnimation);
 
 		if (screenMoveTween is not null && screenMoveTween.IsRunning()){
 			screenMoveTween.Kill();
 		}
 		screenMoveTween = CreateTween();
-
 		float animationTime = 0.6f;
 		if (skipAnimation) animationTime *= 0;
 	
 		MenuItem[] Nodes = GetScreenNodes().ToArray();
 		float delay = reverse ? 0.1f : 0f;
-		
+		Show();
 		ScreenAnimateNodes(screenMoveTween, Nodes, dir, animationTime, reverse, isReverseOrder, delay);
 	}
 

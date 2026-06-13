@@ -13,11 +13,13 @@ public partial class CharacterSelectScreen : MainMenuScreen
     ];
     bool[] colorUnavaliability = new bool[teamColors.Length];
     HBoxContainer startGame;
+    HoldBackProgressBar holdBackProgressBar;
 
     public override void _Ready()
     {
         base._Ready();
         
+        Entered += (bool skipAnimation) => {EnableInput();};
         startGame = GetNode<HBoxContainer>("StartGame");
         foreach(PlayerCapsule playerCapsule in GetAllPlayerCapsules())
         {
@@ -26,6 +28,11 @@ public partial class CharacterSelectScreen : MainMenuScreen
             playerCapsule.UnReadied += OnCapsuleUnReady; 
             playerCapsule.characterSelectScreen = this;
         }
+        if (GetMenuController().currentScreen == this && Game.GetPlayersInfo().Length > 0) {
+            Reconstruct(Game.GetPlayersInfo());
+        }
+        holdBackProgressBar = GetNode<HoldBackProgressBar>("%HoldBackProgressBar");
+        holdBackProgressBar.Success += Back;
     }
     public void Reconstruct(PlayerInfo[] playersInfo = null)
     {
@@ -47,23 +54,23 @@ public partial class CharacterSelectScreen : MainMenuScreen
             playerCapsule.SetColor(playerInfo.colorIdx);
         }
     }
-    public override void _UnhandledInput(InputEvent @event)
+
+    public override void _Input(InputEvent @event)
     {        
-        if (@event.IsReleased() || @event is InputEventMouse || GetMenuController().currentScreen != this) return;
+        if (@event is InputEventMouse || GetMenuController().currentScreen != this) return;
 
         int inputIdx = @event.Device;
         if (@event is InputEventKey)
             inputIdx = -1;
 
+        if (Input.IsActionPressed("MenuBack") || Input.IsActionPressed("MenuBackKeyboard"))
+            holdBackProgressBar.isBeingHeld = true;
+        else
+            holdBackProgressBar.isBeingHeld = false;
+
         if (inputIdxs.Contains(inputIdx)){
             return;
         }
-
-        if (Input.IsActionJustPressed("MenuBack") || Input.IsActionJustPressed("MenuBackKeyboard")){
-            Back();
-            return;
-        }
-
         if (!inputIdxs.Contains(-2))
         {
             GD.PrintErr("Max player count reached!");
@@ -158,7 +165,14 @@ public partial class CharacterSelectScreen : MainMenuScreen
         }
         else
         {
-            Game.StartGame(GetPlayersInfo(), GD.Load<PackedScene>("uid://cck3f1axqqkvm").Instantiate() as Map);
+            DisableInput();
+            Game.StartGame(GetPlayersInfo(), new MapPlaylist());
+        }
+        foreach (PlayerCapsule playerCapsule in GetEnabledPlayerCapsules())
+        {
+            if (!playerCapsule.UnReady()) {
+                GD.PrintErr($"unreadying unsuccessful: {playerCapsule.Name}, {playerCapsule}");
+            }
         }
         return true;
     }
@@ -176,8 +190,9 @@ public partial class CharacterSelectScreen : MainMenuScreen
 
     public override void Back()
     {
-        foreach(PlayerCapsule capsule in GetEnabledPlayerCapsules())
-            capsule.Disable();
+        DisableInput();
+        // foreach(PlayerCapsule capsule in GetEnabledPlayerCapsules())
+        //     capsule.Disable();
 
         ChangeScreen(
             GetParent().GetNode<MainMenuScreen>("GamemodeSelectScreen"),
@@ -219,5 +234,15 @@ public partial class CharacterSelectScreen : MainMenuScreen
                 startGameLabel.Text = "Start Game";
         }
         base.Move(dir, reverse, isReverseOrder, skipAnimation);
+    }
+    void EnableInput()
+    {
+        foreach(PlayerCapsule capsule in GetAllPlayerCapsules())
+            capsule.inputNode.inputEnabled = true;
+    }
+    void DisableInput()
+    {
+        foreach(PlayerCapsule capsule in GetAllPlayerCapsules())
+            capsule.inputNode.inputEnabled = false;
     }
 }

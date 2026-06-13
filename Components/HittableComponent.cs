@@ -57,7 +57,7 @@ public partial class HittableComponent : Area2D
 		}
 		else if (area is LinearProjectile projectile && linearProjectilesAllowed)
 		{
-			projectile.End();
+			projectile.End(LinearProjectile.EndingReason.HITDESTRUCTIBLE);
 			GetHit(projectile);
 		}
 		else if (area is ExplosionComponent explosionComponent && explosionAllowed)
@@ -80,7 +80,7 @@ public partial class HittableComponent : Area2D
 		else if (Hitter is LinearProjectile projectile && linearProjectilesAllowed)
 		{
 			GetHit(projectile);
-			projectile.End();
+			projectile.End(LinearProjectile.EndingReason.HITDESTRUCTIBLE);
 		}
 	}
 

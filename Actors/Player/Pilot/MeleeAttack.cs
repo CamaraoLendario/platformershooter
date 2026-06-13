@@ -10,7 +10,6 @@ public partial class MeleeAttack : Area2D
 	[Export] AudioStreamPlayer2D meleeAudioPlayer;
 	[Export] AnimatedSprite2D sprite;
 	[Export] CollisionShape2D collisionShape;
-	[Export] PlayerParticleEmitters dashParticles;
 	[Export] public Player Main;
 	[Export] float dashForce = 500f;
 	Timer cooldownTimer = new();
@@ -42,7 +41,7 @@ public partial class MeleeAttack : Area2D
 		};
 	}
 
-
+	//TODO hitting something knocks you back? maybe only when deflecting? maybe even if its a wall?
 	public void Attack()
 	{
 		if (!cooldownTimer.IsStopped() && !hasDeflectionPrivelage) return;
@@ -79,7 +78,7 @@ public partial class MeleeAttack : Area2D
 	{
 		if (Main.effectHandler.isFrozen) return;
 		Vector2 attackDirNormal = new Vector2(Mathf.Cos(Rotation), Mathf.Sin(Rotation));
-		if (!Main.IsOnFloor() && Main.IsInPilotArea) SummonParticles(-attackDirNormal);
+		if (!Main.IsOnFloor() && Main.IsInPilotArea) Main.particlesHandler.EmitDashParticles(-attackDirNormal);
 		EmitSignal(SignalName.dashed);
 		dashTimer.Start(DASHTIME);
 		float tempDashForce = dashForce;
@@ -149,15 +148,7 @@ public partial class MeleeAttack : Area2D
 			}
 		}
 	}
-	void SummonParticles(Vector2 direction)
-	{
-		PlayerParticleEmitters newDashParticles = dashParticles.Duplicate() as PlayerParticleEmitters;
-		((newDashParticles.GetChild(0) as GpuParticles2D).ProcessMaterial as ParticleProcessMaterial).Direction = new Vector3(direction.X, direction.Y, 0);
 
-		newDashParticles.GlobalPosition = Main.GlobalPosition + Vector2.Up;
-		Main.world.AddChild(newDashParticles);
-		newDashParticles.Emit();
-	}
 	(RayCast2D ray, bool hasLOS) getHasLOS(Player player)
 	{
 		RayCast2D checkRay = new RayCast2D();

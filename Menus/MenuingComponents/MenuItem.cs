@@ -55,6 +55,25 @@ public partial class MenuItem : Control
 	{
 		return false;
 	}
+		public virtual bool OnInteractReleased()
+	{
+		return false;
+	}
+	
+	public virtual bool OnAltInteractReleased()
+	{
+		return false;
+	}
+
+	public virtual bool OnAcceptReleased()
+	{
+		return false;
+	}
+
+	public virtual bool OnNegativeActionReleased()
+	{
+		return false;
+	}
 
 	public virtual bool OnMoveAction(Vector2 dir)
 	{

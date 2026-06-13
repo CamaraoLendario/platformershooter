@@ -28,7 +28,7 @@ explosionParticles = NodePath("ExplosionParticles")
 FireAudio = NodePath("AudioStreamPlayer2D")
 speed = 200.0
 
-[node name="Sprite2D" parent="." index="1"]
+[node name="Sprite2D" parent="." index="1" unique_id=1321529545]
 texture = SubResource("AtlasTexture_saxex")
 
 [node name="TrailParticles" type="GPUParticles2D" parent="Sprite2D" index="1" unique_id=1544821431]

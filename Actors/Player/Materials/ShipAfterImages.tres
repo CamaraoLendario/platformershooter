@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b5i1uqnrt70x5"]
+
+[ext_resource type="Shader" uid="uid://c22204m6t74uu" path="res://test/afterImagesRetry.gdshader" id="1_ap6wg"]
+[ext_resource type="Texture2D" uid="uid://kayfo7ufdpc2" path="res://Actors/Player/Ship/Sprites/spaceships.png" id="2_rhy86"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_ap6wg")
+shader_parameter/textureSheet = ExtResource("2_rhy86")
+shader_parameter/texSize = Vector2(32, 32)
+shader_parameter/sheetSize = Vector2(1, 1)
+shader_parameter/scale = 0.0
+shader_parameter/imagesCount = 5
+shader_parameter/pixelsOffset = PackedVector2Array(10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000)
+shader_parameter/rotations = PackedFloat32Array(0, 0, 0, 0, 0)
+shader_parameter/frames = PackedInt32Array(0, 0, 0, 0, 0)
+shader_parameter/flip = Array[bool]([false, false, false, false, false])

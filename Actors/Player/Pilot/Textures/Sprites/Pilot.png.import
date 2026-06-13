@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://de15nxjq8mt4s"
-path="res://.godot/imported/PilotStill.png-510d85ec50909967418b42da08f54d35.ctex"
+uid="uid://b1y4dm1w0puo2"
+path="res://.godot/imported/Pilot.png-970c9dfea8c783e22c203829a4c2c645.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Actors/Player/Pilot/Sprites/PilotStill.png"
-dest_files=["res://.godot/imported/PilotStill.png-510d85ec50909967418b42da08f54d35.ctex"]
+source_file="res://Actors/Player/Pilot/Textures/Sprites/Pilot.png"
+dest_files=["res://.godot/imported/Pilot.png-970c9dfea8c783e22c203829a4c2c645.ctex"]
 
 [params]
 

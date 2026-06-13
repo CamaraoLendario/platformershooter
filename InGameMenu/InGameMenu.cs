@@ -21,8 +21,8 @@ public partial class InGameMenu : CanvasLayer
 
 	public override void _Ready()
 	{
-		ConnectSignals();
-		SignalBus.Instance.NewRoundStart += HideMenu;
+		SignalBus.Instance.GameStarted += ConnectSignals;
+		SignalBus.Instance.GameExited += (MainMenuScreen exitedTo) => {DisconnectSignals();};
 
 		foreach (Node possibleButton in buttonsContainer.GetChildren())
         {
@@ -65,9 +65,8 @@ public partial class InGameMenu : CanvasLayer
 
 	void OnBackToCharacterSelectScreenPressed()
 	{
-		UnPause();
-		QueueFree();
-		Game.Instance.CallDeferred(Game.MethodName.BackToMapSelector);
+		HideMenu();
+		Game.Instance.main.CallDeferred(Main.MethodName.BackToCharacterSelectScreen);
 	}
 
 	void OnQuitPressed()
@@ -81,13 +80,23 @@ public partial class InGameMenu : CanvasLayer
 		isHidden = true;
 	}
 
-	private void ConnectSignals()
+	void ConnectSignals()
 	{
 		inputNode.InGameMenuWASD += OnMenuWASD;
 		inputNode.InGameMenuInteract += OnMenuInteract;
 		inputNode.InGameMenuBack += OnMenuBack;
 		Input.JoyConnectionChanged += OnJoyConnectionChanged;	
 		SignalBus.Instance.PauseRequest += Pause;
+		SignalBus.Instance.NewRoundStart += HideMenu;
+	}
+	void DisconnectSignals()
+	{
+		inputNode.InGameMenuWASD -= OnMenuWASD;
+		inputNode.InGameMenuInteract -= OnMenuInteract;
+		inputNode.InGameMenuBack -= OnMenuBack;
+		Input.JoyConnectionChanged -= OnJoyConnectionChanged;	
+		SignalBus.Instance.PauseRequest -= Pause;
+		SignalBus.Instance.NewRoundStart -= HideMenu;
 	}
 
     private void OnJoyConnectionChanged(long device, bool connected)
@@ -136,15 +145,5 @@ public partial class InGameMenu : CanvasLayer
     {
         currentlyAvaliableButtons[currentlySelectedButtonIdx].EmitSignal(Button.SignalName.Pressed);
     }
-
-    public override void _ExitTree()
-    {
-        inputNode.InGameMenuWASD -= OnMenuWASD;
-		inputNode.InGameMenuInteract -= OnMenuInteract;
-		inputNode.InGameMenuBack -= OnMenuBack;
-		SignalBus.Instance.NewRoundStart -= HideMenu;
-		base._ExitTree();
-    }
-
 }
 

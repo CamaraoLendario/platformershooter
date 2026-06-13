@@ -56,11 +56,11 @@ public partial class TeamSelectScreen : MainMenuScreen
     {
         base.Move(dir, reverse, isReverseOrder, skipAnimation);
 		if (!reverse){
-			EmitSignal(SignalName.Entered);
+			EmitSignal(SignalName.Entered, skipAnimation);
 			CheckAllChose();
 		}
 		else
-			EmitSignal(SignalName.Left);
+			EmitSignal(SignalName.Left, skipAnimation);
 
 		if (playerIconTweener is not null && playerIconTweener.IsRunning()){
 			playerIconTweener.Kill();
@@ -100,7 +100,7 @@ public partial class TeamSelectScreen : MainMenuScreen
 			}
 		}), -delay, 0.6, animationTime + delay);
 	}
-	async void MoveIcon(Vector2 dir, TeamSelectScreenPlayerIcon icon)
+	void MoveIcon(Vector2 dir, TeamSelectScreenPlayerIcon icon)
 	{
 		if (dir.X == 0) return;
 		if (dir.X > 0) 
@@ -124,7 +124,7 @@ public partial class TeamSelectScreen : MainMenuScreen
     public override void Back()
 	{
 		RemovePlayerContainers();
-		CharacterSelectScreen characterSelectScreen = GetParent().GetNode<CharacterSelectScreen>("NewCharacterSelectScreen"); 
+		CharacterSelectScreen characterSelectScreen = GetParent().GetNode<CharacterSelectScreen>("CharacterSelectScreen"); 
 		characterSelectScreen.Reconstruct();
 		ChangeScreen(characterSelectScreen,
 			Vector2.Right, Vector2.Left, false, true

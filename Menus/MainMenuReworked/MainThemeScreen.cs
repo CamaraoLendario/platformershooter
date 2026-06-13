@@ -11,13 +11,13 @@ public partial class MainThemeScreen : MainMenuScreen
         base._Ready();
 
 		MainMenuMainScreen mainMenuMain = GetParent().GetNode<MainMenuMainScreen>("MainMenuMainScreen");
-		mainMenuMain.Entered += () => {
+		mainMenuMain.Entered += (bool skip) => {
 			if (GetMenuController().currentScreen != this)
-				Movebanner(false);
+				Movebanner(true, skip);
 		};
-		mainMenuMain.Left += () => {
+		mainMenuMain.Left += (bool skip) => {
 			if (GetMenuController().currentScreen != this)
-				Movebanner(true);
+				Movebanner(false, skip);
 		};
     }
 
@@ -57,8 +57,10 @@ public partial class MainThemeScreen : MainMenuScreen
 		}), 0f, 1f, .6);
 	}
 
-	void Movebanner(bool up = true)
+	void Movebanner(bool up = true, bool skipAnimation = false)
 	{
+		float animationTime = .6f;
+		if (skipAnimation) animationTime *= 0;
 		Tween tween = CreateTween();
 		tween.SetTrans(Tween.TransitionType.Sine);
 		tween.SetEase(Tween.EaseType.InOut);
@@ -76,7 +78,7 @@ public partial class MainThemeScreen : MainMenuScreen
 		Vector2 differencePos = finalBannerPos - initialBannerPos;
 		tween.TweenMethod(Callable.From((float tweenedValue) =>{
 			banner.Position = initialBannerPos + (differencePos*tweenedValue);
-		}), 0f, 1f, .6);
+		}), 0f, 1f, animationTime);
 	}
 /* 
 

@@ -20,25 +20,27 @@ public partial class InGameMenuInput : Node
 			return;
 		if (!Main.Visible || Main.inputIdx == -2) return;
 
-		if (Input.IsActionJustPressed("MenuUp" +  Main.keyboardKeyword + Main.inputIdx))
-			{EmitSignal(SignalName.InGameMenuWASD, 0, -1);	return;}
-		if (Input.IsActionJustPressed("MenuDown" +  Main.keyboardKeyword + Main.inputIdx))
-			{EmitSignal(SignalName.InGameMenuWASD, 0, 1);	return;}
-		if (Input.IsActionJustPressed("MenuLeft" +  Main.keyboardKeyword + Main.inputIdx))
-			{EmitSignal(SignalName.InGameMenuWASD, -1, 0);	return;}
-		if (Input.IsActionJustPressed("MenuRight" +  Main.keyboardKeyword + Main.inputIdx))
-			{EmitSignal(SignalName.InGameMenuWASD, 1, 0);	return;}
+		if (Input.IsActionJustPressed("MenuUp" +  Main.keyboardKeyword + Main.inputIdx)) {
+			EmitSignal(SignalName.InGameMenuWASD, 0, -1);
+		}
+		else if (Input.IsActionJustPressed("MenuDown" +  Main.keyboardKeyword + Main.inputIdx)) {
+			EmitSignal(SignalName.InGameMenuWASD, 0, 1);
+		}
+		else if (Input.IsActionJustPressed("MenuLeft" +  Main.keyboardKeyword + Main.inputIdx)) {
+			EmitSignal(SignalName.InGameMenuWASD, -1, 0);
+		}
+		else if (Input.IsActionJustPressed("MenuRight" +  Main.keyboardKeyword + Main.inputIdx)) {
+			EmitSignal(SignalName.InGameMenuWASD, 1, 0);
+		}
 
-		if (Input.IsActionJustPressed("MenuInteract" +  Main.keyboardKeyword + Main.inputIdx))
-        {
+		else if (Input.IsActionJustPressed("MenuInteract" +  Main.keyboardKeyword + Main.inputIdx)) {
 			EmitSignal(SignalName.InGameMenuInteract);
-            return;
         }
 		
-		if (Input.IsActionJustPressed("MenuBack" +  Main.keyboardKeyword + Main.inputIdx))
-        {
+		else if (Input.IsActionJustPressed("MenuBack" +  Main.keyboardKeyword + Main.inputIdx)) {
 			EmitSignal(SignalName.InGameMenuBack);
-            return;
         }
+
+		GetViewport().SetInputAsHandled();
     }
 }

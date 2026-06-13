@@ -1,12 +1,30 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Metadata;
 
 namespace SpaceMages
 {
 	public partial class SpaceMagesVars : Node
 	{
+		public static string[] pilotSpriteFramesUIDs = [
+			"uid://bcbvwjw2kxhut", // Red
+			"uid://bcbvwjw2kxhut", // Purple
+			"uid://bcbvwjw2kxhut", // Blue
+			"uid://bcbvwjw2kxhut", // Green
+			"uid://bcbvwjw2kxhut", // Yellow
+			"uid://bvv7s24ovshue", // Orange
+		];
+		public enum ColorNames
+		{
+			Red,
+			Purple,
+			Blue,
+			Green,
+			Yellow,
+			Orange,
+		}
 		public enum TeamIdxs{
 			BLUE,
 			RED,
@@ -42,12 +60,18 @@ namespace SpaceMages
 			Vector2.Left,
 			Vector2.Up,
 		];
+
+		public static string GetColorName(int colorIdx)
+		{
+			string[] colorNames = teamColorsDict.Keys.ToArray();
+			return colorNames[NormalizeIdx(colorIdx, colorNames.Length)];
+		}
+
 		public static void ScreenAnimateNodes(Tween screenMoveTween, MenuItem[] Nodes, Vector2 dir, float animationTime, bool reverse = false, bool isReverseOrder = false, float delay = 0)
 		{
 			int NodesCount = Nodes.Length;
 			Vector2 ScreenSize = GetScreenRez();
 			float reverseTweenValue = reverse ? 1 : 0;
-
 			screenMoveTween.TweenMethod(Callable.From((float tweenedValue) =>{
 				for(int i = 0; i < NodesCount; i++)
 				{

@@ -8,33 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://c0jq1fa6bb1ar" path="res://Menus/MenuingComponents/inputIcon.tscn" id="6_64c5m"]
 [ext_resource type="Shader" uid="uid://cq53yv3sm7bqh" path="res://Menus/MainMenuReworked/flashingEffect.gdshader" id="6_c3afc"]
 [ext_resource type="Texture2D" uid="uid://bmpswyokv23bw" path="res://Menus/MenuingComponents/inputIcons.png" id="7_c3afc"]
+[ext_resource type="Shader" uid="uid://c3n5f50hdg068" path="res://Menus/MainMenuReworked/Character Select Screen/LoadingBar.gdshader" id="9_2au40"]
+[ext_resource type="Script" uid="uid://dvjf8fm2lsp4b" path="res://Menus/MainMenuReworked/Character Select Screen/HoldBackProgressBar.cs" id="10_qjtyo"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_64c5m"]
 font_size = 117
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3m1ny"]
-resource_local_to_scene = true
-bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
-corner_radius_top_left = 40
-corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2au40"]
-resource_local_to_scene = true
-bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
-corner_radius_top_left = 40
-corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qjtyo"]
-resource_local_to_scene = true
-bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
-corner_radius_top_left = 40
-corner_radius_top_right = 40
-corner_radius_bottom_right = 40
-corner_radius_bottom_left = 40
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3r37h"]
 resource_local_to_scene = true
@@ -60,19 +38,53 @@ corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gi7yw"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ccigp"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pxmh"]
+resource_local_to_scene = true
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.39607844)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3m1ny"]
+shader = ExtResource("9_2au40")
+shader_parameter/value = 0.655
+shader_parameter/cornerRadius = 0.11
+shader_parameter/rectSize = Vector2(339, 104)
+
+[sub_resource type="LabelSettings" id="LabelSettings_c3afc"]
+font_size = 77
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjtyo"]
+atlas = ExtResource("7_c3afc")
+region = Rect2(0, 0, 16, 16)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q8jyd"]
 shader = ExtResource("6_c3afc")
 shader_parameter/flashPerSec = 2.0
 shader_parameter/maxAlpha = 1.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gi7yw"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqyai"]
 atlas = ExtResource("7_c3afc")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="LabelSettings" id="LabelSettings_c3afc"]
-font_size = 77
-
-[node name="NewCharacterSelectScreen" type="Control" unique_id=354511115]
+[node name="CharacterSelectScreen" type="Control" unique_id=354511115]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -81,6 +93,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_j2fy3")
 script = ExtResource("1_hili5")
+usesSelectorPanel = false
 
 [node name="TITLE" type="Label" parent="." unique_id=638310752]
 layout_mode = 1
@@ -119,37 +132,87 @@ horizontal = true
 layout_mode = 0
 offset_left = -675.0
 offset_right = -675.0
-pannelTheme = SubResource("StyleBoxFlat_3m1ny")
+pannelTheme = SubResource("StyleBoxFlat_3r37h")
 
 [node name="\'s capsule2" parent="MenuItemsContainer" unique_id=576386248 instance=ExtResource("3_0bj3m")]
 layout_mode = 0
 offset_left = -405.0
 offset_right = -405.0
-pannelTheme = SubResource("StyleBoxFlat_2au40")
+pannelTheme = SubResource("StyleBoxFlat_hvtls")
 
 [node name="\'s capsule3" parent="MenuItemsContainer" unique_id=1083298842 instance=ExtResource("3_0bj3m")]
 layout_mode = 0
 offset_left = -135.0
 offset_right = -135.0
-pannelTheme = SubResource("StyleBoxFlat_qjtyo")
+pannelTheme = SubResource("StyleBoxFlat_ipcig")
 
 [node name="\'s capsule4" parent="MenuItemsContainer" unique_id=1936989822 instance=ExtResource("3_0bj3m")]
 layout_mode = 0
 offset_left = 135.0
 offset_right = 135.0
-pannelTheme = SubResource("StyleBoxFlat_3r37h")
+pannelTheme = SubResource("StyleBoxFlat_gi7yw")
 
 [node name="\'s capsule5" parent="MenuItemsContainer" unique_id=1769632314 instance=ExtResource("3_0bj3m")]
 layout_mode = 0
 offset_left = 405.0
 offset_right = 405.0
-pannelTheme = SubResource("StyleBoxFlat_hvtls")
+pannelTheme = SubResource("StyleBoxFlat_ccigp")
 
 [node name="\'s capsule6" parent="MenuItemsContainer" unique_id=1694529882 instance=ExtResource("3_0bj3m")]
 layout_mode = 0
 offset_left = 675.0
 offset_right = 675.0
-pannelTheme = SubResource("StyleBoxFlat_ipcig")
+pannelTheme = SubResource("StyleBoxFlat_7pxmh")
+
+[node name="Control" type="Control" parent="." unique_id=1078673932]
+z_index = -2
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_l55ax")
+Selectable = false
+
+[node name="HoldBackProgressBar" type="ColorRect" parent="Control" unique_id=638000374]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_3m1ny")
+layout_mode = 0
+offset_left = 28.0
+offset_top = 15.0
+offset_right = 367.0
+offset_bottom = 119.0
+scale = Vector2(0.75, 0.75)
+script = ExtResource("10_qjtyo")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/HoldBackProgressBar" unique_id=903051315]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -48.0
+offset_right = 170.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="StartGameLabel" type="Label" parent="Control/HoldBackProgressBar/HBoxContainer" unique_id=1054315345]
+use_parent_material = true
+layout_mode = 2
+text = "Back"
+label_settings = SubResource("LabelSettings_c3afc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartGameInputIcon" parent="Control/HoldBackProgressBar/HBoxContainer" unique_id=266805326 instance=ExtResource("6_64c5m")]
+use_parent_material = true
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+texture = SubResource("AtlasTexture_qjtyo")
+stretch_mode = 1
+action = "MenuBack-2"
 
 [node name="StartGame" type="HBoxContainer" parent="." unique_id=1796703764]
 visible = false
@@ -172,7 +235,7 @@ alignment = 1
 [node name="StartGameInputIcon" parent="StartGame" unique_id=1683868203 instance=ExtResource("6_64c5m")]
 use_parent_material = true
 layout_mode = 2
-texture = SubResource("AtlasTexture_gi7yw")
+texture = SubResource("AtlasTexture_bqyai")
 action = "MenuStart-2"
 
 [node name="StartGameLabel" type="Label" parent="StartGame" unique_id=1288403193]

@@ -16,8 +16,30 @@ float GetAjacentCount(sampler2D tex, vec2 uv, vec2 pixelSize){
 	return pixelCount;
 }
 
+//vec4 GetOutline(sampler2D mainTexture, vec2 texUV, vec4 color){
+	//if (color.a != 0.) return color;
+	//
+	//vec2 quadrant = (ceil((texUV*2.)-vec2(1.))*2.)-vec2(1.);
+	//vec2 Hquadrant = quadrant * vec2(1, 0);
+	//vec2 Vquadrant = quadrant * vec2(0, 1);
+	//vec2 dirs[4] = {
+		//-Hquadrant,
+		//-Vquadrant,
+		//Hquadrant,
+		//Vquadrant
+		//};
+	//for (int i = 0; i < 4; i++){
+		//vec2 HUVoffset = dirs[i] / vec2(textureSize(mainTexture, 0));
+		//float alpha = texture(mainTexture, texUV + HUVoffset).a;
+		//if (alpha != 0.) return vec4(Color, 1.);
+	//}
+	//return vec4(0.);
+//}
+
 void fragment() {
 	if (COLOR.a == 0. && GetAjacentCount(TEXTURE, UV, TEXTURE_PIXEL_SIZE) > 0.0){
 		COLOR = vec4(Color, 1.0);
 	}
+	//COLOR.a += 0.1;
+	//COLOR = GetOutline(TEXTURE, UV, COLOR);
 }

@@ -13,11 +13,9 @@
 [node name="MainMenu" type="CanvasLayer" unique_id=1509971223]
 script = ExtResource("1_kiq52")
 
-[node name="AudioSettingsScreen" parent="." unique_id=1595907082 instance=ExtResource("2_cvum7")]
-offset_left = -1920.0
-offset_top = 2160.0
-offset_right = -1920.0
-offset_bottom = 2160.0
+[node name="MainMenuMainScreen" parent="." unique_id=335065166 instance=ExtResource("4_5fm1k")]
+offset_left = 1.0
+offset_right = 1.0
 
 [node name="GamemodeSelectScreen" parent="." unique_id=979982142 instance=ExtResource("3_5jasj")]
 offset_left = 1921.0
@@ -25,9 +23,13 @@ offset_top = 1.0
 offset_right = 1921.0
 offset_bottom = 1.0
 
-[node name="MainMenuMainScreen" parent="." unique_id=335065166 instance=ExtResource("4_5fm1k")]
-offset_left = 1.0
-offset_right = 1.0
+[node name="CharacterSelectScreen" parent="." unique_id=354511115 instance=ExtResource("7_oylgq")]
+offset_left = 3840.0
+offset_right = 3840.0
+
+[node name="TeamSelectScreen" parent="." unique_id=1625672190 instance=ExtResource("8_1tdrq")]
+offset_left = 5760.0
+offset_right = 5760.0
 
 [node name="SettingsScreen" parent="." unique_id=1574523183 instance=ExtResource("5_pw0gi")]
 offset_left = -1920.0
@@ -39,14 +41,11 @@ offset_top = 1080.0
 offset_right = -1920.0
 offset_bottom = 1080.0
 
-[node name="NewCharacterSelectScreen" parent="." unique_id=354511115 instance=ExtResource("7_oylgq")]
-offset_left = 3840.0
-offset_right = 3840.0
-usesSelectorPanel = false
-
-[node name="TeamSelectScreen" parent="." unique_id=1625672190 instance=ExtResource("8_1tdrq")]
-offset_left = 5760.0
-offset_right = 5760.0
+[node name="AudioSettingsScreen" parent="." unique_id=1595907082 instance=ExtResource("2_cvum7")]
+offset_left = -1920.0
+offset_top = 2160.0
+offset_right = -1920.0
+offset_bottom = 2160.0
 
 [node name="MainMenuController" type="Node" parent="." unique_id=1055294723 node_paths=PackedStringArray("currentScreen")]
 unique_name_in_owner = true

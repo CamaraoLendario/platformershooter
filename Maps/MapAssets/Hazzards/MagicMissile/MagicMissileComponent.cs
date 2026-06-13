@@ -77,7 +77,7 @@ public partial class MagicMissileComponent : Node
 		int alivePlayerCount = 0;
 		foreach (Player player in Game.Instance.players)
 		{
-			if (!player.IsDead)
+			if (!player.isDead)
 			{
 				averagePos += player.GlobalPosition;
 				alivePlayerCount += 1;

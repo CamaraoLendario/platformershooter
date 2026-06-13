@@ -11,8 +11,9 @@ public partial class ScoreBoard : Control
 	public override void _Ready()
 	{
 		scoreContiners = GetNode<MenuItemsListContainer>("%scoreContainers");
-		SignalBus.Instance.GameStarted += Initialize;
+		SignalBus.Instance.StartGame += Initialize;
 		SignalBus.Instance.RoundFinished += AddScoreToAll;
+		SignalBus.Instance.GameExited += (MainMenuScreen toScreen) => {Reset();};
 	}
 
 	public void Initialize()
@@ -29,6 +30,14 @@ public partial class ScoreBoard : Control
 		scoreContiners.MassAddChildren(scoreCounters);
 		ScreenAnimateNodes(CreateTween(), scoreCounters, Vector2.Down, 0f, false, false, 0);
 	}
+	
+	void Reset() {
+		foreach(IndividualScoreCounter scoreCounter in scoreCounters) {
+			scoreCounter.QueueFree();
+		}
+		scoreCounters = [];
+		scoreCountersTeam = [];
+	}
 
 	public void AddScoreToAll()
 	{
@@ -37,6 +46,8 @@ public partial class ScoreBoard : Control
 
 	public async void AnimateAddScoreToAll(List<(int, int)> teamScoreChanges)
 	{
+		GD.Print("animating AddScoreToall");
+		GamemodeLogic gamemodeLogic = Game.GetGamemodeLogic();
 		Game.PauseGame();
 		// Show score animation node animation
 		Tween tween = CreateTween();
@@ -59,14 +70,22 @@ public partial class ScoreBoard : Control
 		// Hide score animation node animation
 		tween = CreateTween(); 	
 		ScreenAnimateNodes(tween, scoreCounters, Vector2.Down, 1f, false, false, 0);
-		// await ^animation^ finished
-		await ToSignal(tween, Tween.SignalName.Finished);
-		Game.UnPauseGame();
-		SignalBus.Instance.EmitSignal(SignalBus.SignalName.NewRoundStart);
+		bool isGameOver = gamemodeLogic.IsGameOver();
+		if (isGameOver)
+			SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameFinished, gamemodeLogic.GetWinningTeam());
+		else
+		{
+			// await ^animation^ finished
+			await ToSignal(tween, Tween.SignalName.Finished);
+			SignalBus.Instance.EmitSignal(SignalBus.SignalName.NewRoundStart);
+			//Game.UnPauseGame();
+		}
+		GD.Print("added score to all");
 	}
 
     public override void _ExitTree()
     {
+		SignalBus.Instance.StartGame -= Initialize;
 		SignalBus.Instance.RoundFinished -= AddScoreToAll;
         base._ExitTree();
     }

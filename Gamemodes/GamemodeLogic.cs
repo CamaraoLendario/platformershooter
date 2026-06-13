@@ -1,4 +1,5 @@
 using Godot;
+using Godot.NativeInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,78 +27,106 @@ public partial class GamemodeLogic : Resource
 	GameLength currentGameLength;
     [Export] float roundEndDelay = 2f;
    	protected Dictionary<Player, int> playerTeam = [];
-    protected Dictionary<int, int> teamSore = [];
+    protected Dictionary<int, int> teamScore = [];
     public List<(int, int)> teamScoreChanges = [];
-    
-    public virtual void OnGameStarted()
+	protected bool isRoundRestarting = false;
+	int winningTeam = -1;
+	
+	public void Ready()
 	{
 		
-	}   
+	}
+    public virtual void OnGameStarted()
+	{
+
+	} 
+	public virtual void OnFinishedSpawningPlayers()
+	{
+		
+	} 
     public virtual void OnPlayerDied(Player died, Player killer)
     {
-        if ((playerTeam[killer] == playerTeam[died]) && suicideLosesPoints)
+		GD.Print("----Begin OnPlayerDied() in GamemodeLogic:----");
+        if (playerTeam[killer] == playerTeam[died])
 		{
-			teamScoreChanges.Add((playerTeam[killer], -1));
-			GD.Print($"the team {playerTeam[killer]} has Lost a point");
+			if(suicideLosesPoints) {
+				teamScoreChanges.Add((playerTeam[killer], -1));
+				GD.Print($"the team {playerTeam[killer]} has Lost a point");
+			}
 		}
 		else {
 			teamScoreChanges.Add((playerTeam[killer], +1));
 			GD.Print($"the team {playerTeam[killer]} has Gained a point");
 		}
 		GD.Print($"teamScoreChanges now has {teamScoreChanges.Count} entries");
-		RestartRound();
-//		CheckRoundOver();
+	
+		CheckRoundOver();
+		GD.Print("----End OnPlayerDied() in GamemodeLogic:----");
     }
     protected void CheckRoundOver(){
-        if (!IsRoundOver()) return;
-        
         RestartRound();
     }
-    public virtual bool IsRoundOver()
+	public virtual bool IsRoundOver()
 	{
-		//TODO need to put second place here and compare that
-		int winningTeam = -1;
-		int currentWinnerPoints = -1;
-		int potentialPoints = 0;
-		for(int i = 0; i < teamSore.Count; i++){
-			if (teamSore[i] > currentWinnerPoints){
-				currentWinnerPoints = teamSore[i];
-				winningTeam = i;
+		return GetAlivePlayerCount() <= 1;
+	}
+    public virtual bool IsGameOver()
+	{
+		winningTeam = teamScore.Keys.First();
+		int winningScore = 0;
+		int nextTeam = teamScore.Keys.First();
+		int nextScore = 0;
+
+		foreach (int team in teamScore.Keys)
+		{
+			int currentTeamScore = teamScore[team];
+			if (currentTeamScore > winningScore)
+			{
+				if (winningScore >= nextScore)
+				{
+					nextTeam = winningTeam;
+					nextScore = winningScore;
+				}
+				winningTeam = team;	
+				winningScore = currentTeamScore;
+			}
+			else if (currentTeamScore > nextScore)
+			{
+				nextTeam = team;
+				nextScore = currentTeamScore;
 			}
 		}
-        if (currentWinnerPoints < GetNecessaryScore()) return false;
-		
-        foreach (Player player in playerTeam.Keys)
-			if (!player.IsDead)
-				potentialPoints ++;
-
-		potentialPoints--; // not counting self
-		for(int i = 0; i < teamSore.Count; i++)
+		GD.Print($"score: {winningScore} GetWinningScore(): {GetWinningScore()}");
+		if (winningScore < GetWinningScore()) return false; 
+		if (nextScore + GetAvailableScore(nextTeam) >= winningScore)
 		{
-			if (i == winningTeam) continue;
-
-			if(teamSore[i] + potentialPoints >= currentWinnerPoints) return false;
+			//do something for deathmatch maybe? but game is not over yet
+			return false;
 		}
 		return true;
 	}
 
     protected async void RestartRound()
     {
+		GD.Print("RestartingRound...");
+		GD.Print("Is Round restarting? ", isRoundRestarting);
+		if (isRoundRestarting) return;
+		isRoundRestarting = true;
 		await ToSignal(Game.Instance.GetTree().CreateTimer(roundEndDelay), Timer.SignalName.Timeout);		
+		GD.Print("Emitting the RoundFinished signal");
 		SignalBus.Instance.EmitSignal(SignalBus.SignalName.RoundFinished);
-		
 		CallDeferred(MethodName.MergeScoreChanges);
-		//SetDeferred();
+		SetDeferred(PropertyName.isRoundRestarting, false);
     }
     void MergeScoreChanges()
 	{
 		foreach((int team, int points) in teamScoreChanges)
 		{
-			teamSore[team] += points;
+			teamScore[team] += points;
 		}
 		teamScoreChanges.Clear();
 	}
-	public int GetNecessaryScore()
+	public int GetWinningScore()
 	{
 		return pointsToWin[(int)currentGameLength];
 	}
@@ -105,8 +134,32 @@ public partial class GamemodeLogic : Resource
 	{
 		if(!playerTeam.Keys.Contains(player))
 			playerTeam.Add(player, teamIdx);
-		if (teamSore.Keys.Contains(teamIdx))
+		if (teamScore.Keys.Contains(teamIdx))
 			return;
-		teamSore.Add(teamIdx, 0);
+		teamScore.Add(teamIdx, 0);
 	} 
+
+	protected virtual int GetAvailableScore(int forTeam)
+	{
+		return 0;
+	}
+	int GetAlivePlayerCount()
+	{
+		int count = 0;
+		foreach(Player player in Game.GetPlayers())
+		{
+			if (!player.isDead)
+				count++;
+		}
+		
+		return count;
+	}
+
+	public int GetWinningTeam()
+	{
+		return winningTeam;
+	}
+
+
+
 }

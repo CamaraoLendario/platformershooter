@@ -5,25 +5,27 @@ using System.Runtime.InteropServices.Marshalling;
 public partial class ShipProjectile : LinearProjectile
 {
 	[ExportGroup("Nodes")]
-	[Export] GpuParticles2D particlesTrail;
+	[Export] GpuParticles2D trailParticles;
 	[Export] GpuParticles2D explosionParticles;
+	PointLight2D projectileLight;
     public override void _Ready()
     {
         base._Ready();
-
-		(particlesTrail.ProcessMaterial as ParticleProcessMaterial).Direction = new Vector3(-Direction.X, -Direction.Y, 0);
+		projectileLight = GetNode<PointLight2D>("%ProjectileLight");
+		(trailParticles.ProcessMaterial as ParticleProcessMaterial).Direction = -new Vector3(Direction.X, Direction.Y, 0);
     }
 
-    public override void End()
+    public override bool End(EndingReason endingReason, bool allowFreeing = true, bool forceFreeing = false)
     {
+		if (!base.End(endingReason, false)) return false;
+		ending = true;
         speed = 0;
 		SetDeferred(PropertyName.Monitoring, false);
 		SetDeferred(PropertyName.Monitorable, false);
-
-		sprite.Visible = false;
-		particlesTrail.Emitting = false;
+		trailParticles.Emitting = false;
 		SpawnExplosionParticles();
-		WaitForParticlesEnd();
+		PrepareForDeletion();
+		return true;
     }
 
     private void SpawnExplosionParticles()
@@ -35,11 +37,16 @@ public partial class ShipProjectile : LinearProjectile
 		Game.Instance.CallDeferred(MethodName.AddChild, newParticles);
 	}
 
-
-    private async void WaitForParticlesEnd()
-    {
-		await ToSignal(GetTree().CreateTimer(1f), "timeout");
+	async void PrepareForDeletion()
+	{
+		trailParticles.Emitting = false;
+		sprite.SelfModulate = new Color(0f, 0f, 0f, 0f);
+		Tween tween = CreateTween();
+		tween.TweenMethod(Callable.From((float tweenedValue) =>
+		{
+			projectileLight.Energy = tweenedValue;
+		}), 1f, 0f, trailParticles.Lifetime/10f);
+		await ToSignal(GetTree().CreateTimer(trailParticles.Lifetime), Timer.SignalName.Timeout);
 		QueueFree();
-    }
-
+	}	
 }

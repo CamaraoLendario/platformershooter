@@ -10,7 +10,6 @@ public partial class Map : Node2D
     [Export] public MapBorders MapBordersNode;
     [Export] public PilotArea pilotArea;
     [Export] public MapCamera camera;
-    [Export] public Node gamemodesContainer;
     InteractableTiles currentTileMapLayerNode;
     public Vector2 PixelsMapSize
     {
@@ -26,9 +25,9 @@ public partial class Map : Node2D
 
     public override void _Ready() 
     {
-        SignalBus.Instance.NewRoundStart += OnNewRoundStart;
-        currentTileMapLayerNode = GetNode<InteractableTiles>("InteractableTiles");
-        //ReplicateCollisions();
+        // SignalBus.Instance.NewRoundStart += OnNewRoundStart;
+        // currentTileMapLayerNode = GetNode<InteractableTiles>("InteractableTiles");
+        // ReplicateCollisions();
     }
     
     void OnNewRoundStart()

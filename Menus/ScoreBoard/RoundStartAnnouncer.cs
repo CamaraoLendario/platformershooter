@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 public partial class RoundStartAnnouncer : Control
 {
 	[Export] Label readyGoLabel; 
-	[Export] AudioStreamPlayer READY; 
-	[Export] AudioStreamPlayer GO;
-	bool isRoundStart = false;
+	[Export] AudioStreamPlayer READYSound; 
+	[Export] AudioStreamPlayer GOSound;
+	bool isRoundStarting = false;
 	
 	Tween tween;
 	World world;
@@ -17,7 +17,12 @@ public partial class RoundStartAnnouncer : Control
 		world = GetTree().GetFirstNodeInGroup("World") as World;
 		SignalBus.Instance.GameStarted += OnNewRound;
 		SignalBus.Instance.NewRoundStart += OnNewRound;
+		SignalBus.Instance.GameStarted += OnGameStart;
+	}
 
+	void OnGameStart()
+	{
+		Game.Instance.CallDeferred(Game.MethodName.PauseGame);
 	}
 
 	public override void _Process(double delta)
@@ -27,8 +32,7 @@ public partial class RoundStartAnnouncer : Control
 
 	void OnNewRound()
 	{
-		Game.Instance.CallDeferred(Game.MethodName.PauseGame);
-		isRoundStart = true;
+		isRoundStarting = true;
 		AnimateReadyGo();	
 	}
 
@@ -36,19 +40,18 @@ public partial class RoundStartAnnouncer : Control
 	{
 		Game.PauseGame();
 		readyGoLabel.Text = "READY!!";
-		READY.Play();
+		READYSound.Play();
 		tween = GetEasedTween();
 		tween.SetEase(Tween.EaseType.Out);
 		tween.TweenProperty(readyGoLabel, "position", new Vector2(607.5f, 419.0f), 0.75f);
 		await ToSignal(GetTree().CreateTimer(2f), "timeout");
 		readyGoLabel.Text = "GO!!";
-		GO.Play();
+		GOSound.Play();
 		Game.UnPauseGame();
-		isRoundStart = false;
+		isRoundStarting = false;
 		tween = GetEasedTween();
 		tween.SetEase(Tween.EaseType.In);
 		tween.TweenProperty(readyGoLabel, "position", new Vector2(607.5f, -300.0f), 0.5f);
-		
 	}
 
 	Tween GetEasedTween()
@@ -62,7 +65,7 @@ public partial class RoundStartAnnouncer : Control
 
 	public override void _Draw()
 	{
-		if (!isRoundStart) return;
+		if (!isRoundStarting) return;
 		foreach (Player player in Game.Instance.players)
 		{
 			Camera2D camera = Game.GetMap().camera;

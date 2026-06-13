@@ -13,7 +13,7 @@ shader = ExtResource("5_i854h")
 shader_parameter/flashPerSec = 2.0
 shader_parameter/maxAlpha = 1.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tgdw4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_i854h"]
 atlas = ExtResource("7_kdlg7")
 region = Rect2(0, 0, 16, 16)
 
@@ -40,19 +40,19 @@ horizontal = true
 
 [node name="ColorRect" type="ColorRect" parent="TeamsRects" index="0" unique_id=1001453481]
 layout_mode = 0
-offset_left = -150.0
-offset_top = -1268.0
-offset_right = 150.0
-offset_bottom = -350.0
+offset_left = -650.0
+offset_top = -459.0
+offset_right = -350.0
+offset_bottom = 459.0
 color = Color(1, 0, 0, 0.49803922)
 script = ExtResource("3_88bbw")
 
 [node name="ColorRect2" type="ColorRect" parent="TeamsRects" index="1" unique_id=1295600925]
 layout_mode = 0
-offset_left = -150.0
-offset_top = 350.0
-offset_right = 150.0
-offset_bottom = 1268.0
+offset_left = 350.0
+offset_top = -459.0
+offset_right = 650.0
+offset_bottom = 459.0
 color = Color(0, 0, 1, 0.49803922)
 script = ExtResource("3_88bbw")
 
@@ -90,7 +90,7 @@ alignment = 1
 [node name="StartGameInputIcon" parent="StartGame" index="0" unique_id=1683868203 instance=ExtResource("6_ojgc1")]
 use_parent_material = true
 layout_mode = 2
-texture = SubResource("AtlasTexture_tgdw4")
+texture = SubResource("AtlasTexture_i854h")
 action = "MenuStart-2"
 
 [node name="StartGameLabel" type="Label" parent="StartGame" index="1" unique_id=1411985521]

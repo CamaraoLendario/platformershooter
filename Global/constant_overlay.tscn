@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://nlhmcbtm3oey"]
+
+[ext_resource type="Script" uid="uid://cymbdng74q7ta" path="res://Global/ConstantOverlay.cs" id="1_8jqjw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_g5522"]
+font_size = 37
+font_color = Color(1, 1, 1, 0.42352942)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8jqjw"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="ConstantOverlay" type="CanvasLayer" unique_id=1557563179]
+script = ExtResource("1_8jqjw")
+
+[node name="Control" type="Control" parent="." unique_id=813835757]
+z_index = 4096
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control" unique_id=1527835223]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 40.0
+grow_vertical = 0
+text = " Alpha 0.1"
+label_settings = SubResource("LabelSettings_g5522")
+vertical_alignment = 2
+
+[node name="FadePanel" type="Panel" parent="." unique_id=155516969]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+offset_right = 1920.0
+offset_bottom = 1080.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8jqjw")

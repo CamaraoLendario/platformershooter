@@ -46,16 +46,16 @@ animations = [{
 "speed": 15.0
 }]
 
-[node name="ShipProjectile" unique_id=669512879 node_paths=PackedStringArray("particlesTrail", "explosionParticles", "sprite") instance=ExtResource("1_5mcne")]
+[node name="ShipProjectile" unique_id=669512879 node_paths=PackedStringArray("trailParticles", "explosionParticles", "sprite") instance=ExtResource("1_5mcne")]
 script = ExtResource("2_a567x")
-particlesTrail = NodePath("TrailParticles")
+trailParticles = NodePath("TrailParticles")
 explosionParticles = NodePath("EplosionParticles")
 sprite = NodePath("AnimatedSprite2D")
 
-[node name="CollisionShape2D" parent="." index="0"]
+[node name="CollisionShape2D" parent="." index="0" unique_id=1324468261]
 shape = SubResource("CircleShape2D_5cqit")
 
-[node name="Sprite2D" parent="." index="1"]
+[node name="Sprite2D" parent="." index="1" unique_id=1321529545]
 visible = false
 z_index = 1
 texture = null
@@ -86,8 +86,8 @@ sprite_frames = SubResource("SpriteFrames_7rbf6")
 autoplay = "default"
 frame_progress = 0.85612386
 
-[node name="PointLight2D" type="PointLight2D" parent="AnimatedSprite2D" index="0" unique_id=341726334]
-position = Vector2(3.5, 0)
+[node name="ProjectileLight" type="PointLight2D" parent="AnimatedSprite2D" index="0" unique_id=341726334]
+unique_name_in_owner = true
 color = Color(0.72, 0.44, 1, 1)
 range_z_max = 0
 texture = ExtResource("2_xcja3")

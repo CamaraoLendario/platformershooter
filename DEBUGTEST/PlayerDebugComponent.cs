@@ -61,13 +61,13 @@ public partial class PlayerDebugComponent : Controller
   
     void CHANGESHIELDSTATEStart()
     {
-        if (Main.HasShield)
+        if (Main.hasShield)
         {
             Main.TakeDamage();
         }
         else
         {
-            Main.HasShield = true;
+            Main.hasShield = true;
             Main.shieldCooldownTimer.Stop();
             Main.pilotShieldFlickerer.Stop();
             Main.shipShieldFlickerer.Stop();

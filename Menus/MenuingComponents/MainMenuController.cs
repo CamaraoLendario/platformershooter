@@ -9,23 +9,22 @@ using System.Reflection.PortableExecutable;
 public partial class MainMenuController : MenuController
 {
 	[Export] public MainMenuScreen currentScreen;
+	MainMenu main;
 	bool enabled = true;
+	
+	(string controllerInput, string keyboardInput, StringName menuAction)[] menuInputs = [
+		("MenuInteract", "MenuInteractKeyboard", MainMenuScreen.MethodName.OnInteract),
+		("MenuAltInteract", "MenuAltInteractKeyboard", MainMenuScreen.MethodName.OnAltInteract),
+		("MenuAccept", "MenuAcceptKeyboard", MainMenuScreen.MethodName.OnAccept),
+		("MenuBack", "MenuBackKeyboard", MainMenuScreen.MethodName.OnNegativeAction),
+	]; 
+
 	public override void _Ready()
 	{
 		base._Ready();
-		SignalBus.Instance.GameStarted += () => {enabled = false;};
-		
-		# if TOOLS
-			if (Engine.IsEditorHint()) return;
-		# endif
-		
-		foreach (Node node in GetParent().GetChildren())
-		{
-			if (node is not MainMenuScreen mainMenuScreen) continue;
-			mainMenuScreen.Position *= 0;
-			if (mainMenuScreen != currentScreen)
-				mainMenuScreen.CallDeferred(MainMenuScreen.MethodName.Move, Vector2.Right, false, false, true);
-		}
+		main = GetParent<MainMenu>();
+		SignalBus.Instance.StartGame += () => {enabled = false;};
+		SignalBus.Instance.GameExited += (MainMenuScreen exitedTo) => {enabled = true;};
 	}
 
 	public override void _Input(InputEvent @event)
@@ -69,19 +68,25 @@ public partial class MainMenuController : MenuController
 		}
 		
 		UpdateInputVec(newInputVec);
-
-		if ((Input.IsActionJustPressed("MenuInteract") || Input.IsActionJustPressed("MenuInteractKeyboard")) && currentScreen.OnInteract()){
-			GetViewport().SetInputAsHandled();
-			return;}
-		if ((Input.IsActionJustPressed("MenuAltInteract") || Input.IsActionJustPressed("MenuAltInteractKeyboard")) && currentScreen.OnAltInteract()){
-			GetViewport().SetInputAsHandled();
-			return;}
-		if ((Input.IsActionJustPressed("MenuAccept") || Input.IsActionJustPressed("MenuAcceptKeyboard")) && currentScreen.OnAccept()){
-			GetViewport().SetInputAsHandled();
-			return;}
-		if ((Input.IsActionJustPressed("MenuBack") || Input.IsActionJustPressed("MenuBackKeyboard")) && currentScreen.OnNegativeAction()){
-			GetViewport().SetInputAsHandled();
-			return;}
+		
+		if (!@event.IsReleased())
+			foreach((string controllerInput, string keyboardInput, StringName menuAction) in menuInputs)
+			{
+				if ((Input.IsActionJustPressed(controllerInput) || Input.IsActionJustPressed(keyboardInput)) && (bool)currentScreen.Call(menuAction))
+				{
+					GetViewport().SetInputAsHandled();
+					return;
+				}
+			}
+		else
+			foreach((string controllerInput, string keyboardInput, StringName menuAction) in menuInputs)
+			{
+				if ((Input.IsActionJustReleased(controllerInput) || Input.IsActionJustReleased(keyboardInput)) && (bool)currentScreen.Call(menuAction + "Released"))
+				{
+					GetViewport().SetInputAsHandled();
+					return;
+				}
+			}
 	}
 
     public override void OnMoveAction(Vector2 inputvec)
@@ -89,4 +94,17 @@ public partial class MainMenuController : MenuController
 		currentScreen.OnMoveAction(inputvec);
 	}
 
+	public MainMenuScreen SetCurrentScreen(MainMenu.Screens screen)
+	{
+		currentScreen.Move(Vector2.Down, false, false, true);
+		currentScreen = main.GetScreen(screen);
+		currentScreen.Move(Vector2.Down, true, false, true);
+		if (currentScreen == null) {
+			GD.PrintErr("screen not found. defaulting to MainMenuScreen");
+			currentScreen = GetNodeOrNull<MainMenuScreen>("MainMenuMainScreen");
+		}
+		return currentScreen;
+	}
+
+ 
 }	

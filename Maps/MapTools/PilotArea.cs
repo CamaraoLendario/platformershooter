@@ -24,7 +24,7 @@ public partial class PilotArea : Node2D
 	{
 		foreach (Player player in Game.Instance.players)
 		{
-			if (!player.IsDead)
+			if (!player.isDead)
 				player.IsInPilotArea = IsInPilotArea(player.GlobalPosition);
 		}
 	}

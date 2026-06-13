@@ -97,7 +97,7 @@ void process() {
 	VELOCITY.xy += acceleration*100.;
 	COLOR.a = min(COLOR.a, dot(normalize(TRANSFORM[3].xy), USERDATA1.xy));
 	
-		vec2 normalizedVel = normalize(VELOCITY.xy);
+	vec2 normalizedVel = normalize(VELOCITY.xy);
 	float currentRotation = atan(normalizedVel.y/normalizedVel.x);// * value;
 	float c = cos(-currentRotation);
 	float s = sin(-currentRotation);

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cbmq3xh2bcijs"]
 
-[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="1_gh11b"]
+[ext_resource type="Material" uid="uid://6b8p1p0j0p4f" path="res://Actors/Player/Materials/OutlineMaterial.tres" id="1_3mvtf"]
 [ext_resource type="Script" uid="uid://dfc37w7c5df0r" path="res://Actors/Player/Player.cs" id="2_30khc"]
 [ext_resource type="Script" uid="uid://dpajyn7twtmqh" path="res://Actors/Player/Pilot/PilotAttack.cs" id="3_iwrur"]
 [ext_resource type="Script" uid="uid://dxdjuabd4rwra" path="res://Actors/Player/OverHeadDisplay.cs" id="4_0ieod"]
@@ -9,20 +9,21 @@
 [ext_resource type="Texture2D" uid="uid://m2xw66h74o04" path="res://Actors/Player/Ship/Sprites/shipPowerUpIndicators.png" id="5_87ye5"]
 [ext_resource type="Script" uid="uid://btwuke1gfr05i" path="res://Actors/Player/Ship/ShipAttack.cs" id="5_fllei"]
 [ext_resource type="PackedScene" uid="uid://ceiwo7xx53l5y" path="res://Actors/Player/Ship/ShipProjectile.tscn" id="5_gsc2s"]
-[ext_resource type="SpriteFrames" uid="uid://bcbvwjw2kxhut" path="res://Actors/Player/Pilot/PilotSpriteFrames.tres" id="6_alwmy"]
+[ext_resource type="SpriteFrames" uid="uid://bcbvwjw2kxhut" path="res://Actors/Player/Pilot/Textures/Sprites/PilotSpriteFrames.tres" id="6_alwmy"]
 [ext_resource type="Script" uid="uid://ccqskcvjhmhsp" path="res://Actors/Player/Pilot/PilotSprite.cs" id="7_tko72"]
 [ext_resource type="SpriteFrames" uid="uid://m61ey6b20dbl" path="res://Actors/Player/Ship/ShipSpriteFrames.tres" id="8_2i0nn"]
 [ext_resource type="Script" uid="uid://iv6540036kov" path="res://Actors/Player/Ship/ShipSprite.cs" id="9_74l4w"]
 [ext_resource type="Script" uid="uid://qdxgmtuu50ff" path="res://Actors/Player/Pilot/PilotWeaponHolder.cs" id="10_a5pbq"]
 [ext_resource type="Script" uid="uid://hs076ncgtutx" path="res://Actors/Player/Pilot/MeleeAttack.cs" id="11_gffum"]
-[ext_resource type="Texture2D" uid="uid://c5440b3wlhm0" path="res://Actors/Player/Pilot/Sprites/pilotShieldParticles.png" id="11_j53hc"]
+[ext_resource type="Texture2D" uid="uid://c5440b3wlhm0" path="res://Actors/Player/Pilot/Textures/Shield/pilotShieldParticles.png" id="11_j53hc"]
 [ext_resource type="Material" uid="uid://x38tv3nmu01" path="res://Actors/Player/Materials/PilotShieldBreakParticles.tres" id="11_rda0l"]
-[ext_resource type="Texture2D" uid="uid://ddymh4fx17tto" path="res://Actors/Player/Pilot/Sprites/PilotShield.png" id="12_g6ejb"]
-[ext_resource type="Texture2D" uid="uid://cogxnc4ocl7vq" path="res://Actors/Player/Pilot/Sprites/MeleeEffect.png" id="12_ujyek"]
-[ext_resource type="Script" uid="uid://8cm6grcsm8l3" path="res://Actors/Player/PlayerParticleEmitters.cs" id="12_upr3p"]
+[ext_resource type="Material" uid="uid://b440sqhrft0wb" path="res://Actors/Player/Materials/PilotAfterImages.tres" id="12_3mvtf"]
+[ext_resource type="Texture2D" uid="uid://ddymh4fx17tto" path="res://Actors/Player/Pilot/Textures/Shield/PilotShield.png" id="12_g6ejb"]
+[ext_resource type="Texture2D" uid="uid://cogxnc4ocl7vq" path="res://Actors/Player/Pilot/Textures/FX/MeleeEffect.png" id="12_ujyek"]
 [ext_resource type="Material" uid="uid://cuu7ef3oi50rv" path="res://Actors/Player/Pilot/pilotDeathParticles.tres" id="13_f6sss"]
 [ext_resource type="Texture2D" uid="uid://hlhysuf1ahja" path="res://Actors/Player/Ship/Sprites/ShipShield.png" id="13_r3pko"]
-[ext_resource type="Texture2D" uid="uid://x4ovpn52h8gn" path="res://Actors/Player/Pilot/Sprites/CrossAir1.png" id="15_f6sss"]
+[ext_resource type="Script" uid="uid://dc2mr76nt5mjn" path="res://afterimagesCPUpart.cs" id="14_c2opx"]
+[ext_resource type="Texture2D" uid="uid://x4ovpn52h8gn" path="res://Actors/Player/Pilot/Textures/FX/CrossAir1.png" id="15_f6sss"]
 [ext_resource type="Texture2D" uid="uid://ca2jhf1dvchi5" path="res://Actors/Player/Ship/Sprites/shipShieldParticles.png" id="15_jiph2"]
 [ext_resource type="Script" uid="uid://c1vl7s8234f5g" path="res://Actors/Player/PlayerInput.cs" id="15_n45d6"]
 [ext_resource type="Script" uid="uid://cugp6ewji0rnl" path="res://Actors/Player/Effects/Frozen/PlayerEffectHandler.cs" id="16_8np4b"]
@@ -37,15 +38,13 @@
 [ext_resource type="Shader" uid="uid://c5of2yh1koxya" path="res://Actors/Player/ShieldColorer.gdshader" id="22_l7nff"]
 [ext_resource type="AudioStream" uid="uid://c861r8jtk0so" path="res://Assets/Audio/Ilikeit.wav" id="23_k8e2g"]
 [ext_resource type="PackedScene" uid="uid://diosn7qu6kfh6" path="res://Actors/Player/Effects/Frozen/frozen_ddr.tscn" id="24_aao0a"]
+[ext_resource type="Material" uid="uid://b5i1uqnrt70x5" path="res://Actors/Player/Materials/ShipAfterImages.tres" id="24_hdyga"]
 [ext_resource type="Texture2D" uid="uid://sk1boe546wm1" path="res://Actors/Player/Ship/Sprites/BrokenShipSpriteSheet.png" id="26_kr5aq"]
 [ext_resource type="Material" uid="uid://bgglq6jh35xxs" path="res://Actors/Player/Ship/ShipReconstructionParticles.tres" id="28_ia8ke"]
 [ext_resource type="Script" uid="uid://lcfkknp3vonf" path="res://Actors/Player/PlayeronPlayerCollision.cs" id="32_aao0a"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jkixf"]
-resource_local_to_scene = true
-shader = ExtResource("1_gh11b")
-shader_parameter/Color = Color(0.9019608, 0, 0, 1)
-shader_parameter/outlineThickness = 1
+[ext_resource type="Script" uid="uid://dfu4imudmwcbs" path="res://Actors/Player/ParticlesHandler.cs" id="41_0ieod"]
+[ext_resource type="Shader" uid="uid://cambmcm2bey2f" path="res://test/PlayerReconstruction.gdshader" id="41_jhh7x"]
+[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Textures/Sprites/PilotStill.png" id="42_e3tbv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_g6ejb"]
 font = ExtResource("4_jiph2")
@@ -115,42 +114,6 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="Shader" id="Shader_kr5aq"]
-code = "shader_type canvas_item;
-render_mode blend_mix;
-uniform int particles_anim_h_frames;
-uniform int particles_anim_v_frames;
-uniform bool particles_anim_loop;
-uniform vec4 Color: source_color = vec4(1);
-
-void vertex() {
-	float h_frames = float(particles_anim_h_frames);
-	float v_frames = float(particles_anim_v_frames);
-	VERTEX.xy /= vec2(h_frames, v_frames);
-	float particle_total_frames = float(particles_anim_h_frames * particles_anim_v_frames);
-	float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
-	if (!particles_anim_loop) {
-		particle_frame = clamp(particle_frame, 0.0, particle_total_frames - 1.0);
-	} else {
-		particle_frame = mod(particle_frame, particle_total_frames);
-	}	UV /= vec2(h_frames, v_frames);
-	UV += vec2(mod(particle_frame, h_frames) / h_frames, floor((particle_frame + 0.5) / h_frames) / v_frames);
-}
-
-void fragment() {
-	float a = COLOR.a;
-	COLOR = (COLOR + (Color*2.))/3.;
-	COLOR.a = a;
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ia8ke"]
-shader = SubResource("Shader_kr5aq")
-shader_parameter/particles_anim_h_frames = 3
-shader_parameter/particles_anim_v_frames = 2
-shader_parameter/particles_anim_loop = false
-shader_parameter/Color = Color(1, 1, 1, 1)
-
 [sub_resource type="Animation" id="Animation_87ye5"]
 length = 0.001
 tracks/0/type = "value"
@@ -177,7 +140,7 @@ tracks/0/path = NodePath("pilotShield:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.000983566, 0.05498357, 0.2572093, 0.2582093, 0.31219548, 0.35023642, 0.35123646, 0.40522265, 0.5683718, 0.5693718, 0.623358, 0.65442204, 0.655422, 0.70940816, 0.7381464, 0.74),
+"times": PackedFloat32Array(-0.0061727017, 0.033514768, 0.2572093, 0.2582093, 0.31219548, 0.35023642, 0.35123646, 0.40522265, 0.5683718, 0.5693718, 0.623358, 0.65442204, 0.655422, 0.70940816, 0.7381464, 0.74),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.7490196)]
@@ -188,8 +151,6 @@ _data = {
 &"RESET": SubResource("Animation_87ye5"),
 &"shieldRegeneration": SubResource("Animation_jiph2")
 }
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f6sss"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cksok"]
 size = Vector2(29, 16)
@@ -274,44 +235,6 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="Shader" id="Shader_l7nff"]
-code = "// NOTE: Shader automatically converted from Godot Engine 4.6.stable.mono's CanvasItemMaterial.
-
-shader_type canvas_item;
-render_mode blend_mix;
-uniform int particles_anim_h_frames;
-uniform int particles_anim_v_frames;
-uniform bool particles_anim_loop;
-uniform vec4 Color: source_color = vec4 (1);
-
-void vertex() {
-	float h_frames = float(particles_anim_h_frames);
-	float v_frames = float(particles_anim_v_frames);
-	VERTEX.xy /= vec2(h_frames, v_frames);
-	float particle_total_frames = float(particles_anim_h_frames * particles_anim_v_frames);
-	float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
-	if (!particles_anim_loop) {
-		particle_frame = clamp(particle_frame, 0.0, particle_total_frames - 1.0);
-	} else {
-		particle_frame = mod(particle_frame, particle_total_frames);
-	}	UV /= vec2(h_frames, v_frames);
-	UV += vec2(mod(particle_frame, h_frames) / h_frames, floor((particle_frame + 0.5) / h_frames) / v_frames);
-}
-
-void fragment() {
-	float a = COLOR.a;
-	COLOR = (COLOR + (Color*2.))/3.;
-	COLOR.a = a;
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_emuwr"]
-resource_local_to_scene = true
-shader = SubResource("Shader_l7nff")
-shader_parameter/particles_anim_h_frames = 4
-shader_parameter/particles_anim_v_frames = 2
-shader_parameter/particles_anim_loop = false
-shader_parameter/Color = Color(1, 1, 1, 1)
-
 [sub_resource type="Animation" id="Animation_rda0l"]
 length = 0.001
 
@@ -341,7 +264,7 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
-"method": &"ForceRecoverShield"
+"method": &"RecoverShield"
 }]
 }
 
@@ -350,6 +273,44 @@ _data = {
 &"RESET": SubResource("Animation_rda0l"),
 &"shieldRegeneration": SubResource("Animation_aao0a")
 }
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f6sss"]
+
+[sub_resource type="Shader" id="Shader_kr5aq"]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+uniform int particles_anim_h_frames;
+uniform int particles_anim_v_frames;
+uniform bool particles_anim_loop;
+uniform vec4 Color: source_color = vec4(1);
+
+void vertex() {
+	float h_frames = float(particles_anim_h_frames);
+	float v_frames = float(particles_anim_v_frames);
+	VERTEX.xy /= vec2(h_frames, v_frames);
+	float particle_total_frames = float(particles_anim_h_frames * particles_anim_v_frames);
+	float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
+	if (!particles_anim_loop) {
+		particle_frame = clamp(particle_frame, 0.0, particle_total_frames - 1.0);
+	} else {
+		particle_frame = mod(particle_frame, particle_total_frames);
+	}	UV /= vec2(h_frames, v_frames);
+	UV += vec2(mod(particle_frame, h_frames) / h_frames, floor((particle_frame + 0.5) / h_frames) / v_frames);
+}
+
+void fragment() {
+	float a = COLOR.a;
+	COLOR = (COLOR + (Color*2.))/3.;
+	COLOR.a = a;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ia8ke"]
+shader = SubResource("Shader_kr5aq")
+shader_parameter/particles_anim_h_frames = 3
+shader_parameter/particles_anim_v_frames = 2
+shader_parameter/particles_anim_loop = false
+shader_parameter/Color = Color(1, 1, 1, 1)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_emuwr"]
 particles_animation = true
@@ -777,11 +738,62 @@ shader_parameter/color_value = Color(1, 1, 1, 1)
 shader_parameter/gravity = Vector3(0, 0, 0)
 shader_parameter/color_ramp = SubResource("GradientTexture1D_f6sss")
 
-[node name="Player" type="CharacterBody2D" unique_id=2096548899 node_paths=PackedStringArray("effectHandler", "pilot", "ship", "inputComponent", "NameLabel", "pilotWeaponHolder", "pilotMeleeAttack", "shipExplosionParticles", "shipReconstructionParticles", "pilotDeathParticles", "shipDeadAudio", "pilotDeadAudio", "pilotSprite", "shipSprite", "shipShield", "pilotShield", "pilotShieldFlickerer", "shipShieldFlickerer")]
-material = SubResource("ShaderMaterial_jkixf")
+[sub_resource type="Shader" id="Shader_l7nff"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.6.stable.mono's CanvasItemMaterial.
+
+shader_type canvas_item;
+render_mode blend_mix;
+uniform int particles_anim_h_frames;
+uniform int particles_anim_v_frames;
+uniform bool particles_anim_loop;
+uniform vec4 Color: source_color = vec4 (1);
+
+void vertex() {
+	float h_frames = float(particles_anim_h_frames);
+	float v_frames = float(particles_anim_v_frames);
+	VERTEX.xy /= vec2(h_frames, v_frames);
+	float particle_total_frames = float(particles_anim_h_frames * particles_anim_v_frames);
+	float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
+	if (!particles_anim_loop) {
+		particle_frame = clamp(particle_frame, 0.0, particle_total_frames - 1.0);
+	} else {
+		particle_frame = mod(particle_frame, particle_total_frames);
+	}	UV /= vec2(h_frames, v_frames);
+	UV += vec2(mod(particle_frame, h_frames) / h_frames, floor((particle_frame + 0.5) / h_frames) / v_frames);
+}
+
+void fragment() {
+	float a = COLOR.a;
+	COLOR = (COLOR + (Color*2.))/3.;
+	COLOR.a = a;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_emuwr"]
+resource_local_to_scene = true
+shader = SubResource("Shader_l7nff")
+shader_parameter/particles_anim_h_frames = 4
+shader_parameter/particles_anim_v_frames = 2
+shader_parameter/particles_anim_loop = false
+shader_parameter/Color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v8mwv"]
+resource_local_to_scene = true
+shader = ExtResource("41_jhh7x")
+shader_parameter/mainTexture = ExtResource("42_e3tbv")
+shader_parameter/outlineColor = Color(1, 0, 0, 1)
+shader_parameter/initialPos = Vector2(0, -5)
+shader_parameter/rotation = 0.0
+shader_parameter/flipped = false
+shader_parameter/spawningTime = 2.0
+shader_parameter/spawningRandomizerWeight = 0.1
+shader_parameter/sheetSize = Vector2i(1, 1)
+shader_parameter/frame = 0
+
+[node name="Player" type="CharacterBody2D" unique_id=2096548899 node_paths=PackedStringArray("effectHandler", "pilot", "ship", "inputComponent", "NameLabel", "pilotWeaponHolder", "pilotMeleeAttack", "shipDeadAudio", "pilotDeadAudio", "pilotSprite", "shipSprite", "shipShield", "pilotShield", "pilotShieldFlickerer", "shipShieldFlickerer", "particlesHandler")]
+process_mode = 1
+material = ExtResource("1_3mvtf")
 collision_mask = 34
 script = ExtResource("2_30khc")
-HasShield = false
 effectHandler = NodePath("EffectHandler")
 pilot = NodePath("Pilot Controller")
 ship = NodePath("Ship Controller")
@@ -789,9 +801,6 @@ inputComponent = NodePath("PlayerInput")
 NameLabel = NodePath("OverHeadDisplay/NameLabel")
 pilotWeaponHolder = NodePath("pilotWeaponHolder")
 pilotMeleeAttack = NodePath("MeleeAttack")
-shipExplosionParticles = NodePath("ShipSprite/ShipDestructionParticles")
-shipReconstructionParticles = NodePath("ShipSprite/ShipReconstructionParticles")
-pilotDeathParticles = NodePath("PilotSprite/PilotDeathParticles")
 shipDeadAudio = NodePath("Sound/ShipDestroyed")
 pilotDeadAudio = NodePath("Sound/PilotDead")
 pilotSprite = NodePath("PilotSprite")
@@ -800,6 +809,7 @@ shipShield = NodePath("ShipSprite/shipShield")
 pilotShield = NodePath("PilotSprite/pilotShield")
 pilotShieldFlickerer = NodePath("PilotSprite/AnimationPlayer")
 shipShieldFlickerer = NodePath("ShipSprite/AnimationPlayer")
+particlesHandler = NodePath("ParticlesHandler")
 
 [node name="OverHeadDisplay" type="VBoxContainer" parent="." unique_id=1352916891 node_paths=PackedStringArray("ammoHud")]
 offset_left = -20.0
@@ -867,15 +877,14 @@ collision = NodePath("../PilotCollision")
 playerInput = NodePath("../PlayerInput")
 
 [node name="PilotCollision" type="CollisionShape2D" parent="." unique_id=1663037647 groups=["PilotCollisions"]]
-visible = false
 shape = SubResource("RectangleShape2D_0jobf")
 
 [node name="PilotSprite" type="AnimatedSprite2D" parent="." unique_id=1745249850 node_paths=PackedStringArray("controller", "Main")]
+process_mode = 3
 z_index = 1
 use_parent_material = true
 sprite_frames = ExtResource("6_alwmy")
 animation = &"Running"
-frame_progress = 0.37927574
 script = ExtResource("7_tko72")
 controller = NodePath("../Pilot Controller")
 Main = NodePath("..")
@@ -884,40 +893,29 @@ Main = NodePath("..")
 self_modulate = Color(1, 1, 1, 0)
 z_index = 3
 material = SubResource("ShaderMaterial_l7nff")
-position = Vector2(0, -0.5)
 sprite_frames = SubResource("SpriteFrames_aao0a")
 autoplay = "default"
-frame_progress = 0.37089354
-
-[node name="PilotShieldDestructionParticles" type="GPUParticles2D" parent="PilotSprite/pilotShield" unique_id=2015931778]
-z_index = 3
-z_as_relative = false
-material = SubResource("ShaderMaterial_ia8ke")
-position = Vector2(0, 0.5)
-emitting = false
-sub_emitter = NodePath(".")
-texture = ExtResource("11_j53hc")
-one_shot = true
-explosiveness = 1.0
-randomness = 1.0
-fixed_fps = 60
-local_coords = true
-process_material = ExtResource("11_rda0l")
+frame_progress = 0.60887146
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PilotSprite" unique_id=862347567]
+process_mode = 3
 libraries/ = SubResource("AnimationLibrary_aao0a")
 
-[node name="PilotDeathParticles" type="GPUParticles2D" parent="PilotSprite" unique_id=888372523]
-z_index = 1
-material = SubResource("CanvasItemMaterial_f6sss")
-emitting = false
-amount = 288
-lifetime = 3.0
-one_shot = true
-explosiveness = 1.0
-fixed_fps = 60
-local_coords = true
-process_material = ExtResource("13_f6sss")
+[node name="AfterImagesShader" type="ColorRect" parent="PilotSprite" unique_id=1479798432]
+show_behind_parent = true
+material = ExtResource("12_3mvtf")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+script = ExtResource("14_c2opx")
+framesDelay = 3
 
 [node name="pilotWeaponHolder" type="Node2D" parent="." unique_id=1996847872 node_paths=PackedStringArray("Pilot", "crossAirSprite")]
 script = ExtResource("10_a5pbq")
@@ -939,14 +937,13 @@ collision_mask = 2
 target_position = Vector2(-20, 0)
 collision_mask = 2
 
-[node name="MeleeAttack" type="Area2D" parent="." unique_id=546809376 node_paths=PackedStringArray("meleeAudioPlayer", "sprite", "collisionShape", "dashParticles", "Main")]
+[node name="MeleeAttack" type="Area2D" parent="." unique_id=546809376 node_paths=PackedStringArray("meleeAudioPlayer", "sprite", "collisionShape", "Main")]
 collision_layer = 4
 collision_mask = 7
 script = ExtResource("11_gffum")
 meleeAudioPlayer = NodePath("MeleeSound")
 sprite = NodePath("AnimatedSprite2D")
 collisionShape = NodePath("CollisionShape2D")
-dashParticles = NodePath("DashparticleEmitter")
 Main = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeAttack" unique_id=807326470]
@@ -961,17 +958,6 @@ sprite_frames = SubResource("SpriteFrames_rr627")
 animation = &"Attack1"
 frame = 4
 offset = Vector2(0, 4)
-
-[node name="DashparticleEmitter" type="Node2D" parent="MeleeAttack" unique_id=1317478179]
-script = ExtResource("12_upr3p")
-
-[node name="DashParticles" type="GPUParticles2D" parent="MeleeAttack/DashparticleEmitter" unique_id=1599359695]
-emitting = false
-amount = 53
-sub_emitter = NodePath(".")
-one_shot = true
-explosiveness = 1.0
-process_material = ExtResource("16_sg1wo")
 
 [node name="MeleeSound" type="AudioStreamPlayer2D" parent="MeleeAttack" unique_id=1016438432]
 process_mode = 3
@@ -988,6 +974,7 @@ collision = NodePath("../ShipCollision")
 playerInput = NodePath("../PlayerInput")
 
 [node name="ShipCollision" type="CollisionShape2D" parent="." unique_id=398740990 groups=["ShipCollisions"]]
+visible = false
 shape = SubResource("CircleShape2D_o4arb")
 disabled = true
 
@@ -1010,39 +997,25 @@ sprite_frames = SubResource("SpriteFrames_l7nff")
 autoplay = "default"
 frame_progress = 0.9349899
 
-[node name="ShipShieldDestructionParticles" type="GPUParticles2D" parent="ShipSprite/shipShield" unique_id=1177343099]
-material = SubResource("ShaderMaterial_emuwr")
-emitting = false
-sub_emitter = NodePath(".")
-texture = ExtResource("15_jiph2")
-one_shot = true
-explosiveness = 1.0
-randomness = 1.0
-fixed_fps = 60
-local_coords = true
-process_material = ExtResource("22_aao0a")
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ShipSprite" unique_id=589171231]
+process_mode = 3
 libraries/ = SubResource("AnimationLibrary_rda0l")
 
-[node name="ShipDestructionParticles" type="GPUParticles2D" parent="ShipSprite" unique_id=250211982]
-material = SubResource("CanvasItemMaterial_emuwr")
-emitting = false
-texture = ExtResource("26_kr5aq")
-lifetime = 0.63
-one_shot = true
-explosiveness = 1.0
-fixed_fps = 120
-process_material = SubResource("ShaderMaterial_f6sss")
-
-[node name="ShipReconstructionParticles" type="GPUParticles2D" parent="ShipSprite" unique_id=713480820]
-z_index = 2
-emitting = false
-amount = 1024
-one_shot = true
-explosiveness = 1.0
-fixed_fps = 60
-process_material = ExtResource("28_ia8ke")
+[node name="AfterImagesShaderShip" type="ColorRect" parent="ShipSprite" unique_id=633715691]
+show_behind_parent = true
+material = ExtResource("24_hdyga")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+script = ExtResource("14_c2opx")
+framesDelay = 3
 
 [node name="ShipPowerUpsHolder" type="Node2D" parent="." unique_id=261392534 node_paths=PackedStringArray("drillIcon", "speedIcon", "dualGunsIcon", "controller")]
 script = ExtResource("21_87ye5")
@@ -1083,8 +1056,99 @@ process_mode = 3
 stream = ExtResource("23_k8e2g")
 
 [node name="PlayerOnPlayerCollision" type="Area2D" parent="." unique_id=1636300373]
+monitoring = false
+monitorable = false
 script = ExtResource("32_aao0a")
 
 [node name="PilotCollision" type="CollisionShape2D" parent="PlayerOnPlayerCollision" unique_id=572772313]
 visible = false
 shape = SubResource("RectangleShape2D_0jobf")
+
+[node name="ParticlesHandler" type="Node2D" parent="." unique_id=914323605 node_paths=PackedStringArray("shipExplosionParticles", "shipReconstructionParticles", "pilotDeathParticles", "pilotShieldBreak", "shipShieldBreak", "dashParticles", "spawningParticles")]
+script = ExtResource("41_0ieod")
+shipExplosionParticles = NodePath("ShipDestructionParticles")
+shipReconstructionParticles = NodePath("ShipReconstructionParticles")
+pilotDeathParticles = NodePath("PilotDeathParticles")
+pilotShieldBreak = NodePath("PilotShieldDestructionParticles")
+shipShieldBreak = NodePath("ShipShieldDestructionParticles")
+dashParticles = NodePath("DashParticles")
+spawningParticles = NodePath("PilotSpawningParticles")
+
+[node name="PilotDeathParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=888372523]
+z_index = 1
+material = SubResource("CanvasItemMaterial_f6sss")
+emitting = false
+amount = 288
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = ExtResource("13_f6sss")
+
+[node name="PilotShieldDestructionParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=2015931778]
+z_index = 3
+z_as_relative = false
+material = SubResource("ShaderMaterial_ia8ke")
+emitting = false
+sub_emitter = NodePath(".")
+texture = ExtResource("11_j53hc")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = ExtResource("11_rda0l")
+
+[node name="DashParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=1599359695]
+z_index = 1
+emitting = false
+amount = 53
+sub_emitter = NodePath(".")
+one_shot = true
+explosiveness = 1.0
+local_coords = true
+process_material = ExtResource("16_sg1wo")
+
+[node name="ShipDestructionParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=250211982]
+material = SubResource("CanvasItemMaterial_emuwr")
+emitting = false
+texture = ExtResource("26_kr5aq")
+lifetime = 0.63
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 120
+process_material = SubResource("ShaderMaterial_f6sss")
+
+[node name="ShipReconstructionParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=713480820]
+z_index = 2
+emitting = false
+amount = 1024
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+process_material = ExtResource("28_ia8ke")
+
+[node name="ShipShieldDestructionParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=1177343099]
+material = SubResource("ShaderMaterial_emuwr")
+emitting = false
+sub_emitter = NodePath(".")
+texture = ExtResource("15_jiph2")
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = ExtResource("22_aao0a")
+
+[node name="PilotSpawningParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=1646918705]
+process_mode = 3
+z_index = 3
+emitting = false
+amount = 324
+lifetime = 1.25
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = SubResource("ShaderMaterial_v8mwv")

@@ -1,6 +1,6 @@
 using Godot;
-using System;
-using System.ComponentModel;
+using System.Collections.Generic;
+using System.Linq;
 
 [Tool]
 public partial class MapBorders : Node2D
@@ -68,9 +68,13 @@ public partial class MapBorders : Node2D
 	int tileSize = 16;
 	public Vector2 pixelMapSize; // Map size in Pixels
 	(Vector2 TL, Vector2 TR, Vector2 BL, Vector2 BR) cornersCoords;
+	Area2D teleportsCheck;
 
 	public override void _Ready()
 	{
+		teleportsCheck = GetChildOrNull<Area2D>(0);
+		if (teleportsCheck == null)
+			GD.Print("Teleports check not found, continuing");
 		UpdateDebug();
 		if(Engine.IsEditorHint())return;
 		GetParent<Map>().camera.SetLeeway(cameraEdgeLeway);
@@ -79,14 +83,25 @@ public partial class MapBorders : Node2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (Engine.IsEditorHint()) return;
+		#if TOOLS
+			if (Engine.IsEditorHint()) return;
+		#endif
 		ProcessTeleporting();
 	}
 	
 	void ProcessTeleporting()
     {
+		if (teleportsCheck == null) return;
+		List<Node2D> nonTeleportingBodies;
+		List<Area2D> nonTeleportingAreas;
+		nonTeleportingBodies = teleportsCheck.GetOverlappingBodies().ToList();
+		nonTeleportingAreas = teleportsCheck.GetOverlappingAreas().ToList();
+
 		foreach (Player player in Game.Instance.players)
 		{
+			if (!nonTeleportingBodies.Contains(player)) continue;
+			nonTeleportingBodies.Remove(player);
+
 			Vector2 boundsDir = GetOutOfBoundsDir(player.Position);
 			if (boundsDir != Vector2.Zero)
 			{
@@ -95,6 +110,12 @@ public partial class MapBorders : Node2D
 		}
 		foreach (Node2D projectile in GetTree().GetNodesInGroup("Projectiles"))
         {
+			if (projectile is Area2D areaProjectile)
+				if (!nonTeleportingAreas.Contains(areaProjectile)) continue;
+				else nonTeleportingAreas.Remove(areaProjectile);
+			else 
+				if (!nonTeleportingBodies.Contains(projectile)) continue;
+				else nonTeleportingBodies.Remove(projectile);
             Vector2 boundsDir = GetOutOfBoundsDir(projectile.Position);
 			if (boundsDir != Vector2.Zero)
 			{

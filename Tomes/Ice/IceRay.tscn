@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cxpas5nanqttn" path="res://Tomes/Ice/IceRay.cs" id="1_65ofw"]
 [ext_resource type="Texture2D" uid="uid://dddru485lah7v" path="res://Tomes/Ice/IceParticlesSpriteSheet.png" id="2_l8rrr"]
-[ext_resource type="Material" uid="uid://um8eg4sda5mp" path="res://Tomes/Ice/IceDroppletsParticles.tres" id="3_thlil"]
-[ext_resource type="Material" uid="uid://bb5cmnqanosm4" path="res://Tomes/Ice/IceRayRingParticles.tres" id="4_t5eis"]
+[ext_resource type="Shader" uid="uid://cn1ig3b2jml2o" path="res://icerayDropplets.gdshader" id="4_t5eis"]
 [ext_resource type="Material" uid="uid://dbwnxxkulxaro" path="res://Tomes/Ice/IceHitEmitterParticles.tres" id="5_ig62p"]
+[ext_resource type="Shader" uid="uid://pm52f82ybc05" path="res://icerayVortex.gdshader" id="6_l24c7"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_l8rrr"]
 particles_animation = true
@@ -12,43 +12,69 @@ particles_anim_h_frames = 2
 particles_anim_v_frames = 2
 particles_anim_loop = true
 
-[node name="IceRay" type="RayCast2D" unique_id=393689571 node_paths=PackedStringArray("rayRingEmitter", "iceDroppletsEmitter", "hitEmitter")]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cb0yb"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rf486"]
+shader = ExtResource("4_t5eis")
+shader_parameter/dist = 100.0
+shader_parameter/color = Color(0.8529905, 0.9144662, 0.99999946, 1)
+shader_parameter/shakeTime = 0.5
+shader_parameter/fallDelay = 0.2
+shader_parameter/dir = Vector2(1, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cb0yb"]
+shader = ExtResource("6_l24c7")
+shader_parameter/particlesPerVortex = 16.0
+shader_parameter/vortexHeight = 20.0
+shader_parameter/color = Color(0.61960787, 0.13333334, 0.94509804, 1)
+shader_parameter/dir = Vector2(1, 0)
+
+[node name="IceRay" type="RayCast2D" unique_id=393689571 node_paths=PackedStringArray("hitEmitter")]
+z_index = 12
+target_position = Vector2(0, 0)
 collision_mask = 55
 collide_with_areas = true
 script = ExtResource("1_65ofw")
 animationSpeed = 4
-rayRingEmitter = NodePath("RayRing")
-iceDroppletsEmitter = NodePath("IceDropplets")
 hitEmitter = NodePath("HitEmitter")
 lifeTime = 2.0
 printDebug = true
 
-[node name="IceDropplets" type="GPUParticles2D" parent="." unique_id=1452876736]
-material = SubResource("CanvasItemMaterial_l8rrr")
-position = Vector2(9, 0)
-amount = 1
-sub_emitter = NodePath(".")
-texture = ExtResource("2_l8rrr")
-lifetime = 2.0
-explosiveness = 1.0
-local_coords = true
-process_material = ExtResource("3_thlil")
-
-[node name="RayRing" type="GPUParticles2D" parent="." unique_id=1956163433]
-position = Vector2(9, 0)
-amount = 16
-sub_emitter = NodePath(".")
-speed_scale = 2.0
-explosiveness = 1.0
-fixed_fps = 60
-local_coords = true
-process_material = ExtResource("4_t5eis")
-
 [node name="HitEmitter" type="GPUParticles2D" parent="." unique_id=819659837]
 material = SubResource("CanvasItemMaterial_l8rrr")
-position = Vector2(51, 0)
+position = Vector2(100, 0)
+emitting = false
 amount = 7
 texture = ExtResource("2_l8rrr")
 lifetime = 0.75
+one_shot = true
 explosiveness = 1.0
+fixed_fps = 60
 process_material = ExtResource("5_ig62p")
+
+[node name="IceDropplets" type="GPUParticles2D" parent="." unique_id=1598309563]
+material = SubResource("CanvasItemMaterial_cb0yb")
+emitting = false
+amount = 20
+texture = ExtResource("2_l8rrr")
+lifetime = 4.0
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = SubResource("ShaderMaterial_rf486")
+metadata/_edit_horizontal_guides_ = [-84.0]
+
+[node name="Vortex" type="GPUParticles2D" parent="." unique_id=940698292]
+emitting = false
+amount = 300
+lifetime = 4.0
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = SubResource("ShaderMaterial_cb0yb")

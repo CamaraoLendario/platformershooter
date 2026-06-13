@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_o6122")
 isTeamed = false
+pointsToWin = PackedInt32Array(1, 12, 18)
 metadata/_custom_type_script = "uid://qrt86oa7grny"

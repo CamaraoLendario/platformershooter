@@ -1,15 +1,12 @@
 using Godot;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
 
 [GlobalClass]
 public partial class FreeForAllLogic : GamemodeLogic
 {
 
-	public override void OnGameStarted()
+	public override void OnFinishedSpawningPlayers()
 	{
-		base.OnGameStarted();
+		base.OnFinishedSpawningPlayers();
 		Player[] players = Game.Instance.players;
 		for(int i = 0; i < players.Length; i++)
 		{

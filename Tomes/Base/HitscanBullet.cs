@@ -16,8 +16,7 @@ public partial class HitscanBullet : RayCast2D
 
 	public override void _Ready()
 	{
-		TargetPosition = new Vector2(1, 0) * maxLength;
-		Rotation = inputDir.Angle();
+		TargetPosition = inputDir * maxLength;
 		lifeTimer.OneShot = true;
 		lifeTimer.Timeout += OnLifeEnd;
 		AddChild(lifeTimer);

@@ -2,8 +2,17 @@
 
 [ext_resource type="PackedScene" uid="uid://gclokew2nun0" path="res://Menus/MainMenuReworked/Main Card Screen/MainMenu.tscn" id="1_4plmu"]
 [ext_resource type="Script" uid="uid://dkdd2s4lt1ic2" path="res://Global/Main.cs" id="1_xoayq"]
+[ext_resource type="PackedScene" uid="uid://nlhmcbtm3oey" path="res://Global/constant_overlay.tscn" id="3_ed0e0"]
+[ext_resource type="PackedScene" uid="uid://blk3xlkdst7il" path="res://Maps/Overworld/OverWorld.tscn" id="4_uph1o"]
 
 [node name="Main" type="Node" unique_id=1873790456 groups=["Main"]]
 script = ExtResource("1_xoayq")
 
 [node name="MainMenu" parent="." unique_id=1509971223 instance=ExtResource("1_4plmu")]
+
+[node name="ConstantOverlay" parent="." unique_id=1557563179 instance=ExtResource("3_ed0e0")]
+unique_name_in_owner = true
+process_mode = 3
+
+[node name="OverWorld" parent="." unique_id=582483126 instance=ExtResource("4_uph1o")]
+unique_name_in_owner = true

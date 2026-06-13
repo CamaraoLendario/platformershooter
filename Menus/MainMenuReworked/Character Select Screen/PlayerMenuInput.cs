@@ -8,19 +8,29 @@ public partial class PlayerMenuInput : MenuController
 	[Signal] public delegate bool InteractEventHandler();
 	[Signal] public delegate bool AltInteractEventHandler();
 	[Signal] public delegate bool NegativeActionEventHandler();
+	[Signal] public delegate bool InteractReleasedEventHandler();
+	[Signal] public delegate bool AltInteractReleasedEventHandler();
+	[Signal] public delegate bool NegativeActionReleasedEventHandler();
 	public bool isEnabled = false;
+	public bool inputEnabled = true;
 	int inputIdx = -2;
 	string keyboardKeyword = "";
+	(string inputName, StringName menuAction)[] playerCapsuleInputs = [
+		("MenuInteract", SignalName.Interact),
+		("MenuAltInteract", SignalName.AltInteract),
+		("MenuBack", SignalName.NegativeAction),
+	]; 
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (inputIdx < -1 ||
 			@event is InputEventMouseMotion ||
-			!isEnabled) 
+			!isEnabled ||
+			!inputEnabled) 
 			return;
 		if (@event is InputEventJoypadMotion motion){
 			UpdateInputVec(GetMenuDirFromJoyStick(motion));
-			GetViewport().SetInputAsHandled();
+			//GetViewport().SetInputAsHandled();
 			return;
 		}
 		string inputSufix = keyboardKeyword + inputIdx;
@@ -33,12 +43,28 @@ public partial class PlayerMenuInput : MenuController
 				menuDirs[(int)dirKeyMenu.Right] + inputSufix, 
 				menuDirs[(int)dirKeyMenu.Up] + inputSufix, 
 				menuDirs[(int)dirKeyMenu.Down] + inputSufix));
-				GetViewport().SetInputAsHandled();
+				//GetViewport().SetInputAsHandled();
 				return;
 			}
 		}
-		if (@event.IsReleased()) return;
-		if (Input.IsActionJustPressed("MenuInteract" + inputSufix)){
+		
+		foreach((string inputName, StringName menuAction) in playerCapsuleInputs) {
+			if (Input.IsActionJustPressed(inputName + inputSufix)) {
+				EmitSignal(menuAction);
+				//GetViewport().SetInputAsHandled();
+				return;
+			}
+		}
+
+		foreach((string inputName, StringName menuAction) in playerCapsuleInputs) {
+			if (Input.IsActionJustReleased(inputName + inputSufix)) {
+				EmitSignal(menuAction + "Released");
+				//GetViewport().SetInputAsHandled();
+				return;
+			}
+		}
+
+/* 		if (Input.IsActionJustPressed("MenuInteract" + inputSufix)){
 			//GD.Print("MenuInteract" + inputSufix);
 			EmitSignal(SignalName.Interact);
 			GetViewport().SetInputAsHandled();
@@ -55,7 +81,7 @@ public partial class PlayerMenuInput : MenuController
 			EmitSignal(SignalName.NegativeAction);
 			GetViewport().SetInputAsHandled();
 			return;
-		}
+		} */
 	}
 
 	public int GetInputIdx()

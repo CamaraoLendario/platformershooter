@@ -66,8 +66,7 @@ public partial class MenuScroll : MenuItem
 	{
 		base._Ready();
 		labelsContainer = GetNode<Control>("%scrollingLabels");
-		currentIdx --;
-		Scroll(1, true);
+		SetIdx(currentIdx);
 		CallDeferred(MethodName.UpdateHelperMinimumSize);
 		CallDeferred(MethodName.Close);
 	}
@@ -288,5 +287,11 @@ public partial class MenuScroll : MenuItem
 					node.Position = initialPosition + (Vector2.Down * Separation * tweenedValue);
 			}
 		}),0f, 1f, animationTime);
+	}
+
+	public void SetIdx(int newIdx)
+	{
+		currentIdx = newIdx-1;
+		Scroll(1, true);
 	}
 }

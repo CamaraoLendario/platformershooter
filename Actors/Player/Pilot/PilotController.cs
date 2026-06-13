@@ -272,6 +272,7 @@ public partial class PilotController : Controller
 
 	void Jump()
 	{
+		//TODO: add coyote time for when someone just came out of the pilot zone (maybe only after being there for a split second?)
 		isJumping = true;
 		jumpAudioPlayer.PitchScale = 1 + (float)GD.RandRange(-0.1f, 0.1f);
 		jumpAudioPlayer.Play();
@@ -300,8 +301,15 @@ public partial class PilotController : Controller
 	public override void Start()
 	{
 		base.Start();
+		Main.pilotShield.Show();
 		hasAirJump = true; 
 	}
+	
+    public override void End()
+    {
+        base.End();
+		Main.pilotShield.Hide();
+    }
 
 	bool IsOnFloor()
 	{
@@ -312,6 +320,8 @@ public partial class PilotController : Controller
     {
         base.Reset();
 		sprite.Rotation = 0;
+		sprite.FlipH = Position.X > 0f;
+		facing = sprite.FlipH ? -1 : 1;
     }
 
 }

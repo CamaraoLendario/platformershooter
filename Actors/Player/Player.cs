@@ -5,40 +5,20 @@ using static SpaceMages.SpaceMagesVars;
 using System.Security.AccessControl;
 using System.IO.Pipes;
 using System.Runtime.CompilerServices;
+using System;
 
 public partial class Player : CharacterBody2D
 {
 	#region Signals
-	[Signal] public delegate void tookDamageEventHandler(Player player);
-	[Signal] public delegate void diedEventHandler(Player player, Player killer);
-	[Signal] public delegate void resetingEventHandler();
+	[Signal] public delegate void TookDamageEventHandler(Player player);
+	[Signal] public delegate void DiedEventHandler(Player player, Player killer);
+	[Signal] public delegate void ResetingEventHandler();
+	[Signal] public delegate void WentPilotAreaEventHandler();
+	[Signal] public delegate void WentShipAreaEventHandler();
+	[Signal] public delegate void LostShipEventHandler();
 	#endregion
 	[Export] public bool godMode = false;
-	[Export] public bool HasShield
-	{
-		get
-		{
-			return hasShield;
-		}
-		set
-		{
-			if (!IsNodeReady()) return;
-			hasShield = value;
-			if (!value)
-			{
-				pilotShield.SelfModulate = new Color(1, 1, 1, 0);
-				shipShield.SelfModulate = new Color(1, 1, 1, 0);
-				shieldCooldownTimer.Start(SHIELDCOOLDOWNTIME - 0.74f); //magic number is animation length for shield flickering. can't get it while its not playing
-				SummonShieldBreakParticles();
-			}
-			else
-			{
-				pilotShield.SelfModulate = new Color(1, 1, 1, 0.75f);
-				shipShield.SelfModulate = new Color(1, 1, 1, 0.75f);
-			}
-		}
-	}
-	bool hasShield = true;
+	public bool hasShield = true;
 	#region Nodes
 	[ExportGroup("Nodes")]
 	[Export] public PlayerEffectHandler effectHandler;
@@ -48,18 +28,15 @@ public partial class Player : CharacterBody2D
 	[Export] public Label NameLabel;
 	[Export] PilotWeaponHolder pilotWeaponHolder;
 	[Export] MeleeAttack pilotMeleeAttack;
-	[Export] GpuParticles2D shipExplosionParticles;
-	[Export] GpuParticles2D shipReconstructionParticles;
-	GpuParticles2D currentShipReconstructionParticles;
-	[Export] GpuParticles2D pilotDeathParticles;
 	[Export] AudioStreamPlayer2D shipDeadAudio;
 	[Export] AudioStreamPlayer pilotDeadAudio;
-	[Export] AnimatedSprite2D pilotSprite;
-	[Export] AnimatedSprite2D shipSprite;
+	[Export] public AnimatedSprite2D pilotSprite;
+	[Export] public AnimatedSprite2D shipSprite;
 	[Export] public AnimatedSprite2D shipShield;
 	[Export] public AnimatedSprite2D pilotShield;
 	[Export] public AnimationPlayer pilotShieldFlickerer;
 	[Export] public AnimationPlayer shipShieldFlickerer;
+	[Export] public ParticlesHandler particlesHandler;
 	public const string playerSceneUID = "uid://cbmq3xh2bcijs";
 	#endregion
 	public Controller currentController;
@@ -68,9 +45,9 @@ public partial class Player : CharacterBody2D
 	
 	#region Timers
 	Timer shipCooldown = new();
-	const float SHIPCOOLDOWNTIME = 5.0f;
+	public const float SHIPCOOLDOWNTIME = 5.0f;
 	Timer goShipTimer = new();
-	const float TIMETOSHIP = 2.0f;
+	public const float TIMETOSHIP = 2.0f;
 	public Timer shieldCooldownTimer = new();
 	const float SHIELDCOOLDOWNTIME = 15f;
 	Timer shipPardonTimer = new();
@@ -81,49 +58,7 @@ public partial class Player : CharacterBody2D
 	bool isInvulnerable = false;
 	const int IFRAMES = 3;
 
-	public bool IsDead
-	{
-		get
-		{
-			return isDead;
-		}
-		set
-		{
-			Velocity *= 0;
-			isDead = value;
-			if (value)
-			{
-				Hide();
-				foreach(CollisionShape2D pilotColShape in GetTree().GetNodesInGroup("PilotCollisions"))
-				{
-					if (pilotColShape.GetParent<Player>() == this)
-						pilotColShape.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
-				}
-				foreach(CollisionShape2D shipColShape in GetTree().GetNodesInGroup("ShipCollisions"))
-				{
-					if (shipColShape.GetParent<Player>() == this)
-						shipColShape.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
-				}
-				//pilot.collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
-				//ship.collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
-				pilot.inputVector *= 0;
-				ship.inputVector *= 0;
-			}
-			else
-			{
-				Show();
-				if (Game.GetMap().IsPositionInPilotArea(Position))
-				{
-					GoPilot();
-				}
-				else
-				{
-					TryGoShip(true);
-				}
-			}
-		}
-	}
-	private bool isDead = false;
+	public bool isDead = false;
 
 	public bool IsInPilotArea
 	{
@@ -139,17 +74,17 @@ public partial class Player : CharacterBody2D
 			if (value)
 			{
 				GoPilot();
-				CancelTurningShip();
+				EmitSignal(SignalName.WentPilotArea);
 			}
 			else
 			{
 				GoShip();
+				EmitSignal(SignalName.WentShipArea);
 			}
 		}
 	}
 	private bool isInPilotArea = false;
 	public bool isPilot = false;
-	bool isTurningToShip = false;
 	public List<CollisionShape2D> collisionShapes = [];
 	public bool isAiming = false;
 
@@ -159,6 +94,7 @@ public partial class Player : CharacterBody2D
 		SetupTimersVarsAndSignals();
 		pilotShieldFlickerer.CurrentAnimation = "shieldRegeneration";
 		shipShieldFlickerer.CurrentAnimation = "shieldRegeneration";
+		MoveAndSlide();
 	}
     public override void _PhysicsProcess(double delta)
     {
@@ -178,10 +114,8 @@ public partial class Player : CharacterBody2D
 
 	public void SetColor(int colorIdx)
 	{
-
 		(Material as ShaderMaterial).SetShaderParameter("Color", teamColors[colorIdx]);
-		(pilotDeathParticles.ProcessMaterial as ShaderMaterial).SetShaderParameter("outlineColor", teamColors[colorIdx]);
-		
+		particlesHandler.SetColor(colorIdx);
 		(shipShield.Material as ShaderMaterial).SetShaderParameter("Color", teamColors[colorIdx]);
 		(pilotShield.Material as ShaderMaterial).SetShaderParameter("Color", teamColors[colorIdx]);
 
@@ -192,39 +126,30 @@ public partial class Player : CharacterBody2D
 		//TODO somewhere somehow you can take damage at the start of the round wtf is going on
 		if (isDead || isInvulnerable || godMode) return false;
 		if (damageDealer == null) damageDealer = this;
-
-		if (HasShield)
+		
+		if (!isPilot) //isShip
 		{
-			Input.StartJoyVibration(GetInputIdx(), 0.3f, 0.3f, 0.2f);
-			Shake(0.5f, 3);
-			HasShield = false;
-		}
-		else if (isPilot)
-		{
-			Input.StartJoyVibration(GetInputIdx(), 0.8f, 0.8f, 0.6f);
-			IsDead = true;
-			CreateDeathParticles(damageDealer);
-			Position = new Vector2(99999, 99999);
-			EmitSignal(SignalName.died, this, damageDealer);
-			SignalBus.Instance.EmitSignal(SignalBus.SignalName.playerDied, this, damageDealer);
-			pilotDeadAudio.PitchScale = 1 + (float) GD.RandRange(-0.1, 0.1);
-			pilotDeadAudio.Play();
-			GD.Print(this, " was killed by ", damageDealer);
-		}
-		else
-		{
-			GpuParticles2D newShipExplosionParticles = GPUParticlesPool.GetClonedParticles(shipExplosionParticles);
-			newShipExplosionParticles.Position = Position;
-			newShipExplosionParticles.Emitting = true;
 			Input.StartJoyVibration(GetInputIdx(), 0.6f, 0.6f, 0.4f);
 			Shake(0.5f, 5);
 			shipCooldown.Start(SHIPCOOLDOWNTIME);
 			GoPilot();
 			shipDeadAudio.PitchScale = 1 + (float) GD.RandRange(-0.1, 0.1);
 			shipDeadAudio.Play();
+			EmitSignal(SignalName.LostShip);
 		}
+		else if (hasShield)
+		{
+			Input.StartJoyVibration(GetInputIdx(), 0.3f, 0.3f, 0.2f);
+			Shake(0.5f, 3);
+			BreakShield();
+		}
+		else
+		{
+			Die(damageDealer);
+		}
+		
 		HandleIFrames();
-		EmitSignal(SignalName.tookDamage, damageDealer);
+		EmitSignal(SignalName.TookDamage, damageDealer);
 		GD.Print(this.Name, " took Damage from by ", damageDealer.Name);
 		return true;
 	}
@@ -238,35 +163,6 @@ public partial class Player : CharacterBody2D
 		}
 		isInvulnerable = false;
 	} 
-	void SummonShieldBreakParticles()
-	{
-		GpuParticles2D particlesEmitter;
-		if (isPilot)
-		{
-			particlesEmitter = pilotShield.GetChild<GpuParticles2D>(0);
-		}
-		else
-		{
-			particlesEmitter = shipShield.GetChild<GpuParticles2D>(0);
-		}
-		
-		//GpuParticles2D newParticlesEmitter = particlesEmitter.Duplicate() as GpuParticles2D;
-		GpuParticles2D newParticlesEmitter = GPUParticlesPool.GetClonedParticles(particlesEmitter);
-		(newParticlesEmitter.Material as ShaderMaterial).SetShaderParameter("Color", teamColors[colorIdx]);
-		newParticlesEmitter.Position = Position;
-		newParticlesEmitter.OneShot = true;
-		thisissofuckingweirdwhatdemonhaspocessedthisgameatleastitworksIguessbutatwhatcost(newParticlesEmitter);
-	}
-	async void thisissofuckingweirdwhatdemonhaspocessedthisgameatleastitworksIguessbutatwhatcost(GpuParticles2D newParticlesEmitter)
-	{
-		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
-		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
-		newParticlesEmitter.Restart();
-	}
-	public void ForceRecoverShield()
-	{
-		HasShield = true;
-	}
 
 	public void GoPilot()
 	{	
@@ -275,7 +171,7 @@ public partial class Player : CharacterBody2D
 		ship.End();
 		if (currentController is not PlayerDebugComponent) currentController = pilot;	
 
-		if (!isPilot) shipPardonTimer.Start(SHIPPARDONTIME - shipReconstructionParticles.Lifetime);
+		if (!isPilot) shipPardonTimer.Start(SHIPPARDONTIME);
 		isPilot = true;
 	}
 	void GoShip()
@@ -285,67 +181,7 @@ public partial class Player : CharacterBody2D
 		{
 			TryGoShip();
 		}
-		else goShipTimer.Start(TIMETOSHIP - shipReconstructionParticles.Lifetime);
-	}
-
-	void PlayParticlesForTryGoShip()
-	{
-		//GD.Print("Playing Particles For Ship Reconstruction...");
-		if (isTurningToShip) return;
-		GpuParticles2D particles = GPUParticlesPool.GetClonedParticles(shipReconstructionParticles);
-		currentShipReconstructionParticles = particles;
-
-		particles.Position = Vector2.Zero;
-		particles.Restart();
-		particles.Visible = true;
-		isTurningToShip = true;
-		//particles.ProcessMaterial = particles.ProcessMaterial.Duplicate() as ShaderMaterial;
-		(particles.ProcessMaterial as ShaderMaterial).
-		SetShaderParameter("outlineColor", teamColors[colorIdx]);
-		(particles.ProcessMaterial as ShaderMaterial).
-		SetShaderParameter("initPos", Position);
-		(particles.ProcessMaterial as ShaderMaterial).
-		SetShaderParameter("newPos", Position);
-		particles.Finished += OnShipRebuiltFinished;
-		(particles.ProcessMaterial as ShaderMaterial).
-		SetShaderParameter("rotation", shipSprite.Rotation);
-		
-	}
-
-    public override void _Process(double delta)
-	{
-		if (currentShipReconstructionParticles != null)
-		{
-			(currentShipReconstructionParticles.ProcessMaterial as ShaderMaterial).
-			SetShaderParameter("newPos", Position);
-		}
-	}
-
-	void OnShipRebuiltFinished()
-	{
-		//GD.Print("rebuildFinished");
-		isTurningToShip = false;
-		RemoveParticles(currentShipReconstructionParticles);
-		TryGoShip();
-	}
-
-	void RemoveParticles(GpuParticles2D particles)
-	{
-		if (currentShipReconstructionParticles == null) return;
-		currentShipReconstructionParticles = null;
-		particles.Finished -= OnShipRebuiltFinished;
-		particles.Visible = false;
-		particles.Emitting = false;
-		GPUParticlesPool.Return(particles);
-	}
-
-	void CancelTurningShip()
-	{
-//		if (!isTurningToShip) return;
-		goShipTimer.Stop();
-		shipPardonTimer.Stop();
-		isTurningToShip = false;
-		RemoveParticles(currentShipReconstructionParticles);
+		else goShipTimer.Start(TIMETOSHIP);
 	}
 
 	public void TryGoShip()
@@ -358,6 +194,8 @@ public partial class Player : CharacterBody2D
 		if ((goShipTimer.IsStopped() && shipCooldown.IsStopped() && !isInPilotArea) || !shipPardonTimer.IsStopped() || forced)
 		{
 			//GD.Print("Succeded!");
+			if (Velocity.LengthSquared() > 0.1)
+				shipSprite.Rotation = Velocity.Angle();
 			shipPardonTimer.Stop();
 			isPilot = false;
 			ship.Start();
@@ -366,14 +204,7 @@ public partial class Player : CharacterBody2D
 		}
 		else GD.Print("try go ship failed..");
 	}
-	void CreateDeathParticles(Player damager)
-	{
-		GpuParticles2D particles = GPUParticlesPool.GetClonedParticles(pilotDeathParticles);
-		(particles.ProcessMaterial as ShaderMaterial).SetShaderParameter("initialDir", (Position - damager.Position).Normalized());
-		(particles.ProcessMaterial as ShaderMaterial).SetShaderParameter("rotation", pilotSprite.Rotation);
-		particles.Position = Position;
-		particles.Restart();
-	}
+
 
 	async void Shake(float shakeTime, float shakeForce = 1)
 	{
@@ -398,22 +229,21 @@ public partial class Player : CharacterBody2D
 
 	public void Reset()
 	{
-		EmitSignal(SignalName.reseting);
-		
 		Tween tween = CreateTween();
 		tween.SetTrans(Tween.TransitionType.Quint);
 		tween.SetEase(Tween.EaseType.In);
+		isDead = false;
 		NameLabel.Modulate = new Color(1, 1, 1, 1);
 		tween.TweenProperty(NameLabel, "modulate:a", 0, NAMEHIDETIME);
 		
+		Velocity *= 0;
 		pilot.Reset();
 		ship.Reset();
-		HasShield = true;
+		RecoverShield();
 		pilotShieldFlickerer.Stop();
 		shipShieldFlickerer.Stop();
 		goShipTimer.Stop();
 		shipPardonTimer.Stop();
-		RemoveParticles(currentShipReconstructionParticles);
 		foreach (Timer timer in timers)
 		{
 			timer.Stop();
@@ -424,6 +254,12 @@ public partial class Player : CharacterBody2D
 			GoPilot();
 		}
 		else TryGoShip(true);
+		Show();
+		if (Game.GetMap().IsPositionInPilotArea(Position))
+			GoPilot();
+		else
+			TryGoShip(true);
+		CallDeferred(MethodName.EmitSignal, SignalName.Reseting);
 	}
 
 	void SetupTimersVarsAndSignals()
@@ -447,10 +283,10 @@ public partial class Player : CharacterBody2D
 
 		shipCooldown.OneShot = true;
 		AddChild(shipCooldown);
-		shipCooldown.Timeout += PlayParticlesForTryGoShip;
+		shipCooldown.Timeout += TryGoShip;
 		goShipTimer.OneShot = true;
 		AddChild(goShipTimer);
-		goShipTimer.Timeout += PlayParticlesForTryGoShip;
+		goShipTimer.Timeout += TryGoShip;
 		shipCooldown.OneShot = true;
 		AddChild(shipPardonTimer);
 		shipPardonTimer.OneShot = true;
@@ -491,4 +327,71 @@ public partial class Player : CharacterBody2D
 
 		return player;
 	}
+	public int GetColorIdx()
+	{
+		return colorIdx;
+	}
+	void Die(Player killer)
+	{
+		Input.StartJoyVibration(GetInputIdx(), 0.8f, 0.8f, 0.6f);
+		Velocity *= 0;
+		isDead = true;
+
+		Hide();
+		
+		foreach(CollisionShape2D pilotColShape in GetTree().GetNodesInGroup("PilotCollisions"))
+		{
+			if (pilotColShape.GetParent<Player>() == this)
+				pilotColShape.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+		}
+		foreach(CollisionShape2D shipColShape in GetTree().GetNodesInGroup("ShipCollisions"))
+		{
+			if (shipColShape.GetParent<Player>() == this)
+				shipColShape.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+		}
+		//pilot.collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+		//ship.collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+		pilot.inputVector *= 0;
+		ship.inputVector *= 0;
+
+
+		particlesHandler.CreateDeathParticles(killer);
+		Position = new Vector2(99999, 99999);
+		EmitSignal(SignalName.Died, this, killer);
+		SignalBus.Instance.EmitSignal(SignalBus.SignalName.playerDied, this, killer);
+		pilotDeadAudio.PitchScale = 1 + (float) GD.RandRange(-0.1, 0.1);
+		pilotDeadAudio.Play();
+		GD.Print(this, " was killed by ", killer);
+	}
+
+	void BreakShield()
+	{
+		pilotShield.SelfModulate = new Color(1, 1, 1, 0);
+		shipShield.SelfModulate = new Color(1, 1, 1, 0);
+		shieldCooldownTimer.Start(SHIELDCOOLDOWNTIME - 0.74f); //magic number is animation length for shield flickering. can't get it while its not playing
+		particlesHandler.SummonShieldBreakParticles(isPilot);
+		hasShield = false;
+	}
+	void RecoverShield()
+	{
+		pilotShield.SelfModulate = new Color(1, 1, 1, 0.75f);
+		shipShield.SelfModulate = new Color(1, 1, 1, 0.75f);
+		hasShield = true;
+	}
+	public AnimatedSprite2D GetCurrentSprite()
+	{
+		if (isPilot)
+			return pilotSprite;
+		else
+			return shipSprite;
+	}
+	# if TOOLS
+    public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventKey key && Input.IsKeyPressed(Key.L))
+		{
+			Die(this);
+		}
+	}
+	# endif
 }

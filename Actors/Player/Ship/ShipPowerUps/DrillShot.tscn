@@ -6,7 +6,8 @@
 
 [node name="LinearProjectile" unique_id=1888305481 instance=ExtResource("1_r6avs")]
 script = ExtResource("2_g01gg")
+CanEndBy = 8
 
-[node name="Sprite2D" parent="." index="1"]
+[node name="Sprite2D" parent="." index="1" unique_id=1321529545]
 texture = ExtResource("3_g01gg")
 offset = Vector2(0, 0.5)

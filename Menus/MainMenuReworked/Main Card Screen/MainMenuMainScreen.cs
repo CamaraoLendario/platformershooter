@@ -26,20 +26,24 @@ public partial class MainMenuMainScreen : MainMenuScreen
 			node.SetDeferred(Control.PropertyName.Position, node.originalPosition + (Vector2.Down * screenRez));
 		}
 
-		Left += () =>
+		Left += (bool skip) =>
 		{
-			MoveBanner(true);
+			MoveBanner(false, skip);
 		};
-		Entered += () =>
+		Entered += (bool skip) =>
 		{
-			MoveBanner(false);
+			MoveBanner(true, skip);
 		};
+
+		if (GetMenuController().currentScreen != this) {
+			LeaveThemeCard(false, true);
+			Move(Vector2.Left, false, false, true);
+		}
 	}
     public override bool OnInteract()
     {
 		if (LeaveThemeCard()) return true;
-		switch (menuSelectPanel.GetCurrentNodeIdx())
-		{
+		switch (menuSelectPanel.GetCurrentNodeIdx()) {
 			case 0:
 				Play();
 				break;
@@ -52,19 +56,17 @@ public partial class MainMenuMainScreen : MainMenuScreen
 			case 3:
 				Quit();
 				break;
-				
 		}
 		return false;
     }
-	void Play()
-	{
+
+	void Play() {
 		Move(Vector2.Left);
 		GamemodeSelectScreen gamemodeSelectScreen = GetParent().GetNode<GamemodeSelectScreen>("GamemodeSelectScreen");
 		gamemodeSelectScreen.Move(Vector2.Right, true);
 		GetMenuController().currentScreen = gamemodeSelectScreen;
 	}
-	void Settings()
-	{
+	void Settings() {
 		Move(Vector2.Right);
 		SettingsScreen settingsScreen = GetParent().GetNode<SettingsScreen>("SettingsScreen");
 		settingsScreen.Move(Vector2.Left, true);
@@ -83,10 +85,11 @@ public partial class MainMenuMainScreen : MainMenuScreen
 	{
 		LeaveThemeCard(true);
 	}
-	public bool LeaveThemeCard(bool reverse = false)
+	public bool LeaveThemeCard(bool reverse = false, bool skipAnimation = false)
 	{
 		if (isAtBanner == reverse) return false;
-
+		float animationTime = .6f;
+		if (skipAnimation) animationTime *= 0f;
 		Vector2 ScreenSize = GetScreenRez();
 		float initialScale = banner.Scale.X;
 		float endScale = 0.5f;
@@ -115,12 +118,13 @@ public partial class MainMenuMainScreen : MainMenuScreen
 
 				node.Position = node.originalPosition + (Vector2.Down * optionsTweenedValue * ScreenSize);
 			}
-		}), 0f, 1f, .6f);
+		}), 0f, 1f, animationTime);
 		isAtBanner = reverse;
 		return true;
 	}
-	void MoveBanner(bool up = true)
+	void MoveBanner(bool up = true, bool skipAnimation = false)
 	{
+		float animationTime = .6f;
 		Tween tween = CreateTween();
 		tween.SetTrans(Tween.TransitionType.Sine);
 		tween.SetEase(Tween.EaseType.InOut);
@@ -129,12 +133,13 @@ public partial class MainMenuMainScreen : MainMenuScreen
 		float value = 0;
 		if (up)
 			value = 1;
+		if (skipAnimation) animationTime *= 0f;
 
 		Vector2 initialBannerPos = new Vector2(-banner.Size.X/2, 0 - banner.Size.Y * value);
 		Vector2 finalBannerPos = new Vector2(-banner.Size.X/2, 0 - (banner.Size.Y * (1 - value)));;
 		Vector2 differencePos = finalBannerPos - initialBannerPos;
 		tween.TweenMethod(Callable.From((float tweenedValue) =>{
 			banner.Position = initialBannerPos + (differencePos*tweenedValue);
-		}), 0f, 1f, .6);
+		}), 0f, 1f, animationTime);
 	}
 }

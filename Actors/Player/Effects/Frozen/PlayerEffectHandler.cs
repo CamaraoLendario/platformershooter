@@ -34,8 +34,8 @@ public partial class PlayerEffectHandler : Node
 		pilot = Main.pilot;
 		ship = Main.ship;
 		
-		Main.tookDamage += OnDamageTaken;
-		Main.reseting += OnReset;
+		Main.TookDamage += OnDamageTaken;
+		Main.Reseting += OnReset;
 
 	}
 

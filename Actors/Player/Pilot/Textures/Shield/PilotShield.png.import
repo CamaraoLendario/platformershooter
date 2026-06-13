@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bb1532suk6g2m"
-path="res://.godot/imported/CrossAir2.png-46842061c257bbed16ead358661a686c.ctex"
+uid="uid://ddymh4fx17tto"
+path="res://.godot/imported/PilotShield.png-eb0be74c12e6370ba2776232ee049eda.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Actors/Player/Pilot/Sprites/CrossAir2.png"
-dest_files=["res://.godot/imported/CrossAir2.png-46842061c257bbed16ead358661a686c.ctex"]
+source_file="res://Actors/Player/Pilot/Textures/Shield/PilotShield.png"
+dest_files=["res://.godot/imported/PilotShield.png-eb0be74c12e6370ba2776232ee049eda.ctex"]
 
 [params]
 

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://drd2rgglnakvn" path="res://Maps/MapTools/HomemadeParallax.tscn" id="3_vvhyc"]
 [ext_resource type="Shader" uid="uid://cx67s33dt1lle" path="res://Maps/MapAssets/Background/Parallax/HomemadeParallax.gdshader" id="4_0g5i5"]
 [ext_resource type="Texture2D" uid="uid://bh42upheoaqhe" path="res://Maps/MapAssets/Background/SpaceBackground.png" id="5_abapp"]
-[ext_resource type="PackedScene" uid="uid://bw7vmyeb1ymu6" path="res://Maps/MapAssets/Pickups/WeaponPickups/weapon_pickup.tscn" id="6_ubbxn"]
+[ext_resource type="PackedScene" uid="uid://bw7vmyeb1ymu6" path="res://Maps/MapAssets/Pickups/WeaponPickups/WeaponPickup.tscn" id="6_ubbxn"]
 [ext_resource type="PackedScene" uid="uid://d2381diivxfax" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/ShipPowerUpChest.tscn" id="7_hu57o"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rcjhq"]

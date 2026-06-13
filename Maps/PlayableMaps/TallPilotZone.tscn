@@ -1,15 +1,17 @@
 [gd_scene format=4 uid="uid://tw7pvvfcnrf1"]
 
 [ext_resource type="PackedScene" uid="uid://dcln4npgljx4k" path="res://Maps/PlayableMaps/MapTemplate.tscn" id="1_5hond"]
-[ext_resource type="PackedScene" uid="uid://bw7vmyeb1ymu6" path="res://Maps/MapAssets/Pickups/WeaponPickups/weapon_pickup.tscn" id="3_lklw2"]
+[ext_resource type="PackedScene" uid="uid://bw7vmyeb1ymu6" path="res://Maps/MapAssets/Pickups/WeaponPickups/WeaponPickup.tscn" id="3_lklw2"]
 [ext_resource type="PackedScene" uid="uid://d2381diivxfax" path="res://Maps/MapAssets/Pickups/shipPowerUpPickups/ShipPowerUpChest.tscn" id="4_5plbm"]
 [ext_resource type="Shader" uid="uid://cx67s33dt1lle" path="res://Maps/MapAssets/Background/Parallax/HomemadeParallax.gdshader" id="4_o074e"]
-[ext_resource type="Script" uid="uid://cacu8rejhbrse" path="res://Maps/MapAssets/Hazzards/MagicMissile/MagicMissileComponent.cs" id="5_5plbm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hond"]
 size = Vector2(192, 628)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r02xc"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o074e"]
+size = Vector2(64, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5plbm"]
 shader = ExtResource("4_o074e")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, 0.195)
@@ -20,7 +22,7 @@ shader_parameter/textureRegion = Vector4(0, 0, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ts4mn"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r02xc"]
 shader = ExtResource("4_o074e")
 shader_parameter/sideLength = 1.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -31,7 +33,7 @@ shader_parameter/textureRegion = Vector4(0, 360, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8do5a"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ts4mn"]
 shader = ExtResource("4_o074e")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, -2)
@@ -42,7 +44,7 @@ shader_parameter/textureRegion = Vector4(0, 2520, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_04lkj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8do5a"]
 shader = ExtResource("4_o074e")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -53,7 +55,7 @@ shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h4y6u"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_04lkj"]
 shader = ExtResource("4_o074e")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -64,7 +66,7 @@ shader_parameter/textureRegion = Vector4(0, 720, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cqvv3"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h4y6u"]
 shader = ExtResource("4_o074e")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -75,7 +77,7 @@ shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cak4x"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cqvv3"]
 shader = ExtResource("4_o074e")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -83,6 +85,17 @@ shader_parameter/scrollSpeed = 0.0
 shader_parameter/parallaxMultiplier = 0.05
 shader_parameter/repeats = true
 shader_parameter/textureRegion = Vector4(0, 720, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cak4x"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.05
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
@@ -104,22 +117,11 @@ shader_parameter/scrollDir = Vector2(1, 0)
 shader_parameter/scrollSpeed = 0.0
 shader_parameter/parallaxMultiplier = 0.05
 shader_parameter/repeats = true
-shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
-shader_parameter/texSize = Vector2(640, 2880)
-shader_parameter/separation = Vector2(300, 300)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_i3e22"]
-shader = ExtResource("4_o074e")
-shader_parameter/sideLength = 2.0
-shader_parameter/scrollDir = Vector2(1, 0)
-shader_parameter/scrollSpeed = 0.0
-shader_parameter/parallaxMultiplier = 0.05
-shader_parameter/repeats = true
 shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tysar"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i3e22"]
 shader = ExtResource("4_o074e")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -130,7 +132,7 @@ shader_parameter/textureRegion = Vector4(0, 720, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6eca1"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tysar"]
 shader = ExtResource("4_o074e")
 shader_parameter/sideLength = 2.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -138,6 +140,17 @@ shader_parameter/scrollSpeed = 0.0
 shader_parameter/parallaxMultiplier = 0.06
 shader_parameter/repeats = true
 shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
+shader_parameter/texSize = Vector2(640, 2880)
+shader_parameter/separation = Vector2(300, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6eca1"]
+shader = ExtResource("4_o074e")
+shader_parameter/sideLength = 2.0
+shader_parameter/scrollDir = Vector2(1, 0)
+shader_parameter/scrollSpeed = 0.0
+shader_parameter/parallaxMultiplier = 0.06
+shader_parameter/repeats = true
+shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
@@ -148,7 +161,7 @@ shader_parameter/scrollDir = Vector2(1, 0)
 shader_parameter/scrollSpeed = 0.0
 shader_parameter/parallaxMultiplier = 0.06
 shader_parameter/repeats = true
-shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
+shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
@@ -159,22 +172,11 @@ shader_parameter/scrollDir = Vector2(1, 0)
 shader_parameter/scrollSpeed = 0.0
 shader_parameter/parallaxMultiplier = 0.06
 shader_parameter/repeats = true
-shader_parameter/textureRegion = Vector4(0, 1440, 640, 360)
-shader_parameter/texSize = Vector2(640, 2880)
-shader_parameter/separation = Vector2(300, 300)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ofq5t"]
-shader = ExtResource("4_o074e")
-shader_parameter/sideLength = 2.0
-shader_parameter/scrollDir = Vector2(1, 0)
-shader_parameter/scrollSpeed = 0.0
-shader_parameter/parallaxMultiplier = 0.06
-shader_parameter/repeats = true
 shader_parameter/textureRegion = Vector4(0, 1080, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m76ho"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ofq5t"]
 shader = ExtResource("4_o074e")
 shader_parameter/sideLength = 1.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -185,7 +187,7 @@ shader_parameter/textureRegion = Vector4(0, 1800, 640, 360)
 shader_parameter/texSize = Vector2(640, 2880)
 shader_parameter/separation = Vector2(300, 300)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ql778"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m76ho"]
 shader = ExtResource("4_o074e")
 shader_parameter/sideLength = 1.0
 shader_parameter/scrollDir = Vector2(1, 0)
@@ -245,63 +247,68 @@ tile_map_data = PackedByteArray("AAD6////AQAIAAEAAAD6/wAAAQAIAAEAAAD6//7/AQAHAAE
 zoom = Vector2(2.39, 2.39)
 
 [node name="MapBorders" parent="." index="7" unique_id=247059389]
+visible = true
 MapSize = Vector2i(48, 26)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapBorders/TeleportsCheck" parent_id_path=PackedInt32Array(934559602) index="0" unique_id=117584523]
+position = Vector2(0, -216)
+shape = SubResource("RectangleShape2D_o074e")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="MapBorders/TeleportsCheck" parent_id_path=PackedInt32Array(934559602) index="1" unique_id=1438155221]
+position = Vector2(0, 216)
+shape = SubResource("RectangleShape2D_o074e")
 
 [node name="WeaponPickup" parent="Pickups" parent_id_path=PackedInt32Array(1916535538) index="0" unique_id=711691087 instance=ExtResource("3_lklw2")]
 position = Vector2(0, -16)
 chosenWeapon = 3
 
 [node name="Sprite2D2" parent="ParallaxBackgroundLayers/Space" parent_id_path=PackedInt32Array(640977743) index="0" unique_id=111226547]
-material = SubResource("ShaderMaterial_r02xc")
+material = SubResource("ShaderMaterial_5plbm")
 
 [node name="Sprite2D" parent="ParallaxBackgroundLayers/Planet" parent_id_path=PackedInt32Array(624547171) index="0" unique_id=384033498]
-material = SubResource("ShaderMaterial_ts4mn")
+material = SubResource("ShaderMaterial_r02xc")
 
 [node name="Sprite2D7" parent="ParallaxBackgroundLayers/Meteorites" parent_id_path=PackedInt32Array(970284129) index="0" unique_id=1106239700]
-material = SubResource("ShaderMaterial_8do5a")
+material = SubResource("ShaderMaterial_ts4mn")
 
 [node name="AsteroidSmall" parent="ParallaxBackgroundLayers/AsteroidsFar" parent_id_path=PackedInt32Array(1201650016) index="0" unique_id=1235984877]
-material = SubResource("ShaderMaterial_04lkj")
+material = SubResource("ShaderMaterial_8do5a")
 
 [node name="AsteroidBIG" parent="ParallaxBackgroundLayers/AsteroidsFar" parent_id_path=PackedInt32Array(1201650016) index="1" unique_id=974079818]
-material = SubResource("ShaderMaterial_h4y6u")
+material = SubResource("ShaderMaterial_04lkj")
 
 [node name="AsteroidMedium2" parent="ParallaxBackgroundLayers/AsteroidsFar" parent_id_path=PackedInt32Array(1201650016) index="2" unique_id=8829527]
-material = SubResource("ShaderMaterial_cqvv3")
+material = SubResource("ShaderMaterial_h4y6u")
 
 [node name="AsteroidBIG2" parent="ParallaxBackgroundLayers/AsteroidsMid" parent_id_path=PackedInt32Array(1630353232) index="0" unique_id=1670056597]
-material = SubResource("ShaderMaterial_cak4x")
+material = SubResource("ShaderMaterial_cqvv3")
 
 [node name="AsteroidSmall2" parent="ParallaxBackgroundLayers/AsteroidsMid" parent_id_path=PackedInt32Array(1630353232) index="1" unique_id=7258765]
-material = SubResource("ShaderMaterial_83gk3")
+material = SubResource("ShaderMaterial_cak4x")
 
 [node name="AsteroidSmall3" parent="ParallaxBackgroundLayers/AsteroidsMid" parent_id_path=PackedInt32Array(1630353232) index="2" unique_id=1370390788]
-material = SubResource("ShaderMaterial_675hb")
+material = SubResource("ShaderMaterial_83gk3")
 
 [node name="AsteroidMedium3" parent="ParallaxBackgroundLayers/AsteroidsMid" parent_id_path=PackedInt32Array(1630353232) index="3" unique_id=1735445889]
-material = SubResource("ShaderMaterial_i3e22")
+material = SubResource("ShaderMaterial_675hb")
 
 [node name="AsteroidBIG3" parent="ParallaxBackgroundLayers/AsteroidsClose" parent_id_path=PackedInt32Array(1692209107) index="0" unique_id=604264202]
-material = SubResource("ShaderMaterial_tysar")
+material = SubResource("ShaderMaterial_i3e22")
 
 [node name="AsteroidMedium" parent="ParallaxBackgroundLayers/AsteroidsClose" parent_id_path=PackedInt32Array(1692209107) index="1" unique_id=1726845116]
-material = SubResource("ShaderMaterial_6eca1")
+material = SubResource("ShaderMaterial_tysar")
 
 [node name="AsteroidSmall4" parent="ParallaxBackgroundLayers/AsteroidsClose" parent_id_path=PackedInt32Array(1692209107) index="2" unique_id=1732436961]
-material = SubResource("ShaderMaterial_mv21c")
+material = SubResource("ShaderMaterial_6eca1")
 
 [node name="AsteroidMedium4" parent="ParallaxBackgroundLayers/AsteroidsClose" parent_id_path=PackedInt32Array(1692209107) index="3" unique_id=731861262]
-material = SubResource("ShaderMaterial_qs6pw")
+material = SubResource("ShaderMaterial_mv21c")
 
 [node name="AsteroidSmall5" parent="ParallaxBackgroundLayers/AsteroidsClose" parent_id_path=PackedInt32Array(1692209107) index="4" unique_id=303699803]
-material = SubResource("ShaderMaterial_ofq5t")
+material = SubResource("ShaderMaterial_qs6pw")
 
 [node name="Island" parent="ParallaxBackgroundLayers/MageTower" parent_id_path=PackedInt32Array(646301627) index="0" unique_id=2120119648]
-material = SubResource("ShaderMaterial_m76ho")
+material = SubResource("ShaderMaterial_ofq5t")
 
 [node name="IslandShrappnel" parent="ParallaxBackgroundLayers/MageTower" parent_id_path=PackedInt32Array(646301627) index="1" unique_id=317131510]
-material = SubResource("ShaderMaterial_ql778")
-
-[node name="MagicMissileComponent" type="Node" parent="." index="11" unique_id=1908810276 node_paths=PackedStringArray("mapNode")]
-script = ExtResource("5_5plbm")
-mapNode = NodePath("..")
+material = SubResource("ShaderMaterial_m76ho")

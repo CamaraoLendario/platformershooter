@@ -81,7 +81,7 @@ public partial class ShipAttack : ShipController
 
     public override void Start()
     {
-		if (Main.IsDead) return;
+		if (Main.isDead) return;
         base.Start();
     }
 	

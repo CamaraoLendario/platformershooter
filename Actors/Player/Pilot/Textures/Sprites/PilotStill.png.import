@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddymh4fx17tto"
-path="res://.godot/imported/PilotShield.png-a726dcaae7e9e820a089761b28773486.ctex"
+uid="uid://de15nxjq8mt4s"
+path="res://.godot/imported/PilotStill.png-a8de915244f197b8746a87e201706fb7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Actors/Player/Pilot/Sprites/PilotShield.png"
-dest_files=["res://.godot/imported/PilotShield.png-a726dcaae7e9e820a089761b28773486.ctex"]
+source_file="res://Actors/Player/Pilot/Textures/Sprites/PilotStill.png"
+dest_files=["res://.godot/imported/PilotStill.png-a8de915244f197b8746a87e201706fb7.ctex"]
 
 [params]
 

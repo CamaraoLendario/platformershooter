@@ -16,8 +16,8 @@ public partial class TeamsLogic : GamemodeLogic
 		{
 			playerTeam.Add(player, Game.Instance.playerTeams[player.GetInputIdx()]);
 		}
-		teamSore.Add(0, 0); // Blue
-		teamSore.Add(1, 0); // Red
+		teamScore.Add(0, 0); // Blue
+		teamScore.Add(1, 0); // Red
 	}
     public override void OnPlayerDied(Player died, Player killer)
     {
@@ -29,7 +29,7 @@ public partial class TeamsLogic : GamemodeLogic
 		List<int> aliveTeams = [];
 		foreach(Player player in playerTeam.Keys)
 		{
-			if (player.IsDead) continue;
+			if (player.isDead) continue;
 			if (!aliveTeams.Contains(playerTeam[player]))
 			{
 				aliveTeams.Add(playerTeam[player]);
@@ -37,7 +37,7 @@ public partial class TeamsLogic : GamemodeLogic
 		}
 
 		if (aliveTeams.Count == 1){
-			teamSore[aliveTeams[0]]++;
+			teamScore[aliveTeams[0]]++;
 		}
 		else if (aliveTeams.Count == 0){
 			return; // for now. there should be code that checks for if the player/team dies or something during the little delay before starting a new round

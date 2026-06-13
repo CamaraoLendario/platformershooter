@@ -1,5 +1,4 @@
 shader_type particles;
-
 uniform sampler2D mainTexture;
 uniform vec3 outlineColor: source_color = vec3(1., 0., 0.);
 uniform vec2 initPos = vec2(0.);
@@ -60,11 +59,12 @@ void start() {
 	vec2 pixelPos = (endPos / vec2(textureSize(mainTexture, 0)) + vec2(0.5, 0.5));
 	USERDATA1.xy = endPos;
 	COLOR = texture(mainTexture, pixelPos);
-	//COLOR = getOutlines(pixelPos);
+	COLOR = getOutlines(pixelPos);
 	TRANSFORM[3].z = 0.;
 }
 
 void process() {
+	//TODO make if went pilot or something dissipate particles
 	
 	if(RESTART){
 		uint alt_seed = hash(NUMBER + uint(1.) + RANDOM_SEED);
@@ -89,12 +89,19 @@ void process() {
 	if (int(indexRandomness*20.) % 2 == 0) flipVecDir = -1.;
 	vec2 perpendicularVec = RotateVec(normalize(travelVec) * 50. * rand_from_seed(test), PI/2. * flipVecDir);
 	float perpendicularValue = sin(value*PI) * 0.25;
-	
-	float currentRotation = rotation * value;
-	float c = cos(-currentRotation);
-	float s = sin(-currentRotation);
-	TRANSFORM[0].xyz = vec3(c, -s, 0.0);
-	TRANSFORM[1].xyz = vec3(s,  c, 0.0);
-	
+	vec2 oldPos = TRANSFORM[3].xy;
 	TRANSFORM[3].xy = USERDATA1.zw + (travelVec * directValue) + (perpendicularVec * perpendicularValue);
+	vec2 normalizedVel = normalize(TRANSFORM[3].xy - oldPos);
+	if (value < 1.){
+		float currentRotation = mix(atan(normalizedVel.y/normalizedVel.x), rotation, value);
+		float c = cos(-currentRotation);
+		float s = sin(-currentRotation);
+		TRANSFORM[0].xyz = vec3(c, -s, 0.0);
+		TRANSFORM[1].xyz = vec3(s,  c, 0.0);
+	}
+	else{
+		TRANSFORM[0].xyz = vec3(1., 0., 0.0);
+		TRANSFORM[1].xyz = vec3(0.,  1., 0.0);
+	}
+	
 }

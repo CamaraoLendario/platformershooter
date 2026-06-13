@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 using static SpaceMages.SpaceMagesVars;
 
@@ -10,39 +11,53 @@ public partial class PlayerCapsule : MenuItem
 	[Signal] public delegate void DisabledEventHandler(PlayerCapsule playerCapsule);
 	#region Exports
 	[ExportGroup("Nodes and References")]
-	[Export] MenuItemsListContainer menuScreenOptions;
-	[Export] Label nameLabel;
-	[Export] TextureRect pilotTexture;
-	[Export] Control enabledCapsule;
-	[Export] Label arrows;
-	[Export] Control disabledCapsule;
-	[Export] RenameKeyboard renameKeyboard;
-	[Export] public PlayerMenuInput inputNode;
 	[Export] ShaderMaterial pilotOutlineShaderMaterial;
 	[Export] StyleBoxFlat pannelTheme;
 	[Export] Color readyBGcolor = new Color(0.161f, 1.0f, 0.161f, 0.396f);
 	[Export] Color unreadyBGcolor = new Color(0.161f, 0.161f, 0.161f, 0.396f);
 	#endregion
+	Label nameLabel;
+	RenameKeyboard renameKeyboard;
+	public PlayerMenuInput inputNode;
+	MenuItemsListContainer capsuleActions;
+	CapsuleCharacterSprite capsuleCharacterSprite;
+	Control enabledCapsule;
+	Control disabledCapsule;
+	Label arrows;
+	Timer backHoldTimer = new Timer(){OneShot = true};
 	InputIcon[] inputIcons = [];
 	public CharacterSelectScreen characterSelectScreen;
+	float pressHoldDelay = .1f;
 	public bool isEnabled = false;
 	public bool isReady = false;
 	public int colorIdx = -1;
 
     public override void _Ready()
     {
+		GetNodeReferences();
+
         base._Ready();
 		Disable();
-
+		
+		renameKeyboard.affectedLabel = nameLabel;
+		
+		AddChild(backHoldTimer);
 		inputNode.Move += OnMoveAction;
 		inputNode.Interact += OnInteract;
 		inputNode.AltInteract += OnAltInteract;
 		inputNode.NegativeAction += OnNegativeAction;
+		inputNode.NegativeActionReleased += OnNegativeActionReleased;
+		Input.JoyConnectionChanged += (long inputIdx, bool connected) =>
+		{	
+			if (inputIdx != GetInputIdx() || connected) return;
+			Disable();
+		};
 
 		inputIcons = GetInputIcons(this);
     }
 
-	public void SetPlayerName(string newName)
+
+    public void SetPlayerName(string newName)
 	{
 		renameKeyboard.SetText(newName);
 		Name = newName + "'s capsule";
@@ -53,27 +68,32 @@ public partial class PlayerCapsule : MenuItem
 	}
 	public void SetColor(int idx)
 	{
-		if (pilotTexture.Material == null) 
-			pilotTexture.Material = pilotOutlineShaderMaterial.Duplicate() as ShaderMaterial;
-		if (idx == colorIdx) return;
-		int dir = 1;
-		if (idx < colorIdx){dir = -1;}
-		for (int i = 0; i < teamColors.Length; i++)
-		{
-			int currentColoridx = NormalizeIdx(idx + (i*dir), teamColors.Length);
-			//GD.Print("trying to set color to: ", idx);
-			if (characterSelectScreen.IsColorAvaliable(currentColoridx)){
-				Vector3 newColor = teamColors[currentColoridx];
-				(pilotTexture.Material as ShaderMaterial).SetShaderParameter("Color", newColor);
-				colorIdx = currentColoridx;
-				break;
+		if (capsuleCharacterSprite.Material == null) 
+			capsuleCharacterSprite.Material = pilotOutlineShaderMaterial.Duplicate() as ShaderMaterial;
+		if (idx != colorIdx){
+			int dir = 1;
+			if (idx < colorIdx){dir = -1;}
+			for (int i = 0; i < teamColors.Length; i++)
+			{
+				int currentColoridx = NormalizeIdx(idx + (i*dir), teamColors.Length);
+				//GD.Print("trying to set color to: ", idx);
+				if (characterSelectScreen.IsColorAvaliable(currentColoridx)){
+					(capsuleCharacterSprite.Material as ShaderMaterial).SetShaderParameter("Color", teamColors[currentColoridx]);
+					capsuleCharacterSprite.SetTexture(currentColoridx);
+					colorIdx = currentColoridx;
+					break;
+				}
 			}
 		}
+
+
+		if (!renameKeyboard.used)
+			nameLabel.Text = GetColorName(colorIdx);
 		//GD.Print($"Color set to {colorIdx}!");
 	}
 	void ClearColor()
 	{
-		pilotTexture.Material = null;
+		capsuleCharacterSprite.Material = null;
 		colorIdx = -1;
 		return;
 	}
@@ -84,10 +104,11 @@ public partial class PlayerCapsule : MenuItem
 
 		enabledCapsule.Show();
 		disabledCapsule.Hide();
-		renameKeyboard.Close();
+		renameKeyboard.Restart();
 		UnReady();
 		isEnabled = true;
 		inputNode.isEnabled = true;
+		inputNode.inputEnabled = true;
 		SetColor(0);
 		InputGenerator.Instance.GeneratePlayerMenuInput(inputIdx);
 		SetInputIdx(inputIdx);
@@ -115,19 +136,19 @@ public partial class PlayerCapsule : MenuItem
 		arrows.Hide();
 		isReady = true;
 		pannelTheme.BgColor = readyBGcolor;
-		menuScreenOptions.Hide();
+		capsuleActions.Hide();
 		EmitSignal(SignalName.Readied, this);
 
 		return true;
 	}
-	bool UnReady()
+	public bool UnReady()
 	{
 		if (!isReady)
 			return false;
 		isReady = false;
 		arrows.Show();
 		pannelTheme.BgColor = unreadyBGcolor;
-		menuScreenOptions.Show();
+		capsuleActions.Show();
 		EmitSignal(SignalName.UnReadied, this);
 		return true;
 	}
@@ -175,10 +196,17 @@ public partial class PlayerCapsule : MenuItem
 			renameKeyboard.OnNegativeAction();
 			return true;
 		}	
-      	if (UnReady()) return true;
+     	if (UnReady()) return true;
+		backHoldTimer.Start(pressHoldDelay);
+		return true;
+	}
+	
+    public override bool OnNegativeActionReleased() {
+		if (backHoldTimer.IsStopped()) return false;
 		Disable();
 		return true;
 	}
+
     public override bool OnAccept()
     {
 		if (renameKeyboard.Visible)
@@ -215,4 +243,15 @@ public partial class PlayerCapsule : MenuItem
 		}
 		return inputIcons.ToArray();
 	}
+    private void GetNodeReferences()
+    {
+		enabledCapsule = GetNode<Control>("Player Connected");
+		disabledCapsule	 = GetNode<Label>("Empty Capsule");
+		renameKeyboard = GetNode<RenameKeyboard>("RenameKeyboard");
+		inputNode = GetNode<PlayerMenuInput>("PlayerMenuInput");
+		capsuleCharacterSprite = enabledCapsule.GetNode<CapsuleCharacterSprite>("CapsuleCharacterSprite");
+		arrows = enabledCapsule.GetNode<Label>("Arrows");
+		nameLabel = enabledCapsule.GetNode<Label>("Name");
+		capsuleActions = enabledCapsule.GetNode<MenuItemsListContainer>("CapsuleActions");
+    }
 }

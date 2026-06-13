@@ -40,7 +40,7 @@ public partial class PilotAttack : PilotController
 
 	public override void Start()
 	{
-		if (Main.IsDead) return;
+		if (Main.isDead) return;
 		base.Start();
 		weaponHolder.Show();
 		if (sprite.Rotation > Mathf.Pi) sprite.Rotation -= Mathf.Pi * 2;

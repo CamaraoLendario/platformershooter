@@ -39,13 +39,14 @@ public partial class InputGenerator : Node
 
 			string currentAction = action + inputIdx;
 			InputMap.AddAction(currentAction);
+			newActions.Add(currentAction);
+			// GD.Print("Added new action: " + currentAction);
 			foreach (InputEvent input in InputMap.ActionGetEvents(action))
 			{
 				InputEvent currentInput = input.Duplicate(true) as InputEvent;
 				currentInput.Device = inputIdx;
 				//GD.Print("action added: ", currentAction);
 				InputMap.ActionAddEvent(currentAction, currentInput);
-				newActions.Add(currentAction);
 			}
 		}
 		if (updateActionList)
@@ -57,19 +58,19 @@ public partial class InputGenerator : Node
 	public void ClearExtraInputs(bool includeMenuInput = false)
     {
 		var tempNewActions = newActions.ToArray();
-		
+
 		foreach(StringName action in tempNewActions)
         {
-			//GD.Print("Trying to erase Action: " + action);
+			// GD.Print("Trying to erase Action: " + action);
 			if (!includeMenuInput && action.ToString().StartsWith("Menu"))
             {
-                //GD.Print("not deleting menu actions!");
+                // GD.Print("not deleting menu actions!");
 				continue;
             }
 			if (InputMap.HasAction(action))
 			{
 				InputMap.EraseAction(action);
-				//GD.Print("Erased Action: " + action);
+				// GD.Print("Erased Action: " + action);
 				newActions.Remove(action);
 			}
         }
@@ -86,13 +87,14 @@ public partial class InputGenerator : Node
 				continue;
 			string currentAction = action + inputIdx;
 			InputMap.AddAction(currentAction);
+			newActions.Add(currentAction);
+			// GD.Print("Added new action: " + currentAction);
 			foreach (InputEvent input in InputMap.ActionGetEvents(action))
 			{
 				InputEvent currentInput = input.Duplicate(true) as InputEvent;
 				currentInput.Device = inputIdx;
 				//GD.Print(currentAction);
 				InputMap.ActionAddEvent(currentAction, currentInput);
-				newActions.Add(currentAction);
 			}
 		}
 	}
@@ -111,7 +113,7 @@ public partial class InputGenerator : Node
 				{
 					InputMap.EraseAction(action);
 					newActions.Remove(action);
-					//GD.Print("Erased Action: " + action);
+					// GD.Print("Erased Action: " + action);
 				}
             }
         }

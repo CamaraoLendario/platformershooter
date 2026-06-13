@@ -4,9 +4,29 @@ using System;
 public partial class ShipSprite : PlayerSprite
 {
 	[Export] protected ShipController controller;
+	afterimagesCPUpart afterimages;
+    public override void _Ready()
+    {
+        base._Ready();
+
+		foreach(Node child in GetChildren())
+		{
+			if (child is afterimagesCPUpart afterimagesCPUpart)
+			{
+				afterimages = afterimagesCPUpart;
+				controller.dashed += () => {
+					afterimages.EnableForTime(1);
+				};
+				controller.Ended += afterimages.Disable;
+			}
+		}
+    }
+
 	public override void _Process(double delta)
 	{
 		ProcessRotation((float)delta);
+		if (controller.Velocity.LengthSquared() <= ShipController.MAXSPEED * ShipController.MAXSPEED)
+			afterimages.Disable();
 	}
 	
 	void ProcessRotation(float delta)

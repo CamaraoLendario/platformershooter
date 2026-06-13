@@ -2,10 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://bnj055xj8cr1x" path="res://Tomes/Base/weapon_template.tscn" id="1_qfput"]
 [ext_resource type="Script" uid="uid://ct4qflbt34a0e" path="res://Tomes/Fire/FireTome.cs" id="2_deydi"]
+[ext_resource type="PackedScene" uid="uid://cvhxytb88e3px" path="res://Tomes/Fire/FireProjectile.tscn" id="3_2g34k"]
 [ext_resource type="Texture2D" uid="uid://daawcol3kgydg" path="res://Tomes/TomeAssets/Weapons.png" id="4_amg4u"]
 [ext_resource type="Material" uid="uid://36slk4uiaeax" path="res://Tomes/Fire/Materials/FireTomeTrailParticles.tres" id="5_2g34k"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_amg4u"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtmxj"]
 resource_local_to_scene = true
 atlas = ExtResource("4_amg4u")
 region = Rect2(16, 0, 16, 16)
@@ -13,10 +14,10 @@ region = Rect2(16, 0, 16, 16)
 [node name="FireTome" unique_id=346186004 node_paths=PackedStringArray("particles") instance=ExtResource("1_qfput")]
 script = ExtResource("2_deydi")
 particles = NodePath("Trail")
-bullet = null
+bullet = ExtResource("3_2g34k")
 
 [node name="Sprite2D" parent="." index="0" unique_id=570493511]
-texture = SubResource("AtlasTexture_amg4u")
+texture = SubResource("AtlasTexture_xtmxj")
 
 [node name="Trail" type="GPUParticles2D" parent="." index="1" unique_id=1628184339]
 show_behind_parent = true

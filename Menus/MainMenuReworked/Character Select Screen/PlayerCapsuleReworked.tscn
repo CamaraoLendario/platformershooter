@@ -2,18 +2,14 @@
 
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_ewlji"]
 [ext_resource type="Script" uid="uid://b67nuarl5dcl4" path="res://Menus/MainMenuReworked/Character Select Screen/PlayerCapsule.cs" id="2_48nbc"]
-[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Sprites/PilotStill.png" id="3_toa6k"]
-[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="3_tvjsv"]
+[ext_resource type="Material" uid="uid://6b8p1p0j0p4f" path="res://Actors/Player/Materials/OutlineMaterial.tres" id="3_ol251"]
+[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Textures/Sprites/PilotStill.png" id="3_toa6k"]
 [ext_resource type="PackedScene" uid="uid://bphnjcidgshy0" path="res://Menus/MenuingComponents/MenuItemsContainer.tscn" id="4_tvjsv"]
-[ext_resource type="Texture2D" uid="uid://bmpswyokv23bw" path="res://Menus/MenuingComponents/inputIcons.png" id="8_jv8gs"]
+[ext_resource type="Script" uid="uid://c1uhsbcrlnwx2" path="res://Menus/MainMenuReworked/Character Select Screen/CapsuleCharacterSprite.cs" id="5_ol251"]
+[ext_resource type="Texture2D" uid="uid://bmpswyokv23bw" path="res://Menus/MenuingComponents/inputIcons.png" id="7_53gnc"]
 [ext_resource type="Script" uid="uid://dmwbtwi6t4nnp" path="res://Menus/MainMenuReworked/Character Select Screen/PlayerMenuInput.cs" id="8_mn5cg"]
 [ext_resource type="PackedScene" uid="uid://dl55e24nxatwp" path="res://Menus/RenameKeyboard.tscn" id="9_slkfj"]
 [ext_resource type="PackedScene" uid="uid://c0jq1fa6bb1ar" path="res://Menus/MenuingComponents/inputIcon.tscn" id="10_wy61a"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_slkfj"]
-shader = ExtResource("3_tvjsv")
-shader_parameter/Color = Color(0.8, 0.8, 0, 1)
-shader_parameter/outlineThickness = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sdmhf"]
 resource_local_to_scene = true
@@ -29,31 +25,33 @@ font_size = 40
 [sub_resource type="LabelSettings" id="LabelSettings_q8q8u"]
 font_size = 45
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rmnnq"]
-atlas = ExtResource("8_jv8gs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_53gnc"]
+atlas = ExtResource("7_53gnc")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_she78"]
-atlas = ExtResource("8_jv8gs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ol251"]
+atlas = ExtResource("7_53gnc")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_sdmhf"]
 font_size = 22
 
-[node name="\'s capsule" type="Control" unique_id=2084640090 node_paths=PackedStringArray("menuScreenOptions", "nameLabel", "pilotTexture", "enabledCapsule", "arrows", "disabledCapsule", "renameKeyboard", "inputNode")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_53gnc"]
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="\'s capsule" type="Control" unique_id=2084640090]
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_ewlji")
 script = ExtResource("2_48nbc")
-menuScreenOptions = NodePath("Player Connected/MenuItemsContainer")
-nameLabel = NodePath("Player Connected/Name")
-pilotTexture = NodePath("Player Connected/TextureRect")
-enabledCapsule = NodePath("Player Connected")
-arrows = NodePath("Player Connected/Arrows")
-disabledCapsule = NodePath("Empty Capsule")
-renameKeyboard = NodePath("RenameKeyboard")
-inputNode = NodePath("PlayerMenuInput")
-pilotOutlineShaderMaterial = SubResource("ShaderMaterial_slkfj")
+pilotOutlineShaderMaterial = ExtResource("3_ol251")
 pannelTheme = SubResource("StyleBoxFlat_sdmhf")
 Selectable = false
 
@@ -73,7 +71,6 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_sdmhf")
 
 [node name="Player Connected" type="Control" parent="." unique_id=1060720999]
-visible = false
 anchors_preset = 0
 offset_top = 32.0
 offset_bottom = 32.0
@@ -113,7 +110,7 @@ label_settings = SubResource("LabelSettings_q8q8u")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Player Connected" unique_id=612125025]
+[node name="CapsuleCharacterSprite" type="TextureRect" parent="Player Connected" unique_id=612125025]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -128,8 +125,9 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_toa6k")
 stretch_mode = 5
+script = ExtResource("5_ol251")
 
-[node name="MenuItemsContainer" parent="Player Connected" unique_id=896509972 instance=ExtResource("4_tvjsv")]
+[node name="CapsuleActions" parent="Player Connected" unique_id=896509972 instance=ExtResource("4_tvjsv")]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = -0.08800001
@@ -140,7 +138,7 @@ grow_horizontal = 2
 grow_vertical = 2
 Separation = 11
 
-[node name="Rename" type="HBoxContainer" parent="Player Connected/MenuItemsContainer" unique_id=1635362832]
+[node name="Rename" type="HBoxContainer" parent="Player Connected/CapsuleActions" unique_id=1635362832]
 layout_mode = 0
 offset_left = -211.5
 offset_top = -55.5
@@ -149,17 +147,17 @@ offset_bottom = -5.5
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="RenameInputIcon" parent="Player Connected/MenuItemsContainer/Rename" unique_id=1121962858 instance=ExtResource("10_wy61a")]
+[node name="RenameInputIcon" parent="Player Connected/CapsuleActions/Rename" unique_id=1121962858 instance=ExtResource("10_wy61a")]
 layout_mode = 2
-texture = SubResource("AtlasTexture_rmnnq")
+texture = SubResource("AtlasTexture_53gnc")
 action = "MenuAltInteract-2"
 
-[node name="RenameLabel" type="Label" parent="Player Connected/MenuItemsContainer/Rename" unique_id=1924376721]
+[node name="RenameLabel" type="Label" parent="Player Connected/CapsuleActions/Rename" unique_id=1924376721]
 layout_mode = 2
 text = "Rename"
 label_settings = SubResource("LabelSettings_q8q8u")
 
-[node name="ReadyUp" type="HBoxContainer" parent="Player Connected/MenuItemsContainer" unique_id=2068099430]
+[node name="ReadyUp" type="HBoxContainer" parent="Player Connected/CapsuleActions" unique_id=2068099430]
 layout_mode = 0
 offset_left = -211.5
 offset_top = 5.5
@@ -168,17 +166,18 @@ offset_bottom = 55.5
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="ReadyUpInputIcon" parent="Player Connected/MenuItemsContainer/ReadyUp" unique_id=339985318 instance=ExtResource("10_wy61a")]
+[node name="ReadyUpInputIcon" parent="Player Connected/CapsuleActions/ReadyUp" unique_id=339985318 instance=ExtResource("10_wy61a")]
 layout_mode = 2
-texture = SubResource("AtlasTexture_she78")
+texture = SubResource("AtlasTexture_ol251")
 action = "MenuInteract-2"
 
-[node name="ReadyUpLabel" type="Label" parent="Player Connected/MenuItemsContainer/ReadyUp" unique_id=940726143]
+[node name="ReadyUpLabel" type="Label" parent="Player Connected/CapsuleActions/ReadyUp" unique_id=940726143]
 layout_mode = 2
 text = "Ready"
 label_settings = SubResource("LabelSettings_q8q8u")
 
 [node name="Empty Capsule" type="Label" parent="." unique_id=1366210280]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -198,10 +197,23 @@ label_settings = SubResource("LabelSettings_sdmhf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RenameKeyboard" parent="." unique_id=1616403939 node_paths=PackedStringArray("affectedLabel") instance=ExtResource("9_slkfj")]
+[node name="RenameKeyboard" parent="." unique_id=1616403939 instance=ExtResource("9_slkfj")]
 visible = false
+z_index = 1
 layout_mode = 0
-affectedLabel = NodePath("../Player Connected/Name")
+offset_top = -34.0
+offset_bottom = -34.0
+letterSettings = null
+
+[node name="Panel" type="Panel" parent="RenameKeyboard" unique_id=386663414]
+self_modulate = Color(1, 1, 1, 0.54901963)
+z_index = -1
+layout_mode = 0
+offset_left = -87.0
+offset_top = -147.0
+offset_right = 87.0
+offset_bottom = 145.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_53gnc")
 
 [node name="PlayerMenuInput" type="Node" parent="." unique_id=66978146]
 script = ExtResource("8_mn5cg")

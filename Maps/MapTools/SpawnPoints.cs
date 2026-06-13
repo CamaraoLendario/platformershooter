@@ -1,5 +1,5 @@
 using Godot;
-using SpaceMages;
+using static SpaceMages.SpaceMagesVars;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,26 +8,20 @@ using System.Runtime.InteropServices;
 public partial class SpawnPoints : Node
 {
 	List<Node2D> spawnPoints = new List<Node2D>();
-
+	
 	public override void _Ready()
 	{
-		SignalBus.Instance.GameStarted += OnGameStarted;
-		SignalBus.Instance.NewRoundStart += OnNewRoundStart;
+		SignalBus.Instance.GameStarted += SpawnPlayers;
+		CallDeferred(MethodName.OnNewRoundStart);
+//		SignalBus.Instance.NewRoundStart += OnNewRoundStart;
 	}
-	
-    private void OnGameStarted()
-    {
-		ScrambleSpawnPoints();
-		SpawnPlayers();
-    }
 	void OnNewRoundStart()
 	{
 		ScrambleSpawnPoints();
 		foreach (Player player in Game.Instance.players)
 		{
 			player.Position = spawnPoints[player.colorIdx].Position;
-			player.Reset();
-			player.IsDead = false;
+			player.CallDeferred(Player.MethodName.Reset);
 		}
 	}
 
@@ -47,23 +41,30 @@ public partial class SpawnPoints : Node
 	}
 
     void SpawnPlayers() {
+		
+		ScrambleSpawnPoints();
+
 		Player[] players = new Player[Game.Instance.playersInfo.Length];
+
 		for(int i = 0; i < players.Length; i++)
 		{
 			PlayerInfo playerInfo = Game.Instance.playersInfo[i];
 			Player newPlayer = Player.New(playerInfo);
 			newPlayer.Position = spawnPoints[newPlayer.colorIdx].Position;
+			newPlayer.pilotSprite.SpriteFrames = GD.Load<SpriteFrames>(pilotSpriteFramesUIDs[newPlayer.colorIdx]);
 
-			Game.GetOverworld().CallDeferred(MethodName.AddChild, newPlayer);
-			newPlayer.CallDeferred("Reset");
+			Game.GetOverworld().GetWorld().CallDeferred(MethodName.AddChild, newPlayer);
+			newPlayer.CallDeferred(Player.MethodName.Reset);
 			players[i] = newPlayer;
 		}
+
 		Game.Instance.players = players;
 		SignalBus.Instance.EmitSignal(SignalBus.SignalName.FinishedSpawningPlayers);
 	}
 
 	public override void _ExitTree() {
-		SignalBus.Instance.NewRoundStart -= OnNewRoundStart;
+		//SignalBus.Instance.NewRoundStart -= OnNewRoundStart;
+		SignalBus.Instance.GameStarted -= SpawnPlayers;
 		base._ExitTree();
 	}
 

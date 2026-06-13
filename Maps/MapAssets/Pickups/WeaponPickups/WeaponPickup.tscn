@@ -219,7 +219,7 @@ light_mask = 0
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_32iig")
 animation = &"Ice"
-frame_progress = 0.8751042
+frame_progress = 0.81324446
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1612679127]
 z_index = 10

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x4ovpn52h8gn"
-path="res://.godot/imported/CrossAir1.png-b23972598d7af10d0360f8cb774f0d53.ctex"
+uid="uid://bx3mpbehtsfc"
+path="res://.godot/imported/Dinoxaurr.png-7ca126fad462cd1a3d20c02004027e6e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Actors/Player/Pilot/Sprites/CrossAir1.png"
-dest_files=["res://.godot/imported/CrossAir1.png-b23972598d7af10d0360f8cb774f0d53.ctex"]
+source_file="res://Actors/Player/Pilot/Textures/Sprites/Dinoxaurr.png"
+dest_files=["res://.godot/imported/Dinoxaurr.png-7ca126fad462cd1a3d20c02004027e6e.ctex"]
 
 [params]
 

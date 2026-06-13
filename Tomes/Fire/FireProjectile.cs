@@ -20,12 +20,13 @@ public partial class FireProjectile : LinearProjectile
 		AddChild(waitParticlesTimer);
 		FireAudio.Finished += () => {FireAudio.Play();};
 		waitParticlesTimer.Timeout += OnParticlesFinished;
-		PrepareExplosionParticles();
 		world = GetTree().GetFirstNodeInGroup("World") as World;
+		PrepareExplosionParticles();
     }
 
     public override void _PhysicsProcess(double delta)
     {
+		if (ending) return;
         base._PhysicsProcess(delta);
 		speed += acceleration * (float)delta;
     }
@@ -44,26 +45,37 @@ public partial class FireProjectile : LinearProjectile
 
 	protected override void OnBodyHit(Node2D body)
 	{
-		if (body is TileMapLayer || body is Player player && player.colorIdx != owner.colorIdx)
-		{
-			End();
-        }
+		if (body is Player player && player.colorIdx != owner.colorIdx)
+			End(EndingReason.HITPLAYER);
+		else if (body is TileMapLayer)
+			End(EndingReason.HITGEOMETRY);
 	}
 
-	public override void End()
+	public override bool End(EndingReason endingReason, bool allowFreeing = true, bool forceFreeing = false)
 	{
+		if (!base.End(endingReason, false)) return false;
 		explosionComponent.Position = Position;
 		world.CallDeferred(MethodName.AddChild, explosionComponent);
 		SummonExplosionParticles();
-		sprite.Hide();
-		trailParticles.Emitting = false;
 		waitParticlesTimer.Start(trailParticles.Lifetime);
+		ending = true;
 		SetDeferred(PropertyName.Monitorable, false);
 		SetDeferred(PropertyName.Monitoring, false);
 		speed = 0;
+		PrepareForDeletion();
+		return true;
 	}
 
-	void SummonExplosionParticles()
+	async void PrepareForDeletion()
+	{
+		trailParticles.Emitting = false;
+		sprite.SelfModulate = new Color(0f, 0f, 0f, 0f);
+		FireAudio.Stop();
+		await ToSignal(GetTree().CreateTimer(trailParticles.Lifetime), Timer.SignalName.Timeout);
+		QueueFree();
+	}
+
+    void SummonExplosionParticles()
 	{
 		explosionParticles.GlobalPosition = GlobalPosition;
 		explosionParticles.Emitting = true;
@@ -71,6 +83,6 @@ public partial class FireProjectile : LinearProjectile
 
 	void OnParticlesFinished()
 	{
-        base.End();
+        base.End(EndingReason.TIMEOUT);
     }
 }

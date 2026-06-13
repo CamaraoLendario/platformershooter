@@ -30,51 +30,6 @@ public partial class GPUParticlesPool : Node2D
 		{
 			GenerateNewGeneralUseParticles();
 		}
-
-	//IceRay
-		IceRay iceRay = GD.Load<PackedScene>("uid://dlbbif2cwel8d").Instantiate<IceRay>();
-	//Rings
-		ringsParent = new Node2D(){Name = "ringsParent"};
-		AddSibling(ringsParent);
-		rings = new()
-		{
-			ProcessMaterial = GD.Load<ParticleProcessMaterial>("uid://bb5cmnqanosm4")	
-		};
-		SetVariablesTo(rings, iceRay.rayRingEmitter);
-		for(int i = 0; i < particlesNodesCount; i++)
-		{
-			GenerateNewRayRing();
-		}
-	//Dropplets
-		droppletsParent = new Node2D(){Name = "droppletsParent"};
-		AddSibling(droppletsParent);
-		dropplets = new()
-		{
-			ProcessMaterial = GD.Load<ParticleProcessMaterial>("uid://um8eg4sda5mp")
-		};
-		SetVariablesTo(dropplets, iceRay.iceDroppletsEmitter);
-		for(int i = 0; i < particlesNodesCount; i++)
-		{
-			GenerateNewDropplets();
-		}
-	}
-
-	public static GpuParticles2D GenerateNewDropplets()
-	{
-		GpuParticles2D newparticles = Instance.dropplets.Duplicate() as GpuParticles2D;
-		newparticles.Emitting = false;
-		newparticles.ZIndex = 1;
-		Instance.droppletsParent.CallDeferred(MethodName.AddChild, newparticles);
-		return newparticles;
-	}
-
-	public static GpuParticles2D GenerateNewRayRing()
-	{
-		GpuParticles2D newRings = Instance.rings.Duplicate() as GpuParticles2D;
-		newRings.Emitting = false;
-		newRings.ZIndex = 1;
-		Instance.ringsParent.CallDeferred(MethodName.AddChild, newRings);
-		return newRings;
 	}
 
 	public static GpuParticles2D GetParticles()
@@ -101,21 +56,6 @@ public partial class GPUParticlesPool : Node2D
 		return newParticles;
 	}
 
-	public static (GpuParticles2D, GpuParticles2D) GetIceParticles()
-	{
-		(GpuParticles2D, GpuParticles2D) particles = (Instance.ringsParent.GetChild<GpuParticles2D>(0), Instance.droppletsParent.GetChild<GpuParticles2D>(0));
-		Instance.ringsParent.MoveChild(particles.Item1, -1);
-		Instance.droppletsParent.MoveChild(particles.Item2, -1);
-		if (particles.Item1 == null || particles.Item2 == null)
-		{
-			GD.PrintErr("More IceParticles Nodes Necessary, generating..");
-			particles = (GenerateNewDropplets(), GenerateNewRayRing());
-		}
-		particles.Item1.Emitting = true;
-		particles.Item2.Emitting = true;
-		return particles;
-	}
-
 	public static void NormalizePoolCountToPlayerCount()
 	{
 		int playerCount = Game.Instance.players.Length;
@@ -124,21 +64,6 @@ public partial class GPUParticlesPool : Node2D
 		{
 			GenerateNewGeneralUseParticles();
 		}
-		int necessaryDropplets = (playerCount - (Instance.droppletsParent.GetChildCount() / particleObjectsPerPlayer)) * particleObjectsPerPlayer;
-		for (int i = 0; i < necessaryDropplets; i++)
-		{
-			GenerateNewDropplets();
-		}
-		int necessaryRings = (playerCount - (Instance.ringsParent.GetChildCount() / particleObjectsPerPlayer)) * particleObjectsPerPlayer;
-		for (int i = 0; i < necessaryRings; i++)
-		{
-			GenerateNewRayRing();
-		}
-	}
-
-	void DelayedPrintTemp(int str)
-	{
-		GD.Print(str);
 	}
 
 	public static GpuParticles2D GetClonedParticles(GpuParticles2D clonee)
@@ -170,23 +95,13 @@ public partial class GPUParticlesPool : Node2D
 		from.Material = to.Material;
 		from.ZIndex = GetAbsoluteZindex(to);
 		from.ZAsRelative = to.ZAsRelative;
-		from.ProcessMode = ProcessModeEnum.Pausable;
+		from.ProcessMode = to.ProcessMode;
 	}
 
 	public static void Return(GpuParticles2D particles)
 	{
 		particles.Reparent(Instance);
 		SetVariablesToDefault(particles);
-	}
-	public static void ReturnRing(GpuParticles2D particles)
-	{
-		particles.Reparent(Instance.ringsParent);
-		particles.Position = Vector2.Zero;
-	}
-	public static void ReturnDropplet(GpuParticles2D particles)
-	{
-		particles.Reparent(Instance.droppletsParent);
-		particles.Position = Vector2.Zero;
 	}
 
 	void OnNodeEntered(Node node)

@@ -9,6 +9,7 @@ public partial class GameLengthScroll : MenuScroll
     {
 		base._Ready();
         Contents = Enum.GetNames(typeof(GamemodeLogic.GameLength));
+		SetIdx(1);
     }
 	
 	string GetGamemodeString(GamemodeLogic.GameLength gamemodeIdx)

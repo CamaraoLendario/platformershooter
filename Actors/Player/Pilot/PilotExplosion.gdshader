@@ -1,55 +1,10 @@
 shader_type particles;
+#include "res://test/usefulFuncs.gdshaderinc"
 
 uniform vec2 initialDir = vec2(1.);
 uniform sampler2D mainTexture;
 uniform vec3 outlineColor: source_color = vec3(1., 0., 0.);
 uniform float rotation;
-
-vec4 getOutlines(vec2 pos){
-	vec4 selfColor = texture(mainTexture, pos); 
-	if (selfColor.a != 0.) return selfColor;
-	
-	for(int y = -1; y <= 1; y++){
-		for(int x = -1; x <= 1; x++){
-			if ((x + y)%2 == 0) continue;
-			if (texture(mainTexture, pos + vec2(float(x), float(y))/vec2(16., 17.)).a != 0.){
-				return vec4(outlineColor, 1.);
-			}
-		}
-	}
-	return vec4(0.);
-}
-
-
-uint hash(uint x) {
-	x = ((x >> uint(16)) ^ x) * uint(73244475);
-	x = ((x >> uint(16)) ^ x) * uint(73244475);
-	x = (x >> uint(16)) ^ x;
-	return x;
-}
-
-float rand_from_seed(inout uint seed) {
-	int k;
-	int s = int(seed);
-	if (s == 0) {
-		s = 305420679;
-	}
-	k = s / 127773;
-	s = 16807 * (s - k * 127773) - 2836 * k;
-	if (s < 0) {
-		s += 2147483647;
-	}
-	seed = uint(s);
-	return float(seed % uint(65536)) / 65535.0;
-}
-
-vec2 RotateVec(vec2 inputVec, float angle){
-	vec2 outputVec;
-	vec2 v1 = vec2(cos(angle), sin(angle));
-	vec2 v2 = vec2(-sin(angle), cos(angle));
-	outputVec = inputVec.x*v1 + inputVec.y*v2;
-	return outputVec;
-}
 
 void start() {
 	vec2 textureS = vec2(textureSize(mainTexture, 0));
@@ -57,7 +12,7 @@ void start() {
 	float x = floor(float(INDEX) - textureS.y*y);
 	vec2 pixelCoord = vec2(x, y);
 	COLOR = texture(mainTexture, (pixelCoord + vec2(0.5)) / vec2(textureSize(mainTexture, 0)));
-	COLOR = getOutlines((pixelCoord + vec2(0.5)) / vec2(textureSize(mainTexture, 0)));
+	COLOR = getOutlines((pixelCoord + vec2(0.5)) / vec2(textureSize(mainTexture, 0)), COLOR, mainTexture, outlineColor);
 	TRANSFORM[3].xy = pixelCoord - textureS/2.;
 	TRANSFORM[3].xy = RotateVec(TRANSFORM[3].xy, rotation);
 	VELOCITY.xy = vec2(0.);
@@ -89,7 +44,7 @@ void process() {
 	TRANSFORM[1].xyz = vec3(s,  c, 0.0);
 	}
 
-	if (USERDATA1.w == 10. && COLOR.a > 0.){// && dot(normalize(USERDATA1.xy), normalize(TRANSFORM[3].xy)) < 0.){
+	if (USERDATA1.w == 10. && COLOR.a > 0.) { // && dot(normalize(USERDATA1.xy), normalize(TRANSFORM[3].xy)) < 0.){
 		float SoredPositionLength = length(USERDATA1.xy);
 		float alpha1 = 1. - ((SoredPositionLength - length(TRANSFORM[3].xy))/SoredPositionLength);
 		float alpha2 = dot(normalize(USERDATA1.xy), normalize(TRANSFORM[3].xy));

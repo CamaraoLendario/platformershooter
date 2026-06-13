@@ -5,8 +5,22 @@ using static SpaceMages.SpaceMagesVars;
 
 public partial class AndTheWinnerIs : Control
 {
-	[Export] AnimationPlayer announcingAnimation;
+	[Export] public AnimationPlayer announcingAnimation;
 	[Export] AudioStreamPlayer colorAnnouncer;
+
+    public override void _Ready()
+    {
+        base._Ready();
+        announcingAnimation.AnimationFinished += (StringName animation) => {
+			if (animation != "RESET")
+				Game.GetMain().CallDeferred(Main.MethodName.BackToCharacterSelectScreen);
+		};
+ 		SignalBus.Instance.GameExited += (MainMenuScreen toScreen) =>
+		{
+			announcingAnimation.Play("RESET");
+		};
+    }
+
 
 	List<string> announcementColors = [
 		"uid://dxche3ctkq2gg",	// Red

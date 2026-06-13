@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://cig1jhkfbumhs" path="res://Assets/Audio/GO!.wav" id="7_ww1s6"]
 [ext_resource type="Script" uid="uid://cxjncdus4t5b2" path="res://Menus/ScoreBoard/AndTheWinnerIs.cs" id="8_vdi58"]
 [ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="8_wgo8s"]
-[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Sprites/PilotStill.png" id="9_ef8pb"]
+[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Textures/Sprites/PilotStill.png" id="9_ef8pb"]
 [ext_resource type="AudioStream" uid="uid://cgac2tx4ihctk" path="res://Assets/Audio/AndTheWinnerIs/AndTheWinnerIs.ogg" id="10_ef8pb"]
 [ext_resource type="AudioStream" uid="uid://dxche3ctkq2gg" path="res://Assets/Audio/AndTheWinnerIs/RED.ogg" id="12_vdi58"]
 
@@ -37,7 +37,7 @@ shadow_offset = Vector2(18, 9)
 
 [sub_resource type="Animation" id="Animation_vdi58"]
 resource_name = "Base"
-length = 3.136
+length = 3.6666667
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -239,7 +239,7 @@ script = ExtResource("5_40t86")
 Separation = 20
 horizontal = true
 
-[node name="READY GO" type="Control" parent="." unique_id=1508956759 node_paths=PackedStringArray("readyGoLabel", "READY", "GO")]
+[node name="READY GO" type="Control" parent="." unique_id=1508956759 node_paths=PackedStringArray("readyGoLabel", "READYSound", "GOSound")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -249,8 +249,8 @@ grow_vertical = 2
 theme = ExtResource("2_un3ay")
 script = ExtResource("4_6wo6e")
 readyGoLabel = NodePath("Label")
-READY = NodePath("READY")
-GO = NodePath("GO")
+READYSound = NodePath("READY")
+GOSound = NodePath("GO")
 
 [node name="Label" type="Label" parent="READY GO" unique_id=964125853]
 layout_mode = 1
@@ -319,7 +319,7 @@ anchor_bottom = 0.5
 offset_left = -1093.0
 offset_top = 700.0
 offset_right = 1093.0
-offset_bottom = 941.99976
+offset_bottom = 941.9998
 grow_horizontal = 2
 grow_vertical = 2
 text = "And the winner is..."
