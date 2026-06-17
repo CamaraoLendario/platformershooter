@@ -26,6 +26,8 @@ public partial class BeamsOfDeath : Node2D
 		SuddenDeathTimer.Timeout += () =>
 		{
 			started = 1;
+			beamLeft.Monitoring = true;
+			beamRight.Monitoring = true;
 		};
 
 		SuddenDeathTimer.Start(timeToSuddenDeath);
@@ -57,6 +59,9 @@ public partial class BeamsOfDeath : Node2D
 			started = 0;
 		}
 		SuddenDeathTimer.Start(timeToSuddenDeath);
+		
+		beamLeft.Monitoring = false;
+		beamRight.Monitoring = false;
 	}
 
     public override void _ExitTree()

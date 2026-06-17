@@ -56,9 +56,27 @@ public partial class CharacterSelectScreen : MainMenuScreen
     }
 
     public override void _Input(InputEvent @event)
-    {        
+    {
         if (@event is InputEventMouse || GetMenuController().currentScreen != this) return;
-
+       
+        #if TOOLS
+        if (Input.IsKeyPressed(Key.L)) {
+            PlayerCapsule newCapsule = GetFirstDisabledCapsule();
+            if (newCapsule != null) 
+                for (int i = 0; i < 6; i++)
+                    if (!inputIdxs.Contains(i)){
+                        EnableCapsule(newCapsule, i);
+                        newCapsule.ReadyUp();
+                        return;
+                        }
+        }
+        if (Input.IsKeyPressed(Key.K))
+        {
+            foreach (PlayerCapsule newCapsule in GetEnabledPlayerCapsules()) {
+                newCapsule.ReadyUp();
+            }
+        }
+        #endif
         int inputIdx = @event.Device;
         if (@event is InputEventKey)
             inputIdx = -1;

@@ -129,7 +129,7 @@ public partial class PlayerCapsule : MenuItem
 		SetInputIdx(-2);
 	}
 
-	bool ReadyUp() // Note: name can't be "Ready" cuz of Node.Ready
+	public bool ReadyUp() // Note: name can't be "Ready" cuz of Node.Ready
 	{ 
 		if (isReady)
 			return false;

@@ -6,9 +6,16 @@ using System.Threading.Tasks.Dataflow;
 public partial class PilotArea : Node2D
 {
 	List<(Godot.Vector2 TL, Godot.Vector2 BR)> areas = [];
+	bool areAreasGot = false;
 
     public override void _Ready()
 	{
+		SetupAreas();
+    }
+
+	void SetupAreas()
+	{
+		if(areAreasGot) return;
 		foreach (Node node in GetChildren())
 		{
 			if (node is CollisionShape2D)
@@ -18,8 +25,8 @@ public partial class PilotArea : Node2D
 				areas.Add((shape.GlobalPosition - halfSize, shape.GlobalPosition + halfSize));
 			}
 		}
-    }
-
+		areAreasGot = true;
+	}
 	public override void _PhysicsProcess(double delta)
 	{
 		foreach (Player player in Game.Instance.players)
@@ -31,6 +38,8 @@ public partial class PilotArea : Node2D
 	
 	public bool IsInPilotArea(Vector2 playerPos)
 	{
+		if (!areAreasGot) SetupAreas();
+		
 		foreach ((Vector2 TL, Vector2 BR) area in areas)
         {
 			if (playerPos.X < area.BR.X && playerPos.X > area.TL.X && playerPos.Y < area.BR.Y && playerPos.Y > area.TL.Y)

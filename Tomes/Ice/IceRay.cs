@@ -18,9 +18,9 @@ public partial class IceRay : HitscanBullet
 		float distance = (colPos - GlobalPosition).Length();
 
 		iceDropplets.Position += inputDir * offsetInFrontOfCharacter;
-		iceDropplets.Amount = ((int)distance / 5) - offsetInFrontOfCharacter / 5;
+		iceDropplets.Amount = Mathf.Max(1, ((int)distance / 5) - offsetInFrontOfCharacter / 5);
 		vortex.Position += inputDir * offsetInFrontOfCharacter;
-		vortex.Amount = ((int)distance * 3) - offsetInFrontOfCharacter * 3;
+		vortex.Amount = Mathf.Max(1, ((int)distance * 3) - offsetInFrontOfCharacter * 3);
 		SetParticlesProperties(iceDropplets, distance, inputDir);
 		SetParticlesProperties(vortex, distance, inputDir);
 		hitEmitter.GlobalPosition = colPos;

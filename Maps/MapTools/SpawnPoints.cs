@@ -18,9 +18,11 @@ public partial class SpawnPoints : Node
 	void OnNewRoundStart()
 	{
 		ScrambleSpawnPoints();
-		foreach (Player player in Game.Instance.players)
+		Player[] players = Game.Instance.players;
+		for(int i = 0; i < players.Length; i++)
 		{
-			player.Position = spawnPoints[player.colorIdx].Position;
+			Player player = players[i];
+			player.Position = spawnPoints[i].Position;
 			player.CallDeferred(Player.MethodName.Reset);
 		}
 	}

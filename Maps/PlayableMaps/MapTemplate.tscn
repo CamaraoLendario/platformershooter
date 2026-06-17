@@ -302,6 +302,7 @@ color = Color(0.47058824, 0, 1, 0.25490198)
 polygon = PackedVector2Array(85, 76, 81, -54, -87, -54, -89, 80)
 
 [node name="BackgroundTiles" type="Node2D" parent="." unique_id=1552887034]
+z_index = -1024
 
 [node name="Background" type="TileMapLayer" parent="BackgroundTiles" unique_id=617801030]
 self_modulate = Color(0.65834, 0.65834, 0.6583398, 1)

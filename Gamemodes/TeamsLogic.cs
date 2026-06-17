@@ -9,12 +9,12 @@ using static SpaceMages.SpaceMagesVars;
 public partial class TeamsLogic : GamemodeLogic
 {
 	[Export] bool objectiveIsTeamSurvive = true;
-    public override void OnGameStarted()
+    public override void OnStartGame()
 	{
-		base.OnGameStarted();
-		foreach(Player player in Game.GetPlayers())
+		base.OnStartGame();
+		foreach(PlayerInfo playerInfo in Game.GetPlayersInfo())
 		{
-			playerTeam.Add(player, Game.Instance.playerTeams[player.GetInputIdx()]);
+			/* playerTeamByInputIdx.Add(playerInfo.inputIdx, ); */ // TODO make it so this can read teams from team select screen
 		}
 		teamScore.Add(0, 0); // Blue
 		teamScore.Add(1, 0); // Red
@@ -27,12 +27,11 @@ public partial class TeamsLogic : GamemodeLogic
 			return;
 		}
 		List<int> aliveTeams = [];
-		foreach(Player player in playerTeam.Keys)
+		foreach(Player player in Game.GetPlayers())
 		{
 			if (player.isDead) continue;
-			if (!aliveTeams.Contains(playerTeam[player]))
-			{
-				aliveTeams.Add(playerTeam[player]);
+			if (!aliveTeams.Contains(playerTeamByInputIdx[player.GetInputIdx()])) {
+				aliveTeams.Add(playerTeamByInputIdx[player.GetInputIdx()]);
 			}
 		}
 

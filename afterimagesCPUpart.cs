@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 //TODO optimize information transfered to the GPU there's a lot of optimization to be done here
-[Tool]
 public partial class afterimagesCPUpart : ColorRect
 {
 	[Export] bool enabled = false;

@@ -1,5 +1,6 @@
 using Godot;
 using Godot.NativeInterop;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,8 @@ public partial class GamemodeLogic : Resource
 	}
 	GameLength currentGameLength;
     [Export] float roundEndDelay = 2f;
-   	protected Dictionary<Player, int> playerTeam = [];
+   	public Dictionary<int, int> playerTeamByInputIdx = []; //inputIdx, Team
+	public List<(string teamName, int teamColorIdx)> teams = [];
     protected Dictionary<int, int> teamScore = [];
     public List<(int, int)> teamScoreChanges = [];
 	protected bool isRoundRestarting = false;
@@ -36,6 +38,15 @@ public partial class GamemodeLogic : Resource
 	{
 		
 	}
+	public virtual void Reset()
+	{
+		
+	}
+
+    public virtual void OnStartGame()
+    {
+
+    }
     public virtual void OnGameStarted()
 	{
 
@@ -47,24 +58,31 @@ public partial class GamemodeLogic : Resource
     public virtual void OnPlayerDied(Player died, Player killer)
     {
 		GD.Print("----Begin OnPlayerDied() in GamemodeLogic:----");
-        if (playerTeam[killer] == playerTeam[died])
+		int diedIdx = died.GetInputIdx();
+		int killerIdx = killer.GetInputIdx();
+        if (playerTeamByInputIdx[killerIdx] == playerTeamByInputIdx[diedIdx])
 		{
 			if(suicideLosesPoints) {
-				teamScoreChanges.Add((playerTeam[killer], -1));
-				GD.Print($"the team {playerTeam[killer]} has Lost a point");
+				teamScoreChanges.Add((playerTeamByInputIdx[killerIdx], -1));
+				GD.Print($"the team {playerTeamByInputIdx[killerIdx]} has Lost a point");
 			}
 		}
 		else {
-			teamScoreChanges.Add((playerTeam[killer], +1));
-			GD.Print($"the team {playerTeam[killer]} has Gained a point");
+			teamScoreChanges.Add((playerTeamByInputIdx[killerIdx], +1));
+			GD.Print($"the team {playerTeamByInputIdx[killerIdx]} has Gained a point");
 		}
 		GD.Print($"teamScoreChanges now has {teamScoreChanges.Count} entries");
+		foreach ((int Team, int Score) scoreToAddInfo in teamScoreChanges)
+		{
+			GD.Print($"The team {scoreToAddInfo.Team} gets {scoreToAddInfo.Score} points");	
+		}
 	
 		CheckRoundOver();
 		GD.Print("----End OnPlayerDied() in GamemodeLogic:----");
     }
     protected void CheckRoundOver(){
-        RestartRound();
+		if (GetAlivePlayerCount() <= 1)
+     	   RestartRound();
     }
 	public virtual bool IsRoundOver()
 	{
@@ -130,13 +148,8 @@ public partial class GamemodeLogic : Resource
 	{
 		return pointsToWin[(int)currentGameLength];
 	}
-	protected void RegisterTeam(Player player, int teamIdx)
-	{
-		if(!playerTeam.Keys.Contains(player))
-			playerTeam.Add(player, teamIdx);
-		if (teamScore.Keys.Contains(teamIdx))
-			return;
-		teamScore.Add(teamIdx, 0);
+	protected virtual void RegisterPlayer(int playerInputIdx, int teamIdx) {
+
 	} 
 
 	protected virtual int GetAvailableScore(int forTeam)
@@ -155,11 +168,9 @@ public partial class GamemodeLogic : Resource
 		return count;
 	}
 
-	public int GetWinningTeam()
+	public int GetWinningTeamColor()
 	{
-		return winningTeam;
+		return teams[winningTeam].teamColorIdx;
 	}
-
-
 
 }

@@ -9,9 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://m2xw66h74o04" path="res://Actors/Player/Ship/Sprites/shipPowerUpIndicators.png" id="5_87ye5"]
 [ext_resource type="Script" uid="uid://btwuke1gfr05i" path="res://Actors/Player/Ship/ShipAttack.cs" id="5_fllei"]
 [ext_resource type="PackedScene" uid="uid://ceiwo7xx53l5y" path="res://Actors/Player/Ship/ShipProjectile.tscn" id="5_gsc2s"]
-[ext_resource type="SpriteFrames" uid="uid://bcbvwjw2kxhut" path="res://Actors/Player/Pilot/Textures/Sprites/PilotSpriteFrames.tres" id="6_alwmy"]
 [ext_resource type="Script" uid="uid://ccqskcvjhmhsp" path="res://Actors/Player/Pilot/PilotSprite.cs" id="7_tko72"]
 [ext_resource type="SpriteFrames" uid="uid://m61ey6b20dbl" path="res://Actors/Player/Ship/ShipSpriteFrames.tres" id="8_2i0nn"]
+[ext_resource type="SpriteFrames" uid="uid://bvv7s24ovshue" path="res://Actors/Player/Pilot/Textures/Sprites/DinoxaurrSpriteFrames.tres" id="8_3mvtf"]
 [ext_resource type="Script" uid="uid://iv6540036kov" path="res://Actors/Player/Ship/ShipSprite.cs" id="9_74l4w"]
 [ext_resource type="Script" uid="uid://qdxgmtuu50ff" path="res://Actors/Player/Pilot/PilotWeaponHolder.cs" id="10_a5pbq"]
 [ext_resource type="Script" uid="uid://hs076ncgtutx" path="res://Actors/Player/Pilot/MeleeAttack.cs" id="11_gffum"]
@@ -883,7 +883,7 @@ shape = SubResource("RectangleShape2D_0jobf")
 process_mode = 3
 z_index = 1
 use_parent_material = true
-sprite_frames = ExtResource("6_alwmy")
+sprite_frames = ExtResource("8_3mvtf")
 animation = &"Running"
 script = ExtResource("7_tko72")
 controller = NodePath("../Pilot Controller")
@@ -915,7 +915,6 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 script = ExtResource("14_c2opx")
-framesDelay = 3
 
 [node name="pilotWeaponHolder" type="Node2D" parent="." unique_id=1996847872 node_paths=PackedStringArray("Pilot", "crossAirSprite")]
 script = ExtResource("10_a5pbq")
@@ -979,9 +978,8 @@ shape = SubResource("CircleShape2D_o4arb")
 disabled = true
 
 [node name="ShipSprite" type="AnimatedSprite2D" parent="." unique_id=675688146 node_paths=PackedStringArray("controller", "Main")]
-visible = false
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
-use_parent_material = true
 sprite_frames = ExtResource("8_2i0nn")
 animation = &"Idle"
 script = ExtResource("9_74l4w")
@@ -1015,7 +1013,6 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 script = ExtResource("14_c2opx")
-framesDelay = 3
 
 [node name="ShipPowerUpsHolder" type="Node2D" parent="." unique_id=261392534 node_paths=PackedStringArray("drillIcon", "speedIcon", "dualGunsIcon", "controller")]
 script = ExtResource("21_87ye5")
@@ -1056,8 +1053,6 @@ process_mode = 3
 stream = ExtResource("23_k8e2g")
 
 [node name="PlayerOnPlayerCollision" type="Area2D" parent="." unique_id=1636300373]
-monitoring = false
-monitorable = false
 script = ExtResource("32_aao0a")
 
 [node name="PilotCollision" type="CollisionShape2D" parent="PlayerOnPlayerCollision" unique_id=572772313]

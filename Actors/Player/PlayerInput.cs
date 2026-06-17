@@ -64,8 +64,15 @@ public partial class PlayerInput : Node
 		}
 		else
 		{
-			X = Input.GetJoyAxis(inputIdx, JoyAxis.LeftX);
-			Y = Input.GetJoyAxis(inputIdx, JoyAxis.LeftY);
+			Vector2 DpadVec = Input.GetVector("LeftDpad" + inputIdx, "RightDpad" + inputIdx, "UpDpad" + inputIdx, "DownDpad" + inputIdx);
+			if (Mathf.Abs(DpadVec.X) > 0.1)
+				X = DpadVec.X;
+			else
+				X = Input.GetJoyAxis(inputIdx, JoyAxis.LeftX);
+			if (Mathf.Abs(DpadVec.Y) > 0.1)
+				Y = DpadVec.Y;
+			else
+				Y = Input.GetJoyAxis(inputIdx, JoyAxis.LeftY);
 			EmitSignal(SignalName.InputDirChanged, X, Y);
 		}
 

@@ -8,11 +8,10 @@ using System.Xml;
 public partial class MapPlaylist : Resource
 {
 	[Export] string[] mapUIDs = [
-		"uid://dxgxqieibdi5n", // Cave Map
-		"uid://dxgxqieibdi5n", // Cave Map
 		"uid://cck3f1axqqkvm", // base Map
+		"uid://dxgxqieibdi5n", // Cave Map
 		"uid://coklf46qo3sam", // Pilot Only
-		"uid://ckjbxccmrmhmb", // Pilot Only Small
+		// "uid://ckjbxccmrmhmb", // Pilot Only Small
 		"uid://cjg0yfrc2mlc0", // Poison Ridden
 		"uid://tw7pvvfcnrf1",  // Tall Pilot Zone
 	];

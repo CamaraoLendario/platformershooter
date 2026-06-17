@@ -57,6 +57,7 @@ public partial class Player : CharacterBody2D
 	#endregion
 	bool isInvulnerable = false;
 	const int IFRAMES = 3;
+	Timer bandaidFixTimer = new Timer(){OneShot = true}; //TODO ACTUALLY FIX IT
 
 	public bool isDead = false;
 
@@ -95,6 +96,7 @@ public partial class Player : CharacterBody2D
 		pilotShieldFlickerer.CurrentAnimation = "shieldRegeneration";
 		shipShieldFlickerer.CurrentAnimation = "shieldRegeneration";
 		MoveAndSlide();
+		AddChild(bandaidFixTimer);
 	}
     public override void _PhysicsProcess(double delta)
     {
@@ -123,6 +125,7 @@ public partial class Player : CharacterBody2D
 	}
 	public bool TakeDamage(Player damageDealer = null)
 	{
+		if(!bandaidFixTimer.IsStopped()) return false;
 		//TODO somewhere somehow you can take damage at the start of the round wtf is going on
 		if (isDead || isInvulnerable || godMode) return false;
 		if (damageDealer == null) damageDealer = this;
@@ -150,7 +153,7 @@ public partial class Player : CharacterBody2D
 		
 		HandleIFrames();
 		EmitSignal(SignalName.TookDamage, damageDealer);
-		GD.Print(this.Name, " took Damage from by ", damageDealer.Name);
+		GD.Print(this.Name, " took Damage from ", damageDealer.Name);
 		return true;
 	}
 
@@ -167,6 +170,8 @@ public partial class Player : CharacterBody2D
 	public void GoPilot()
 	{	
 		if(isDead) return;
+		if (!isPilot)
+			GD.Print($"{this.Name} is going pilot");
 		pilot.Start();
 		ship.End();
 		if (currentController is not PlayerDebugComponent) currentController = pilot;	
@@ -190,10 +195,10 @@ public partial class Player : CharacterBody2D
 	}
 	public void TryGoShip(bool forced)
 	{
-		//GD.Print("trying to go ship...");
+		// GD.Print($"{this.Name } is trying to go ship...");
 		if ((goShipTimer.IsStopped() && shipCooldown.IsStopped() && !isInPilotArea) || !shipPardonTimer.IsStopped() || forced)
 		{
-			//GD.Print("Succeded!");
+		// GD.Print($"{this.Name } Succeded!");
 			if (Velocity.LengthSquared() > 0.1)
 				shipSprite.Rotation = Velocity.Angle();
 			shipPardonTimer.Stop();
@@ -202,7 +207,7 @@ public partial class Player : CharacterBody2D
 			pilot.End();
 			if (currentController is not PlayerDebugComponent)currentController = ship;
 		}
-		else GD.Print("try go ship failed..");
+		// else GD.Print($"{this.Name } try go ship failed..");
 	}
 
 
@@ -260,6 +265,7 @@ public partial class Player : CharacterBody2D
 		else
 			TryGoShip(true);
 		CallDeferred(MethodName.EmitSignal, SignalName.Reseting);
+		bandaidFixTimer.Start(0.5);
 	}
 
 	void SetupTimersVarsAndSignals()

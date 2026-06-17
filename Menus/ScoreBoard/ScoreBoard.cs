@@ -11,21 +11,21 @@ public partial class ScoreBoard : Control
 	public override void _Ready()
 	{
 		scoreContiners = GetNode<MenuItemsListContainer>("%scoreContainers");
-		SignalBus.Instance.StartGame += Initialize;
+		SignalBus.Instance.StartGame += () => {CallDeferred(MethodName.Initialize);};
 		SignalBus.Instance.RoundFinished += AddScoreToAll;
 		SignalBus.Instance.GameExited += (MainMenuScreen toScreen) => {Reset();};
 	}
 
 	public void Initialize()
 	{
-		PlayerInfo[] playersInfo = Game.GetPlayersInfo();
-		scoreCounters = new IndividualScoreCounter[playersInfo.Length];
-		for (int i = 0 ; i < playersInfo.Length; i++)
+		GamemodeLogic gamemodeLogic = Game.GetGamemodeLogic();
+		scoreCounters = new IndividualScoreCounter[gamemodeLogic.playerTeamByInputIdx.Count];
+		for (int i = 0 ; i < scoreCounters.Length; i++)
 		{
 			if (scoreCountersTeam.Keys.Contains(-1)) return;
-			IndividualScoreCounter counter = IndividualScoreCounter.New(playersInfo[i]);
+			IndividualScoreCounter counter = IndividualScoreCounter.New(gamemodeLogic.teams[i].teamName, gamemodeLogic.teams[i].teamColorIdx);
 			scoreCounters[i] = counter;
-			scoreCountersTeam.Add(playersInfo[i].colorIdx, counter);
+			scoreCountersTeam.Add(i, counter);
 		}
 		scoreContiners.MassAddChildren(scoreCounters);
 		ScreenAnimateNodes(CreateTween(), scoreCounters, Vector2.Down, 0f, false, false, 0);
@@ -58,10 +58,11 @@ public partial class ScoreBoard : Control
 		
 		foreach((int team, int points) in teamScoreChanges) {
 			await ToSignal(GetTree().CreateTimer(0.1f), Timer.SignalName.Timeout);
+			GD.Print($"adding {points} points to {team}");
 			scoreCounter = scoreCountersTeam[team];
 			scoreCounter.AddScore(points);
 		}
-		// await ^finished^ signal
+		// await ^finished^ signal\
 		if (scoreCounter == null) {
 			GD.PrintErr("no counter found");
 			await ToSignal(GetTree().CreateTimer(0.5f + 0.2f), Timer.SignalName.Timeout);
@@ -72,7 +73,7 @@ public partial class ScoreBoard : Control
 		ScreenAnimateNodes(tween, scoreCounters, Vector2.Down, 1f, false, false, 0);
 		bool isGameOver = gamemodeLogic.IsGameOver();
 		if (isGameOver)
-			SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameFinished, gamemodeLogic.GetWinningTeam());
+			SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameFinished, gamemodeLogic.GetWinningTeamColor());
 		else
 		{
 			// await ^animation^ finished
