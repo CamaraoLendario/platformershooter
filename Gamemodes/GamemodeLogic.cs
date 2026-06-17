@@ -36,11 +36,15 @@ public partial class GamemodeLogic : Resource
 	
 	public void Ready()
 	{
-		
+
 	}
 	public virtual void Reset()
 	{
-		
+		playerTeamByInputIdx = [];
+		teams = [];
+		teamScore = [];
+		teamScoreChanges = [];
+		winningTeam = -1;
 	}
 
     public virtual void OnStartGame()
@@ -64,11 +68,13 @@ public partial class GamemodeLogic : Resource
 		{
 			if(suicideLosesPoints) {
 				teamScoreChanges.Add((playerTeamByInputIdx[killerIdx], -1));
+				teamScore[playerTeamByInputIdx[killerIdx]] -= 1;
 				GD.Print($"the team {playerTeamByInputIdx[killerIdx]} has Lost a point");
 			}
 		}
 		else {
 			teamScoreChanges.Add((playerTeamByInputIdx[killerIdx], +1));
+			teamScore[playerTeamByInputIdx[killerIdx]] += 1;
 			GD.Print($"the team {playerTeamByInputIdx[killerIdx]} has Gained a point");
 		}
 		GD.Print($"teamScoreChanges now has {teamScoreChanges.Count} entries");
@@ -76,18 +82,18 @@ public partial class GamemodeLogic : Resource
 		{
 			GD.Print($"The team {scoreToAddInfo.Team} gets {scoreToAddInfo.Score} points");	
 		}
-	
-		CheckRoundOver();
+		if (IsGameOver())
+		{
+			SetupGameOverOvertime();
+		}
+		else
+			CheckRoundOver();
 		GD.Print("----End OnPlayerDied() in GamemodeLogic:----");
     }
     protected void CheckRoundOver(){
 		if (GetAlivePlayerCount() <= 1)
      	   RestartRound();
     }
-	public virtual bool IsRoundOver()
-	{
-		return GetAlivePlayerCount() <= 1;
-	}
     public virtual bool IsGameOver()
 	{
 		winningTeam = teamScore.Keys.First();
@@ -124,26 +130,28 @@ public partial class GamemodeLogic : Resource
 		return true;
 	}
 
+	async void SetupGameOverOvertime()
+	{
+		await ToSignal(Game.Instance.GetTree().CreateTimer(roundEndDelay), Timer.SignalName.Timeout);
+		if (IsGameOver()) {
+			Game.PauseGame();
+			SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameFinished, GetWinningTeamColor());
+		}
+	}
+
     protected async void RestartRound()
     {
 		GD.Print("RestartingRound...");
 		GD.Print("Is Round restarting? ", isRoundRestarting);
 		if (isRoundRestarting) return;
 		isRoundRestarting = true;
-		await ToSignal(Game.Instance.GetTree().CreateTimer(roundEndDelay), Timer.SignalName.Timeout);		
+		await ToSignal(Game.Instance.GetTree().CreateTimer(roundEndDelay), Timer.SignalName.Timeout);
 		GD.Print("Emitting the RoundFinished signal");
 		SignalBus.Instance.EmitSignal(SignalBus.SignalName.RoundFinished);
-		CallDeferred(MethodName.MergeScoreChanges);
+		teamScoreChanges.Clear();
 		SetDeferred(PropertyName.isRoundRestarting, false);
     }
-    void MergeScoreChanges()
-	{
-		foreach((int team, int points) in teamScoreChanges)
-		{
-			teamScore[team] += points;
-		}
-		teamScoreChanges.Clear();
-	}
+	
 	public int GetWinningScore()
 	{
 		return pointsToWin[(int)currentGameLength];

@@ -1,6 +1,5 @@
 using Godot;
 using System.Collections.Generic;
-//TODO IMPLEMENT NEW PARTICLES SHADER
 public partial class IceRay : HitscanBullet
 {
 	[ExportGroup("Visual")]

@@ -14,7 +14,9 @@ public partial class PoisonTome : Weapon
 		PoisonMinePlacerBody newBullet = bullet.Instantiate<PoisonMinePlacerBody>();
 
 		newBullet.direction = inputDir.Normalized();
-		newBullet.direction.Y -= 0.5f;
+		// if (Game.GetMap().IsPositionInPilotArea(GlobalPosition))
+		// 	newBullet.direction.Y -= 0.5f;
+		
 		newBullet.speed = projectileInitialVelocity;
 		newBullet.Position = GlobalPosition;
 		newBullet.direction = newBullet.direction.Normalized();

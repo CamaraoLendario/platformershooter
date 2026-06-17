@@ -122,8 +122,7 @@ public partial class CharacterSelectScreen : MainMenuScreen
     PlayerCapsule[] GetEnabledPlayerCapsules()
     {
         List<PlayerCapsule> capsules = [];
-        foreach (MenuItem menuItem in GetOptions())
-        {
+        foreach (MenuItem menuItem in GetOptions()) {
             if (menuItem is not PlayerCapsule playerCapsule || !playerCapsule.isEnabled) continue;
             capsules.Add(playerCapsule);
         }
@@ -156,7 +155,6 @@ public partial class CharacterSelectScreen : MainMenuScreen
     void OnCapsuleReady(PlayerCapsule playerCapsule){
         colorUnavaliability[playerCapsule.colorIdx] = true;
         bool isEveryoneReady = true;
-        
         foreach(PlayerCapsule capsule in GetAllPlayerCapsules())
         {
             if (capsule.isEnabled && !capsule.isReady)
@@ -164,7 +162,6 @@ public partial class CharacterSelectScreen : MainMenuScreen
                 isEveryoneReady = false;
                 if (capsule.colorIdx == playerCapsule.colorIdx)
                     capsule.SetColor(capsule.colorIdx+1);
-                return;
             }
         }
         startGame.Visible = isEveryoneReady;

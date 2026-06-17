@@ -100,10 +100,10 @@ public partial class MapCamera : Camera2D
 	{
 		Vector2 medianPos = Vector2.Zero;
 
-		foreach (Player player in Game.Instance.players)
-		{
-			if (player.isDead) continue;
-			medianPos += player.GlobalPosition / Game.Instance.GetAlivePlayerCount();
+		Player[] alivePlayers = Game.GetAlivePlayers();
+
+		foreach (Player player in alivePlayers) {
+			medianPos += player.GlobalPosition / alivePlayers.Length;
 		}
 
 		return medianPos;
@@ -113,12 +113,12 @@ public partial class MapCamera : Camera2D
 	{
 		Vector2 CurrentLengthVector = Vector2.One * 0;
 		float currentGreatestLength = 0;
-		foreach (Player playerA in Game.Instance.players)
+		foreach (Player playerA in Game.GetAlivePlayers())
 		{
-			foreach (Player playerB in Game.Instance.players)
+			foreach (Player playerB in Game.GetAlivePlayers())
 			{
-				if (playerB == playerA) continue; //TODO: add a check for if the player is dead or not this is literally so easy why didn't I do this before you idiot
-
+				if (playerB == playerA) continue; 
+				
 				Vector2 playerpos1 = new Vector2(playerA.Position.X, playerA.Position.Y);
 				Vector2 playerpos2 = new Vector2(playerB.Position.X, playerB.Position.Y);
 

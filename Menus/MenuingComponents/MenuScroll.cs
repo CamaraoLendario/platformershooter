@@ -217,7 +217,7 @@ public partial class MenuScroll : MenuItem
 	}
 
 	void UpdateSeparation()
-	{ //TODO: make separation work after either scroll
+	{
 		for(int i = 0; i < 4; i++)
 		{
 			Label currentLabel = new Label();//labelsContainer.GetChild<Label>(i);

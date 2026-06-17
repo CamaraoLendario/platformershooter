@@ -37,7 +37,7 @@ shadow_offset = Vector2(18, 9)
 
 [sub_resource type="Animation" id="Animation_vdi58"]
 resource_name = "Base"
-length = 3.6666667
+length = 3.8666666
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -303,7 +303,7 @@ anchor_bottom = 0.5
 offset_left = -212.5
 offset_top = 700.0
 offset_right = 212.5
-offset_bottom = 1100.0004
+offset_bottom = 1100.0006
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(212, 200)
@@ -319,7 +319,7 @@ anchor_bottom = 0.5
 offset_left = -1093.0
 offset_top = 700.0
 offset_right = 1093.0
-offset_bottom = 941.9998
+offset_bottom = 941.99976
 grow_horizontal = 2
 grow_vertical = 2
 text = "And the winner is..."

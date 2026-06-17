@@ -11,14 +11,14 @@ public partial class PoisonMinePlacerBody : CharacterBody2D
 	const float GRAVITYFORCE = 1250;
 	Vector2 velocity;
 	Map currentMap;
-	bool isInPilotArea = true;
+	public bool isInPilotArea = true;
 	World world;
 
     public override void _Ready()
     {
         velocity = direction * speed;
 		sprite.Rotation = direction.Angle();
-		currentMap = Game.Instance.currentMap;
+		currentMap = Game.GetMap();
 		SignalBus.Instance.NewRoundStart += OnNewRoundStart;
 		world = GetTree().GetFirstNodeInGroup("World") as World;
 	}
@@ -30,7 +30,7 @@ public partial class PoisonMinePlacerBody : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-		isInPilotArea = currentMap.IsPositionInPilotArea(Position);
+		isInPilotArea = currentMap.IsPositionInPilotArea(GlobalPosition);
 		if (isInPilotArea) processGravity((float)delta);
 		velocity -= velocity.Normalized() * velocity.Length() * 0.75f * (float)delta;
 

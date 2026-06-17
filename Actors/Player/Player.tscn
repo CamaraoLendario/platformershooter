@@ -1053,6 +1053,7 @@ process_mode = 3
 stream = ExtResource("23_k8e2g")
 
 [node name="PlayerOnPlayerCollision" type="Area2D" parent="." unique_id=1636300373]
+unique_name_in_owner = true
 script = ExtResource("32_aao0a")
 
 [node name="PilotCollision" type="CollisionShape2D" parent="PlayerOnPlayerCollision" unique_id=572772313]

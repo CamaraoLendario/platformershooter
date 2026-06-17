@@ -12,6 +12,7 @@ public partial class Gamemode : Node
         SignalBus.Instance.StartGame += logic.OnStartGame;
         SignalBus.Instance.GameStarted += logic.OnGameStarted;
 		SignalBus.Instance.playerDied += logic.OnPlayerDied;
+        SignalBus.Instance.GameExited += OnGameFinished;
         SignalBus.Instance.FinishedSpawningPlayers += logic.OnFinishedSpawningPlayers;
     }
 
@@ -20,6 +21,12 @@ public partial class Gamemode : Node
         SignalBus.Instance.StartGame -= logic.OnStartGame;
         SignalBus.Instance.GameStarted -= logic.OnGameStarted;
 		SignalBus.Instance.playerDied -= logic.OnPlayerDied;
+        SignalBus.Instance.GameExited -= OnGameFinished;
         SignalBus.Instance.FinishedSpawningPlayers -= logic.OnFinishedSpawningPlayers;
-    } 
+    }
+
+    private void OnGameFinished(MainMenuScreen exitedTo)
+    {
+        logic.Reset();
+    }
 }

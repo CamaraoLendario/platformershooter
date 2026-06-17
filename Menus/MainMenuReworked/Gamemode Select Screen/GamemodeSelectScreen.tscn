@@ -63,7 +63,7 @@ Separation = 378
 layout_mode = 0
 offset_top = -189.0
 offset_bottom = -189.0
-Contents = PackedStringArray("Free for All", "Team Deathmatch", "Capture the Flag")
+Contents = PackedStringArray("Free for All")
 SettingName = "Gamemode"
 
 [node name="leftLabel" parent="MenuItemsContainer/gamemode choice" index="0" unique_id=127801925]
@@ -75,7 +75,7 @@ text = "Gamemode:"
 offset_left = 510.0
 offset_right = 510.0
 script = ExtResource("6_ln1ds")
-Contents = PackedStringArray("Free for All", "Team Deathmatch", "Capture the Flag")
+Contents = PackedStringArray("Free for All")
 
 [node name="MenuSelectorHelper" parent="MenuItemsContainer/gamemode choice/Scroller" index="0" unique_id=1724905341]
 offset_left = 56.0
@@ -83,13 +83,13 @@ offset_right = 706.0
 
 [node name="Label" parent="MenuItemsContainer/gamemode choice/Scroller/scrollingLabels" parent_id_path=PackedInt32Array(1906426519, 1348934665, 940476632) index="0" unique_id=1992009693]
 offset_left = -315.0
-offset_right = 315.0
-text = "Team Deathmatch"
+offset_right = 185.0
+text = "Free For All"
 
 [node name="Label2" parent="MenuItemsContainer/gamemode choice/Scroller/scrollingLabels" parent_id_path=PackedInt32Array(1906426519, 1348934665, 940476632) index="1" unique_id=1483010365]
 offset_left = -325.0
-offset_right = 325.0
-text = "Capture The Flag"
+offset_right = 175.0
+text = "Free For All"
 
 [node name="Label3" parent="MenuItemsContainer/gamemode choice/Scroller/scrollingLabels" parent_id_path=PackedInt32Array(1906426519, 1348934665, 940476632) index="2" unique_id=917384314]
 offset_left = -175.0
@@ -98,8 +98,8 @@ text = "Free For All"
 
 [node name="Label4" parent="MenuItemsContainer/gamemode choice/Scroller/scrollingLabels" parent_id_path=PackedInt32Array(1906426519, 1348934665, 940476632) index="3" unique_id=1015717041]
 offset_left = -315.0
-offset_right = 315.0
-text = "Team Deathmatch"
+offset_right = 185.0
+text = "Free For All"
 
 [node name="MenuItemsContainer" type="Control" parent="MenuItemsContainer" index="1" unique_id=487858122]
 layout_mode = 1

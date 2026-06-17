@@ -75,7 +75,7 @@ public partial class PlayerCapsule : MenuItem
 			if (idx < colorIdx){dir = -1;}
 			for (int i = 0; i < teamColors.Length; i++)
 			{
-				int currentColoridx = NormalizeIdx(idx + (i*dir), teamColors.Length);
+				int currentColoridx = NormalizeIdx(idx + (i * dir), teamColors.Length);
 				//GD.Print("trying to set color to: ", idx);
 				if (characterSelectScreen.IsColorAvaliable(currentColoridx)){
 					(capsuleCharacterSprite.Material as ShaderMaterial).SetShaderParameter("Color", teamColors[currentColoridx]);
@@ -85,7 +85,6 @@ public partial class PlayerCapsule : MenuItem
 				}
 			}
 		}
-
 
 		if (!renameKeyboard.used)
 			nameLabel.Text = GetColorName(colorIdx);

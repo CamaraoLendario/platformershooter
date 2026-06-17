@@ -125,6 +125,16 @@ public partial class Game : Node
 	{
 		return Instance.players;
 	}
+	public static Player[] GetAlivePlayers()
+	{
+		List<Player> alivePlayers = [];
+		foreach (Player player in Instance.players)
+		{
+			if (!player.isDead)
+				alivePlayers.Add(player);
+		}
+		return alivePlayers.ToArray();
+	}
 	public static PlayerInfo[] GetPlayersInfo()
 	{
 		return Instance.playersInfo;

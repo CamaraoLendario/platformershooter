@@ -55,6 +55,7 @@ public partial class Player : CharacterBody2D
 	const float NAMEHIDETIME = 2f;
 	List<Timer> timers = [];
 	#endregion
+	PlayeronPlayerCollision playeronPlayerCollision;
 	bool isInvulnerable = false;
 	const int IFRAMES = 3;
 	Timer bandaidFixTimer = new Timer(){OneShot = true}; //TODO ACTUALLY FIX IT
@@ -91,6 +92,8 @@ public partial class Player : CharacterBody2D
 
 	public override void _Ready()
 	{
+		playeronPlayerCollision = GetNode<PlayeronPlayerCollision>("%PlayerOnPlayerCollision");
+		
 		currentController = ship;
 		SetupTimersVarsAndSignals();
 		pilotShieldFlickerer.CurrentAnimation = "shieldRegeneration";
@@ -234,6 +237,7 @@ public partial class Player : CharacterBody2D
 
 	public void Reset()
 	{
+		playeronPlayerCollision.Monitoring = true;
 		Tween tween = CreateTween();
 		tween.SetTrans(Tween.TransitionType.Quint);
 		tween.SetEase(Tween.EaseType.In);
@@ -343,6 +347,7 @@ public partial class Player : CharacterBody2D
 		Velocity *= 0;
 		isDead = true;
 
+		playeronPlayerCollision.Monitoring = false;
 		Hide();
 		
 		foreach(CollisionShape2D pilotColShape in GetTree().GetNodesInGroup("PilotCollisions"))
@@ -359,7 +364,6 @@ public partial class Player : CharacterBody2D
 		//ship.collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
 		pilot.inputVector *= 0;
 		ship.inputVector *= 0;
-
 
 		particlesHandler.CreateDeathParticles(killer);
 		Position = new Vector2(99999, 99999);

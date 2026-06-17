@@ -5,7 +5,6 @@ using System.ComponentModel;
 
 public partial class OverHeadDisplay : VBoxContainer
 {
-    //TODO: put code for power ups here
 	[Export] HBoxContainer ammoHud;
 	Player Main;
 

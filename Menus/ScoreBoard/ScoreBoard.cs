@@ -1,6 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using static SpaceMages.SpaceMagesVars;
 
 public partial class ScoreBoard : Control
@@ -71,16 +72,12 @@ public partial class ScoreBoard : Control
 		// Hide score animation node animation
 		tween = CreateTween(); 	
 		ScreenAnimateNodes(tween, scoreCounters, Vector2.Down, 1f, false, false, 0);
-		bool isGameOver = gamemodeLogic.IsGameOver();
-		if (isGameOver)
-			SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameFinished, gamemodeLogic.GetWinningTeamColor());
-		else
-		{
-			// await ^animation^ finished
-			await ToSignal(tween, Tween.SignalName.Finished);
-			SignalBus.Instance.EmitSignal(SignalBus.SignalName.NewRoundStart);
-			//Game.UnPauseGame();
-		}
+
+		// await ^animation^ finished
+		await ToSignal(tween, Tween.SignalName.Finished);
+		SignalBus.Instance.EmitSignal(SignalBus.SignalName.NewRoundStart);
+		//Game.UnPauseGame();
+
 		GD.Print("added score to all");
 	}
 

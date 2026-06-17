@@ -171,7 +171,7 @@ public partial class MeleeAttack : Area2D
 			checkRay.AddException(tileMapLayer.shape);
 			return helpLOS(checkRay, player);
 		}
-		else */ if (checkRay.GetCollider() == player) // TODO: check if this makes it so you can't double kill
+		else */ if (checkRay.GetCollider() == player)
 			return true;
 		else
 			return false;
