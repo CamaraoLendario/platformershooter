@@ -4,12 +4,16 @@ using System;
 public partial class Shaders2DPreloader : ColorRect
 {
 	[Signal] public delegate void Shaders2DPreloadingFinishedEventHandler();
-	[Export] Shader[] shadersToPreload =
+	[Export] ShaderMaterial[] shadersToPreload =
 	{
-		GD.Load<Shader>("uid://cywx8daesh6uu"),	//OutlineShader
-		GD.Load<Shader>("uid://cx67s33dt1lle"),	//HomemadeParallax
-		GD.Load<Shader>("uid://djdkl0hm4q5m6"),	//BorderShader
-		GD.Load<Shader>("uid://dha1qnh4th4vi"),	//SelectedMapPreview
+		GD.Load<ShaderMaterial>("uid://b440sqhrft0wb"), // Pilot After Images
+		GD.Load<ShaderMaterial>("uid://b5i1uqnrt70x5"), // Ship After Images
+		GD.Load<ShaderMaterial>("uid://bvc3mf3avwkhd"), // Contestant Spawn Animation
+		GD.Load<ShaderMaterial>("uid://6b8p1p0j0p4f"),  // Outline Material
+		GD.Load<ShaderMaterial>("uid://cuu7ef3oi50rv"), // Pilot Death Particles
+		GD.Load<ShaderMaterial>("uid://bgglq6jh35xxs"), // Ship Reconstruction Particles
+		// GD.Load<Shader>("uid://cx67s33dt1lle"),	//HomemadeParallax
+		// GD.Load<Shader>("uid://djdkl0hm4q5m6"),	//BorderShader
 	};
 	ShaderPreloader Main;
     public override void _Ready()
@@ -19,13 +23,20 @@ public partial class Shaders2DPreloader : ColorRect
 
 	public async void BeginPreloadingShaders()
 	{
-		ShaderMaterial testMaterial = new ShaderMaterial();
-		Material = testMaterial;
-		foreach(Shader shader in shadersToPreload)
+		foreach(ShaderMaterial shaderMaterial in shadersToPreload)
 		{
-			testMaterial.Shader = shader;
+			Material = shaderMaterial;
 			await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
 		}
+		PreloadParallax();
 		CallDeferred(MethodName.EmitSignal, SignalName.Shaders2DPreloadingFinished);
-	} 
+	}
+	
+	void PreloadParallax()
+	{
+		Material = new ShaderMaterial()
+		{
+			Shader = GD.Load<Shader>("uid://cx67s33dt1lle")
+		};
+	}
 }

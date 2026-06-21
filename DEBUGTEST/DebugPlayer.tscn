@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://ilj6u5qbe2db"]
 
 [ext_resource type="PackedScene" uid="uid://cbmq3xh2bcijs" path="res://Actors/Player/Player.tscn" id="1_w7u7k"]
-[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="2_u06wf"]
+[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/Materials/PixelOutline.gdshader" id="2_u06wf"]
 [ext_resource type="Shader" uid="uid://c5of2yh1koxya" path="res://Actors/Player/ShieldColorer.gdshader" id="3_kfl2n"]
-[ext_resource type="Shader" uid="uid://cnr3u2i0u1fwl" path="res://Actors/Player/Pilot/PilotExplosion.gdshader" id="4_15ty2"]
+[ext_resource type="Shader" uid="uid://cnr3u2i0u1fwl" path="res://Actors/Player/Materials/PilotExplosion.gdshader" id="4_15ty2"]
 [ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Textures/Sprites/PilotStill.png" id="5_6g81s"]
 [ext_resource type="Shader" uid="uid://dxivkxlfvph5y" path="res://Actors/Player/Ship/ShipPowerUps/ShipFormingParticles.gdshader" id="6_wbyu2"]
 [ext_resource type="Texture2D" uid="uid://kayfo7ufdpc2" path="res://Actors/Player/Ship/Sprites/spaceships.png" id="7_5c71o"]

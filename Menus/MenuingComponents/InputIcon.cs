@@ -17,7 +17,6 @@ public partial class InputIcon : TextureRect
 
     public override void _Ready()
     {
-		this.Texture = this.Texture.Duplicate() as AtlasTexture; 
     	texture = Texture as AtlasTexture;
 		SetInputIdx(-2);
 		SetDisplayedButton(GetStringAndInt(action).main, 0, false, ControllerUsed.Xbox);

@@ -19,7 +19,7 @@ public partial class MainMenu : CanvasLayer
     {
         Game.Instance.mainMenu = this;
         menuController = GetNode<MainMenuController>("MainMenuController");	
-		# if TOOLS
+		#if TOOLS
 			if (Engine.IsEditorHint()) return;
 		# endif
         Reset();

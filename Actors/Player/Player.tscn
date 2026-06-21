@@ -16,18 +16,16 @@
 [ext_resource type="Script" uid="uid://qdxgmtuu50ff" path="res://Actors/Player/Pilot/PilotWeaponHolder.cs" id="10_a5pbq"]
 [ext_resource type="Script" uid="uid://hs076ncgtutx" path="res://Actors/Player/Pilot/MeleeAttack.cs" id="11_gffum"]
 [ext_resource type="Texture2D" uid="uid://c5440b3wlhm0" path="res://Actors/Player/Pilot/Textures/Shield/pilotShieldParticles.png" id="11_j53hc"]
-[ext_resource type="Material" uid="uid://x38tv3nmu01" path="res://Actors/Player/Materials/PilotShieldBreakParticles.tres" id="11_rda0l"]
-[ext_resource type="Material" uid="uid://b440sqhrft0wb" path="res://Actors/Player/Materials/PilotAfterImages.tres" id="12_3mvtf"]
+[ext_resource type="Material" uid="uid://b440sqhrft0wb" path="res://Actors/Player/Materials/AfterImages/PilotAfterImages.tres" id="12_3mvtf"]
 [ext_resource type="Texture2D" uid="uid://ddymh4fx17tto" path="res://Actors/Player/Pilot/Textures/Shield/PilotShield.png" id="12_g6ejb"]
 [ext_resource type="Texture2D" uid="uid://cogxnc4ocl7vq" path="res://Actors/Player/Pilot/Textures/FX/MeleeEffect.png" id="12_ujyek"]
-[ext_resource type="Material" uid="uid://cuu7ef3oi50rv" path="res://Actors/Player/Pilot/pilotDeathParticles.tres" id="13_f6sss"]
+[ext_resource type="Material" uid="uid://cuu7ef3oi50rv" path="res://Actors/Player/Materials/pilotDeathParticles.tres" id="13_f6sss"]
 [ext_resource type="Texture2D" uid="uid://hlhysuf1ahja" path="res://Actors/Player/Ship/Sprites/ShipShield.png" id="13_r3pko"]
-[ext_resource type="Script" uid="uid://dc2mr76nt5mjn" path="res://afterimagesCPUpart.cs" id="14_c2opx"]
+[ext_resource type="Script" uid="uid://dc2mr76nt5mjn" path="res://Actors/Player/Materials/AfterImages/afterimagesCPUpart.cs" id="14_c2opx"]
 [ext_resource type="Texture2D" uid="uid://x4ovpn52h8gn" path="res://Actors/Player/Pilot/Textures/FX/CrossAir1.png" id="15_f6sss"]
 [ext_resource type="Texture2D" uid="uid://ca2jhf1dvchi5" path="res://Actors/Player/Ship/Sprites/shipShieldParticles.png" id="15_jiph2"]
 [ext_resource type="Script" uid="uid://c1vl7s8234f5g" path="res://Actors/Player/PlayerInput.cs" id="15_n45d6"]
 [ext_resource type="Script" uid="uid://cugp6ewji0rnl" path="res://Actors/Player/Effects/Frozen/PlayerEffectHandler.cs" id="16_8np4b"]
-[ext_resource type="Material" uid="uid://iawq5go2txhe" path="res://Actors/Player/Materials/PilotDashParticles.tres" id="16_sg1wo"]
 [ext_resource type="AudioStream" uid="uid://gkcajckfe2c0" path="res://Actors/Player/Pilot/Audio/PilotDash.wav" id="18_iwmb3"]
 [ext_resource type="AudioStream" uid="uid://b7ytipig3ka0c" path="res://Actors/Player/Pilot/Audio/Jump.wav" id="20_704ek"]
 [ext_resource type="AudioStream" uid="uid://uitr02mt5aa6" path="res://Actors/Player/Ship/Audio/ShipShoot.wav" id="20_s8ljq"]
@@ -38,13 +36,15 @@
 [ext_resource type="Shader" uid="uid://c5of2yh1koxya" path="res://Actors/Player/ShieldColorer.gdshader" id="22_l7nff"]
 [ext_resource type="AudioStream" uid="uid://c861r8jtk0so" path="res://Assets/Audio/Ilikeit.wav" id="23_k8e2g"]
 [ext_resource type="PackedScene" uid="uid://diosn7qu6kfh6" path="res://Actors/Player/Effects/Frozen/frozen_ddr.tscn" id="24_aao0a"]
-[ext_resource type="Material" uid="uid://b5i1uqnrt70x5" path="res://Actors/Player/Materials/ShipAfterImages.tres" id="24_hdyga"]
+[ext_resource type="Material" uid="uid://b5i1uqnrt70x5" path="res://Actors/Player/Materials/AfterImages/ShipAfterImages.tres" id="24_hdyga"]
 [ext_resource type="Texture2D" uid="uid://sk1boe546wm1" path="res://Actors/Player/Ship/Sprites/BrokenShipSpriteSheet.png" id="26_kr5aq"]
 [ext_resource type="Material" uid="uid://bgglq6jh35xxs" path="res://Actors/Player/Ship/ShipReconstructionParticles.tres" id="28_ia8ke"]
 [ext_resource type="Script" uid="uid://lcfkknp3vonf" path="res://Actors/Player/PlayeronPlayerCollision.cs" id="32_aao0a"]
+[ext_resource type="Shader" uid="uid://2a0lckgf0rh1" path="res://Actors/Player/Materials/ShieldParticlesSpriteSheetHandler.gdshader" id="37_3mvtf"]
+[ext_resource type="Shader" uid="uid://rx1j3gaigmer" path="res://Actors/Player/Materials/PilotShieldBreakParticles.gdshader" id="39_hdyga"]
+[ext_resource type="Shader" uid="uid://d2yhqul7vijnh" path="res://Actors/Player/ShipDestructionParticles.gdshader" id="40_3mvtf"]
 [ext_resource type="Script" uid="uid://dfu4imudmwcbs" path="res://Actors/Player/ParticlesHandler.cs" id="41_0ieod"]
-[ext_resource type="Shader" uid="uid://cambmcm2bey2f" path="res://test/PlayerReconstruction.gdshader" id="41_jhh7x"]
-[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Textures/Sprites/PilotStill.png" id="42_e3tbv"]
+[ext_resource type="Material" uid="uid://bvc3mf3avwkhd" path="res://Actors/Player/Materials/ContestantSpawnAnimation.tres" id="44_v8mwv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_g6ejb"]
 font = ExtResource("4_jiph2")
@@ -276,41 +276,20 @@ _data = {
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f6sss"]
 
-[sub_resource type="Shader" id="Shader_kr5aq"]
-code = "shader_type canvas_item;
-render_mode blend_mix;
-uniform int particles_anim_h_frames;
-uniform int particles_anim_v_frames;
-uniform bool particles_anim_loop;
-uniform vec4 Color: source_color = vec4(1);
-
-void vertex() {
-	float h_frames = float(particles_anim_h_frames);
-	float v_frames = float(particles_anim_v_frames);
-	VERTEX.xy /= vec2(h_frames, v_frames);
-	float particle_total_frames = float(particles_anim_h_frames * particles_anim_v_frames);
-	float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
-	if (!particles_anim_loop) {
-		particle_frame = clamp(particle_frame, 0.0, particle_total_frames - 1.0);
-	} else {
-		particle_frame = mod(particle_frame, particle_total_frames);
-	}	UV /= vec2(h_frames, v_frames);
-	UV += vec2(mod(particle_frame, h_frames) / h_frames, floor((particle_frame + 0.5) / h_frames) / v_frames);
-}
-
-void fragment() {
-	float a = COLOR.a;
-	COLOR = (COLOR + (Color*2.))/3.;
-	COLOR.a = a;
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ia8ke"]
-shader = SubResource("Shader_kr5aq")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e3tbv"]
+shader = ExtResource("37_3mvtf")
 shader_parameter/particles_anim_h_frames = 3
 shader_parameter/particles_anim_v_frames = 2
 shader_parameter/particles_anim_loop = false
 shader_parameter/Color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v8mwv"]
+resource_local_to_scene = true
+shader = ExtResource("39_hdyga")
+shader_parameter/initialVelocityMultiplier = 50.0
+shader_parameter/rotationMultiplier = 4.0
+shader_parameter/SpriteSheetSize = Vector2(4, 2)
+shader_parameter/Color = Color(0.8509804, 0, 0, 1)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_emuwr"]
 particles_animation = true
@@ -318,476 +297,19 @@ particles_anim_h_frames = 4
 particles_anim_v_frames = 2
 particles_anim_loop = false
 
-[sub_resource type="Shader" id="Shader_emuwr"]
-code = "// NOTE: Shader automatically converted from Godot Engine 4.6.stable.mono's ParticleProcessMaterial.
-
-shader_type particles;
-render_mode disable_velocity;
-
-uniform vec3 direction;
-uniform float spread;
-uniform float flatness;
-uniform float inherit_emitter_velocity_ratio = 0.0;
-uniform float initial_linear_velocity_min;
-uniform float initial_linear_velocity_max;
-uniform float directional_velocity_min;
-uniform float directional_velocity_max;
-uniform float angular_velocity_min;
-uniform float angular_velocity_max;
-uniform float orbit_velocity_min;
-uniform float orbit_velocity_max;
-uniform float radial_velocity_min;
-uniform float radial_velocity_max;
-uniform float linear_accel_min;
-uniform float linear_accel_max;
-uniform float radial_accel_min;
-uniform float radial_accel_max;
-uniform float tangent_accel_min;
-uniform float tangent_accel_max;
-uniform float damping_min;
-uniform float damping_max;
-uniform float initial_angle_min;
-uniform float initial_angle_max;
-uniform float scale_min;
-uniform float scale_max;
-uniform float hue_variation_min;
-uniform float hue_variation_max;
-uniform float anim_speed_min;
-uniform float anim_speed_max;
-uniform float anim_offset_min;
-uniform float anim_offset_max;
-uniform float lifetime_randomness;
-uniform vec3 emission_shape_offset = vec3(0.0);
-uniform vec3 emission_shape_scale = vec3(1.0);
-uniform vec3 velocity_pivot = vec3(0.0);
-uniform float emission_sphere_radius;
-uniform vec4 color_value : source_color;
-uniform vec3 gravity;
-uniform sampler2D color_ramp : repeat_disable;
-
-vec3 normalize_or_else(vec3 _in, const vec3 _else) {
-	if (_in == vec3(0.0)) {
-		return _else;
-	}
-	return normalize(_in);
-}
-
-vec4 rotate_hue(vec4 current_color, float hue_rot_angle) {
-	float hue_rot_c = cos(hue_rot_angle);
-	float hue_rot_s = sin(hue_rot_angle);
-	mat4 hue_rot_mat =
-			mat4(vec4(0.299, 0.587, 0.114, 0.0),
-					vec4(0.299, 0.587, 0.114, 0.0),
-					vec4(0.299, 0.587, 0.114, 0.0),
-					vec4(0.000, 0.000, 0.000, 1.0)) +
-			mat4(vec4(0.701, -0.587, -0.114, 0.0),
-					vec4(-0.299, 0.413, -0.114, 0.0),
-					vec4(-0.300, -0.588, 0.886, 0.0),
-					vec4(0.000, 0.000, 0.000, 0.0)) *
-					hue_rot_c +
-			mat4(vec4(0.168, 0.330, -0.497, 0.0),
-					vec4(-0.328, 0.035, 0.292, 0.0),
-					vec4(1.250, -1.050, -0.203, 0.0),
-					vec4(0.000, 0.000, 0.000, 0.0)) *
-					hue_rot_s;
-	return hue_rot_mat * current_color;
-}
-
-float rand_from_seed(inout uint seed) {
-	int k;
-	int s = int(seed);
-	if (s == 0) {
-		s = 305420679;
-	}
-	k = s / 127773;
-	s = 16807 * (s - k * 127773) - 2836 * k;
-	if (s < 0) {
-		s += 2147483647;
-	}
-	seed = uint(s);
-	return float(seed % uint(65536)) / 65535.0;
-}
-
-float rand_from_seed_m1_p1(inout uint seed) {
-	return rand_from_seed(seed) * 2.0 - 1.0;
-}
-
-uint hash(uint x) {
-	x = ((x >> uint(16)) ^ x) * uint(73244475);
-	x = ((x >> uint(16)) ^ x) * uint(73244475);
-	x = (x >> uint(16)) ^ x;
-	return x;
-}
-
-struct DisplayParameters {
-	vec3 scale;
-	float hue_rotation;
-	float animation_speed;
-	float animation_offset;
-	float lifetime;
-	vec4 color;
-	float emission_texture_position;
-};
-
-struct DynamicsParameters {
-	float angle;
-	float angular_velocity;
-	float initial_velocity_multiplier;
-	float directional_velocity;
-	float radial_velocity;
-	float orbit_velocity;
-};
-
-struct PhysicalParameters {
-	float linear_accel;
-	float radial_accel;
-	float tangent_accel;
-	float damping;
-};
-
-void calculate_initial_physical_params(inout PhysicalParameters params, inout uint alt_seed) {
-	params.linear_accel = mix(linear_accel_min, linear_accel_max, rand_from_seed(alt_seed));
-	params.radial_accel = mix(radial_accel_min, radial_accel_max, rand_from_seed(alt_seed));
-	params.tangent_accel = mix(tangent_accel_min, tangent_accel_max, rand_from_seed(alt_seed));
-	params.damping = mix(damping_min, damping_max, rand_from_seed(alt_seed));
-}
-
-void calculate_initial_dynamics_params(inout DynamicsParameters params, inout uint alt_seed) {
-	// -------------------- DO NOT REORDER OPERATIONS, IT BREAKS VISUAL COMPATIBILITY
-	// -------------------- ADD NEW OPERATIONS AT THE BOTTOM
-	params.angle = mix(initial_angle_min, initial_angle_max, rand_from_seed(alt_seed));
-	params.angular_velocity = mix(angular_velocity_min, angular_velocity_max, rand_from_seed(alt_seed));
-	params.initial_velocity_multiplier = mix(initial_linear_velocity_min, initial_linear_velocity_max, rand_from_seed(alt_seed));
-	params.directional_velocity = mix(directional_velocity_min, directional_velocity_max, rand_from_seed(alt_seed));
-	params.radial_velocity = mix(radial_velocity_min, radial_velocity_max, rand_from_seed(alt_seed));
-	params.orbit_velocity = mix(orbit_velocity_min, orbit_velocity_max, rand_from_seed(alt_seed));
-}
-
-void calculate_initial_display_params(inout DisplayParameters params, inout uint alt_seed) {
-	// -------------------- DO NOT REORDER OPERATIONS, IT BREAKS VISUAL COMPATIBILITY
-	// -------------------- ADD NEW OPERATIONS AT THE BOTTOM
-	float pi = 3.14159;
-	params.scale = vec3(mix(scale_min, scale_max, rand_from_seed(alt_seed)));
-	params.scale = sign(params.scale) * max(abs(params.scale), 0.001);
-	params.hue_rotation = pi * 2.0 * mix(hue_variation_min, hue_variation_max, rand_from_seed(alt_seed));
-	params.animation_speed = mix(anim_speed_min, anim_speed_max, rand_from_seed(alt_seed));
-	params.animation_offset = mix(anim_offset_min, anim_offset_max, rand_from_seed(alt_seed));
-	params.lifetime = (1.0 - lifetime_randomness * rand_from_seed(alt_seed));
-	params.color = color_value;
-}
-
-void process_display_param(inout DisplayParameters parameters, float lifetime) {
-	// Compile-time add textures.
-	parameters.color *= texture(color_ramp, vec2(lifetime));
-	parameters.color = rotate_hue(parameters.color, parameters.hue_rotation);
-}
-
-vec3 calculate_initial_position(inout DisplayParameters params, inout uint alt_seed) {
-	float pi = 3.14159;
-	vec3 pos = vec3(0.0);
-	{ // Emission shape.
-		float s = rand_from_seed(alt_seed) * 2.0 - 1.0;
-		float t = rand_from_seed(alt_seed) * 2.0 * pi;
-		float p = rand_from_seed(alt_seed);
-		float radius = emission_sphere_radius * sqrt(1.0 - s * s);
-		pos = mix(vec3(0.0, 0.0, 0.0), vec3(radius * cos(t), radius * sin(t), emission_sphere_radius * s), p);
-	}
-	return pos * emission_shape_scale + emission_shape_offset;
-}
-
-vec3 process_orbit_displacement(DynamicsParameters param, float lifetime, inout uint alt_seed, mat4 transform, mat4 emission_transform, float delta, float total_lifetime) {
-	if (abs(param.orbit_velocity) < 0.01 || delta < 0.001) {
-		return vec3(0.0);
-	}
-	vec3 displacement = vec3(0.0);
-	float pi = 3.14159;
-	float orbit_amount = param.orbit_velocity;
-	if (orbit_amount != 0.0) {
-		vec3 pos = transform[3].xyz;
-		vec3 org = emission_transform[3].xyz;
-		vec3 diff = pos - org;
-		float ang = orbit_amount * pi * 2.0 * delta;
-		mat2 rot = mat2(vec2(cos(ang), -sin(ang)), vec2(sin(ang), cos(ang)));
-		displacement.xy -= diff.xy;
-		displacement.xy += rot * diff.xy;
-	}
-	return (emission_transform * vec4(displacement / delta, 0.0)).xyz;
-}
-
-vec3 get_random_direction_from_spread(inout uint alt_seed, float spread_angle) {
-	float pi = 3.14159;
-	float degree_to_rad = pi / 180.0;
-	float spread_rad = spread_angle * degree_to_rad;
-	float angle1_rad = rand_from_seed_m1_p1(alt_seed) * spread_rad;
-	angle1_rad += direction.x != 0.0 ? atan(direction.y, direction.x) : sign(direction.y) * (pi / 2.0);
-	vec3 spread_direction = vec3(cos(angle1_rad), sin(angle1_rad), 0.0);
-	return spread_direction;
-}
-
-vec3 process_radial_displacement(DynamicsParameters param, float lifetime, inout uint alt_seed, mat4 transform, mat4 emission_transform, float delta) {
-	vec3 radial_displacement = vec3(0.0);
-	if (delta < 0.001) {
-		return radial_displacement;
-	}
-	float radial_displacement_multiplier = 1.0;
-	vec3 global_pivot = (emission_transform * vec4(velocity_pivot, 1.0)).xyz;
-	if (length(transform[3].xyz - global_pivot) > 0.01) {
-		radial_displacement = normalize(transform[3].xyz - global_pivot) * radial_displacement_multiplier * param.radial_velocity;
-	} else {
-		radial_displacement = get_random_direction_from_spread(alt_seed, 360.0) * param.radial_velocity;
-	}
-	if (radial_displacement_multiplier * param.radial_velocity < 0.0) {
-		// Prevent inwards velocity to flicker once the point is reached.
-		radial_displacement = normalize(radial_displacement) * min(abs(radial_displacement_multiplier * param.radial_velocity), length(transform[3].xyz - global_pivot) / delta);
-	}
-	return radial_displacement;
-}
-
-void process_physical_parameters(inout PhysicalParameters params, float lifetime_percent) {
-}
-
-void start() {
-	uint base_number = NUMBER;
-	uint alt_seed = hash(base_number + uint(1) + RANDOM_SEED);
-	DisplayParameters params;
-	calculate_initial_display_params(params, alt_seed);
-	// Reset alt seed?
-	//alt_seed = hash(base_number + uint(1) + RANDOM_SEED);
-	DynamicsParameters dynamic_params;
-	calculate_initial_dynamics_params(dynamic_params, alt_seed);
-	PhysicalParameters physics_params;
-	calculate_initial_physical_params(physics_params, alt_seed);
-	process_display_param(params, 0.0);
-	if (rand_from_seed(alt_seed) > AMOUNT_RATIO) {
-		ACTIVE = false;
-	}
-
-	if (RESTART_CUSTOM) {
-		CUSTOM = vec4(0.0);
-		CUSTOM.w = params.lifetime;
-		CUSTOM.x = dynamic_params.angle;
-	}
-	if (RESTART_COLOR) {
-		COLOR = params.color;
-	}
-	if (RESTART_ROT_SCALE) {
-		TRANSFORM[0].xyz = vec3(1.0, 0.0, 0.0);
-		TRANSFORM[1].xyz = vec3(0.0, 1.0, 0.0);
-		TRANSFORM[2].xyz = vec3(0.0, 0.0, 1.0);
-	}
-	if (RESTART_POSITION) {
-		TRANSFORM[3].xyz = calculate_initial_position(params, alt_seed);
-		TRANSFORM = EMISSION_TRANSFORM * TRANSFORM;
-	}
-	if (RESTART_VELOCITY) {
-		VELOCITY = get_random_direction_from_spread(alt_seed, spread) * dynamic_params.initial_velocity_multiplier;
-	}
-
-	process_display_param(params, 0.0);
-
-	VELOCITY = (EMISSION_TRANSFORM * vec4(VELOCITY, 0.0)).xyz;
-	VELOCITY += EMITTER_VELOCITY * inherit_emitter_velocity_ratio;
-	VELOCITY.z = 0.0;
-	TRANSFORM[3].z = 0.0;
-}
-
-void process() {
-	uint base_number = NUMBER;
-	//if (repeatable) {
-	//	base_number = INDEX;
-	//}
-	uint alt_seed = hash(base_number + uint(1) + RANDOM_SEED);
-	DisplayParameters params;
-	calculate_initial_display_params(params, alt_seed);
-	DynamicsParameters dynamic_params;
-	calculate_initial_dynamics_params(dynamic_params, alt_seed);
-	PhysicalParameters physics_params;
-	calculate_initial_physical_params(physics_params, alt_seed);
-
-	float pi = 3.14159;
-	float degree_to_rad = pi / 180.0;
-
-	CUSTOM.y += DELTA / LIFETIME;
-	CUSTOM.y = mix(CUSTOM.y, 1.0, INTERPOLATE_TO_END);
-	
-	float lifetime_percent = CUSTOM.y / params.lifetime;
-	if (CUSTOM.y > CUSTOM.w) {
-		ACTIVE = false;
-	}
-
-	// Calculate all velocity.
-	vec3 controlled_displacement = vec3(0.0);
-	controlled_displacement += process_orbit_displacement(dynamic_params, lifetime_percent, alt_seed, TRANSFORM, EMISSION_TRANSFORM, DELTA, params.lifetime * LIFETIME);
-	controlled_displacement += process_radial_displacement(dynamic_params, lifetime_percent, alt_seed, TRANSFORM, EMISSION_TRANSFORM, DELTA);
-
-	process_physical_parameters(physics_params, lifetime_percent);
-	vec3 force;
-	{
-		// Copied from previous version.
-		vec3 pos = TRANSFORM[3].xyz;
-		force = gravity;
-		// Apply linear acceleration.
-		force += length(VELOCITY) > 0.0 ? normalize(VELOCITY) * physics_params.linear_accel : vec3(0.0);
-		// Apply radial acceleration.
-		vec3 org = EMISSION_TRANSFORM[3].xyz;
-		vec3 diff = pos - org;
-		force += length(diff) > 0.0 ? normalize(diff) * physics_params.radial_accel : vec3(0.0);
-		// Apply tangential acceleration.
-		float tangent_accel_val = physics_params.tangent_accel;
-		force += length(diff.yx) > 0.0 ? vec3(normalize(diff.yx * vec2(-1.0, 1.0)), 0.0) * tangent_accel_val : vec3(0.0);
-		force += ATTRACTOR_FORCE;
-		force.z = 0.0;
-		// Apply attractor forces.
-		VELOCITY += force * DELTA;
-	}
-	{
-		// Copied from previous version.
-		if (physics_params.damping > 0.0) {
-			float v = length(VELOCITY);
-			v -= physics_params.damping * DELTA;
-			if (v < 0.0) {
-				VELOCITY = vec3(0.0);
-			} else {
-				VELOCITY = normalize(VELOCITY) * v;
-			}
-		}
-	}
-
-	// Turbulence before limiting.
-	vec3 final_velocity = controlled_displacement + VELOCITY;
-
-	final_velocity.z = 0.0;
-
-	TRANSFORM[3].xyz += final_velocity * DELTA;
-
-	process_display_param(params, lifetime_percent);
-
-	float base_angle = dynamic_params.angle;
-	base_angle += CUSTOM.y * LIFETIME * dynamic_params.angular_velocity;
-	CUSTOM.x = base_angle * degree_to_rad;
-	COLOR = params.color;
-
-	TRANSFORM[0] = vec4(cos(CUSTOM.x), -sin(CUSTOM.x), 0.0, 0.0);
-	TRANSFORM[1] = vec4(sin(CUSTOM.x), cos(CUSTOM.x), 0.0, 0.0);
-	TRANSFORM[2] = vec4(0.0, 0.0, 1.0, 0.0);
-	TRANSFORM[3].z = 0.0;
-
-	float scale_sign_x = params.scale.x < 0.0 ? -1.0 : 1.0;
-	float scale_sign_y = params.scale.y < 0.0 ? -1.0 : 1.0;
-	float scale_sign_z = params.scale.z < 0.0 ? -1.0 : 1.0;
-	float scale_minimum = 0.001;
-	TRANSFORM[0].xyz *= scale_sign_x * max(abs(params.scale.x), scale_minimum);
-	TRANSFORM[1].xyz *= scale_sign_y * max(abs(params.scale.y), scale_minimum);
-	TRANSFORM[2].xyz *= scale_sign_z * max(abs(params.scale.z), scale_minimum);
-
-	CUSTOM.z = params.animation_offset + lifetime_percent * params.animation_speed;
-
-	if (CUSTOM.y > CUSTOM.w) {
-		ACTIVE = false;
-	}
-}
-"
-
-[sub_resource type="Gradient" id="Gradient_ia8ke"]
-offsets = PackedFloat32Array(0, 0.8153153, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_f6sss"]
-gradient = SubResource("Gradient_ia8ke")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_f6sss"]
-shader = SubResource("Shader_emuwr")
-shader_parameter/direction = Vector3(0, -1, 0)
-shader_parameter/spread = 180.0
-shader_parameter/flatness = 0.0
-shader_parameter/inherit_emitter_velocity_ratio = 0.0
-shader_parameter/initial_linear_velocity_min = 25.55
-shader_parameter/initial_linear_velocity_max = 62.039997
-shader_parameter/directional_velocity_min = 1.0
-shader_parameter/directional_velocity_max = 1.0
-shader_parameter/angular_velocity_min = -720.0
-shader_parameter/angular_velocity_max = 720.0
-shader_parameter/orbit_velocity_min = 0.0
-shader_parameter/orbit_velocity_max = 0.0
-shader_parameter/radial_velocity_min = 0.0
-shader_parameter/radial_velocity_max = 0.0
-shader_parameter/linear_accel_min = 0.0
-shader_parameter/linear_accel_max = 0.0
-shader_parameter/radial_accel_min = 0.0
-shader_parameter/radial_accel_max = 0.0
-shader_parameter/tangent_accel_min = 0.0
-shader_parameter/tangent_accel_max = 0.0
-shader_parameter/damping_min = 0.0
-shader_parameter/damping_max = 19.925
-shader_parameter/initial_angle_min = 0.0
-shader_parameter/initial_angle_max = 360.0
-shader_parameter/scale_min = 1.0
-shader_parameter/scale_max = 1.0
-shader_parameter/hue_variation_min = 0.0
-shader_parameter/hue_variation_max = 0.0
-shader_parameter/anim_speed_min = 0.0
-shader_parameter/anim_speed_max = 0.0
-shader_parameter/anim_offset_min = 0.0
-shader_parameter/anim_offset_max = 1.0
-shader_parameter/lifetime_randomness = 0.4
-shader_parameter/emission_shape_offset = Vector3(0, 0, 0)
-shader_parameter/emission_shape_scale = Vector3(1, 1, 1)
-shader_parameter/velocity_pivot = Vector3(0, 0, 0)
-shader_parameter/emission_sphere_radius = 16.87
-shader_parameter/color_value = Color(1, 1, 1, 1)
-shader_parameter/gravity = Vector3(0, 0, 0)
-shader_parameter/color_ramp = SubResource("GradientTexture1D_f6sss")
-
-[sub_resource type="Shader" id="Shader_l7nff"]
-code = "// NOTE: Shader automatically converted from Godot Engine 4.6.stable.mono's CanvasItemMaterial.
-
-shader_type canvas_item;
-render_mode blend_mix;
-uniform int particles_anim_h_frames;
-uniform int particles_anim_v_frames;
-uniform bool particles_anim_loop;
-uniform vec4 Color: source_color = vec4 (1);
-
-void vertex() {
-	float h_frames = float(particles_anim_h_frames);
-	float v_frames = float(particles_anim_v_frames);
-	VERTEX.xy /= vec2(h_frames, v_frames);
-	float particle_total_frames = float(particles_anim_h_frames * particles_anim_v_frames);
-	float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
-	if (!particles_anim_loop) {
-		particle_frame = clamp(particle_frame, 0.0, particle_total_frames - 1.0);
-	} else {
-		particle_frame = mod(particle_frame, particle_total_frames);
-	}	UV /= vec2(h_frames, v_frames);
-	UV += vec2(mod(particle_frame, h_frames) / h_frames, floor((particle_frame + 0.5) / h_frames) / v_frames);
-}
-
-void fragment() {
-	float a = COLOR.a;
-	COLOR = (COLOR + (Color*2.))/3.;
-	COLOR.a = a;
-}"
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hdyga"]
+shader = ExtResource("40_3mvtf")
+shader_parameter/initialVelocityMultiplier = 100.0
+shader_parameter/rotationMultiplier = 1.0
+shader_parameter/SpriteSheetSize = Vector2(4, 2)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_emuwr"]
 resource_local_to_scene = true
-shader = SubResource("Shader_l7nff")
+shader = ExtResource("37_3mvtf")
 shader_parameter/particles_anim_h_frames = 4
 shader_parameter/particles_anim_v_frames = 2
 shader_parameter/particles_anim_loop = false
 shader_parameter/Color = Color(1, 1, 1, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v8mwv"]
-resource_local_to_scene = true
-shader = ExtResource("41_jhh7x")
-shader_parameter/mainTexture = ExtResource("42_e3tbv")
-shader_parameter/outlineColor = Color(1, 0, 0, 1)
-shader_parameter/initialPos = Vector2(0, -5)
-shader_parameter/rotation = 0.0
-shader_parameter/flipped = false
-shader_parameter/spawningTime = 2.0
-shader_parameter/spawningRandomizerWeight = 0.1
-shader_parameter/sheetSize = Vector2i(1, 1)
-shader_parameter/frame = 0
 
 [node name="Player" type="CharacterBody2D" unique_id=2096548899 node_paths=PackedStringArray("effectHandler", "pilot", "ship", "inputComponent", "NameLabel", "pilotWeaponHolder", "pilotMeleeAttack", "shipDeadAudio", "pilotDeadAudio", "pilotSprite", "shipSprite", "shipShield", "pilotShield", "pilotShieldFlickerer", "shipShieldFlickerer", "particlesHandler")]
 process_mode = 1
@@ -930,11 +452,11 @@ texture = ExtResource("15_f6sss")
 
 [node name="Right" type="RayCast2D" parent="WallSideGetters" unique_id=1681196812]
 target_position = Vector2(20, 0)
-collision_mask = 2
+collision_mask = 34
 
 [node name="Left" type="RayCast2D" parent="WallSideGetters" unique_id=978288997]
 target_position = Vector2(-20, 0)
-collision_mask = 2
+collision_mask = 34
 
 [node name="MeleeAttack" type="Area2D" parent="." unique_id=546809376 node_paths=PackedStringArray("meleeAudioPlayer", "sprite", "collisionShape", "Main")]
 collision_layer = 4
@@ -1060,14 +582,13 @@ script = ExtResource("32_aao0a")
 visible = false
 shape = SubResource("RectangleShape2D_0jobf")
 
-[node name="ParticlesHandler" type="Node2D" parent="." unique_id=914323605 node_paths=PackedStringArray("shipExplosionParticles", "shipReconstructionParticles", "pilotDeathParticles", "pilotShieldBreak", "shipShieldBreak", "dashParticles", "spawningParticles")]
+[node name="ParticlesHandler" type="Node2D" parent="." unique_id=914323605 node_paths=PackedStringArray("shipExplosionParticles", "shipReconstructionParticles", "pilotDeathParticles", "pilotShieldBreak", "shipShieldBreak", "spawningParticles")]
 script = ExtResource("41_0ieod")
 shipExplosionParticles = NodePath("ShipDestructionParticles")
 shipReconstructionParticles = NodePath("ShipReconstructionParticles")
 pilotDeathParticles = NodePath("PilotDeathParticles")
 pilotShieldBreak = NodePath("PilotShieldDestructionParticles")
 shipShieldBreak = NodePath("ShipShieldDestructionParticles")
-dashParticles = NodePath("DashParticles")
 spawningParticles = NodePath("PilotSpawningParticles")
 
 [node name="PilotDeathParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=888372523]
@@ -1085,8 +606,9 @@ process_material = ExtResource("13_f6sss")
 [node name="PilotShieldDestructionParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=2015931778]
 z_index = 3
 z_as_relative = false
-material = SubResource("ShaderMaterial_ia8ke")
+material = SubResource("ShaderMaterial_e3tbv")
 emitting = false
+amount = 6
 sub_emitter = NodePath(".")
 texture = ExtResource("11_j53hc")
 one_shot = true
@@ -1094,27 +616,16 @@ explosiveness = 1.0
 randomness = 1.0
 fixed_fps = 60
 local_coords = true
-process_material = ExtResource("11_rda0l")
-
-[node name="DashParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=1599359695]
-z_index = 1
-emitting = false
-amount = 53
-sub_emitter = NodePath(".")
-one_shot = true
-explosiveness = 1.0
-local_coords = true
-process_material = ExtResource("16_sg1wo")
+process_material = SubResource("ShaderMaterial_v8mwv")
 
 [node name="ShipDestructionParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=250211982]
 material = SubResource("CanvasItemMaterial_emuwr")
 emitting = false
 texture = ExtResource("26_kr5aq")
-lifetime = 0.63
 one_shot = true
 explosiveness = 1.0
 fixed_fps = 120
-process_material = SubResource("ShaderMaterial_f6sss")
+process_material = SubResource("ShaderMaterial_hdyga")
 
 [node name="ShipReconstructionParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=713480820]
 z_index = 2
@@ -1147,4 +658,4 @@ one_shot = true
 explosiveness = 1.0
 fixed_fps = 60
 local_coords = true
-process_material = SubResource("ShaderMaterial_v8mwv")
+process_material = ExtResource("44_v8mwv")

@@ -25,7 +25,7 @@ public partial class HorizontalMenu : MenuItem
 		set
 		{
 			totalSize = value;
-			# if TOOLS
+			#if TOOLS
 				if (Engine.IsEditorHint()) return;
 			#endif
 				CallDeferred(MethodName.DoFormatting);

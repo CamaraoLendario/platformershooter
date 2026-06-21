@@ -6,7 +6,6 @@ public partial class ShadersParticlesPreloader : GpuParticles2D
 	[Signal] public delegate void ShadersParticlesPreloadingFinishedEventHandler();
 	[Export] ParticleProcessMaterial[] particlesToPreload =
 	{// holy pirate software
-		GD.Load<ParticleProcessMaterial>("uid://iawq5go2txhe"),		// Dash Particles
 		GD.Load<ParticleProcessMaterial>("uid://x38tv3nmu01"),		// Pilot Shield Break
 		GD.Load<ParticleProcessMaterial>("uid://b5s0ni7p05ow1"),	// Ship Shield Break
 		GD.Load<ParticleProcessMaterial>("uid://bb6qj2nxuidly"),	// Ship Projectile Explosion
@@ -36,4 +35,5 @@ public partial class ShadersParticlesPreloader : GpuParticles2D
 		}
 		CallDeferred(MethodName.EmitSignal, SignalName.ShadersParticlesPreloadingFinished);
 	} 
+
 }

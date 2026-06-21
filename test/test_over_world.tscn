@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://deavbdxssxkrb" path="res://Maps/MapAssets/Pickups/ShipPowerUpChestSpawner.tscn" id="9_6hyq3"]
 [ext_resource type="Script" uid="uid://x4dnw7pvkhwb" path="res://Maps/MapAssets/SuddenDeath/BeamsOfDeath.cs" id="11_6riqf"]
 [ext_resource type="Texture2D" uid="uid://dd6up0jcu0f6j" path="res://Maps/MapAssets/SuddenDeath/BeamOfDeath.png" id="12_sqeer"]
-[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="14_xdesj"]
+[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/Materials/PixelOutline.gdshader" id="14_xdesj"]
 [ext_resource type="PackedScene" uid="uid://ilj6u5qbe2db" path="res://DEBUGTEST/DebugPlayer.tscn" id="15_yp32w"]
 [ext_resource type="Script" uid="uid://cp01y0p7cvqmr" path="res://Maps/MapAssets/Background/Parallax/ParallaxBackgroundLayers.cs" id="16_p7p4v"]
 [ext_resource type="PackedScene" uid="uid://drd2rgglnakvn" path="res://Maps/MapTools/HomemadeParallax.tscn" id="17_id1n8"]

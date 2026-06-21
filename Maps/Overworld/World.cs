@@ -1,9 +1,11 @@
 using System;
+using System.Diagnostics;
 using Godot;
 
 public partial class World : Node2D
 {
 	[Export] public ScoreHUD Hud;
+	Stopwatch stopwatch = new Stopwatch();
 	public override void _Ready()
 	{
 		SignalBus.Instance.StartGame += OnStartGame;
@@ -16,6 +18,7 @@ public partial class World : Node2D
 	}
 	void generateMap()
 	{
+		stopwatch.Restart();
 		Map currentMap = Game.GetMap();
 		if (currentMap == null) {
 			currentMap = Game.GetMapPlaylist().GetRandMap(false);
@@ -25,7 +28,14 @@ public partial class World : Node2D
 			currentMap = Game.GetMapPlaylist().GetNextMap();
 		}
 		
+		AwaitCurrentMapReady(currentMap);
 		AddChild(currentMap);
+	}
+	async void AwaitCurrentMapReady(Map map)
+	{
+		await ToSignal(map, Map.SignalName.Ready);
+		stopwatch.Stop();
+		GD.Print("Time to load Map: ", stopwatch.ElapsedMilliseconds);
 	}
 
 	public void UpdateWeaponPickups()

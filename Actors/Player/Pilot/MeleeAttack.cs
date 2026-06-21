@@ -78,7 +78,6 @@ public partial class MeleeAttack : Area2D
 	{
 		if (Main.effectHandler.isFrozen) return;
 		Vector2 attackDirNormal = new Vector2(Mathf.Cos(Rotation), Mathf.Sin(Rotation));
-		if (!Main.IsOnFloor() && Main.IsInPilotArea) Main.particlesHandler.EmitDashParticles(-attackDirNormal);
 		EmitSignal(SignalName.dashed);
 		dashTimer.Start(DASHTIME);
 		float tempDashForce = dashForce;

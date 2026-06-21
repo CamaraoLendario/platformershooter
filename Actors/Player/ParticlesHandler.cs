@@ -12,7 +12,6 @@ public partial class ParticlesHandler : Node2D
 	[Export] public GpuParticles2D pilotDeathParticles;
 	[Export] GpuParticles2D pilotShieldBreak;
 	[Export] GpuParticles2D shipShieldBreak;
-	[Export] GpuParticles2D dashParticles;
 	[Export] GpuParticles2D spawningParticles;
 	Player main;
 	Timer startAssemblingShipTimer = new Timer() {OneShot = true};
@@ -214,13 +213,5 @@ public partial class ParticlesHandler : Node2D
 		base._ExitTree();
 		startAssemblingShipTimer.Timeout -= PlayParticlesForTryGoShip;
 		cooldownStartAssemblingShipTimer.Timeout -= PlayParticlesForTryGoShip;
-	}
-
-	public void EmitDashParticles(Vector2 dir)
-	{
-		GpuParticles2D newDashParticles = GPUParticlesPool.GetClonedParticles(dashParticles);
-		(newDashParticles.ProcessMaterial as ParticleProcessMaterial).Direction = new Vector3(dir.X, dir.Y, 0);
-		newDashParticles.GlobalPosition = main.GlobalPosition;
-		newDashParticles.Restart();
 	}
 }

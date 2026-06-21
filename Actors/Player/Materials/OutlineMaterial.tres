@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://6b8p1p0j0p4f"]
 
-[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="1_143pe"]
+[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/Materials/PixelOutline.gdshader" id="1_143pe"]
 
 [resource]
 resource_local_to_scene = true

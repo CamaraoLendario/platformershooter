@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://415raywue47"]
 
 [ext_resource type="PackedScene" uid="uid://ilj6u5qbe2db" path="res://DEBUGTEST/DebugPlayer.tscn" id="1_gk1jr"]
-[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/PixelOutline.gdshader" id="2_rgj0q"]
+[ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/Materials/PixelOutline.gdshader" id="2_rgj0q"]
 [ext_resource type="PackedScene" uid="uid://cck3f1axqqkvm" path="res://Maps/PlayableMaps/BaseMap.tscn" id="3_n5wjn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_alsom"]

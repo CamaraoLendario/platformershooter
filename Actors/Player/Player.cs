@@ -395,7 +395,8 @@ public partial class Player : CharacterBody2D
 		else
 			return shipSprite;
 	}
-	# if TOOLS
+
+	#if TOOLS
     public override void _Input(InputEvent @event)
 	{
 		if (@event is InputEventKey key && Input.IsKeyPressed(Key.L))
@@ -403,5 +404,5 @@ public partial class Player : CharacterBody2D
 			Die(this);
 		}
 	}
-	# endif
+	#endif
 }

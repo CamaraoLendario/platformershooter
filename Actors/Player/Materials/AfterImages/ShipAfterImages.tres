@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://b5i1uqnrt70x5"]
 
-[ext_resource type="Shader" uid="uid://c22204m6t74uu" path="res://test/afterImagesRetry.gdshader" id="1_ap6wg"]
+[ext_resource type="Shader" uid="uid://c22204m6t74uu" path="res://Actors/Player/Materials/AfterImages/afterImages.gdshader" id="1_ap6wg"]
 [ext_resource type="Texture2D" uid="uid://kayfo7ufdpc2" path="res://Actors/Player/Ship/Sprites/spaceships.png" id="2_rhy86"]
 
 [resource]

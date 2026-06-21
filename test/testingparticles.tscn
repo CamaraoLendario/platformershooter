@@ -1,9 +1,8 @@
 [gd_scene format=3 uid="uid://b21mdwxehi2be"]
 
 [ext_resource type="Script" uid="uid://ccubeqhpap1bn" path="res://test/Testingparticles.cs" id="1_jl5lc"]
-[ext_resource type="Material" uid="uid://cuu7ef3oi50rv" path="res://Actors/Player/Pilot/pilotDeathParticles.tres" id="1_two45"]
+[ext_resource type="Material" uid="uid://cuu7ef3oi50rv" path="res://Actors/Player/Materials/pilotDeathParticles.tres" id="1_two45"]
 [ext_resource type="Material" uid="uid://bgglq6jh35xxs" path="res://Actors/Player/Ship/ShipReconstructionParticles.tres" id="2_1w7aq"]
-[ext_resource type="Shader" uid="uid://c1lon7lx53xpf" path="res://test/PlayerReconstructionVortex.gdshader" id="4_0n3v0"]
 [ext_resource type="Shader" uid="uid://cambmcm2bey2f" path="res://test/PlayerReconstruction.gdshader" id="4_ovb6m"]
 [ext_resource type="Texture2D" uid="uid://kayfo7ufdpc2" path="res://Actors/Player/Ship/Sprites/spaceships.png" id="5_0n3v0"]
 [ext_resource type="Texture2D" uid="uid://b1y4dm1w0puo2" path="res://Actors/Player/Pilot/Textures/Sprites/Pilot.png" id="5_5stis"]
@@ -194,15 +193,6 @@ _data = {
 &"shieldRegeneration": SubResource("Animation_aao0a")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0n3v0"]
-shader = ExtResource("4_0n3v0")
-shader_parameter/mainTexture = ExtResource("5_0n3v0")
-shader_parameter/outlineColor = Color(1, 0, 0, 1)
-shader_parameter/initialPos = Vector2(0, -10)
-shader_parameter/animationTime = 1.0
-shader_parameter/rotation = 0.51
-shader_parameter/flipped = false
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_fnouk"]
 atlas = ExtResource("5_5stis")
 region = Rect2(48, 0, 16, 18)
@@ -288,15 +278,6 @@ autoplay = "default"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PilotSpawningParticles2/ShipSprite" unique_id=2097007487]
 libraries/ = SubResource("AnimationLibrary_le5uu")
-
-[node name="GPUParticles2D3" type="GPUParticles2D" parent="." unique_id=1462133014]
-position = Vector2(-172, 26)
-amount = 1024
-lifetime = 4.96
-explosiveness = 1.0
-fixed_fps = 60
-local_coords = true
-process_material = SubResource("ShaderMaterial_0n3v0")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1122313279]
 position = Vector2(77, 10)

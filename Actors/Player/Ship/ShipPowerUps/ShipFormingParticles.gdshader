@@ -68,10 +68,10 @@ void process() {
 	
 	if(RESTART){
 		uint alt_seed = hash(NUMBER + uint(1.) + RANDOM_SEED);
-		float angle = rand_from_seed(alt_seed)*PI*2.;
+		float angle = rand_from_seed(alt_seed) * PI * 2.;
 		float dist = rand_from_seed(alt_seed);
 		
-		ivec2 size = textureSize(mainTexture, 0)/2;
+		ivec2 size = textureSize(mainTexture, 0) / 2;
 		TRANSFORM[3].xy = -normalize(USERDATA1.xy - initPos) * 30. + vec2(cos(angle), sin(angle)) * dist * 30.;
 		USERDATA1.zw = TRANSFORM[3].xy + initPos; //initialPos
 		TRANSFORM[3].z = 0.;

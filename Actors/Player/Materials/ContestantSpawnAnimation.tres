@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bvc3mf3avwkhd"]
+
+[ext_resource type="Shader" uid="uid://cambmcm2bey2f" path="res://test/PlayerReconstruction.gdshader" id="1_qlg80"]
+[ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Textures/Sprites/PilotStill.png" id="2_au2af"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_qlg80")
+shader_parameter/mainTexture = ExtResource("2_au2af")
+shader_parameter/outlineColor = Color(1, 0, 0, 1)
+shader_parameter/initialPos = Vector2(0, -5)
+shader_parameter/rotation = 0.0
+shader_parameter/flipped = false
+shader_parameter/spawningTime = 2.0
+shader_parameter/spawningRandomizerWeight = 0.1
+shader_parameter/sheetSize = Vector2i(1, 1)
+shader_parameter/frame = 0

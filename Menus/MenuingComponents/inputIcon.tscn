@@ -4,10 +4,12 @@
 [ext_resource type="Script" uid="uid://bdrqk1juhnrsi" path="res://Menus/MenuingComponents/InputIcon.cs" id="2_ycw53"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bfu5r"]
+resource_local_to_scene = true
 atlas = ExtResource("1_bfu5r")
 region = Rect2(0, 0, 16, 16)
 
 [node name="inputIcon" type="TextureRect" unique_id=1683868203]
+custom_minimum_size = Vector2(16, 16)
 offset_right = 16.0
 offset_bottom = 16.0
 texture = SubResource("AtlasTexture_bfu5r")
@@ -15,3 +17,6 @@ expand_mode = 2
 stretch_mode = 4
 script = ExtResource("2_ycw53")
 action = "-2"
+texture = SubResource("AtlasTexture_bfu5r")
+isPressed = false
+currentControllerUsed = 1

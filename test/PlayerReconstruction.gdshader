@@ -15,6 +15,11 @@ void start() {
 	uint alt_seed = hash(NUMBER + uint(1.) + RANDOM_SEED);
 	ivec2 texSize = textureSize(mainTexture, 0) / sheetSize;
 	int idx = int(INDEX);// (texSize.x * texSize.y) - int(INDEX);
+	USERDATA1 = vec4(0.);
+	USERDATA2 = vec4(0.);
+	USERDATA3 = vec4(0.);
+	USERDATA4 = vec4(0.);
+	
 	
 	// Position in texture (final position)
 	USERDATA2.zw = vec2( 
