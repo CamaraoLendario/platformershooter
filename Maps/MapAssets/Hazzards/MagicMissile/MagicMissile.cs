@@ -89,7 +89,7 @@ public partial class MagicMissile : HittableComponent
 
         if (hitter is LinearProjectile projectile)
         {
-            velocity = projectile.Direction * maxSpeed;
+            velocity = projectile.direction * maxSpeed;
         }
         else if (hitter is MeleeAttack melee)
         {

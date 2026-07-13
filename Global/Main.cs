@@ -42,4 +42,8 @@ public partial class Main : Node
         MainMenuScreen currentScreen = mainMenu.GetController().SetCurrentScreen(MainMenu.Screens.CHARACTERSELECT);
         SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameExited, currentScreen);
     }
+    public MainMenu GetMainMenu()
+    {
+        return mainMenu;
+    }
 }

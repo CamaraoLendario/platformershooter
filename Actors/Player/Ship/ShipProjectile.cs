@@ -12,7 +12,7 @@ public partial class ShipProjectile : LinearProjectile
     {
         base._Ready();
 		projectileLight = GetNode<PointLight2D>("%ProjectileLight");
-		(trailParticles.ProcessMaterial as ParticleProcessMaterial).Direction = -new Vector3(Direction.X, Direction.Y, 0);
+		(trailParticles.ProcessMaterial as ShaderMaterial).SetShaderParameter("projectileDir", direction);
     }
 
     public override bool End(EndingReason endingReason, bool allowFreeing = true, bool forceFreeing = false)

@@ -42,6 +42,10 @@ public partial class PoisonMine : Node2D
 		PrepareExplosion();
 		SetDirection();
 		SignalBus.Instance.NewRoundStart += OnNewRoundStart;
+		sprite.FrameChanged += () =>
+		{
+			(sprite.Material as ShaderMaterial).SetShaderParameter("frame", sprite.Frame);
+		};
 	}
 
 	void OnNewRoundStart()
@@ -70,7 +74,22 @@ public partial class PoisonMine : Node2D
 
     public override void _Process(double delta)
     {
-        sprite.Position = Vector2.Zero + new Vector2(GD.RandRange(-1, 1), GD.RandRange(-1, 1)).Normalized() * (1 - CurrentFuseTime)*2;
+		float closestPlayerDist = -1f;
+		Vector2 closestToPlayerVec = Vector2.Zero;
+		foreach(Player player in Game.GetAlivePlayers())
+		{
+			Vector2 currentToPlayerVec = player.Position - Position;
+			float currentPlayerDist = currentToPlayerVec.LengthSquared();
+			if (closestPlayerDist < currentPlayerDist) {
+				closestPlayerDist = currentPlayerDist;
+				closestToPlayerVec = currentToPlayerVec;
+			}
+		}
+		(sprite.Material as ShaderMaterial).SetShaderParameter("lookDir", closestToPlayerVec.Normalized());
+		/* if (closestPlayerDist < 50f)
+		else 
+			(sprite.Material as ShaderMaterial).SetShaderParameter("lookDir", Vector2.Zero);
+         */sprite.Position = Vector2.Zero + new Vector2(GD.RandRange(-1, 1), GD.RandRange(-1, 1)).Normalized() * (1 - CurrentFuseTime)*2;
 		sprite.Frame = (int) ((1 - CurrentFuseTime)*sprite.SpriteFrames.GetFrameCount("Explode") + 0.5f);
     }
 

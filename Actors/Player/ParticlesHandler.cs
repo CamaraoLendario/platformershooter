@@ -10,7 +10,7 @@ public partial class ParticlesHandler : Node2D
 	[Export] public GpuParticles2D shipReconstructionParticles;
 	public GpuParticles2D currentShipReconstructionParticles;
 	[Export] public GpuParticles2D pilotDeathParticles;
-	[Export] GpuParticles2D pilotShieldBreak;
+	[Export] public GpuParticles2D pilotShieldBreak;
 	[Export] GpuParticles2D shipShieldBreak;
 	[Export] GpuParticles2D spawningParticles;
 	Player main;
@@ -45,17 +45,9 @@ public partial class ParticlesHandler : Node2D
 		startAssemblingShipTimer.Timeout += PlayParticlesForTryGoShip;
 		cooldownStartAssemblingShipTimer.Timeout += PlayParticlesForTryGoShip;
 		main.Reseting += OnReseting;
+		pilotShieldBreak.ProcessMaterial = pilotShieldBreak.ProcessMaterial.Duplicate(false) as ShaderMaterial;
 	}
 
-	public override void _Process(double delta)
-	{
-		if (currentShipReconstructionParticles != null)
-		{
-			(currentShipReconstructionParticles.ProcessMaterial as ShaderMaterial).
-			SetShaderParameter("newPos", playerPosition);
-		}
-
-	}
 	void OnReseting()
 	{
 		CallDeferred(MethodName.EmitSpawnParticles);
@@ -78,7 +70,7 @@ public partial class ParticlesHandler : Node2D
 	{
 		GpuParticles2D newShipExplosionParticles = GPUParticlesPool.GetClonedParticles(shipExplosionParticles);
 		newShipExplosionParticles.Position = playerPosition;
-		newShipExplosionParticles.Emitting = true;
+		newShipExplosionParticles.Restart();
 	}
 	public void SummonShieldBreakParticles(bool isPilot)
 	{
@@ -94,16 +86,16 @@ public partial class ParticlesHandler : Node2D
 		
 		//GpuParticles2D newParticlesEmitter = particlesEmitter.Duplicate() as GpuParticles2D;
 		GpuParticles2D newParticlesEmitter = GPUParticlesPool.GetClonedParticles(particlesEmitter);
-		(newParticlesEmitter.Material as ShaderMaterial).SetShaderParameter("Color", teamColors[main.GetColorIdx()]);
+		(newParticlesEmitter.ProcessMaterial as ShaderMaterial).SetShaderParameter("Color", teamColors[Game.GetGamemodeLogic().teams[Game.GetGamemodeLogic().playerTeamByInputIdx[main.GetInputIdx()]].teamColorIdx]); //TODO: make this take team color instead
 		newParticlesEmitter.Position = playerPosition;
 		newParticlesEmitter.OneShot = true;
-		thisissofuckingweirdwhatdemonhaspocessedthisgameatleastitworksIguessbutatwhatcost(newParticlesEmitter);
+		newParticlesEmitter.Restart();
+//		thisissofuckingweirdwhatdemonhaspocessedthisgameatleastitworksIguessbutatwhatcost(newParticlesEmitter);
 	}
 	async void thisissofuckingweirdwhatdemonhaspocessedthisgameatleastitworksIguessbutatwhatcost(GpuParticles2D newParticlesEmitter)
 	{
 		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
 		await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
-		newParticlesEmitter.Restart();
 	}
 	public void PlayParticlesForTryGoShip()
 	{
@@ -116,32 +108,32 @@ public partial class ParticlesHandler : Node2D
 		currentShipReconstructionParticles = particles;
 
 		particles.Position = Vector2.Zero;
-		particles.Restart();
 		particles.Visible = true;
-		//particles.ProcessMaterial = particles.ProcessMaterial.Duplicate() as ShaderMaterial;
-		(particles.ProcessMaterial as ShaderMaterial).
-		SetShaderParameter("outlineColor", teamColors[main.GetColorIdx()]);
-		(particles.ProcessMaterial as ShaderMaterial).
-		SetShaderParameter("initPos", playerPosition);
-		(particles.ProcessMaterial as ShaderMaterial).
-		SetShaderParameter("newPos", playerPosition);
-		particles.Finished += OnShipRebuiltFinished;
-		(particles.ProcessMaterial as ShaderMaterial).
-		SetShaderParameter("rotation", main.Velocity.Angle());
-		
-	}
-	void OnShipRebuiltFinished()
-	{
-		//GD.Print("rebuildFinished");
-		isTurningToShip = false;
-		RemoveParticles(currentShipReconstructionParticles);
+		ShaderMaterial particlesMaterial = particles.ProcessMaterial as ShaderMaterial;
+		particlesMaterial.SetShaderParameter("emitterRotationOffset", GD.Randf());
+		Action process;
+		process = () => {
+			particlesMaterial.SetShaderParameter("rotation", main.shipSprite.Rotation);
+			particlesMaterial.SetShaderParameter("globalPosition", main.Position);
+		};
+		process();
+		GetTree().ProcessFrame += process;
+
+		Callable OnParticlesFinished = Callable.From(() =>
+		{
+			GetTree().ProcessFrame -= process;
+			//GD.Print("rebuildFinished");
+			isTurningToShip = false;
+			RemoveParticles(particles);
+			currentShipReconstructionParticles = null;
+		});
+		particles.Connect(GpuParticles2D.SignalName.Finished, OnParticlesFinished, (uint)ConnectFlags.OneShot);
+		particles.Restart();
 	}
 
 	void RemoveParticles(GpuParticles2D particles)
 	{
-		if (currentShipReconstructionParticles == null) return;
-		currentShipReconstructionParticles = null;
-		particles.Finished -= OnShipRebuiltFinished;
+		if (particles == null) return;
 		particles.Visible = false;
 		particles.Emitting = false;
 		GPUParticlesPool.Return(particles);
@@ -156,6 +148,7 @@ public partial class ParticlesHandler : Node2D
 		isTurningToShip = false;
 		//TODO maybe change this so it dissipates the particles instead?
 		RemoveParticles(currentShipReconstructionParticles);
+		currentShipReconstructionParticles = null;
 	}
 	void EmitSpawnParticles()
 	{
@@ -178,23 +171,23 @@ public partial class ParticlesHandler : Node2D
 			mainSprite.Hide();
 			particlesMaterial.SetShaderParameter("rotation", mainSprite.Rotation);
 			particlesMaterial.SetShaderParameter("sheetSize", textureSize/ atlasSize);
-			particlesMaterial.SetShaderParameter("frame", (int)((atlasPosition.X/atlasSize.X) + ((atlasPosition.Y/atlasSize.Y)*(atlasSize.X/textureSize.X))));	
+			particlesMaterial.SetShaderParameter("frame", (int)((atlasPosition.X/atlasSize.X) + ((atlasPosition.Y/atlasSize.Y) * (atlasSize.X/textureSize.X))));	
 			particlesMaterial.SetShaderParameter("flipped", mainSprite.FlipH);
 		};
 		process();
 		GpuParticles2D newSpawningParticles = GPUParticlesPool.GetClonedParticles(spawningParticles);
 		GetTree().ProcessFrame += process;
-
-/* 		GD.Print("----- playercolor ", main.colorIdx, " -----");
+/*
+		GD.Print("----- playercolor ", main.colorIdx, " -----");
 		GD.Print("textureSize", atlasSize);
 		GD.Print("mainTexture", spriteAtlas);
 		GD.Print("outlineColor", teamColors[main.colorIdx]);
 		GD.Print("rotation", mainSprite.Rotation);
-		GD.Print("sheetSize", textureSize/ atlasSize);
-		GD.Print("frame", (int)((atlasPosition.X/atlasSize.X) + ((atlasPosition.Y/atlasSize.Y)*(atlasSize.X/textureSize.X))));
+		GD.Print("sheetSize", textureSize / atlasSize);
+		GD.Print("frame", (int)((atlasPosition.X / atlasSize.X) + ((atlasPosition.Y / atlasSize.Y) * (atlasSize.X / textureSize.X))));
 		GD.Print("flipped", mainSprite.FlipH);
-		GD.Print("particlesCount", (int) (atlasSize.X * atlasSize.Y));	 */
-
+		GD.Print("particlesCount", (int) (atlasSize.X * atlasSize.Y));
+*/	
 		Callable onParticlesFinished;
 		onParticlesFinished = Callable.From(() =>
 		{

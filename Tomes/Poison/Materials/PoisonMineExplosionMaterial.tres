@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b0fn35j08id67"]
+
+[ext_resource type="Shader" uid="uid://dcp5konejlph4" path="res://Tomes/Poison/Materials/PoisonMineExplosionParticles.gdshader" id="1_os0pn"]
+
+[resource]
+shader = ExtResource("1_os0pn")

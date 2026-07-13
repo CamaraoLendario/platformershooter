@@ -4,14 +4,8 @@
 [ext_resource type="Script" uid="uid://dwtbqao5yu8i1" path="res://Tomes/Wind/WindTome.cs" id="2_86360"]
 [ext_resource type="PackedScene" uid="uid://fwcn3c2pvun" path="res://Tomes/Wind/WindProjectile.tscn" id="3_vkqiy"]
 [ext_resource type="AudioStream" uid="uid://jejf8xrc8wvt" path="res://Tomes/Wind/Audio/AirShoot.wav" id="4_1dloi"]
-[ext_resource type="Texture2D" uid="uid://daawcol3kgydg" path="res://Tomes/TomeAssets/Weapons.png" id="4_86360"]
 [ext_resource type="Script" uid="uid://mky5rwfixdbm" path="res://Tomes/Wind/WindBulletsAnimator.cs" id="6_1dloi"]
 [ext_resource type="Texture2D" uid="uid://du22f6c8i3wdm" path="res://Tomes/Wind/WindAmmo.png" id="6_vkqiy"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_21d0j"]
-resource_local_to_scene = true
-atlas = ExtResource("4_86360")
-region = Rect2(16, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1dloi"]
 atlas = ExtResource("6_vkqiy")
@@ -51,7 +45,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m0e00")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 10.0
 }]
@@ -63,9 +57,8 @@ rotates = false
 bullet = ExtResource("3_vkqiy")
 maxAmmo = 3
 
-[node name="Sprite2D" parent="." index="0" unique_id=570493511]
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=1661307283]
 visible = false
-texture = SubResource("AtlasTexture_21d0j")
 
 [node name="AudioStreamPlayer2D" parent="." index="1" unique_id=1734592678]
 stream = ExtResource("4_1dloi")

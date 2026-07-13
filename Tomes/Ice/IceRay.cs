@@ -23,8 +23,7 @@ public partial class IceRay : HitscanBullet
 		SetParticlesProperties(iceDropplets, distance, inputDir);
 		SetParticlesProperties(vortex, distance, inputDir);
 		hitEmitter.GlobalPosition = colPos;
-		(hitEmitter.ProcessMaterial as ParticleProcessMaterial).Direction = -new Vector3(inputDir.X, inputDir.Y, 0f);
-
+		(hitEmitter.ProcessMaterial as ShaderMaterial).SetShaderParameter("direction", -inputDir);
 		iceDropplets.Restart();
 		vortex.Restart();
 		hitEmitter.Restart();

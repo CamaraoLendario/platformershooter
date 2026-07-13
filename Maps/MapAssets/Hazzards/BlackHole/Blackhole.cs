@@ -35,7 +35,7 @@ public partial class Blackhole : Node2D
 			}
 			else if (node is LinearProjectile projectile)
 			{
-				projectile.Direction = ((projectile.Direction * projectile.speed) + pullForce).Normalized();
+				projectile.SetDirection((projectile.direction * projectile.speed) + pullForce);
 			}
 		}
     }

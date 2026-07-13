@@ -256,10 +256,11 @@ use_parent_material = true
 custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
 texture = SubResource("AtlasTexture_l4vhg")
-stretch_mode = 1
+stretch_mode = 0
 action = "MenuBack-2"
 
 [node name="StartGame" type="HBoxContainer" parent="." unique_id=1796703764]
+visible = false
 material = SubResource("ShaderMaterial_q8jyd")
 layout_mode = 1
 anchors_preset = 7

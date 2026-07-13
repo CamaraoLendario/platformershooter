@@ -9,9 +9,9 @@ public partial class MapPlaylist : Resource
 {
 	[Export] string[] mapUIDs = [
 		"uid://cck3f1axqqkvm", // base Map
-		"uid://dxgxqieibdi5n", // Cave Map
+		"uid://ckjbxccmrmhmb", // Pilot Only Small
 		"uid://coklf46qo3sam", // Pilot Only
-		// "uid://ckjbxccmrmhmb", // Pilot Only Small
+		"uid://dxgxqieibdi5n", // Cave Map
 		"uid://cjg0yfrc2mlc0", // Poison Ridden
 		"uid://tw7pvvfcnrf1",  // Tall Pilot Zone
 	];
@@ -39,16 +39,31 @@ public partial class MapPlaylist : Resource
 	{
 		currentIdx = NormalizeIdx(currentIdx + scrollCount, mapUIDs.Length);
 		currentMap = GD.Load<PackedScene>(mapUIDs[currentIdx]).Instantiate<Map>();
+
+		GD.Print("maxplayerCount: ", currentMap.maxPlayerCount);
+		GD.Print("player count:", Game.GetPlayersInfo().Count());
+
+		if (!hasEnoughSlots(currentMap)) {
+			return GetNextMap();
+		}
 		return currentMap;
 	}
 	public Map GetMap(int mapIdx)
 	{
 		currentIdx = mapIdx;
 		currentMap = GD.Load<PackedScene>(mapUIDs[mapIdx]).Instantiate<Map>();
+		if (!hasEnoughSlots(currentMap)) {
+			return GetNextMap();
+		}
 		return currentMap;
 	}
 	public Map GetCurrentMap()
 	{
 		return currentMap;
+	}
+
+	bool hasEnoughSlots(Map map)
+	{
+		return currentMap.maxPlayerCount >= Game.GetPlayersInfo().Count();
 	}
 }

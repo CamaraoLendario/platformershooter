@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public partial class Map : Node2D
 {
+    [Export] public int maxPlayerCount = 6;
     [ExportGroup("Nodes")]
     [Export] public Node Pickups;
     [Export] public MapBorders MapBordersNode;

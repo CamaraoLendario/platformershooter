@@ -46,3 +46,7 @@ vec2 RotateVec(vec2 inputVec, float angle){
 	outputVec = inputVec.x*v1 + inputVec.y*v2;
 	return outputVec;
 }
+
+vec2 cossin(float angle){
+	return vec2(cos(angle), sin(angle));
+}

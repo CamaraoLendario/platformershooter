@@ -20,7 +20,7 @@ public partial class ScoreBoard : Control
 	public void Initialize()
 	{
 		GamemodeLogic gamemodeLogic = Game.GetGamemodeLogic();
-		scoreCounters = new IndividualScoreCounter[gamemodeLogic.playerTeamByInputIdx.Count];
+		scoreCounters = new IndividualScoreCounter[gamemodeLogic.teams.Count];
 		for (int i = 0 ; i < scoreCounters.Length; i++)
 		{
 			if (scoreCountersTeam.Keys.Contains(-1)) return;

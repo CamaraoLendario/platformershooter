@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dga68363nl2bl"]
+
+[ext_resource type="Shader" uid="uid://cn7cvhbkatlrn" path="res://test/ShipReconstructionEmitters.gdshader" id="1_agm02"]
+[ext_resource type="Texture2D" uid="uid://kayfo7ufdpc2" path="res://Actors/Player/Ship/Sprites/spaceships.png" id="2_buwao"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_agm02")
+shader_parameter/shipTexture = ExtResource("2_buwao")
+shader_parameter/initialDistanceFromCenter = 20.0
+shader_parameter/spawningTime = 0.62
+shader_parameter/rotation = 0.0
+shader_parameter/randomSpawnWeight = 0.18
+shader_parameter/emitterRotationOffset = 1.2
+shader_parameter/globalPosition = Vector2(0, 0)

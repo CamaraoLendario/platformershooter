@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 public partial class Game : Node
 {
 	[Signal] public delegate void PausedGameEventHandler();	
 	[Signal] public delegate void UnPausedGameEventHandler();
-	public Dictionary<int, int> playerTeams; //inputIdx, teamIdx
 	public static Game Instance { get; private set; }
 	public Main main;
 	public MainMenu mainMenu;
@@ -136,7 +136,13 @@ public partial class Game : Node
 		return alivePlayers.ToArray();
 	}
 	public static PlayerInfo[] GetPlayersInfo()
-	{
+	{/* 
+		Main main = GetMain();
+		MainMenu mainMenu = main.GetMainMenu(); */
+
+		CharacterSelectScreen characterSelectScreen = Instance.mainMenu.GetScreen(MainMenu.Screens.CHARACTERSELECT) as CharacterSelectScreen;
+		Instance.playersInfo = characterSelectScreen.GetPlayersInfo();
+//		Instance.playersInfo = (GetMain().GetMainMenu().GetScreen(MainMenu.Screens.CHARACTERSELECT) as CharacterSelectScreen).GetPlayersInfo();
 		return Instance.playersInfo;
 	}
     public static Main GetMain()
@@ -175,6 +181,14 @@ public partial class Game : Node
 					}
 				}
 			}
+			if (Input.IsKeyPressed(Key.F11))
+			{
+				if (DisplayServer.WindowGetMode() != DisplayServer.WindowMode.Fullscreen)
+					DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
+				else
+					DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+			}
+			
 		}
 	}
 

@@ -2,18 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cq5j8co6klqqo" path="res://Preloaders/ShaderPreloader.cs" id="1_u365h"]
 [ext_resource type="Script" uid="uid://udbmy4veormw" path="res://Preloaders/Shaders2DPreloader.cs" id="2_gx4ag"]
+[ext_resource type="Material" uid="uid://b440sqhrft0wb" path="res://Actors/Player/Materials/AfterImages/PilotAfterImages.tres" id="3_66hw4"]
 [ext_resource type="Script" uid="uid://duhvyybb8gk21" path="res://Preloaders/ShadersParticlesPreloader.cs" id="3_c7uo6"]
-[ext_resource type="Material" uid="uid://x38tv3nmu01" path="res://Actors/Player/Materials/PilotShieldBreakParticles.tres" id="5_n5me8"]
-[ext_resource type="Material" uid="uid://b5s0ni7p05ow1" path="res://Actors/Player/Materials/ShipShieldBreakParticles.tres" id="6_h4eyt"]
-[ext_resource type="Material" uid="uid://bb6qj2nxuidly" path="res://Actors/Player/Ship/Material/ShipProjectileExplosionParticles.tres" id="7_h57io"]
-[ext_resource type="Material" uid="uid://bniqjtc2x7lkc" path="res://Actors/Player/Ship/Material/ShipProjectileTrailParticles.tres" id="8_tjm7n"]
-[ext_resource type="Material" uid="uid://evaeqexklt5o" path="res://Tomes/Fire/Materials/FireProjectileExplosionParticles.tres" id="9_jbuui"]
-[ext_resource type="Material" uid="uid://biflh5l4gvpao" path="res://Tomes/Fire/Materials/FireProjectileTrailParticles.tres" id="10_s6o26"]
-[ext_resource type="Material" uid="uid://36slk4uiaeax" path="res://Tomes/Fire/Materials/FireTomeTrailParticles.tres" id="11_43rki"]
-[ext_resource type="Material" uid="uid://um8eg4sda5mp" path="res://Tomes/Ice/IceDroppletsParticles.tres" id="12_ycucl"]
-[ext_resource type="Material" uid="uid://dbwnxxkulxaro" path="res://Tomes/Ice/IceHitEmitterParticles.tres" id="13_ysfab"]
-[ext_resource type="Material" uid="uid://bb5cmnqanosm4" path="res://Tomes/Ice/IceRayRingParticles.tres" id="14_qjvgt"]
-[ext_resource type="Material" uid="uid://dhsdia54awj6f" path="res://Tomes/Poison/Materials/PoisonMineExplosionParticles.tres" id="15_d66u2"]
+[ext_resource type="Material" uid="uid://b5i1uqnrt70x5" path="res://Actors/Player/Materials/AfterImages/ShipAfterImages.tres" id="4_6bydc"]
+[ext_resource type="Material" uid="uid://bvc3mf3avwkhd" path="res://Actors/Player/Materials/ContestantSpawnAnimation.tres" id="5_t215n"]
+[ext_resource type="Material" uid="uid://6b8p1p0j0p4f" path="res://Actors/Player/Materials/OutlineMaterial.tres" id="6_f4fnr"]
+[ext_resource type="Material" uid="uid://cuu7ef3oi50rv" path="res://Actors/Player/Materials/pilotDeathParticles.tres" id="7_vetao"]
+[ext_resource type="Material" uid="uid://bgglq6jh35xxs" path="res://Actors/Player/Ship/ShipReconstructionParticles.tres" id="8_f421r"]
 
 [node name="ShaderPreloader" type="Node2D" unique_id=1162227823 node_paths=PackedStringArray("shaders2DPreloader", "shadersParticlesPreloader")]
 script = ExtResource("1_u365h")
@@ -24,7 +19,7 @@ shadersParticlesPreloader = NodePath("ParticlesShaderLoader")
 offset_right = 1.0
 offset_bottom = 1.0
 script = ExtResource("2_gx4ag")
+shadersToPreload = [ExtResource("3_66hw4"), ExtResource("4_6bydc"), ExtResource("5_t215n"), ExtResource("6_f4fnr"), ExtResource("7_vetao"), ExtResource("8_f421r")]
 
 [node name="ParticlesShaderLoader" type="GPUParticles2D" parent="." unique_id=2079015238]
 script = ExtResource("3_c7uo6")
-particlesToPreload = [ExtResource("5_n5me8"), ExtResource("6_h4eyt"), ExtResource("7_h57io"), ExtResource("8_tjm7n"), ExtResource("9_jbuui"), ExtResource("10_s6o26"), ExtResource("11_43rki"), ExtResource("12_ycucl"), ExtResource("13_ysfab"), ExtResource("14_qjvgt"), ExtResource("15_d66u2")]

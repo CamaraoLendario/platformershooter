@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://lcoablfapn74"]
+
+[ext_resource type="Shader" uid="uid://b46p0nio05t5y" path="res://Tomes/Fire/Materials/FireTrailShader.gdshader" id="1_5cr02"]
+
+[resource]
+shader = ExtResource("1_5cr02")

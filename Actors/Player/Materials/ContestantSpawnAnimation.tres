@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://bvc3mf3avwkhd"]
 
-[ext_resource type="Shader" uid="uid://cambmcm2bey2f" path="res://test/PlayerReconstruction.gdshader" id="1_qlg80"]
+[ext_resource type="Shader" uid="uid://cambmcm2bey2f" path="res://test/PilotReconstruction.gdshader" id="1_qlg80"]
 [ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Textures/Sprites/PilotStill.png" id="2_au2af"]
 
 [resource]

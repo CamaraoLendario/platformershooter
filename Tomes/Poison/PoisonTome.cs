@@ -21,7 +21,7 @@ public partial class PoisonTome : Weapon
 		newBullet.Position = GlobalPosition;
 		newBullet.direction = newBullet.direction.Normalized();
 		newBullet.owner = owner;
-
+	
 		world.CallDeferred(MethodName.AddChild, newBullet);
 
 		currentAmmo--;

@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://ceiwo7xx53l5y" path="res://Actors/Player/Ship/ShipProjectile.tscn" id="5_gsc2s"]
 [ext_resource type="Script" uid="uid://ccqskcvjhmhsp" path="res://Actors/Player/Pilot/PilotSprite.cs" id="7_tko72"]
 [ext_resource type="SpriteFrames" uid="uid://m61ey6b20dbl" path="res://Actors/Player/Ship/ShipSpriteFrames.tres" id="8_2i0nn"]
-[ext_resource type="SpriteFrames" uid="uid://bvv7s24ovshue" path="res://Actors/Player/Pilot/Textures/Sprites/DinoxaurrSpriteFrames.tres" id="8_3mvtf"]
+[ext_resource type="SpriteFrames" uid="uid://did31qqxjn5po" path="res://Actors/Player/Pilot/Textures/Sprites/BasePilotSpriteFrames.tres" id="8_v8mwv"]
 [ext_resource type="Script" uid="uid://iv6540036kov" path="res://Actors/Player/Ship/ShipSprite.cs" id="9_74l4w"]
 [ext_resource type="Script" uid="uid://qdxgmtuu50ff" path="res://Actors/Player/Pilot/PilotWeaponHolder.cs" id="10_a5pbq"]
 [ext_resource type="Script" uid="uid://hs076ncgtutx" path="res://Actors/Player/Pilot/MeleeAttack.cs" id="11_gffum"]
@@ -32,18 +32,17 @@
 [ext_resource type="Script" uid="uid://cm35ummf61a2h" path="res://Actors/Player/Ship/ShipPowerUps/ShipPowerUpsHolder.cs" id="21_87ye5"]
 [ext_resource type="AudioStream" uid="uid://df3887uxi4rdk" path="res://Actors/Player/Ship/Audio/ShipDash.wav" id="21_k8e2g"]
 [ext_resource type="AudioStream" uid="uid://dme50v05dt1qp" path="res://Actors/Player/Ship/Audio/ShipDestroyed.wav" id="22_7m1i7"]
-[ext_resource type="Material" uid="uid://b5s0ni7p05ow1" path="res://Actors/Player/Materials/ShipShieldBreakParticles.tres" id="22_aao0a"]
 [ext_resource type="Shader" uid="uid://c5of2yh1koxya" path="res://Actors/Player/ShieldColorer.gdshader" id="22_l7nff"]
 [ext_resource type="AudioStream" uid="uid://c861r8jtk0so" path="res://Assets/Audio/Ilikeit.wav" id="23_k8e2g"]
 [ext_resource type="PackedScene" uid="uid://diosn7qu6kfh6" path="res://Actors/Player/Effects/Frozen/frozen_ddr.tscn" id="24_aao0a"]
 [ext_resource type="Material" uid="uid://b5i1uqnrt70x5" path="res://Actors/Player/Materials/AfterImages/ShipAfterImages.tres" id="24_hdyga"]
 [ext_resource type="Texture2D" uid="uid://sk1boe546wm1" path="res://Actors/Player/Ship/Sprites/BrokenShipSpriteSheet.png" id="26_kr5aq"]
-[ext_resource type="Material" uid="uid://bgglq6jh35xxs" path="res://Actors/Player/Ship/ShipReconstructionParticles.tres" id="28_ia8ke"]
 [ext_resource type="Script" uid="uid://lcfkknp3vonf" path="res://Actors/Player/PlayeronPlayerCollision.cs" id="32_aao0a"]
 [ext_resource type="Shader" uid="uid://2a0lckgf0rh1" path="res://Actors/Player/Materials/ShieldParticlesSpriteSheetHandler.gdshader" id="37_3mvtf"]
-[ext_resource type="Shader" uid="uid://rx1j3gaigmer" path="res://Actors/Player/Materials/PilotShieldBreakParticles.gdshader" id="39_hdyga"]
-[ext_resource type="Shader" uid="uid://d2yhqul7vijnh" path="res://Actors/Player/ShipDestructionParticles.gdshader" id="40_3mvtf"]
+[ext_resource type="Material" uid="uid://x38tv3nmu01" path="res://Actors/Player/Materials/PilotShieldBreakParticles.tres" id="39_3mvtf"]
 [ext_resource type="Script" uid="uid://dfu4imudmwcbs" path="res://Actors/Player/ParticlesHandler.cs" id="41_0ieod"]
+[ext_resource type="Material" uid="uid://dvi2o7o70cua" path="res://Actors/Player/Materials/ShipDestructionParticles.tres" id="41_3mvtf"]
+[ext_resource type="Material" uid="uid://dga68363nl2bl" path="res://Actors/Player/Materials/ShipReconstruction.tres" id="42_3mvtf"]
 [ext_resource type="Material" uid="uid://bvc3mf3avwkhd" path="res://Actors/Player/Materials/ContestantSpawnAnimation.tres" id="44_v8mwv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_g6ejb"]
@@ -109,7 +108,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jiph2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 7.0
 }]
@@ -193,7 +192,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m1t7r")
 }],
-"loop": false,
+"loop": 0,
 "name": &"Attack1",
 "speed": 20.0
 }]
@@ -230,7 +229,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sg1wo")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 7.0
 }]
@@ -276,32 +275,17 @@ _data = {
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f6sss"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e3tbv"]
-shader = ExtResource("37_3mvtf")
-shader_parameter/particles_anim_h_frames = 3
-shader_parameter/particles_anim_v_frames = 2
-shader_parameter/particles_anim_loop = false
-shader_parameter/Color = Color(1, 1, 1, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v8mwv"]
-resource_local_to_scene = true
-shader = ExtResource("39_hdyga")
-shader_parameter/initialVelocityMultiplier = 50.0
-shader_parameter/rotationMultiplier = 4.0
-shader_parameter/SpriteSheetSize = Vector2(4, 2)
-shader_parameter/Color = Color(0.8509804, 0, 0, 1)
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3mvtf"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 2
+particles_anim_loop = false
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_emuwr"]
 particles_animation = true
 particles_anim_h_frames = 4
 particles_anim_v_frames = 2
 particles_anim_loop = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hdyga"]
-shader = ExtResource("40_3mvtf")
-shader_parameter/initialVelocityMultiplier = 100.0
-shader_parameter/rotationMultiplier = 1.0
-shader_parameter/SpriteSheetSize = Vector2(4, 2)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_emuwr"]
 resource_local_to_scene = true
@@ -405,7 +389,7 @@ shape = SubResource("RectangleShape2D_0jobf")
 process_mode = 3
 z_index = 1
 use_parent_material = true
-sprite_frames = ExtResource("8_3mvtf")
+sprite_frames = ExtResource("8_v8mwv")
 animation = &"Running"
 script = ExtResource("7_tko72")
 controller = NodePath("../Pilot Controller")
@@ -606,7 +590,7 @@ process_material = ExtResource("13_f6sss")
 [node name="PilotShieldDestructionParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=2015931778]
 z_index = 3
 z_as_relative = false
-material = SubResource("ShaderMaterial_e3tbv")
+material = SubResource("CanvasItemMaterial_3mvtf")
 emitting = false
 amount = 6
 sub_emitter = NodePath(".")
@@ -616,7 +600,7 @@ explosiveness = 1.0
 randomness = 1.0
 fixed_fps = 60
 local_coords = true
-process_material = SubResource("ShaderMaterial_v8mwv")
+process_material = ExtResource("39_3mvtf")
 
 [node name="ShipDestructionParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=250211982]
 material = SubResource("CanvasItemMaterial_emuwr")
@@ -625,7 +609,8 @@ texture = ExtResource("26_kr5aq")
 one_shot = true
 explosiveness = 1.0
 fixed_fps = 120
-process_material = SubResource("ShaderMaterial_hdyga")
+local_coords = true
+process_material = ExtResource("41_3mvtf")
 
 [node name="ShipReconstructionParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=713480820]
 z_index = 2
@@ -633,8 +618,8 @@ emitting = false
 amount = 1024
 one_shot = true
 explosiveness = 1.0
-fixed_fps = 60
-process_material = ExtResource("28_ia8ke")
+fixed_fps = 75
+process_material = ExtResource("42_3mvtf")
 
 [node name="ShipShieldDestructionParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=1177343099]
 material = SubResource("ShaderMaterial_emuwr")
@@ -646,7 +631,7 @@ explosiveness = 1.0
 randomness = 1.0
 fixed_fps = 60
 local_coords = true
-process_material = ExtResource("22_aao0a")
+process_material = ExtResource("41_3mvtf")
 
 [node name="PilotSpawningParticles" type="GPUParticles2D" parent="ParticlesHandler" unique_id=1646918705]
 process_mode = 3

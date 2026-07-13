@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cxpas5nanqttn" path="res://Tomes/Ice/IceRay.cs" id="1_65ofw"]
 [ext_resource type="Texture2D" uid="uid://dddru485lah7v" path="res://Tomes/Ice/IceParticlesSpriteSheet.png" id="2_l8rrr"]
+[ext_resource type="Material" uid="uid://b4p0o7p6b7kvm" path="res://Tomes/Ice/IceRayHitParticles.tres" id="3_thlil"]
 [ext_resource type="Shader" uid="uid://cn1ig3b2jml2o" path="res://icerayDropplets.gdshader" id="4_t5eis"]
-[ext_resource type="Material" uid="uid://dbwnxxkulxaro" path="res://Tomes/Ice/IceHitEmitterParticles.tres" id="5_ig62p"]
 [ext_resource type="Shader" uid="uid://pm52f82ybc05" path="res://icerayVortex.gdshader" id="6_l24c7"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_l8rrr"]
@@ -54,7 +54,8 @@ lifetime = 0.75
 one_shot = true
 explosiveness = 1.0
 fixed_fps = 60
-process_material = ExtResource("5_ig62p")
+local_coords = true
+process_material = ExtResource("3_thlil")
 
 [node name="IceDropplets" type="GPUParticles2D" parent="." unique_id=1598309563]
 material = SubResource("CanvasItemMaterial_cb0yb")

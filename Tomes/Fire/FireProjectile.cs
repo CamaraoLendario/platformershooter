@@ -45,7 +45,7 @@ public partial class FireProjectile : LinearProjectile
 
 	protected override void OnBodyHit(Node2D body)
 	{
-		if (body is Player player && player.colorIdx != owner.colorIdx)
+		if (body is Player player && player.GetTeam() != owner.GetTeam())
 			End(EndingReason.HITPLAYER);
 		else if (body is TileMapLayer)
 			End(EndingReason.HITGEOMETRY);
@@ -85,4 +85,10 @@ public partial class FireProjectile : LinearProjectile
 	{
         base.End(EndingReason.TIMEOUT);
     }
+
+    public override void SetDirection(Vector2 inputVector) {
+		base.SetDirection(inputVector);
+		sprite.Rotation -= Mathf.Pi/2;
+		sprite.FlipV = false;
+	}
 }

@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dkdd2s4lt1ic2" path="res://Global/Main.cs" id="1_xoayq"]
 [ext_resource type="PackedScene" uid="uid://nlhmcbtm3oey" path="res://Global/constant_overlay.tscn" id="3_ed0e0"]
 [ext_resource type="PackedScene" uid="uid://blk3xlkdst7il" path="res://Maps/Overworld/OverWorld.tscn" id="4_uph1o"]
+[ext_resource type="Material" uid="uid://ywc7ap10rmau" path="res://FullScreenShaders/CRTfilterMaterial.tres" id="5_b42ka"]
 
 [node name="Main" type="Node" unique_id=1873790456 groups=["Main"]]
 script = ExtResource("1_xoayq")
@@ -16,3 +17,13 @@ process_mode = 3
 
 [node name="OverWorld" parent="." unique_id=582483126 instance=ExtResource("4_uph1o")]
 unique_name_in_owner = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=134932299]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=561122860]
+material = ExtResource("5_b42ka")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

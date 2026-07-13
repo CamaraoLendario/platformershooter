@@ -1,4 +1,5 @@
 shader_type particles;
+
 uniform sampler2D mainTexture;
 uniform vec3 outlineColor: source_color = vec3(1., 0., 0.);
 uniform vec2 initPos = vec2(0.);

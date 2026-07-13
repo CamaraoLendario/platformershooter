@@ -396,6 +396,11 @@ public partial class Player : CharacterBody2D
 			return shipSprite;
 	}
 
+	public int GetTeam()
+	{
+		return Game.GetGamemodeLogic().playerTeamByInputIdx[GetInputIdx()];
+	}
+
 	#if TOOLS
     public override void _Input(InputEvent @event)
 	{

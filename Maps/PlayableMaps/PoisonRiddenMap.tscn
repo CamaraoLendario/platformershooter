@@ -197,22 +197,40 @@ shader_parameter/separation = Vector2(300, 300)
 
 [node name="Map" unique_id=2111020874 instance=ExtResource("1_w4e3s")]
 
-[node name="Node2D" type="Node2D" parent="SpawnPoints" parent_id_path=PackedInt32Array(1437720429) index="0" unique_id=449482881]
+[node name="Node2D" type="Node2D" parent="SpawnPoints/FFAPoints" parent_id_path=PackedInt32Array(796362291) index="0" unique_id=449482881]
 position = Vector2(-136, 89)
 
-[node name="Node2D2" type="Node2D" parent="SpawnPoints" parent_id_path=PackedInt32Array(1437720429) index="1" unique_id=2089811191]
+[node name="Node2D2" type="Node2D" parent="SpawnPoints/FFAPoints" parent_id_path=PackedInt32Array(796362291) index="1" unique_id=2089811191]
 position = Vector2(136, 90)
 
-[node name="Node2D3" type="Node2D" parent="SpawnPoints" parent_id_path=PackedInt32Array(1437720429) index="2" unique_id=1050628310]
+[node name="Node2D3" type="Node2D" parent="SpawnPoints/FFAPoints" parent_id_path=PackedInt32Array(796362291) index="2" unique_id=1050628310]
 position = Vector2(349, -157)
 
-[node name="Node2D5" type="Node2D" parent="SpawnPoints" parent_id_path=PackedInt32Array(1437720429) index="3" unique_id=42736697]
+[node name="Node2D5" type="Node2D" parent="SpawnPoints/FFAPoints" parent_id_path=PackedInt32Array(796362291) index="3" unique_id=42736697]
 position = Vector2(-353, -157)
 
-[node name="Node2D4" type="Node2D" parent="SpawnPoints" parent_id_path=PackedInt32Array(1437720429) index="4" unique_id=1594212046]
+[node name="Node2D4" type="Node2D" parent="SpawnPoints/FFAPoints" parent_id_path=PackedInt32Array(796362291) index="4" unique_id=1594212046]
 position = Vector2(349, 157)
 
-[node name="Node2D6" type="Node2D" parent="SpawnPoints" parent_id_path=PackedInt32Array(1437720429) index="5" unique_id=318127100]
+[node name="Node2D6" type="Node2D" parent="SpawnPoints/FFAPoints" parent_id_path=PackedInt32Array(796362291) index="5" unique_id=318127100]
+position = Vector2(-353, 157)
+
+[node name="Node2D2" type="Node2D" parent="SpawnPoints/TEAMSPoints/team0" parent_id_path=PackedInt32Array(280656345) index="0" unique_id=1646791737]
+position = Vector2(136, 90)
+
+[node name="Node2D3" type="Node2D" parent="SpawnPoints/TEAMSPoints/team0" parent_id_path=PackedInt32Array(280656345) index="1" unique_id=1091482400]
+position = Vector2(349, -157)
+
+[node name="Node2D4" type="Node2D" parent="SpawnPoints/TEAMSPoints/team0" parent_id_path=PackedInt32Array(280656345) index="2" unique_id=411552427]
+position = Vector2(349, 157)
+
+[node name="Node2D" type="Node2D" parent="SpawnPoints/TEAMSPoints/team1" parent_id_path=PackedInt32Array(1880593755) index="0" unique_id=1518338762]
+position = Vector2(-136, 89)
+
+[node name="Node2D5" type="Node2D" parent="SpawnPoints/TEAMSPoints/team1" parent_id_path=PackedInt32Array(1880593755) index="1" unique_id=1130399049]
+position = Vector2(-353, -157)
+
+[node name="Node2D6" type="Node2D" parent="SpawnPoints/TEAMSPoints/team1" parent_id_path=PackedInt32Array(1880593755) index="2" unique_id=769007828]
 position = Vector2(-353, 157)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PilotArea" parent_id_path=PackedInt32Array(35701636) index="1" unique_id=1364536640]

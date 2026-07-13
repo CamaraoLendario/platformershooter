@@ -9,11 +9,11 @@ namespace SpaceMages
 	public partial class SpaceMagesVars : Node
 	{
 		public static string[] pilotSpriteFramesUIDs = [
-			"uid://bcbvwjw2kxhut", // Red
-			"uid://bcbvwjw2kxhut", // Purple
+			"uid://djokvg4l6rywx", // Red
+			"uid://c6hak11j7sscu", // Purple
 			"uid://bcbvwjw2kxhut", // Blue
-			"uid://bcbvwjw2kxhut", // Green
-			"uid://bcbvwjw2kxhut", // Yellow
+			"uid://b2bbgfnkglt34", // Green
+			"uid://dtn6lngqvldbv", // Yellow
 			"uid://bvv7s24ovshue", // Orange
 		];
 		public enum ColorNames

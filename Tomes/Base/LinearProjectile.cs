@@ -22,27 +22,11 @@ public partial class LinearProjectile : Area2D
 	[Export]
 	public ReasonFlags CanEndBy = (ReasonFlags)15;
 	[ExportGroup("Nodes")]
-	[Export] public Node2D sprite;
-	[Export] Node2D confirmRaysNode;
-
-	public Vector2 Direction
-	{
-		get
-		{
-			return direction;
-		}
-		set
-		{
-			direction = value;
-			sprite.Rotation = value.Angle();
-		}
-	}
-	private Vector2 direction;
-	
+	[Export] public AnimatedSprite2D sprite;
+	public Vector2 direction {get; private set;}
 	PilotArea pilotArea;
 	public Player owner;
 	public bool isInPilotArea = true;
-	protected float collisionConfirmLength = 24.0f;
 	protected Timer lifeTimer = new Timer();
 	protected bool ending = false;
 	protected bool isColiding = false;
@@ -56,11 +40,6 @@ public partial class LinearProjectile : Area2D
 	
 	public override void _Ready()
 	{
-		sprite.Rotation = Direction.Angle();
-	
-		if (sprite.Rotation > Mathf.Pi/2 || sprite.Rotation < -Mathf.Pi/2)
-			FlipVSprite(sprite, true);
-
 		lifeTimer.OneShot = true;
 		AddChild(lifeTimer);
 		lifeTimer.Timeout += OnLifeEnd;
@@ -109,29 +88,27 @@ public partial class LinearProjectile : Area2D
 	
 	protected virtual void Move(double delta)
 	{
-		Position += Direction * speed * (float)delta;
+		Position += direction * speed * (float)delta;
 	}
 
     public void SetDirection(float inputRotation)
 	{
-		if (inputRotation < 0)
-		{
-			inputRotation += (2 * MathF.PI);
-		}
-		Direction = new Vector2(MathF.Cos(inputRotation), MathF.Sin(inputRotation));
+		inputRotation = Mathf.Abs(inputRotation);
+		SetDirection(new Vector2(MathF.Cos(inputRotation), MathF.Sin(inputRotation)));
 	}
-	public void SetDirection(Vector2 inputVector)
+	public virtual void SetDirection(Vector2 inputVector)
 	{
-		Direction = inputVector.Normalized();
-	}
-	public void SetDirection(int x, int y)
-	{
-		Direction = new Vector2(x, y).Normalized();
+		direction = inputVector.Normalized();
+		sprite.Rotation = direction.Angle();
+	
+		if (sprite.Rotation > Mathf.Pi/2 || sprite.Rotation < -Mathf.Pi/2)
+			sprite.FlipV = true;
 	}
 
 	protected virtual void OnBodyHit(Node2D body)
 	{
-		if ((body is Player) && ((body as Player).colorIdx == owner.colorIdx)) return;
+		if ((body is Player player) && player.GetTeam() == owner.GetTeam())
+			return;
 		isColiding = true;
 		if (body is TileMapLayer tileMapLayer)
 		{
@@ -141,10 +118,8 @@ public partial class LinearProjectile : Area2D
 		}
 		if (!(body is Player)) return;
 
-		Player player = body as Player;
-
 		End(EndingReason.HITPLAYER);
-		player.TakeDamage(owner);
+		(body as Player).TakeDamage(owner);
 	}
 	
 	public virtual void OnLifeEnd()
@@ -183,61 +158,15 @@ public partial class LinearProjectile : Area2D
 			QueueFree();
 		return true;
 	}
-
-	protected virtual void CollisionConfirm()
-	{
-		if (IsQueuedForDeletion()) return;
-		List<Vector2> CollisionPoints = [
-			Vector2.Zero,
-			Vector2.Zero,
-			Vector2.Zero,
-		];
-
-		for (int i = -1; i <= 1; i++)
-		{
-			RayCast2D confirmRay = confirmRaysNode.GetChild<RayCast2D>(i);
-
-			confirmRay.Position = Vector2.Left.Rotated((Mathf.Pi / 2) * i) * collisionConfirmLength;
-			confirmRay.TargetPosition = Vector2.Right.Rotated((Mathf.Pi / 2) * i) * collisionConfirmLength * 2;
-
-			confirmRay.ForceRaycastUpdate();
-			Vector2 collisionPos = confirmRay.GetCollisionPoint();
-			if (collisionPos != confirmRay.GlobalPosition)
-				CollisionPoints[i + 1] = collisionPos;
-		}
-
-		var tempPos = CollisionPoints;
-		CollisionPoints[0] = tempPos[1];
-		CollisionPoints[1] = tempPos[0];
-
-		for (int i = 0; i < CollisionPoints.Count - 1; i++)
-        {
-			if (CollisionPoints[i] != Vector2.Zero)
-			{
-				GlobalPosition = CollisionPoints[i];
-				
-				return;
-			}
-        }
-	}
 	
     public virtual void OnRoundFinished()
     {
 		QueueFree();
     }
 
-	void FlipVSprite(Node2D sprite, bool flip)
-	{
-		if(sprite is Sprite2D Sprite)
-		{
-			Sprite.FlipV = flip;
-		}
-		else if (sprite is AnimatedSprite2D animatedSprite)
-			animatedSprite.FlipV = flip;
-	}
     public override void _ExitTree()
     {
 		SignalBus.Instance.RoundFinished -= OnRoundFinished;
     }
-
+	
 }

@@ -1,18 +1,36 @@
 [gd_scene format=3 uid="uid://b21mdwxehi2be"]
 
-[ext_resource type="Script" uid="uid://ccubeqhpap1bn" path="res://test/Testingparticles.cs" id="1_jl5lc"]
 [ext_resource type="Material" uid="uid://cuu7ef3oi50rv" path="res://Actors/Player/Materials/pilotDeathParticles.tres" id="1_two45"]
 [ext_resource type="Material" uid="uid://bgglq6jh35xxs" path="res://Actors/Player/Ship/ShipReconstructionParticles.tres" id="2_1w7aq"]
-[ext_resource type="Shader" uid="uid://cambmcm2bey2f" path="res://test/PlayerReconstruction.gdshader" id="4_ovb6m"]
+[ext_resource type="Shader" uid="uid://cambmcm2bey2f" path="res://test/PilotReconstruction.gdshader" id="4_ovb6m"]
 [ext_resource type="Texture2D" uid="uid://kayfo7ufdpc2" path="res://Actors/Player/Ship/Sprites/spaceships.png" id="5_0n3v0"]
-[ext_resource type="Texture2D" uid="uid://b1y4dm1w0puo2" path="res://Actors/Player/Pilot/Textures/Sprites/Pilot.png" id="5_5stis"]
+[ext_resource type="Texture2D" uid="uid://b1y4dm1w0puo2" path="res://Actors/Player/Pilot/Textures/Sprites/PilotBlue.png" id="5_5stis"]
 [ext_resource type="Script" uid="uid://bxve3vi4ksdh7" path="res://test/PilotSpawningParticles.cs" id="6_u816s"]
-[ext_resource type="SpriteFrames" uid="uid://bcbvwjw2kxhut" path="res://Actors/Player/Pilot/Textures/Sprites/PilotSpriteFrames.tres" id="7_5stis"]
+[ext_resource type="SpriteFrames" uid="uid://bcbvwjw2kxhut" path="res://Actors/Player/Pilot/Textures/Sprites/PilotBlueSpriteFrames.tres" id="7_5stis"]
 [ext_resource type="Shader" uid="uid://c5of2yh1koxya" path="res://Actors/Player/ShieldColorer.gdshader" id="8_6s7tq"]
 [ext_resource type="Texture2D" uid="uid://ddymh4fx17tto" path="res://Actors/Player/Pilot/Textures/Shield/PilotShield.png" id="9_fnouk"]
 [ext_resource type="SpriteFrames" uid="uid://m61ey6b20dbl" path="res://Actors/Player/Ship/ShipSpriteFrames.tres" id="11_yn2pn"]
 [ext_resource type="Script" uid="uid://iv6540036kov" path="res://Actors/Player/Ship/ShipSprite.cs" id="12_tcigw"]
 [ext_resource type="Texture2D" uid="uid://hlhysuf1ahja" path="res://Actors/Player/Ship/Sprites/ShipShield.png" id="13_r827h"]
+[ext_resource type="Material" uid="uid://dga68363nl2bl" path="res://Actors/Player/Materials/ShipReconstruction.tres" id="14_fnouk"]
+[ext_resource type="Texture2D" uid="uid://bksnhkh0eug50" path="res://Assets/Particles/fireTrailParticles.png" id="15_tcigw"]
+[ext_resource type="Material" uid="uid://lcoablfapn74" path="res://Tomes/Fire/Materials/FireTrailMaterial.tres" id="16_r827h"]
+[ext_resource type="Script" uid="uid://dbapunmp230g0" path="res://test/ParticlesTesting.cs" id="16_tcigw"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_r827h"]
+script/source = "using Godot;
+using System;
+
+public partial class Testingparticles : Node2D
+{
+	[Export] GpuParticles2D reconstruction;
+
+	public override void _Process(double delta)
+	{
+		(reconstruction.ProcessMaterial as ShaderMaterial).SetShaderParameter(\"newPos\", reconstruction.Position);
+	}
+}
+"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xfrbd"]
 atlas = ExtResource("5_5stis")
@@ -60,7 +78,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jiph2")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 7.0
 }]
@@ -149,7 +167,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_sg1wo")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 7.0
 }]
@@ -197,8 +215,14 @@ _data = {
 atlas = ExtResource("5_5stis")
 region = Rect2(48, 0, 16, 18)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gprao"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
 [node name="Node2D" type="Node2D" unique_id=298116757 node_paths=PackedStringArray("reconstruction")]
-script = ExtResource("1_jl5lc")
+script = SubResource("CSharpScript_r827h")
 reconstruction = NodePath("ShipReconstructionParticles")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=2128121280]
@@ -282,3 +306,24 @@ libraries/ = SubResource("AnimationLibrary_le5uu")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1122313279]
 position = Vector2(77, 10)
 texture = SubResource("AtlasTexture_fnouk")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="." unique_id=1471474219]
+position = Vector2(-100, 100)
+amount = 1024
+explosiveness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = ExtResource("14_fnouk")
+
+[node name="TrailParticles" type="GPUParticles2D" parent="." unique_id=473054430]
+show_behind_parent = true
+material = SubResource("CanvasItemMaterial_gprao")
+position = Vector2(-53, 10)
+amount = 60
+sub_emitter = NodePath(".")
+texture = ExtResource("15_tcigw")
+lifetime = 0.31
+fixed_fps = 60
+process_material = ExtResource("16_r827h")
+script = ExtResource("16_tcigw")
+enabled = false

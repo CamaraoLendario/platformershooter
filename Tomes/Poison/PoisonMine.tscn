@@ -4,8 +4,41 @@
 [ext_resource type="PackedScene" uid="uid://c6gpkqe1yquou" path="res://Tomes/TomesComponents/explosion_component.tscn" id="2_5i22y"]
 [ext_resource type="Texture2D" uid="uid://jxttkygiuo0l" path="res://Tomes/TomeAssets/Poison/PoisonMine.png" id="2_jtwu7"]
 [ext_resource type="AudioStream" uid="uid://befsxwhbucufv" path="res://Tomes/Fire/Audio/fireExplosion.wav" id="3_loy0m"]
-[ext_resource type="Texture2D" uid="uid://cw0mcwp3fsiht" path="res://Assets/Particles/explosion particle.png" id="5_wdsbh"]
-[ext_resource type="Material" uid="uid://dhsdia54awj6f" path="res://Tomes/Poison/Materials/PoisonMineExplosionParticles.tres" id="6_0bnul"]
+[ext_resource type="Texture2D" uid="uid://pwre6lvptcv8" path="res://Assets/Particles/explosionParticlesSouls.png" id="5_0bnul"]
+[ext_resource type="Material" uid="uid://b0fn35j08id67" path="res://Tomes/Poison/Materials/PoisonMineExplosionMaterial.tres" id="6_0bnul"]
+
+[sub_resource type="Shader" id="Shader_r07xa"]
+code = "shader_type canvas_item;
+uniform int frame = 0;
+uniform vec3 eyeColor: source_color;
+uniform vec2 lookDir;
+const vec2[2] eyeCenterPoss = vec2[2](
+	vec2(0.375, 0.25),
+	vec2(0.688, 0.25)
+);
+
+void fragment() {
+	vec2 uv = UV * vec2(3., 1.);
+	uv -= vec2(0., 0.);
+	for (int i = 0; i < 2; i++){
+	vec2 dirVec = uv - ((eyeCenterPoss[i] + float(frame) * vec2(1, 0)) + (lookDir * TEXTURE_PIXEL_SIZE * vec2(1.5, 0.5)));
+		if (dirVec.x < TEXTURE_PIXEL_SIZE.x*1.5 && dirVec.y < TEXTURE_PIXEL_SIZE.x*1.5 && dirVec.x > -TEXTURE_PIXEL_SIZE.x*1.5 && dirVec.y > -TEXTURE_PIXEL_SIZE.x*1.5){
+			COLOR.rgba = vec4(eyeColor, 1.);
+	}}
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0bnul"]
+resource_local_to_scene = true
+shader = SubResource("Shader_r07xa")
+shader_parameter/frame = 0
+shader_parameter/eyeColor = Color(0.37800002, 0.54, 0.47520003, 1)
+shader_parameter/lookDir = Vector2(0, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_loy0m"]
 atlas = ExtResource("2_jtwu7")
@@ -31,7 +64,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wdsbh")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Explode",
 "speed": 5.0
 }]
@@ -60,6 +93,7 @@ explosionParticles = NodePath("ExplosionParticles")
 sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=36108805]
+material = SubResource("ShaderMaterial_0bnul")
 sprite_frames = SubResource("SpriteFrames_0bnul")
 animation = &"Explode"
 
@@ -72,6 +106,7 @@ collision_layer = 0
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=2140548625]
+visible = false
 shape = SubResource("CircleShape2D_5i22y")
 
 [node name="CollisionArea" type="Area2D" parent="." unique_id=1369547824]
@@ -79,20 +114,22 @@ collision_layer = 0
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea" unique_id=2011727288]
+visible = false
 shape = SubResource("CircleShape2D_0bnul")
 
 [node name="ExplosionRadius" type="CollisionShape2D" parent="." unique_id=1005325337]
+visible = false
 shape = SubResource("CircleShape2D_wdsbh")
 debug_color = Color(1, 0, 0.05000019, 0.16862746)
 
 [node name="ExplosionParticles" type="GPUParticles2D" parent="." unique_id=1619195926]
 material = SubResource("CanvasItemMaterial_0bnul")
 emitting = false
-amount = 152
-texture = ExtResource("5_wdsbh")
-lifetime = 0.5
+amount = 120
+texture = ExtResource("5_0bnul")
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
+fixed_fps = 60
 local_coords = true
 process_material = ExtResource("6_0bnul")

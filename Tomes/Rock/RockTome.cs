@@ -25,14 +25,8 @@ public partial class RockTome : Weapon
 
 			rockPellet.SetDirection(Vector2.FromAngle(rot));
 			rockPellet.owner = owner;
-			
-			AtlasTexture newTexture = (rockPellet.sprite as Sprite2D).Texture.Duplicate() as AtlasTexture;
 
-			Vector2 pelletSpriteRegionPosition = new(GD.RandRange(0, 2), GD.RandRange(0, 1));
-
-			newTexture.Region = new Rect2(pelletSpriteRegionPosition * 16, Vector2.One * 16);
-			(rockPellet.sprite as Sprite2D).Texture = newTexture;
-			
+			rockPellet.sprite.Frame = GD.RandRange(0, 5);
 			pellets.Add(rockPellet);
 			world.CallDeferred(MethodName.AddChild, rockPellet);
 		}
@@ -44,13 +38,8 @@ public partial class RockTome : Weapon
 		currentAmmo--;
 		if (currentAmmo <= 0) holder.DropWeapon();
 
-		Rect2 newRegion = new Rect2()
-		{
-			Size = Vector2.One * 16,
-			Position = Vector2.Right * (3 - currentAmmo) * 16
-		};
-
-		((sprite as Sprite2D).Texture as AtlasTexture).Region = newRegion;
+		sprite.Frame = 3 - currentAmmo;// TODO changed this from using atlas texture in a sprite 2d to just an animated sprite 2d due to changing standard in main scene of weapons. untested, test
+		
 		return true;
     }
 }

@@ -113,7 +113,7 @@ public partial class MeleeAttack : Area2D
 	{
 		if (area is LinearProjectile projectile/*  && projectile is not PoisonProjectile */)
 		{
-			projectile.Direction = pilot.aimVector.Normalized();
+			projectile.SetDirection(pilot.aimVector);
 			projectile.owner = Main;
 			//projectile.End();
 			hasDeflectionPrivelage = true;
@@ -138,7 +138,7 @@ public partial class MeleeAttack : Area2D
 
 		if (body is Player player)
 		{
-			if (player.isPilot && player.colorIdx != colorIdx)
+			if (player.isPilot && player.GetTeam() != Main.GetTeam())
 			{
 				(RayCast2D ray, bool hasLOS) LOS = getHasLOS(player); 
 				if (LOS.hasLOS)

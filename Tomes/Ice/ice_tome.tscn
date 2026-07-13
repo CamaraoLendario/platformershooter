@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bvv0r0rral008"]
+[gd_scene format=3 uid="uid://bvv0r0rral008"]
 
 [ext_resource type="PackedScene" uid="uid://bnj055xj8cr1x" path="res://Tomes/Base/weapon_template.tscn" id="1_mrbom"]
 [ext_resource type="Script" uid="uid://1lt1nr45wgo7" path="res://Tomes/Ice/IceTome.cs" id="2_vcxt1"]
@@ -7,16 +7,26 @@
 [ext_resource type="AudioStream" uid="uid://dpll71wetcp4e" path="res://Tomes/Ice/Audio/IceRay3.wav" id="4_vcxt1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4squt"]
-resource_local_to_scene = true
 atlas = ExtResource("4_4squt")
 region = Rect2(0, 0, 16, 16)
 
-[node name="IceTome" instance=ExtResource("1_mrbom")]
+[sub_resource type="SpriteFrames" id="SpriteFrames_x4wbo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4squt")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="IceTome" unique_id=2074305282 instance=ExtResource("1_mrbom")]
 script = ExtResource("2_vcxt1")
 bullet = ExtResource("3_4squt")
 
-[node name="Sprite2D" parent="." index="0"]
-texture = SubResource("AtlasTexture_4squt")
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=1661307283]
+sprite_frames = SubResource("SpriteFrames_x4wbo")
 
-[node name="AudioStreamPlayer2D" parent="." index="1"]
+[node name="AudioStreamPlayer2D" parent="." index="1" unique_id=1734592678]
 stream = ExtResource("4_vcxt1")

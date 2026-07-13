@@ -5,5 +5,5 @@
 [resource]
 resource_local_to_scene = true
 shader = ExtResource("1_143pe")
-shader_parameter/Color = Color(0.9019608, 0, 0, 1)
-shader_parameter/outlineThickness = 1
+shader_parameter/Color = Color(0.8, 0.8, 0, 1)
+shader_parameter/enabled = false

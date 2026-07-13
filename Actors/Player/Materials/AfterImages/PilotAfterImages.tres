@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://b440sqhrft0wb"]
 
 [ext_resource type="Shader" uid="uid://c22204m6t74uu" path="res://Actors/Player/Materials/AfterImages/afterImages.gdshader" id="1_67ba6"]
-[ext_resource type="Texture2D" uid="uid://b1y4dm1w0puo2" path="res://Actors/Player/Pilot/Textures/Sprites/Pilot.png" id="2_67ba6"]
+[ext_resource type="Texture2D" uid="uid://b1y4dm1w0puo2" path="res://Actors/Player/Pilot/Textures/Sprites/PilotBlue.png" id="2_67ba6"]
 
 [resource]
 resource_local_to_scene = true

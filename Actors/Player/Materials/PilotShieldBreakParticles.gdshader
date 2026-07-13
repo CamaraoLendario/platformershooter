@@ -4,7 +4,7 @@ shader_type particles;
 uniform float initialVelocityMultiplier = 30.;
 uniform float rotationMultiplier = 4.;
 uniform vec2 SpriteSheetSize = vec2(4., 2.);
-uniform vec4 Color: source_color = vec4(1.);
+uniform vec3 Color: source_color = vec3(1.);
 
 void start() {
 	uint alt_seed = hash(NUMBER + uint(1.) + RANDOM_SEED);
@@ -21,7 +21,7 @@ void start() {
 	VELOCITY.xy = velDir * initialVelocityMultiplier;
 	COLOR.a = 1.;
 	TRANSFORM[3].xy = VELOCITY.xy/(initialVelocityMultiplier/2.);
-
+	COLOR.rgb = Color;
 }
 
 void process() {

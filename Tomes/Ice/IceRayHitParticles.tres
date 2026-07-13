@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b4p0o7p6b7kvm"]
+
+[ext_resource type="Shader" uid="uid://ble5i1fh002j8" path="res://Tomes/Ice/IceHitParticles.gdshader" id="1_vij3g"]
+
+[resource]
+shader = ExtResource("1_vij3g")
+shader_parameter/direction = Vector2(-1, 0)
+shader_parameter/coneAngle = 1.0
+shader_parameter/particlesCount = 7

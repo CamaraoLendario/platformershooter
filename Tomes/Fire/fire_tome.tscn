@@ -3,28 +3,66 @@
 [ext_resource type="PackedScene" uid="uid://bnj055xj8cr1x" path="res://Tomes/Base/weapon_template.tscn" id="1_qfput"]
 [ext_resource type="Script" uid="uid://ct4qflbt34a0e" path="res://Tomes/Fire/FireTome.cs" id="2_deydi"]
 [ext_resource type="PackedScene" uid="uid://cvhxytb88e3px" path="res://Tomes/Fire/FireProjectile.tscn" id="3_2g34k"]
-[ext_resource type="Texture2D" uid="uid://daawcol3kgydg" path="res://Tomes/TomeAssets/Weapons.png" id="4_amg4u"]
-[ext_resource type="Material" uid="uid://36slk4uiaeax" path="res://Tomes/Fire/Materials/FireTomeTrailParticles.tres" id="5_2g34k"]
+[ext_resource type="Texture2D" uid="uid://b7vrbl5drriag" path="res://Tomes/Fire/FireBallSprite.png" id="4_xtmxj"]
+[ext_resource type="Texture2D" uid="uid://bksnhkh0eug50" path="res://Assets/Particles/fireTrailParticles.png" id="6_ee7r0"]
+[ext_resource type="Material" uid="uid://lcoablfapn74" path="res://Tomes/Fire/Materials/FireTrailMaterial.tres" id="7_iwkow"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xtmxj"]
-resource_local_to_scene = true
-atlas = ExtResource("4_amg4u")
+[sub_resource type="AtlasTexture" id="AtlasTexture_54gh8"]
+atlas = ExtResource("4_xtmxj")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dkq5y"]
+atlas = ExtResource("4_xtmxj")
 region = Rect2(16, 0, 16, 16)
 
-[node name="FireTome" unique_id=346186004 node_paths=PackedStringArray("particles") instance=ExtResource("1_qfput")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5621t"]
+atlas = ExtResource("4_xtmxj")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_do63a"]
+atlas = ExtResource("4_xtmxj")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xtmxj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_54gh8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dkq5y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5621t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_do63a")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_iixj7"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[node name="FireTome" unique_id=346186004 node_paths=PackedStringArray("sprite") instance=ExtResource("1_qfput")]
 script = ExtResource("2_deydi")
-particles = NodePath("Trail")
+sprite = NodePath("AnimatedSprite2D")
 bullet = ExtResource("3_2g34k")
 
-[node name="Sprite2D" parent="." index="0" unique_id=570493511]
-texture = SubResource("AtlasTexture_xtmxj")
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=1661307283]
+sprite_frames = SubResource("SpriteFrames_xtmxj")
 
-[node name="Trail" type="GPUParticles2D" parent="." index="1" unique_id=1628184339]
+[node name="Trail" type="GPUParticles2D" parent="AnimatedSprite2D" index="0" unique_id=76232043]
 show_behind_parent = true
-position = Vector2(9, 0)
-amount = 131
+material = SubResource("CanvasItemMaterial_iixj7")
+amount = 120
 sub_emitter = NodePath(".")
+texture = ExtResource("6_ee7r0")
 lifetime = 0.31
-speed_scale = 0.6
-fixed_fps = 1000
-process_material = ExtResource("5_2g34k")
+fixed_fps = 60
+process_material = ExtResource("7_iwkow")

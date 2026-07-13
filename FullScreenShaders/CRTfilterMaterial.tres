@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ywc7ap10rmau"]
+
+[ext_resource type="Shader" uid="uid://bjspmpid5cl2d" path="res://FullScreenShaders/CRTfilter.gdshader" id="1_sux3r"]
+
+[resource]
+shader = ExtResource("1_sux3r")
+shader_parameter/CAammount = 0.75
+shader_parameter/ConvexAmmount = 42.485
+shader_parameter/enabled = true

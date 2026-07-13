@@ -1,10 +1,4 @@
 using Godot;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text.RegularExpressions;
-using System.Xml.XPath;
 
 public partial class ExplosionComponent : Area2D
 {
@@ -45,11 +39,13 @@ public partial class ExplosionComponent : Area2D
     {
 		if (body is Player player)
 		{
-			if (HasLOS(player))
+			if (HasLOS(player)){
+				player.Velocity += 50 * (player.Position - Position);
 				if (owner != null)
 					player.TakeDamage(owner);
 				else
 					player.TakeDamage();
+			}
 		}
     }
 	void OnAreaEntered(Area2D area)

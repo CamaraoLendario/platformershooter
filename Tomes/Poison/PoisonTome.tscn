@@ -6,18 +6,28 @@
 [ext_resource type="Texture2D" uid="uid://daawcol3kgydg" path="res://Tomes/TomeAssets/Weapons.png" id="4_0aksm"]
 [ext_resource type="AudioStream" uid="uid://bvjkxvsy0krsw" path="res://Assets/Audio/poisonShoot.wav" id="4_l6p47"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_25vb2"]
-resource_local_to_scene = true
+[sub_resource type="AtlasTexture" id="AtlasTexture_lj88h"]
 atlas = ExtResource("4_0aksm")
 region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r1qbm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lj88h")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="PoisonTome" unique_id=1463312537 instance=ExtResource("1_xyoji")]
 script = ExtResource("2_nf45n")
 projectileInitialVelocity = 450.0
 bullet = ExtResource("3_l6p47")
 
-[node name="Sprite2D" parent="." index="0" unique_id=570493511]
-texture = SubResource("AtlasTexture_25vb2")
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=1661307283]
+sprite_frames = SubResource("SpriteFrames_r1qbm")
 
 [node name="AudioStreamPlayer2D" parent="." index="1" unique_id=1734592678]
 stream = ExtResource("4_l6p47")

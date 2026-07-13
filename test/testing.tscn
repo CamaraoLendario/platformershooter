@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bs1rqma1l5yaf"]
 
-[ext_resource type="Shader" uid="uid://yqkuck1yfrxc" path="res://ControllerMenuInputVisualizer.gdshader" id="1_qrja6"]
-[ext_resource type="Texture2D" uid="uid://b1y4dm1w0puo2" path="res://Actors/Player/Pilot/Textures/Sprites/Pilot.png" id="3_27f5x"]
+[ext_resource type="Shader" uid="uid://cqbklyvgpb4se" path="res://test/wirlwindfirst.gdshader" id="1_yaq74"]
+[ext_resource type="Texture2D" uid="uid://b1y4dm1w0puo2" path="res://Actors/Player/Pilot/Textures/Sprites/PilotBlue.png" id="3_27f5x"]
 [ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Textures/Sprites/PilotStill.png" id="3_kj3p2"]
 [ext_resource type="Texture2D" uid="uid://kayfo7ufdpc2" path="res://Actors/Player/Ship/Sprites/spaceships.png" id="3_lc7k4"]
 [ext_resource type="Script" uid="uid://dc2mr76nt5mjn" path="res://Actors/Player/Materials/AfterImages/afterimagesCPUpart.cs" id="4_kj3p2"]
@@ -9,14 +9,72 @@
 [ext_resource type="Shader" uid="uid://cnr3u2i0u1fwl" path="res://Actors/Player/Materials/PilotExplosion.gdshader" id="7_4oh6q"]
 [ext_resource type="Shader" uid="uid://d4oh7k2hkrx6" path="res://test/NewPilotExplosionSlashed.gdshader" id="8_53gdd"]
 [ext_resource type="Shader" uid="uid://bq163qjda65hj" path="res://test/NewPilotExplosion.gdshader" id="8_h5mla"]
-[ext_resource type="SpriteFrames" uid="uid://bcbvwjw2kxhut" path="res://Actors/Player/Pilot/Textures/Sprites/PilotSpriteFrames.tres" id="10_rm2ew"]
+[ext_resource type="SpriteFrames" uid="uid://bcbvwjw2kxhut" path="res://Actors/Player/Pilot/Textures/Sprites/PilotBlueSpriteFrames.tres" id="10_rm2ew"]
 [ext_resource type="Shader" uid="uid://cywx8daesh6uu" path="res://Actors/Player/Materials/PixelOutline.gdshader" id="10_rodqw"]
 [ext_resource type="SpriteFrames" uid="uid://m61ey6b20dbl" path="res://Actors/Player/Ship/ShipSpriteFrames.tres" id="11_5w1d7"]
 [ext_resource type="Shader" uid="uid://c22204m6t74uu" path="res://Actors/Player/Materials/AfterImages/afterImages.gdshader" id="11_27f5x"]
 [ext_resource type="Script" uid="uid://y4r6hlkrgu1k" path="res://test/rotateDEBUG.cs" id="13_yaq74"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_co24e"]
-shader = ExtResource("1_qrja6")
+shader = ExtResource("1_yaq74")
+shader_parameter/Colors = PackedColorArray(0.5176471, 0.48235294, 0.1764706, 1, 0.41568628, 0.7647059, 0.6509804, 1, 0.6431373, 0.77254903, 0.8509804, 1, 0.46277058, 0.00014992729, 0.462767, 1)
+shader_parameter/waveSum = PackedVector2Array(4, 0.105, 9, -0.3, 13, 2.235, 18, -3.61, 5, 0.34, 12, 1.59, 19, -2.125, 23, 4.02, 3, 0.28, 7, -0.57, 17, 1.13, 21, -3.645)
+
+[sub_resource type="Shader" id="Shader_yaq74"]
+code = "shader_type canvas_item;
+#include \"res://test/usefulFuncs.gdshaderinc\"
+
+uniform vec3[4] Colors : source_color;
+uniform vec2[12] waveSum;
+
+float GetSinWaveSum(float angle, int waveSumIdx){
+	float value = 0.; 
+	for(int i = 0; i < 4; i++) {
+		value += (sin((angle * waveSum[i + (waveSumIdx * 4)].x) + ((TIME*0.1) * waveSum[i + (waveSumIdx * 4)].y)) + 1.) / 8.;
+	}
+	return value;
+}
+
+float GetCosWaveSum(float angle, int waveSumIdx){
+	float value = 0.; 
+	for(int i = 0; i < 4; i++) {
+		value += (cos((angle * waveSum[i + (waveSumIdx * 4)].x) + ((TIME*0.1) * waveSum[i + (waveSumIdx * 4)].y)) + 1.) / 8.;
+	}
+	return value;
+}
+
+
+void fragment() {
+	vec2 uv = UV * 2. - 1.;
+	
+	float value = length(uv);
+	uv = RotateVec(uv, value*2.);
+	float angle = atan(uv.y, -uv.x) + PI;
+	
+	float[4] HeightOffsets;
+	
+	HeightOffsets[0] = GetSinWaveSum(angle, 0);
+	HeightOffsets[1] = GetSinWaveSum(angle, 1);
+	HeightOffsets[2] = GetSinWaveSum(angle, 2);
+	HeightOffsets[3] = 10.;
+	value *= 3.;
+	
+	int index = 0;
+	for(int i = 0; i < 4; i++){
+		if (i == 3) discard;
+		if (value > float(i+1) - HeightOffsets[i] * 0.5) continue;
+		index = i;
+		break;
+	}
+	
+	COLOR.rgb = Colors[index] * (1.-HeightOffsets[index]);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yaq74"]
+shader = SubResource("Shader_yaq74")
+shader_parameter/Colors = PackedColorArray(0.84313726, 0.2, 0.1764706, 1, 0.5764706, 0.23529412, 0.6509804, 1, 0.7529412, 0.7647059, 0.19215687, 1, 0.46277058, 0.00014992729, 0.462767, 1)
+shader_parameter/waveSum = PackedVector2Array(4, 0.105, 9, -0.3, 13, 2.235, 18, -3.61, 5, 0.34, 12, 1.59, 19, -2.125, 23, 4.02, 3, 0.28, 7, -0.57, 17, 1.13, 21, -3.645)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ac1nb"]
 shader = ExtResource("11_27f5x")
@@ -71,7 +129,6 @@ shader_parameter/flip = Array[bool]([false, false, false, false, false])
 resource_local_to_scene = true
 shader = ExtResource("10_rodqw")
 shader_parameter/Color = Color(0.9019608, 0, 0, 1)
-shader_parameter/outlineThickness = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5w1d7"]
 shader = ExtResource("11_27f5x")
@@ -100,6 +157,22 @@ material = SubResource("ShaderMaterial_co24e")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="ColorRect3" type="ColorRect" parent="." unique_id=1917382260]
+material = SubResource("ShaderMaterial_co24e")
+layout_mode = 0
+offset_left = 395.0
+offset_top = -84.0
+offset_right = 435.0
+offset_bottom = -44.0
+
+[node name="ColorRect6" type="ColorRect" parent="." unique_id=1256561567]
+material = SubResource("ShaderMaterial_yaq74")
+layout_mode = 0
+offset_left = 448.0
+offset_top = -86.0
+offset_right = 488.0
+offset_bottom = -46.0
 
 [node name="ColorRect2" type="ColorRect" parent="." unique_id=1457391527]
 material = SubResource("ShaderMaterial_ac1nb")
@@ -154,8 +227,8 @@ process_material = SubResource("ShaderMaterial_53gdd")
 visible = false
 z_index = 1
 use_parent_material = true
-position = Vector2(-48.29842, 0)
-rotation = 5.013675
+position = Vector2(-14.640686, 0)
+rotation = 0.78354895
 sprite_frames = ExtResource("11_5w1d7")
 animation = &"Idle"
 script = ExtResource("13_yaq74")
@@ -182,8 +255,8 @@ framesDelay = 3
 process_mode = 3
 z_index = 1
 material = SubResource("ShaderMaterial_27f5x")
-position = Vector2(-85.244865, 0)
-rotation = 2.500993
+position = Vector2(210.75246, 0)
+rotation = 4.5538387
 sprite_frames = ExtResource("10_rm2ew")
 animation = &"Running"
 frame_progress = 0.4744985

@@ -88,7 +88,7 @@ public partial class GPUParticlesPool : Node2D
 		from.Preprocess = to.Preprocess;
 		from.SpeedScale = to.SpeedScale;
 		from.Explosiveness = to.Explosiveness;
-		from.FixedFps = to.FixedFps;
+		from.FixedFps = to.FixedFps; // TODO make this equal to current refresh rate or frame rate if I can't get that
 		from.LocalCoords = to.LocalCoords;
 		from.TrailEnabled = to.TrailEnabled;
 		from.ProcessMaterial = to.ProcessMaterial;
@@ -139,5 +139,4 @@ public partial class GPUParticlesPool : Node2D
 
 		return zIndex;
 	}
-
 }

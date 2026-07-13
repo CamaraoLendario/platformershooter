@@ -4,8 +4,7 @@ using static SpaceMages.SpaceMagesVars;
 
 public partial class TeamSelectScreenPlayerIcon : MenuItem
 {
-	[Signal] public delegate void moveLeftEventHandler(Vector2 dir, TeamSelectScreenPlayerIcon icon);
-	[Signal] public delegate void moveRightEventHandler(Vector2 dir, TeamSelectScreenPlayerIcon icon);
+	[Signal] public delegate void moveEventHandler(Vector2 dir, TeamSelectScreenPlayerIcon icon);
 	[Export] StyleBoxFlat panelStyleBox;
 	[Export] TextureRect pilotStill;
 	[Export] Label nameLabel;
@@ -44,14 +43,15 @@ public partial class TeamSelectScreenPlayerIcon : MenuItem
 	{
 		(pilotStill.Material as ShaderMaterial).SetShaderParameter("Color", teamColors[colorIdx]);
 	}
-	void MoveRight()
+	public void MoveRight()
 	{
-		EmitSignal(SignalName.moveRight, Vector2.Right, this);
+		EmitSignal(SignalName.move, Vector2.Right, this);
 	}
-	void MoveLeft()
+	public void MoveLeft()
 	{
-		EmitSignal(SignalName.moveLeft, Vector2.Left, this);
+		EmitSignal(SignalName.move, Vector2.Left, this);
 	}
+
 	void SetInputIdx(int inputIdx)
 	{
 		inputNode.SetInputIdx(inputIdx);

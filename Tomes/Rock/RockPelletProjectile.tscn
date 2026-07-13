@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://cb8rndkouptad"]
+
+[ext_resource type="PackedScene" uid="uid://fi88ocyqxvqn" path="res://Tomes/Base/LinearProjectileTemplate.tscn" id="1_mvw6i"]
+[ext_resource type="Script" uid="uid://ck3ysp6xdjgsf" path="res://Tomes/Rock/RockPellet.cs" id="2_o6oyh"]
+[ext_resource type="Texture2D" uid="uid://c87ayt52xqkv6" path="res://Tomes/Rock/RockPellets.png" id="3_apok8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ixgj"]
+atlas = ExtResource("3_apok8")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4j0js"]
+atlas = ExtResource("3_apok8")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6h6r"]
+atlas = ExtResource("3_apok8")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anx3v"]
+atlas = ExtResource("3_apok8")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vhbb4"]
+atlas = ExtResource("3_apok8")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndpee"]
+atlas = ExtResource("3_apok8")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bqwtu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ixgj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4j0js")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k6h6r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_anx3v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vhbb4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ndpee")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="RockPellet" unique_id=1527228019 instance=ExtResource("1_mvw6i")]
+script = ExtResource("2_o6oyh")
+rotPerSec = 3.0
+speed = 250.0
+
+[node name="Sprite2D" parent="." index="1" unique_id=1178221709]
+sprite_frames = SubResource("SpriteFrames_bqwtu")
+frame = 4
+frame_progress = 0.24747176

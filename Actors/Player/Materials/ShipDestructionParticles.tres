@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dvi2o7o70cua"]
+
+[ext_resource type="Shader" uid="uid://d2yhqul7vijnh" path="res://Actors/Player/ShipDestructionParticles.gdshader" id="1_tkpxi"]
+
+[resource]
+shader = ExtResource("1_tkpxi")
+shader_parameter/initialVelocityMultiplier = 100.0
+shader_parameter/rotationMultiplier = 1.0
+shader_parameter/SpriteSheetSize = Vector2(4, 2)

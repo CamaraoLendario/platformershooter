@@ -174,6 +174,7 @@ public partial class CharacterSelectScreen : MainMenuScreen
         {
             TeamSelectScreen teamSelectScreen = GetParent().GetNode<TeamSelectScreen>("TeamSelectScreen");
             teamSelectScreen.Initialize(GetPlayersInfo());
+            DisableInput();
             ChangeScreen(
                 teamSelectScreen,
                 Vector2.Left, Vector2.Right);
@@ -213,7 +214,7 @@ public partial class CharacterSelectScreen : MainMenuScreen
             GetParent().GetNode<MainMenuScreen>("GamemodeSelectScreen"),
             Vector2.Right, Vector2.Left, true);
     }
-    PlayerInfo[] GetPlayersInfo()
+    public PlayerInfo[] GetPlayersInfo()
     {
         PlayerCapsule[] capsules = GetEnabledPlayerCapsules();
         PlayerInfo[] playersInfo = new PlayerInfo[capsules.Length];

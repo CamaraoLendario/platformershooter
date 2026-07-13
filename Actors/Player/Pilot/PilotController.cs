@@ -323,5 +323,4 @@ public partial class PilotController : Controller
 		sprite.FlipH = Position.X > 0f;
 		facing = sprite.FlipH ? -1 : 1;
     }
-
 }

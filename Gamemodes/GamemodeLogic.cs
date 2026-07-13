@@ -32,7 +32,7 @@ public partial class GamemodeLogic : Resource
     protected Dictionary<int, int> teamScore = [];
     public List<(int, int)> teamScoreChanges = [];
 	protected bool isRoundRestarting = false;
-	int winningTeam = -1;
+	protected int winningTeam = -1;
 	
 	public void Ready()
 	{
@@ -90,7 +90,7 @@ public partial class GamemodeLogic : Resource
 			CheckRoundOver();
 		GD.Print("----End OnPlayerDied() in GamemodeLogic:----");
     }
-    protected void CheckRoundOver(){
+    protected virtual void CheckRoundOver(){
 		if (GetAlivePlayerCount() <= 1)
      	   RestartRound();
     }
@@ -130,7 +130,7 @@ public partial class GamemodeLogic : Resource
 		return true;
 	}
 
-	async void SetupGameOverOvertime()
+	public async void SetupGameOverOvertime()
 	{
 		await ToSignal(Game.Instance.GetTree().CreateTimer(roundEndDelay), Timer.SignalName.Timeout);
 		if (IsGameOver()) {
