@@ -6,10 +6,12 @@ uniform vec2[12] waveSum;
 
 float GetSinWaveSum(float angle, int waveSumIdx){
 	float value = 0.; 
+	waveSumIdx *= 4;
 	for(int i = 0; i < 4; i++) {
-		value += (sin((angle * waveSum[i + (waveSumIdx * 4)].x) + ((TIME*0.1) * waveSum[i + (waveSumIdx * 4)].y)) + 1.) / 4.;
+		int index = i + waveSumIdx;
+		value += (sin((angle * waveSum[index].x) + ((TIME*.5) * waveSum[index].y))+1.);
 	}
-	return value;
+	return value/4.;
 }
 
 float GetCosWaveSum(float angle, int waveSumIdx){
@@ -21,12 +23,12 @@ float GetCosWaveSum(float angle, int waveSumIdx){
 }
 
 
-void fragment() {
-	vec2 uv = UV * 2. - 1.;
+vec3 Effect(vec2 texuv) {
+	vec2 uv = texuv * 2. - 1.;
 	
-	float value = length(uv);
+	float value = length(uv*1.1);
 	
-	//uv = RotateVec(uv, value*2.);
+	uv = RotateVec(uv, value*2.);
 	
 	float angle = atan(uv.y, -uv.x) + PI;
 	
@@ -35,33 +37,30 @@ void fragment() {
 	Values[0] = ((GetSinWaveSum(angle, 0)*0.7)+0.3);
 	Values[1] = ((GetSinWaveSum(angle, 1)*0.6)+0.4);
 	Values[2] = ((GetSinWaveSum(angle, 2)*0.5)+0.5);
-	
-	Values[3] = 10.;
+	Values[3] = ((GetSinWaveSum(angle, 0)*0.4)+0.6);
 	
 	value *= 3.;
 	vec3 Color;
 	float heightOffset;
 	float lighting;
 	for(int i = 0; i < 4; i++){
-		if (i < 3){
 			int index = i;
 			//if (fract(value) < 0.5){
 				//index = max(1, i-1);
 			//}
 			
 			if (value > float(index+1) + Values[index]) continue;
-			heightOffset = (1. - (value - float(i)) + Values[i]);
+			heightOffset = (1. - ((value) - float(i)) + Values[i]);
 			lighting = GetCosWaveSum(angle, index);
 			Color = Colors[i].rgb;
 			break;
-		}
-		else {
-			Color = Colors[3].rgb;
-			heightOffset = 1.;
-		}
 	}
 	float test = (1. - (value - float(1)) + Values[1]);
 	//heightOffset = 1.-abs(heightOffset*2. -1.);
 	//COLOR.rgb = Color * (lighting + 0.3) + heightOffset*heightOffset*0.4;
-	COLOR.rgb = Color * (min(1., heightOffset));
+	return Color * (min(1., heightOffset*0.8));
+}
+
+void fragment(){
+	COLOR.rgb = Effect(UV);
 }

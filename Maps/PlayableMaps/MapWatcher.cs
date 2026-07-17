@@ -10,8 +10,8 @@ public partial class MapWatcher : Camera2D
 		subViewport = GetParent<SubViewport>();
 		subViewport.World2D = GetViewport().World2D;
 		GD.Print(subViewport.Size);
-GD.Print(subViewport.World2D);
-GD.Print(subViewport.GetTexture().GetSize());
+		GD.Print(subViewport.World2D);
+		GD.Print(subViewport.GetTexture().GetSize());
 	}
 
     public override void _Process(double delta)

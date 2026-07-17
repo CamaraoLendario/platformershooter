@@ -30,7 +30,7 @@ uniform vec2[12] waveSum;
 float GetSinWaveSum(float angle, int waveSumIdx){
 	float value = 0.; 
 	for(int i = 0; i < 4; i++) {
-		value += (sin((angle * waveSum[i + (waveSumIdx * 4)].x) + ((TIME*0.1) * waveSum[i + (waveSumIdx * 4)].y)) + 1.) / 8.;
+		value += (sin((angle * waveSum[i + (waveSumIdx * 4)].x) + ((TIME*0.5) * waveSum[i + (waveSumIdx * 4)].y)) + 1.) / 8.;
 	}
 	return value;
 }
@@ -169,10 +169,10 @@ offset_bottom = -44.0
 [node name="ColorRect6" type="ColorRect" parent="." unique_id=1256561567]
 material = SubResource("ShaderMaterial_yaq74")
 layout_mode = 0
-offset_left = 448.0
-offset_top = -86.0
-offset_right = 488.0
-offset_bottom = -46.0
+offset_left = 435.0
+offset_top = -84.0
+offset_right = 475.0
+offset_bottom = -44.0
 
 [node name="ColorRect2" type="ColorRect" parent="." unique_id=1457391527]
 material = SubResource("ShaderMaterial_ac1nb")
@@ -227,8 +227,8 @@ process_material = SubResource("ShaderMaterial_53gdd")
 visible = false
 z_index = 1
 use_parent_material = true
-position = Vector2(-14.640686, 0)
-rotation = 0.78354895
+position = Vector2(-21.906334, 0)
+rotation = 4.169845
 sprite_frames = ExtResource("11_5w1d7")
 animation = &"Idle"
 script = ExtResource("13_yaq74")
@@ -255,8 +255,8 @@ framesDelay = 3
 process_mode = 3
 z_index = 1
 material = SubResource("ShaderMaterial_27f5x")
-position = Vector2(210.75246, 0)
-rotation = 4.5538387
+position = Vector2(146.85593, 0)
+rotation = 1.6566792
 sprite_frames = ExtResource("10_rm2ew")
 animation = &"Running"
 frame_progress = 0.4744985

@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://nlhmcbtm3oey" path="res://Global/constant_overlay.tscn" id="3_ed0e0"]
 [ext_resource type="PackedScene" uid="uid://blk3xlkdst7il" path="res://Maps/Overworld/OverWorld.tscn" id="4_uph1o"]
 [ext_resource type="Material" uid="uid://ywc7ap10rmau" path="res://FullScreenShaders/CRTfilterMaterial.tres" id="5_b42ka"]
+[ext_resource type="Script" uid="uid://drambqksnftge" path="res://Global/filters.cs" id="6_nd8o8"]
 
 [node name="Main" type="Node" unique_id=1873790456 groups=["Main"]]
 script = ExtResource("1_xoayq")
@@ -27,3 +28,4 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("6_nd8o8")
