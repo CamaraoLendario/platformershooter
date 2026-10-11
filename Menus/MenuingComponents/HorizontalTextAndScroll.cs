@@ -6,6 +6,8 @@ using System.Runtime.Serialization.Formatters;
 [Tool]
 public partial class HorizontalTextAndScroll : HorizontalMenu
 {
+	
+	[Signal] public delegate void settingChangedEventHandler(int newSetting);
 	[Export] public string[] Contents
 	{
 		get
@@ -41,12 +43,22 @@ public partial class HorizontalTextAndScroll : HorizontalMenu
 
     public override bool OnInteract()
     {
-        return menuScroll.OnInteract();
+		bool result = menuScroll.OnInteract();
+		if (!menuScroll.isActivated)
+		{
+			EmitSignal(SignalName.settingChanged);
+		}
+        return result;
     }
 
     public override bool OnNegativeAction()
     {
-        return menuScroll.OnNegativeAction();
+		bool result = menuScroll.OnNegativeAction();
+		if (!menuScroll.isActivated)
+		{
+			EmitSignal(SignalName.settingChanged);
+		}
+        return result;
     }
 
     public override bool OnMoveAction(Vector2 dir)

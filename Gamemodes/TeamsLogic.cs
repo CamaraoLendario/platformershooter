@@ -40,11 +40,11 @@ public partial class TeamsLogic : GamemodeLogic
 		}
 	}
 
-    public override void OnPlayerDied(Player died, Player killer)
+    public override void OnPlayerDied(Player died, Player killer, int usedWeapon)
     {
 		if (!objectiveIsTeamSurvive)
 		{
-			base.OnPlayerDied(died, killer);
+			base.OnPlayerDied(died, killer, usedWeapon);
 			return;
 		}
 		List<int> aliveTeams = [];
@@ -57,11 +57,11 @@ public partial class TeamsLogic : GamemodeLogic
 		}
 
 		if (aliveTeams.Count == 1){
-			teamScore[aliveTeams[0]]++;
-			teamScoreChanges.Add((aliveTeams[0], 1));
+			AddToTeamScoreChanges(aliveTeams[0], 1);
 		}
 		else if (aliveTeams.Count == 0){
-			return; // for now. there should be code that checks for if the player/team dies or something during the little delay before starting a new round
+			teamScoreChanges.Clear();
+			return;
 		}
 		else
 		{
@@ -74,7 +74,7 @@ public partial class TeamsLogic : GamemodeLogic
 		}
 		else RestartRound();
     }
-    public override bool IsGameOver()
+   public override bool IsGameOver()
     {
 		if (Mathf.Max(teamScore[0], teamScore[1]) >= GetWinningScore() && teamScore[0] != teamScore[1])
 		{

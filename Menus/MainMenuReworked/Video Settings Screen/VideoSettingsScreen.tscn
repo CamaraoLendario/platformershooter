@@ -44,7 +44,6 @@ offset_bottom = 184.43
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_yjbg6")
-horizontal = false
 
 [node name="Window Settings" parent="MenuItemsContainer" index="0" unique_id=1906426519 instance=ExtResource("3_v6dsd")]
 layout_mode = 0
@@ -62,8 +61,8 @@ offset_bottom = 62.5
 text = "Window:"
 
 [node name="Scroller" parent="MenuItemsContainer/Window Settings" index="1" unique_id=1348934665]
-offset_left = 285.0
-offset_right = 285.0
+offset_left = 635.0
+offset_right = 635.0
 Contents = PackedStringArray("Fullscreen", "Windowed", "Borderless window")
 
 [node name="MenuSelectorHelper" parent="MenuItemsContainer/Window Settings/Scroller" index="0" unique_id=1724905341]
@@ -172,8 +171,8 @@ offset_bottom = 62.5
 text = "Max FPS:"
 
 [node name="Scroller" parent="MenuItemsContainer/FPS Limit" index="1" unique_id=1348934665]
-offset_left = 575.0
-offset_right = 575.0
+offset_left = 635.0
+offset_right = 635.0
 Contents = PackedStringArray("120", "144", "200", "240", "30", "50", "60", "75", "100")
 
 [node name="MenuSelectorHelper" parent="MenuItemsContainer/FPS Limit/Scroller" index="0" unique_id=1724905341]

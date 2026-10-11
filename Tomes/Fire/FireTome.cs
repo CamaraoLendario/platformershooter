@@ -10,7 +10,7 @@ public partial class FireTome : Weapon
 		{
 			return false;
 		}
-		LinearProjectile newBullet = GetNewBullet(owner.colorIdx, inputDir);
+		LinearProjectile newBullet = GetNewBullet(owner.colorIdx, inputDir, KillFeed.WEAPONS.FIRE);
 
 		world.CallDeferred(MethodName.AddChild, newBullet);
 

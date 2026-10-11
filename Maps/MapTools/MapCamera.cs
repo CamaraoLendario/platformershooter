@@ -172,19 +172,23 @@ public partial class MapCamera : Camera2D
 		if (shakeForce < 0) shakeForce = 0;
 	}
 
-	void OnPlayerDied(Player died, Player killed)
+	void OnPlayerDied(Player died, Player killed, int usedWeapon)
 	{
 		if (Game.Instance.GetAlivePlayerCount() == 1)
 		{
-			shakeForce = 15;
-			shakeTime = 1;
+			shakeScreen(15f, 1);
 		}
         else
         {
-            shakeForce = 15f;
-			shakeTime = 0.3f;
+            shakeScreen(15f, 0.3f);
         }
 		Game.Instance.ApplyHitstop(shakeTime*0.6f);
+	}
+
+	public void shakeScreen(float force, float time)
+	{
+		shakeForce = Mathf.Max(shakeForce, force);
+		shakeTime = Mathf.Max(shakeTime, time);
 	}
 
 	void EasePos()

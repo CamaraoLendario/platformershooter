@@ -11,9 +11,11 @@ public partial class PoisonMine : Node2D
 	ExplosionComponent explosionComponent;
 	[Export] GpuParticles2D explosionParticles;
 	GpuParticles2D newExplosionParticles;
+	[Export] AudioStream explosionAudio;
 	[Export] AnimatedSprite2D sprite;
 	public Vector2 wallSide;
 	public Player owner;
+	float time = 0;
 	const float FUSETIME = 0.5f;
 	float CurrentFuseTime
     {
@@ -57,11 +59,13 @@ public partial class PoisonMine : Node2D
 	{
 		newExplosionParticles = explosionParticles.Duplicate() as GpuParticles2D;
 		newExplosionParticles.Finished += () => newExplosionParticles.QueueFree();
-		ExplosionComponent explosionComponent = explosionComponentScene.Instantiate<ExplosionComponent>();
-		explosionComponent.GlobalPosition = GlobalPosition + wallSide * 16; 
-		explosionComponent.SetSize(explosionRadius);
-		explosionComponent.owner = owner;
-		this.explosionComponent = explosionComponent;
+		ExplosionComponent newExplosionComponent = explosionComponentScene.Instantiate<ExplosionComponent>();
+		newExplosionComponent.GlobalPosition = GlobalPosition + wallSide * 16; 
+		newExplosionComponent.SetSize(explosionRadius);
+		newExplosionComponent.owner = owner;
+		newExplosionComponent.relatedWeapon = KillFeed.WEAPONS.SPIRIT;
+		newExplosionComponent.ExplosionAudio.Stream = explosionAudio;
+		explosionComponent = newExplosionComponent;
 	}
 
 	void SetDirection()
@@ -75,10 +79,15 @@ public partial class PoisonMine : Node2D
     public override void _Process(double delta)
     {
 		float closestPlayerDist = -1f;
+		if (time > 1)
+		{
+			time -= 1;
+		}
+		sprite.Offset = new Vector2(0f, Mathf.Sin(time * float.Tau) * 2.5f);
 		Vector2 closestToPlayerVec = Vector2.Zero;
 		foreach(Player player in Game.GetAlivePlayers())
 		{
-			Vector2 currentToPlayerVec = player.Position - Position;
+			Vector2 currentToPlayerVec = player.Position - (Position + sprite.Offset);
 			float currentPlayerDist = currentToPlayerVec.LengthSquared();
 			if (closestPlayerDist < currentPlayerDist) {
 				closestPlayerDist = currentPlayerDist;
@@ -91,6 +100,7 @@ public partial class PoisonMine : Node2D
 			(sprite.Material as ShaderMaterial).SetShaderParameter("lookDir", Vector2.Zero);
          */sprite.Position = Vector2.Zero + new Vector2(GD.RandRange(-1, 1), GD.RandRange(-1, 1)).Normalized() * (1 - CurrentFuseTime)*2;
 		sprite.Frame = (int) ((1 - CurrentFuseTime)*sprite.SpriteFrames.GetFrameCount("Explode") + 0.5f);
+		time += (float)delta * .25f;
     }
 
 	void OnBodyEntered(Node2D body)

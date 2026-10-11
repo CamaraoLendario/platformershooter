@@ -61,7 +61,7 @@ public partial class MenuController : Node
 		keepSpammingInputs = false;
 		if (inputVec == Vector2.Zero)
 			return;
-		inputSpammerDelay.Start(0.6);
+		inputSpammerDelay.Start(0.25);
 
 		OnMoveAction(inputVec);
 	}
@@ -75,7 +75,7 @@ public partial class MenuController : Node
 	{
 		if (!keepSpammingInputs) return;
 		OnMoveAction(inputVec);
-		await ToSignal(GetTree().CreateTimer(0.2f), Timer.SignalName.Timeout);
+		await ToSignal(GetTree().CreateTimer(0.025f), Timer.SignalName.Timeout);
 		StartInputSpam();
 	}
 	public virtual void OnMoveAction(Vector2 inputvec)

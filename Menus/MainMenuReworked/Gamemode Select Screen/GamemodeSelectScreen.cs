@@ -33,11 +33,12 @@ public partial class GamemodeSelectScreen : MainMenuScreen
         return true;
     }
 
-    public override void Back()
+    public override bool Back()
     {
         ChangeScreen(
             GetParent().GetNode<MainMenuMainScreen>("MainMenuMainScreen"),
             Vector2.Right, Vector2.Left);
+        return true;
     }
 
     void SetSettings()

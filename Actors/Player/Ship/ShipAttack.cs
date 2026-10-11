@@ -92,6 +92,7 @@ public partial class ShipAttack : ShipController
 		newBullet.SetDirection(sprite.Rotation);
 		newBullet.GlobalPosition = Main.GlobalPosition;
 		newBullet.isInPilotArea = false;
+		newBullet.weaponUsed = KillFeed.WEAPONS.ShipProjectile;
 		return newBullet;
 	}
 }

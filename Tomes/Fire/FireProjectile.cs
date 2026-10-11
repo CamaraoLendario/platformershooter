@@ -37,10 +37,11 @@ public partial class FireProjectile : LinearProjectile
 		explosionParticles.Finished += () => explosionParticles.QueueFree();
 		explosionParticles.Reparent(world);
 
-		ExplosionComponent explosionComponent = explosionComponentScene.Instantiate<ExplosionComponent>();
-		explosionComponent.SetSize(explosionRadius);
-		explosionComponent.owner = owner;
-		this.explosionComponent = explosionComponent;
+		ExplosionComponent newExplosionComponent = explosionComponentScene.Instantiate<ExplosionComponent>();
+		newExplosionComponent.SetSize(explosionRadius);
+		newExplosionComponent.owner = owner;
+		newExplosionComponent.relatedWeapon = KillFeed.WEAPONS.FIRE;
+		explosionComponent = newExplosionComponent;
 	}
 
 	protected override void OnBodyHit(Node2D body)

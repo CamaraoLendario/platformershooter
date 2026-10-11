@@ -30,6 +30,8 @@ public partial class Game : Node
     ];
 	// public bool isGamePaused = false;
 
+	public float masterVolume = 0.75f;
+
     public override void _Ready(){
 		Instance ??= this;
 	}

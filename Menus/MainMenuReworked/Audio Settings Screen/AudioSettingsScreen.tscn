@@ -5,6 +5,9 @@
 [ext_resource type="Script" uid="uid://b27p12vnimu0l" path="res://Menus/MainMenuReworked/Audio Settings Screen/AudioSettingsScreen.cs" id="2_u7x5x"]
 [ext_resource type="Script" uid="uid://0ho0d84jvj3r" path="res://Menus/MenuingComponents/MenuItemsListContainer.cs" id="3_u7x5x"]
 [ext_resource type="PackedScene" uid="uid://blrhm4bqw0us1" path="res://Menus/MenuingComponents/HorizontalTextAndSlider.tscn" id="4_re14l"]
+[ext_resource type="Script" uid="uid://er0fyamwvrmo" path="res://Menus/MenuingComponents/MasterVolumeSlider.cs" id="6_8hixb"]
+[ext_resource type="Script" uid="uid://d3t76p3ww13br" path="res://Menus/MenuingComponents/BGMSlider.cs" id="7_m0bjd"]
+[ext_resource type="Script" uid="uid://dhqem2dldo0uq" path="res://Menus/MenuingComponents/SFXSlider.cs" id="8_d70vi"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nvmy7"]
 font_size = 117
@@ -45,21 +48,17 @@ grow_vertical = 2
 script = ExtResource("3_u7x5x")
 Separation = 175
 
-[node name="Master" parent="MenuItemsContainer" index="0" unique_id=1161178196 instance=ExtResource("4_re14l")]
+[node name="Master" parent="MenuItemsContainer" index="0" unique_id=1161178196 node_paths=PackedStringArray("audioTester") instance=ExtResource("4_re14l")]
 layout_mode = 0
 offset_top = -175.0
 offset_bottom = -175.0
-SettingName = "Master"
-TotalSize = Vector2(1720, 125)
+script = ExtResource("6_8hixb")
+audioTester = NodePath("")
+SettingName = "Master Volume"
 
 [node name="leftLabel" parent="MenuItemsContainer/Master" index="0" unique_id=1183137305]
-offset_top = -62.5
-offset_bottom = 62.5
-text = "Master:"
-
-[node name="Slider" parent="MenuItemsContainer/Master" index="1" unique_id=1307486710]
-offset_top = -25.0
-offset_bottom = 25.0
+offset_right = -30.0
+text = "Master Volume:"
 
 [node name="MenuSelectorHelper" parent="MenuItemsContainer/Master" index="2" unique_id=873022633]
 offset_top = -62.5
@@ -67,14 +66,15 @@ offset_bottom = 62.5
 
 [node name="Music" parent="MenuItemsContainer" index="1" unique_id=1297678539 instance=ExtResource("4_re14l")]
 layout_mode = 0
+script = ExtResource("7_m0bjd")
 SettingName = "Music"
-TotalSize = Vector2(1720, 125)
 
-[node name="SFX" parent="MenuItemsContainer" index="2" unique_id=1614735625 instance=ExtResource("4_re14l")]
+[node name="SFX" parent="MenuItemsContainer" index="2" unique_id=1614735625 node_paths=PackedStringArray("audioTester") instance=ExtResource("4_re14l")]
 layout_mode = 0
 offset_top = 175.0
 offset_bottom = 175.0
+script = ExtResource("8_d70vi")
+audioTester = NodePath("")
 SettingName = "SFX"
-TotalSize = Vector2(1720, 125)
 
 [editable path="MenuItemsContainer/Master"]

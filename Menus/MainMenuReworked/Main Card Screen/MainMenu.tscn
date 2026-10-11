@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cv7ev1h883cal" path="res://Menus/MainMenuReworked/Character Select Screen/CharacterSelectScreen.tscn" id="7_oylgq"]
 [ext_resource type="PackedScene" uid="uid://dxarxssua6mlj" path="res://Menus/MainMenuReworked/TeamSelectScreen/TeamSelectScreen.tscn" id="8_1tdrq"]
 [ext_resource type="Script" uid="uid://cbtcwbxma8c3v" path="res://Menus/MenuingComponents/MainMenuController.cs" id="9_n4hhb"]
+[ext_resource type="AudioStream" uid="uid://bw61s6dcjwa4o" path="res://Assets/Audio/Menuing/menubeep.wav" id="10_cvum7"]
 
 [node name="MainMenu" type="CanvasLayer" unique_id=1509971223]
 script = ExtResource("1_kiq52")
@@ -47,7 +48,11 @@ offset_top = 2160.0
 offset_right = -1920.0
 offset_bottom = 2160.0
 
-[node name="MainMenuController" type="Node" parent="." unique_id=1055294723 node_paths=PackedStringArray("currentScreen")]
+[node name="MainMenuController" type="Node" parent="." unique_id=1055294723 node_paths=PackedStringArray("currentScreen", "menuBeeps")]
 unique_name_in_owner = true
 script = ExtResource("9_n4hhb")
 currentScreen = NodePath("../MainMenuMainScreen")
+menuBeeps = NodePath("../AudioStreamPlayer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=600779685]
+stream = ExtResource("10_cvum7")

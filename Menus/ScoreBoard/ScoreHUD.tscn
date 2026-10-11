@@ -25,7 +25,6 @@ shadow_offset = Vector2(18, 9)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3npgx"]
 shader = ExtResource("8_wgo8s")
 shader_parameter/Color = Color(0.8, 0.8, 0, 1)
-shader_parameter/outlineThickness = 1
 
 [sub_resource type="LabelSettings" id="LabelSettings_8boj2"]
 font = ExtResource("6_w8ut1")
@@ -272,10 +271,12 @@ vertical_alignment = 1
 
 [node name="READY" type="AudioStreamPlayer" parent="READY GO" unique_id=1455629447]
 stream = ExtResource("6_q0m6a")
+bus = &"SFX"
 
 [node name="GO" type="AudioStreamPlayer" parent="READY GO" unique_id=448458955]
 stream = ExtResource("7_ww1s6")
 volume_db = -10.0
+bus = &"SFX"
 
 [node name="AndTheWinnerIs" type="Control" parent="." unique_id=1185322526 node_paths=PackedStringArray("announcingAnimation", "colorAnnouncer")]
 layout_mode = 3
@@ -329,9 +330,11 @@ vertical_alignment = 1
 
 [node name="AndTheWinnerIs" type="AudioStreamPlayer" parent="AndTheWinnerIs" unique_id=1967129571]
 stream = ExtResource("10_ef8pb")
+bus = &"SFX"
 
 [node name="ColorAnnouncer" type="AudioStreamPlayer" parent="AndTheWinnerIs" unique_id=1288229189]
 stream = ExtResource("12_vdi58")
+bus = &"SFX"
 
 [node name="WinnerDecider" type="AnimationPlayer" parent="AndTheWinnerIs" unique_id=352300474]
 libraries/ = SubResource("AnimationLibrary_8lsr1")

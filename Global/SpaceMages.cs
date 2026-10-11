@@ -16,6 +16,7 @@ namespace SpaceMages
 			"uid://dtn6lngqvldbv", // Yellow
 			"uid://bvv7s24ovshue", // Orange
 		];
+
 		public enum ColorNames
 		{
 			Red,

@@ -62,6 +62,7 @@ public partial class Player : CharacterBody2D
 
 	public bool isDead = false;
 
+
 	public bool IsInPilotArea
 	{
 
@@ -126,7 +127,7 @@ public partial class Player : CharacterBody2D
 
 		this.colorIdx = colorIdx;
 	}
-	public bool TakeDamage(Player damageDealer = null)
+	public bool TakeDamage(KillFeed.WEAPONS weaponUsed, Player damageDealer = null)
 	{
 		if(!bandaidFixTimer.IsStopped()) return false;
 		//TODO somewhere somehow you can take damage at the start of the round wtf is going on
@@ -151,7 +152,7 @@ public partial class Player : CharacterBody2D
 		}
 		else
 		{
-			Die(damageDealer);
+			Die(damageDealer, weaponUsed);
 		}
 		
 		HandleIFrames();
@@ -170,7 +171,7 @@ public partial class Player : CharacterBody2D
 		isInvulnerable = false;
 	} 
 
-	public void GoPilot()
+	public virtual void GoPilot()
 	{	
 		if(isDead) return;
 		if (!isPilot)
@@ -182,7 +183,7 @@ public partial class Player : CharacterBody2D
 		if (!isPilot) shipPardonTimer.Start(SHIPPARDONTIME);
 		isPilot = true;
 	}
-	void GoShip()
+	public virtual void GoShip()
 	{	
 		if(isDead) return;
 		if (!shipPardonTimer.IsStopped())
@@ -341,7 +342,7 @@ public partial class Player : CharacterBody2D
 	{
 		return colorIdx;
 	}
-	void Die(Player killer)
+	void Die(Player killer, KillFeed.WEAPONS weaponUsed)
 	{
 		Input.StartJoyVibration(GetInputIdx(), 0.8f, 0.8f, 0.6f);
 		Velocity *= 0;
@@ -368,7 +369,7 @@ public partial class Player : CharacterBody2D
 		particlesHandler.CreateDeathParticles(killer);
 		Position = new Vector2(99999, 99999);
 		EmitSignal(SignalName.Died, this, killer);
-		SignalBus.Instance.EmitSignal(SignalBus.SignalName.playerDied, this, killer);
+		SignalBus.Instance.EmitSignal(SignalBus.SignalName.playerDied, this, killer, (int)weaponUsed);
 		pilotDeadAudio.PitchScale = 1 + (float) GD.RandRange(-0.1, 0.1);
 		pilotDeadAudio.Play();
 		GD.Print(this, " was killed by ", killer);
@@ -402,11 +403,12 @@ public partial class Player : CharacterBody2D
 	}
 
 	#if TOOLS
+
     public override void _Input(InputEvent @event)
 	{
 		if (@event is InputEventKey key && Input.IsKeyPressed(Key.L))
 		{
-			Die(this);
+			Die(this, KillFeed.WEAPONS.TIMEOUTBEAM);
 		}
 	}
 	#endif

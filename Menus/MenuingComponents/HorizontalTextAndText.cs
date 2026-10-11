@@ -5,6 +5,8 @@ using static SpaceMages.SpaceMagesVars;
 [Tool]
 public partial class HorizontalTextAndText : HorizontalMenu
 {
+	
+	[Signal] public delegate void settingChangedEventHandler(int newSetting);
 	TextOptions TextOptions;
 
     public override void _Ready()
@@ -18,7 +20,11 @@ public partial class HorizontalTextAndText : HorizontalMenu
 
     public override bool OnInteract()
     {
-		return TextOptions.OnInteract();
+		bool result = TextOptions.OnInteract(); 
+		
+		EmitSignal(SignalName.settingChanged);
+
+		return result;
     }
 	protected override void DoFormatting()
 	{

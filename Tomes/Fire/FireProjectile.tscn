@@ -84,6 +84,7 @@ process_mode = 3
 stream = ExtResource("6_dw3gq")
 volume_db = 3.0
 autoplay = true
+bus = &"SFX"
 
 [node name="ExplosionParticles" type="GPUParticles2D" parent="." index="3" unique_id=1612285461]
 material = SubResource("CanvasItemMaterial_s51s0")

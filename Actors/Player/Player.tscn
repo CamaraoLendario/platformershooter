@@ -467,6 +467,8 @@ offset = Vector2(0, 4)
 [node name="MeleeSound" type="AudioStreamPlayer2D" parent="MeleeAttack" unique_id=1016438432]
 process_mode = 3
 stream = ExtResource("18_iwmb3")
+volume_db = 2.968
+bus = &"SFX"
 
 [node name="Ship Controller" type="Node" parent="." unique_id=534347838 node_paths=PackedStringArray("ShootAudio", "powerUpsHolder", "DashAudio", "sprite", "collision", "playerInput")]
 script = ExtResource("5_fllei")
@@ -541,22 +543,32 @@ process_mode = 3
 [node name="JumpSound" type="AudioStreamPlayer2D" parent="Sound" unique_id=1615038726]
 process_mode = 3
 stream = ExtResource("20_704ek")
+volume_db = -7.195
+bus = &"SFX"
 
 [node name="ShipAttack" type="AudioStreamPlayer2D" parent="Sound" unique_id=1841865435]
 process_mode = 3
 stream = ExtResource("20_s8ljq")
+volume_db = 6.892
+bus = &"SFX"
 
 [node name="ShipDash" type="AudioStreamPlayer2D" parent="Sound" unique_id=141250322]
 process_mode = 3
 stream = ExtResource("21_k8e2g")
+volume_db = 6.892
+bus = &"SFX"
 
 [node name="ShipDestroyed" type="AudioStreamPlayer2D" parent="Sound" unique_id=1197217660]
 process_mode = 3
 stream = ExtResource("22_7m1i7")
+volume_db = 6.892
+bus = &"SFX"
 
 [node name="PilotDead" type="AudioStreamPlayer" parent="Sound" unique_id=317725591]
 process_mode = 3
 stream = ExtResource("23_k8e2g")
+volume_db = 6.892
+bus = &"SFX"
 
 [node name="PlayerOnPlayerCollision" type="Area2D" parent="." unique_id=1636300373]
 unique_name_in_owner = true

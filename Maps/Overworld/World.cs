@@ -25,7 +25,9 @@ public partial class World : Node2D
 		} 
 		else if (currentMap.IsInsideTree()) {
 			currentMap.QueueFree();
-			currentMap = Game.GetMapPlaylist().GetNextMap();
+			//currentMap = Game.GetMapPlaylist().GetNextMap();
+			//currentMap = Game.GetMapPlaylist().GetRandMap(true);
+			currentMap = Game.GetMapPlaylist().GetRandMapMarbleBag();
 		}
 		
 		AwaitCurrentMapReady(currentMap);

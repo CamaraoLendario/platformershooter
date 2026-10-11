@@ -24,7 +24,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m3ypj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"DrillShot",
 "speed": 5.0
 }, {
@@ -32,7 +32,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_61qc5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"DualGuns",
 "speed": 5.0
 }, {
@@ -40,14 +40,15 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7k4oo")
 }],
-"loop": true,
+"loop": 1,
 "name": &"SpeedUp",
 "speed": 5.0
 }]
 
-[node name="ShipPowerUpPickup" type="Area2D" unique_id=644448315]
+[node name="ShipPowerUpPickup" type="Area2D" unique_id=644448315 node_paths=PackedStringArray("sprite")]
 collision_layer = 8
 script = ExtResource("1_tqqha")
+sprite = NodePath("PowerUpSprite")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1108446863]
 visible = false
@@ -56,3 +57,4 @@ shape = SubResource("CircleShape2D_m3ypj")
 [node name="PowerUpSprite" type="AnimatedSprite2D" parent="." unique_id=1715042645]
 sprite_frames = SubResource("SpriteFrames_25whq")
 animation = &"DualGuns"
+offset = Vector2(0, -0.40874755)

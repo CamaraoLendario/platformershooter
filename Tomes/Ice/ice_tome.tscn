@@ -24,9 +24,11 @@ animations = [{
 [node name="IceTome" unique_id=2074305282 instance=ExtResource("1_mrbom")]
 script = ExtResource("2_vcxt1")
 bullet = ExtResource("3_4squt")
+recoilForce = 450.0
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1661307283]
 sprite_frames = SubResource("SpriteFrames_x4wbo")
 
 [node name="AudioStreamPlayer2D" parent="." index="1" unique_id=1734592678]
 stream = ExtResource("4_vcxt1")
+volume_db = 10.465

@@ -1,6 +1,7 @@
 using Godot;
 using Godot.NativeInterop;
 using Microsoft.VisualBasic;
+using SpaceMages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,7 @@ public partial class GamemodeLogic : Resource
 	{
 		
 	} 
-    public virtual void OnPlayerDied(Player died, Player killer)
+    public virtual void OnPlayerDied(Player died, Player killer, int usedWeapon)
     {
 		GD.Print("----Begin OnPlayerDied() in GamemodeLogic:----");
 		int diedIdx = died.GetInputIdx();
@@ -67,14 +68,12 @@ public partial class GamemodeLogic : Resource
         if (playerTeamByInputIdx[killerIdx] == playerTeamByInputIdx[diedIdx])
 		{
 			if(suicideLosesPoints) {
-				teamScoreChanges.Add((playerTeamByInputIdx[killerIdx], -1));
-				teamScore[playerTeamByInputIdx[killerIdx]] -= 1;
+				AddToTeamScoreChanges(playerTeamByInputIdx[killerIdx], -1);
 				GD.Print($"the team {playerTeamByInputIdx[killerIdx]} has Lost a point");
 			}
 		}
 		else {
-			teamScoreChanges.Add((playerTeamByInputIdx[killerIdx], +1));
-			teamScore[playerTeamByInputIdx[killerIdx]] += 1;
+			AddToTeamScoreChanges(playerTeamByInputIdx[killerIdx], 1);
 			GD.Print($"the team {playerTeamByInputIdx[killerIdx]} has Gained a point");
 		}
 		GD.Print($"teamScoreChanges now has {teamScoreChanges.Count} entries");
@@ -179,6 +178,15 @@ public partial class GamemodeLogic : Resource
 	public int GetWinningTeamColor()
 	{
 		return teams[winningTeam].teamColorIdx;
+	}
+
+	protected void AddToTeamScoreChanges(int team, int score = 1)
+	{
+		if (teamScoreChanges.Count > 0 && teamScoreChanges[teamScoreChanges.Count-1].Item1 == team)
+			teamScoreChanges[teamScoreChanges.Count-1] = (teamScoreChanges[teamScoreChanges.Count-1].Item1, teamScoreChanges[teamScoreChanges.Count-1].Item2 +1);
+		else
+		teamScoreChanges.Add((team, score));
+		teamScore[team] += score;
 	}
 
 }

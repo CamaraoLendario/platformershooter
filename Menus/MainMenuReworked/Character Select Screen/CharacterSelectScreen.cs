@@ -32,7 +32,7 @@ public partial class CharacterSelectScreen : MainMenuScreen
             Reconstruct(Game.GetPlayersInfo());
         }
         holdBackProgressBar = GetNode<HoldBackProgressBar>("%HoldBackProgressBar");
-        holdBackProgressBar.Success += Back;
+        holdBackProgressBar.Success += () => {Back();};
     }
     public void Reconstruct(PlayerInfo[] playersInfo = null)
     {
@@ -204,7 +204,7 @@ public partial class CharacterSelectScreen : MainMenuScreen
         return false;
     }
 
-    public override void Back()
+    public override bool Back()
     {
         DisableInput();
         // foreach(PlayerCapsule capsule in GetEnabledPlayerCapsules())
@@ -213,6 +213,7 @@ public partial class CharacterSelectScreen : MainMenuScreen
         ChangeScreen(
             GetParent().GetNode<MainMenuScreen>("GamemodeSelectScreen"),
             Vector2.Right, Vector2.Left, true);
+        return true;
     }
     public PlayerInfo[] GetPlayersInfo()
     {

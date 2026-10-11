@@ -46,16 +46,16 @@ public partial class MainMenuMainScreen : MainMenuScreen
 		switch (menuSelectPanel.GetCurrentNodeIdx()) {
 			case 0:
 				Play();
-				break;
+				return true;
 			case 1:
 				Settings();
-				break;
+				return true;
 			case 2:
 				Credits();
-				break;
+				return true;
 			case 3:
 				Quit();
-				break;
+				return true;
 		}
 		return false;
     }
@@ -81,9 +81,10 @@ public partial class MainMenuMainScreen : MainMenuScreen
 		if(Engine.IsEditorHint()) return;
 		GetTree().Quit();
 	}
-    public override void Back()
+    public override bool Back()
 	{
 		LeaveThemeCard(true);
+		return true;
 	}
 	public bool LeaveThemeCard(bool reverse = false, bool skipAnimation = false)
 	{

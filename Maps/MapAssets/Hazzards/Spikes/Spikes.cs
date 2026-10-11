@@ -60,7 +60,7 @@ public partial class Spikes : Area2D
     }
     void DealDamage(Player player)
     {
-        player.TakeDamage();
+        player.TakeDamage(KillFeed.WEAPONS.SPIKES);
         player.Velocity += Vector2.Up.Rotated(Rotation) * 300;
     }
     void PrepareCollision()

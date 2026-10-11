@@ -282,6 +282,7 @@ _data = {
 }
 
 [node name="Map" type="Node2D" unique_id=564809975 node_paths=PackedStringArray("Pickups", "MapBordersNode", "pilotArea", "camera")]
+texture_filter = 1
 script = ExtResource("1_nxmd1")
 Pickups = NodePath("Pickups")
 MapBordersNode = NodePath("MapBorders")

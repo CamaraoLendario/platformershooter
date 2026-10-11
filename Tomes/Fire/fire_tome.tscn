@@ -49,10 +49,10 @@ particles_anim_h_frames = 2
 particles_anim_v_frames = 2
 particles_anim_loop = false
 
-[node name="FireTome" unique_id=346186004 node_paths=PackedStringArray("sprite") instance=ExtResource("1_qfput")]
+[node name="FireTome" unique_id=346186004 instance=ExtResource("1_qfput")]
 script = ExtResource("2_deydi")
-sprite = NodePath("AnimatedSprite2D")
 bullet = ExtResource("3_2g34k")
+recoilForce = 350.0
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1661307283]
 sprite_frames = SubResource("SpriteFrames_xtmxj")

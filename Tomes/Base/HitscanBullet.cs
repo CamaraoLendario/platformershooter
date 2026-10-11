@@ -99,7 +99,7 @@ public partial class HitscanBullet : RayCast2D
 	}
     protected virtual void Hit(Player player)
 	{
-		player.TakeDamage(owner);
+		player.TakeDamage(KillFeed.WEAPONS.ICE, owner);
 	}
 	protected virtual void Hit(StaticBody2D body)
 	{

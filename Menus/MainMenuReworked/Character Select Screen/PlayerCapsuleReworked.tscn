@@ -2,7 +2,6 @@
 
 [ext_resource type="Theme" uid="uid://bp3y44lrfkx80" path="res://Menus/SpaceMagesThemeResource.tres" id="1_ewlji"]
 [ext_resource type="Script" uid="uid://b67nuarl5dcl4" path="res://Menus/MainMenuReworked/Character Select Screen/PlayerCapsule.cs" id="2_48nbc"]
-[ext_resource type="Material" uid="uid://6b8p1p0j0p4f" path="res://Actors/Player/Materials/OutlineMaterial.tres" id="3_ol251"]
 [ext_resource type="Texture2D" uid="uid://de15nxjq8mt4s" path="res://Actors/Player/Pilot/Textures/Sprites/PilotStill.png" id="3_toa6k"]
 [ext_resource type="PackedScene" uid="uid://bphnjcidgshy0" path="res://Menus/MenuingComponents/MenuItemsContainer.tscn" id="4_tvjsv"]
 [ext_resource type="Script" uid="uid://c1uhsbcrlnwx2" path="res://Menus/MainMenuReworked/Character Select Screen/CapsuleCharacterSprite.cs" id="5_ol251"]
@@ -25,11 +24,13 @@ font_size = 40
 [sub_resource type="LabelSettings" id="LabelSettings_q8q8u"]
 font_size = 45
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_53gnc"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ol251"]
+resource_local_to_scene = true
 atlas = ExtResource("7_53gnc")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ol251"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ubgkj"]
+resource_local_to_scene = true
 atlas = ExtResource("7_53gnc")
 region = Rect2(0, 0, 16, 16)
 
@@ -51,7 +52,6 @@ layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_ewlji")
 script = ExtResource("2_48nbc")
-pilotOutlineShaderMaterial = ExtResource("3_ol251")
 pannelTheme = SubResource("StyleBoxFlat_sdmhf")
 Selectable = false
 
@@ -149,7 +149,7 @@ alignment = 1
 
 [node name="RenameInputIcon" parent="Player Connected/CapsuleActions/Rename" unique_id=1121962858 instance=ExtResource("10_wy61a")]
 layout_mode = 2
-texture = SubResource("AtlasTexture_53gnc")
+texture = SubResource("AtlasTexture_ol251")
 action = "MenuAltInteract-2"
 
 [node name="RenameLabel" type="Label" parent="Player Connected/CapsuleActions/Rename" unique_id=1924376721]
@@ -168,7 +168,7 @@ alignment = 1
 
 [node name="ReadyUpInputIcon" parent="Player Connected/CapsuleActions/ReadyUp" unique_id=339985318 instance=ExtResource("10_wy61a")]
 layout_mode = 2
-texture = SubResource("AtlasTexture_ol251")
+texture = SubResource("AtlasTexture_ubgkj")
 action = "MenuInteract-2"
 
 [node name="ReadyUpLabel" type="Label" parent="Player Connected/CapsuleActions/ReadyUp" unique_id=940726143]

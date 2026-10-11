@@ -49,7 +49,7 @@ public partial class PlayerEffectHandler : Node
 		else PoisonBuildup -= delta / 2;
 		if (PoisonBuildup > timeToPoison)
 		{
-			Main.TakeDamage(poisoner);
+			Main.TakeDamage(KillFeed.WEAPONS.SPIRIT, poisoner);
 			PoisonBuildup = 0;
 		}
 		if (PoisonBuildup < 0) PoisonBuildup = 0;

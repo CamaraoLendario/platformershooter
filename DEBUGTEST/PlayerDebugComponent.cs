@@ -63,7 +63,7 @@ public partial class PlayerDebugComponent : Controller
     {
         if (Main.hasShield)
         {
-            Main.TakeDamage();
+            Main.TakeDamage(KillFeed.WEAPONS.TIMEOUTBEAM);
         }
         else
         {

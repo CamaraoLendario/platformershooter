@@ -9,7 +9,7 @@ public partial class WindTome : Weapon
 		{
 			return false;
 		}
-		LinearProjectile newBullet = GetNewBullet(owner.colorIdx, inputDir);
+		LinearProjectile newBullet = GetNewBullet(owner.colorIdx, inputDir, KillFeed.WEAPONS.WIND);
 
 		world.CallDeferred(MethodName.AddChild, newBullet);
 

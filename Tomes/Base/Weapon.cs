@@ -1,6 +1,7 @@
 using Godot;
 using GodotPlugins.Game;
 using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 
 public partial class Weapon : Node2D
@@ -15,6 +16,7 @@ public partial class Weapon : Node2D
 	[Export] protected AudioStreamPlayer2D shootAudio;
 	private Timer shootCooldownTimer = new();
 	[Export] float shootCooldownTime = 0.1f;
+	[Export] public float recoilForce = 300;
 	public Player owner;
 	protected World world;
 	protected PilotWeaponHolder holder;
@@ -47,12 +49,13 @@ public partial class Weapon : Node2D
 		return true;
 	}
 
-	protected LinearProjectile GetNewBullet(int colorIdx, Vector2 inputDir) {
+	protected LinearProjectile GetNewBullet(int colorIdx, Vector2 inputDir, KillFeed.WEAPONS weaponUsed) {
 		LinearProjectile newBullet = bullet.Instantiate<LinearProjectile>();
 		newBullet.owner = owner;
 		newBullet.SetDirection(inputDir);
 		newBullet.Position = holder.GlobalPosition;
 		newBullet.isInPilotArea = currentMap.IsPositionInPilotArea(GlobalPosition);
+		newBullet.weaponUsed = weaponUsed;
 		return newBullet;
 	}
 } 

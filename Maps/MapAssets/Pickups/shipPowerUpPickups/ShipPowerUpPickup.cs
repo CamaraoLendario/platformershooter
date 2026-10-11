@@ -26,10 +26,12 @@ public partial class ShipPowerUpPickup : Pickup
 				GetNode<AnimatedSprite2D>("PowerUpSprite").Animation = weaponNamesArray[value];
         }
     }
+	[Export] AnimatedSprite2D sprite;
 	private int heldPowerup;
 	private string[] weaponNamesArray = ["DualGuns", "SpeedUp", "DrillShot",/*  "Laser",  */];
 	Timer CooldownTimer;
 	const float COOLDOWNTIME = 15;
+	float time = 0f;
     public override void _Ready()
     {
 		
@@ -38,6 +40,17 @@ public partial class ShipPowerUpPickup : Pickup
 		SignalBus.Instance.NewRoundStart += QueueFree;
 		GetNode<AnimatedSprite2D>("PowerUpSprite").Animation = weaponNamesArray[HeldPowerup];
 	}
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+		time += (float)delta * .25f;
+		if (time > 1)
+		{
+			time -= 1;
+		}
+		sprite.Offset = new Vector2(0f, Mathf.Sin(time * float.Tau) * 2.5f);
+    }
 
 	void OnBodyEntered(Node2D body)
 	{

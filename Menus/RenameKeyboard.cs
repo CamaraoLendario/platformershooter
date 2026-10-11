@@ -40,6 +40,7 @@ public partial class RenameKeyboard : Control
 	}
 	void Refresh()
 	{
+		if(optionsContainer != null)
 		foreach(Node node in optionsContainer.GetChildren())
 		{
 			if (node is not Panel && node is not MenuItemsListContainer) node.QueueFree();

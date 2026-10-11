@@ -4,6 +4,6 @@
 
 [resource]
 shader = ExtResource("1_sux3r")
-shader_parameter/CAammount = 0.75
-shader_parameter/ConvexAmmount = 42.485
-shader_parameter/enabled = true
+shader_parameter/CAammount = 1.0
+shader_parameter/ConvexAmmount = 8.02
+shader_parameter/enabled = false

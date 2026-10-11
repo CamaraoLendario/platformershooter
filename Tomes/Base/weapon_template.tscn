@@ -12,3 +12,4 @@ position = Vector2(9, 0)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1734592678]
 process_mode = 3
+bus = &"SFX"

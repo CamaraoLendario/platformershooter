@@ -162,7 +162,7 @@ public partial class TeamSelectScreen : MainMenuScreen
 		}), 0f, 1f, 0.2);
 
 	}
-    public override void Back()
+    public override bool Back()
 	{
 		RemovePlayerContainers();
 		CharacterSelectScreen characterSelectScreen = GetParent().GetNode<CharacterSelectScreen>("CharacterSelectScreen"); 
@@ -170,6 +170,7 @@ public partial class TeamSelectScreen : MainMenuScreen
 		ChangeScreen(characterSelectScreen,
 			Vector2.Right, Vector2.Left, false, true
 		);
+		return true;
 	}
 	MenuItem[] GetPlayerIcons()
 	{

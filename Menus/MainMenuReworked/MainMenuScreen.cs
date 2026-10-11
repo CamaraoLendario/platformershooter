@@ -55,12 +55,11 @@ public partial class MainMenuScreen : Control
 	{
 		if (currentInteractible == null)
 		{
-			Back();
-			return false;
+			return Back();
 		}
 		bool result = currentInteractible.OnNegativeAction();
 		if (!result)
-			Back();
+			return Back();
 		return result;
 	}
 	public virtual bool OnInteractReleased() {
@@ -77,24 +76,27 @@ public partial class MainMenuScreen : Control
 	}
 
 
-	public virtual void OnMoveAction(Vector2 dir)
+	public virtual bool OnMoveAction(Vector2 dir)
 	{
-		if (currentInteractible != null && currentInteractible.OnMoveAction(dir)) return;
+		if (currentInteractible != null && currentInteractible.OnMoveAction(dir)) return true;
 		
 		if (usesSelectorPanel)
 		{
 			if (menuSelectPanel == null)
 			{
 				MenuError("Uses panel but has no panel");
-				return;
+				return false;
 			}
 			currentInteractible = menuSelectPanel.MoveGetSelectedNode(dir);
+			return dir.Y != 0;
 		}
+		return false;
 	}
 
-	public virtual void Back()
+	public virtual bool Back()
 	{
 		MenuError("Back function not set up");
+		return false;
 	}
 	protected void SpawnMenuSelectPanel()
 	{

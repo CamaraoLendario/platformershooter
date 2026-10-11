@@ -58,7 +58,18 @@ public partial class PilotWeaponHolder : Node2D
 		if (CurrentWeapon != null)
 		{
 			EmitSignal(SignalName.WeaponShot);
-			CurrentWeapon.OnShoot(inputdir);
+			float oldPilotSpeedSquared = Pilot.Velocity.LengthSquared();
+			Vector2 recoilVector = (-inputdir + Vector2.Up*0.3f) * CurrentWeapon.recoilForce;
+			float newPilotSpeedSquared = (Pilot.Velocity + recoilVector).LengthSquared();
+
+			if (newPilotSpeedSquared > 500 * 500)
+			{
+				Pilot.Velocity += recoilVector;
+				Pilot.Velocity = Pilot.Velocity.Normalized() * Mathf.Sqrt(oldPilotSpeedSquared);
+			}
+
+
+			CurrentWeapon.OnShoot(inputdir); // has to be the last thing done as it queuefrees the weapon if its the last bullet
 		}
 	}
 

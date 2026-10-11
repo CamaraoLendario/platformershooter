@@ -44,6 +44,7 @@ public partial class ShipProjectile : LinearProjectile
 		Tween tween = CreateTween();
 		tween.TweenMethod(Callable.From((float tweenedValue) =>
 		{
+			
 			projectileLight.Energy = tweenedValue;
 		}), 1f, 0f, trailParticles.Lifetime/10f);
 		await ToSignal(GetTree().CreateTimer(trailParticles.Lifetime), Timer.SignalName.Timeout);

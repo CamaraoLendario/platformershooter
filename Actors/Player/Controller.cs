@@ -40,7 +40,7 @@ public partial class Controller : Node
 
 	public override void _Ready()
 	{
-		Main = GetParent<Player>();
+		Main = GetParent() as Player;
 
 		playerInput.InputDirChanged += ProcessWASD;
 		playerInput.JumpStart += OnJumpStart;

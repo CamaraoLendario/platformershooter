@@ -38,9 +38,10 @@ public partial class IceRay : HitscanBullet
 
 	protected override void Hit(Player player)
 	{
-		if(player.hasShield)
-			player.TakeDamage(owner);
+		player.TakeDamage(KillFeed.WEAPONS.ICE, owner);
+		/* if(player.hasShield)
+			player.TakeDamage(KillFeed.WEAPONS.ICE, owner);
 		else
-			player.effectHandler.Freeze();
+			player.effectHandler.Freeze(); */
 	}
 }

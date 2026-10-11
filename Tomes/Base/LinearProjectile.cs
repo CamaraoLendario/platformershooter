@@ -37,6 +37,7 @@ public partial class LinearProjectile : Area2D
 		HITPLAYER,
 		TIMEOUT,
 	}
+	public KillFeed.WEAPONS weaponUsed = KillFeed.WEAPONS.WIND;
 	
 	public override void _Ready()
 	{
@@ -119,7 +120,7 @@ public partial class LinearProjectile : Area2D
 		if (!(body is Player)) return;
 
 		End(EndingReason.HITPLAYER);
-		(body as Player).TakeDamage(owner);
+		(body as Player).TakeDamage(weaponUsed, owner);
 	}
 	
 	public virtual void OnLifeEnd()

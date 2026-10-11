@@ -5,7 +5,7 @@ public partial class DebugCamera : Camera2D
 {
     public override void _Ready()
     {
-        MakeCurrent();
+        CallDeferred(Camera2D.MethodName.MakeCurrent);
     }
 
     public override void _Input(InputEvent @event)

@@ -1,14 +1,11 @@
 using Godot;
 using static SpaceMages.SpaceMagesVars;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection.PortableExecutable;
 
 [Tool]
 public partial class MainMenuController : MenuController
 {
 	[Export] public MainMenuScreen currentScreen;
+	[Export] AudioStreamPlayer menuBeeps;
 	MainMenu main;
 	bool enabled = true;
 	
@@ -33,8 +30,10 @@ public partial class MainMenuController : MenuController
 
 		if (currentScreen is MainMenuMainScreen mainMenuMainScreen && @event is not InputEventJoypadMotion && !@event.IsReleased())
 		{
-			if (mainMenuMainScreen.LeaveThemeCard())
-				return;
+			if (mainMenuMainScreen.LeaveThemeCard()){
+					menuBeeps.Play();
+					return;
+				}
 		}
 
 		Vector2 newInputVec = inputVec;
@@ -69,20 +68,26 @@ public partial class MainMenuController : MenuController
 		
 		UpdateInputVec(newInputVec);
 		
-		if (!@event.IsReleased())
+
+		if (!@event.IsReleased()){
 			foreach((string controllerInput, string keyboardInput, StringName menuAction) in menuInputs)
 			{
 				if ((Input.IsActionJustPressed(controllerInput) || Input.IsActionJustPressed(keyboardInput)) && (bool)currentScreen.Call(menuAction))
 				{
+					GD.Print("released lmao");
+					menuBeeps.Play();
 					GetViewport().SetInputAsHandled();
 					return;
 				}
 			}
+		}
 		else
 			foreach((string controllerInput, string keyboardInput, StringName menuAction) in menuInputs)
 			{
 				if ((Input.IsActionJustReleased(controllerInput) || Input.IsActionJustReleased(keyboardInput)) && (bool)currentScreen.Call(menuAction + "Released"))
 				{
+					GD.Print("pressed lmao");
+					menuBeeps.Play();
 					GetViewport().SetInputAsHandled();
 					return;
 				}
@@ -91,7 +96,8 @@ public partial class MainMenuController : MenuController
 
     public override void OnMoveAction(Vector2 inputvec)
 	{
-		currentScreen.OnMoveAction(inputvec);
+		if (currentScreen.OnMoveAction(inputvec))
+			menuBeeps.Play();
 	}
 
 	public MainMenuScreen SetCurrentScreen(MainMenu.Screens screen)

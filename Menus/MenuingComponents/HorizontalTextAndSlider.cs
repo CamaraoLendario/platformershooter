@@ -6,7 +6,7 @@ using System.ComponentModel;
 public partial class HorizontalTextAndSlider : HorizontalMenu
 {
 	ProgressBar slider;
-	[Export] int SliderValue
+	[Export] public int SliderValue
 	{
 		get
 		{
@@ -19,7 +19,7 @@ public partial class HorizontalTextAndSlider : HorizontalMenu
 		}
 	}
 	int sliderValue;
-	[Export] int maxValue = 100;
+	[Export] public int maxValue = 100;
 	public override void _Ready()
     {
 		base._Ready();

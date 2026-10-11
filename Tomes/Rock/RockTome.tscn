@@ -40,6 +40,7 @@ bulletCount = 5
 coneAngle = 7.5
 bullet = ExtResource("3_x4wbo")
 maxAmmo = 3
+recoilForce = 350.0
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1661307283]
 sprite_frames = SubResource("SpriteFrames_vkqiy")

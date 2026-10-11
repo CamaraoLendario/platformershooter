@@ -17,7 +17,7 @@ public partial class RockTome : Weapon
 		List<RockPellet> pellets = new();
 		for (int bulletNum = 1; bulletNum <= bulletCount; bulletNum++)
 		{
-			RockPellet rockPellet = GetNewBullet(owner.colorIdx, inputDir) as RockPellet;
+			RockPellet rockPellet = GetNewBullet(owner.colorIdx, inputDir, KillFeed.WEAPONS.ROCK) as RockPellet;
 			float rot = inputDir.Angle();
 
 			rot -= coneAngleRad / 2;

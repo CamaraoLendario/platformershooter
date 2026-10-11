@@ -11,7 +11,6 @@ public partial class PlayerCapsule : MenuItem
 	[Signal] public delegate void DisabledEventHandler(PlayerCapsule playerCapsule);
 	#region Exports
 	[ExportGroup("Nodes and References")]
-	[Export] ShaderMaterial pilotOutlineShaderMaterial;
 	[Export] StyleBoxFlat pannelTheme;
 	[Export] Color readyBGcolor = new Color(0.161f, 1.0f, 0.161f, 0.396f);
 	[Export] Color unreadyBGcolor = new Color(0.161f, 0.161f, 0.161f, 0.396f);
@@ -68,8 +67,6 @@ public partial class PlayerCapsule : MenuItem
 	}
 	public void SetColor(int idx)
 	{
-		if (capsuleCharacterSprite.Material == null) 
-			capsuleCharacterSprite.Material = pilotOutlineShaderMaterial.Duplicate() as ShaderMaterial;
 		if (idx != colorIdx){
 			int dir = 1;
 			if (idx < colorIdx){dir = -1;}
@@ -78,7 +75,6 @@ public partial class PlayerCapsule : MenuItem
 				int currentColoridx = NormalizeIdx(idx + (i * dir), teamColors.Length);
 				//GD.Print("trying to set color to: ", idx);
 				if (characterSelectScreen.IsColorAvaliable(currentColoridx)){
-					(capsuleCharacterSprite.Material as ShaderMaterial).SetShaderParameter("Color", teamColors[currentColoridx]);
 					capsuleCharacterSprite.SetTexture(currentColoridx);
 					colorIdx = currentColoridx;
 					break;

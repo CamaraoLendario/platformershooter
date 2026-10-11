@@ -77,7 +77,7 @@ public partial class MagicMissile : HittableComponent
     {
         if (body is not Player player) return;
         if (player == ignoredTarget) return;
-        if (player.TakeDamage(target))
+        if (player.TakeDamage(KillFeed.WEAPONS.MAGICMISSILE, target))
             End();
     }   
 

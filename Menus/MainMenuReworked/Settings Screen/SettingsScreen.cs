@@ -10,13 +10,13 @@ public partial class SettingsScreen : MainMenuScreen
 		{
 			case 0:
 				VideoSettings();
-				break;
+				return true;
 			case 1:
 				AudioSettings();
-				break;
+				return true;
 			case 2:
 				Accessibility();
-				break;
+				return true;
 				
 		}
 		return false;
@@ -36,10 +36,11 @@ public partial class SettingsScreen : MainMenuScreen
     }
 	void Accessibility(){}
 
-    public override void Back()
+    public override bool Back()
     {
 		ChangeScreen(
             GetParent().GetNode<MainMenuMainScreen>("MainMenuMainScreen"),
             Vector2.Left, Vector2.Right);
-    }
+		return true;
+	}
 }

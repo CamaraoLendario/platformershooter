@@ -46,7 +46,7 @@ public partial class BeamsOfDeath : Node2D
 			{
 				if (body is not Player player) return;
 
-				player.TakeDamage(player);
+				player.TakeDamage(KillFeed.WEAPONS.TIMEOUTBEAM, player);
 			}
 		}
 	}

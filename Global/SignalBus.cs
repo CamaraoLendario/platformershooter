@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 public partial class SignalBus : Node
 {
-	[Signal] public delegate void playerDiedEventHandler(Player died, Player killer);
+	[Signal] public delegate void playerDiedEventHandler(Player died, Player killer, int weaponUsed);
 	[Signal] public delegate void PlayerAddedEventHandler(Player player);
 	[Signal] public delegate void FinishedSpawningPlayersEventHandler();
 	[Signal] public delegate void StartGameEventHandler();

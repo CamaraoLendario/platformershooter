@@ -14,7 +14,6 @@ script = ExtResource("1_xoayq")
 
 [node name="ConstantOverlay" parent="." unique_id=1557563179 instance=ExtResource("3_ed0e0")]
 unique_name_in_owner = true
-process_mode = 3
 
 [node name="OverWorld" parent="." unique_id=582483126 instance=ExtResource("4_uph1o")]
 unique_name_in_owner = true

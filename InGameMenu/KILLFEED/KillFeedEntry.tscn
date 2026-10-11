@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://coxwxco8e6kp6"]
+
+[ext_resource type="Texture2D" uid="uid://daawcol3kgydg" path="res://Tomes/TomeAssets/Weapons.png" id="1_er346"]
+[ext_resource type="FontFile" uid="uid://c5a2sdgkmsblj" path="res://Fonts/SpaceMagesFontOutlined.png" id="1_ys5ff"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_f20ke"]
+font = ExtResource("1_ys5ff")
+font_size = 32
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ulq3i"]
+atlas = ExtResource("1_er346")
+region = Rect2(0, 0, 16, 16)
+
+[node name="KillFeedEntry" type="HBoxContainer" unique_id=633032109]
+anchors_preset = -1
+offset_right = 184.0
+offset_bottom = 64.0
+alignment = 2
+
+[node name="Killer" type="Label" parent="." unique_id=1769548395]
+layout_mode = 2
+text = "RED"
+label_settings = SubResource("LabelSettings_f20ke")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1152788724]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = SubResource("AtlasTexture_ulq3i")
+
+[node name="Victim" type="Label" parent="." unique_id=1158767781]
+layout_mode = 2
+text = "RED"
+label_settings = SubResource("LabelSettings_f20ke")
+horizontal_alignment = 2
+vertical_alignment = 1

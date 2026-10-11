@@ -142,7 +142,7 @@ public partial class MeleeAttack : Area2D
 			{
 				(RayCast2D ray, bool hasLOS) LOS = getHasLOS(player); 
 				if (LOS.hasLOS)
-					player.TakeDamage(Main);
+					player.TakeDamage(KillFeed.WEAPONS.MELEE, Main);
 				LOS.ray.QueueFree();
 			}
 		}

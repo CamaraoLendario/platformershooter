@@ -4,12 +4,14 @@ public partial class ExplosionComponent : Area2D
 {
 	[Export] int frameLength = 3;
 	[Export] CollisionShape2D explosionCollision;
-	[Export] AudioStreamPlayer2D ExplosionAudio;
+	[Export] public AudioStreamPlayer2D ExplosionAudio;
+	[Export] public float screenShakeAmount = 10f;
+	[Export] public float screenShakeTime = 0.3f;
 	public float explosionRadius;
 	public Player owner;
+	public KillFeed.WEAPONS relatedWeapon;
 	CollisionShape2D shape;
 	RayCast2D checkRay = new();
-
 	public override void _Ready()
 	{
 		AreaEntered += OnAreaEntered;
@@ -42,9 +44,9 @@ public partial class ExplosionComponent : Area2D
 			if (HasLOS(player)){
 				player.Velocity += 50 * (player.Position - Position);
 				if (owner != null)
-					player.TakeDamage(owner);
+					player.TakeDamage(relatedWeapon, owner);
 				else
-					player.TakeDamage();
+					player.TakeDamage(relatedWeapon);
 			}
 		}
     }
