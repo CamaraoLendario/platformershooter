@@ -4,15 +4,13 @@ using System.Linq;
 using System.Runtime.InteropServices;
 
 [Tool]
-public partial class MapWheelReinvented : Node2D
+public partial class MapTiles : Node2D
 {
 	Texture2D sheet;
-	struct Tile {
+	public struct Tile {
 		public int sheetPos;
 		//Vector2I size; for now this will be assumed 16x16
-		//rotation?
-		//fliph???
-		//flipv???
+
 	}
 	Tile emptyTile = new Tile
 	{
@@ -20,6 +18,8 @@ public partial class MapWheelReinvented : Node2D
 	};
 
 	Tile[] tiles = new Tile[64*64];
+
+	Vector2I CurrentTilePos;
 
 	public override void _Ready()
 	{
@@ -32,12 +32,12 @@ public partial class MapWheelReinvented : Node2D
 		shader.SetShaderParameter("tiles", emptyTiles);
 	}
 
-	void PlaceBlock(Vector2I pos, Tile tile)
+	public void PlaceBlock(Vector2I pos, Tile tile)
 	{
 		tiles[pos.X + pos.Y*64] = tile;
 	}
 
-	void RemoveBlock(Vector2I pos)
+	public void RemoveBlock(Vector2I pos)
 	{
 		tiles[pos.X + pos.Y*64] = emptyTile;
 	}
