@@ -6,6 +6,9 @@ public partial class MapEditor : Node2D
 {
 	TextureRect ghost = new TextureRect();
 	Texture2D sheet = GD.Load<Texture2D>("uid://chyns5moafk7j");
+	MapTiles currentMap;
+	Vector2I CurrentTilePos;
+	MapTiles.Tile currentTile;
 	public override void _Ready()
 	{
 		ghost.Texture = new AtlasTexture()
@@ -25,5 +28,15 @@ public partial class MapEditor : Node2D
 		if (mousePos.Y < 0)
 			mousePos = new Vector2( mousePos.X, mousePos.Y - 16);
 		ghost.Position = (new Vector2((int)(mousePos.X /16), (int)(mousePos.Y /16))*16) - Vector2.One * 2;
+	}
+
+	    public override void _Input(InputEvent @event)
+	{
+		if (!(@event is InputEventMouseMotion || @event is InputEventMouseButton))
+			return;
+		
+		if (Input.IsMouseButtonPressed(MouseButton.Left)){
+			currentMap.PlaceBlock(CurrentTilePos, currentTile);
+		}
 	}
 }
