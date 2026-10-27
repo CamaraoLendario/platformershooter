@@ -1,4 +1,5 @@
 using Godot;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -128,11 +129,13 @@ namespace SpaceMages
 		}
 		public static int NormalizeIdx(int idx, int collectionSize)
 		{
-			if (collectionSize == 0)
+			if (collectionSize <= 0)
 			{
-				GD.PrintErr("Tried to normalize Idx of a collection with size 0, returning 0");
+				GD.PrintErr($"Tried to normalize Idx of a collection with size {collectionSize}, returning 0");
 				return 0;
 			}
+
+			//return ((idx % collectionSize) + collectionSize) % collectionSize; 
 
 			if (idx < 0)
 			{

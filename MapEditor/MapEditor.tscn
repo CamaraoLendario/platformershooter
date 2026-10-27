@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://trof51gcugvp"]
+
+[ext_resource type="Script" uid="uid://drcrpm3gcnw28" path="res://MapEditor/MapEditor.cs" id="1_jhnah"]
+[ext_resource type="FontFile" uid="uid://c5a2sdgkmsblj" path="res://Fonts/SpaceMagesFontOutlined.png" id="2_k3j5l"]
+[ext_resource type="PackedScene" uid="uid://tpkl2ldjoh3r" path="res://MapEditor/mapWheelReinvented.tscn" id="2_rcuh3"]
+
+[node name="MapEditor" type="Node2D" unique_id=1943003019 node_paths=PackedStringArray("currentMap", "editorCamera")]
+script = ExtResource("1_jhnah")
+DebugFont = ExtResource("2_k3j5l")
+currentMap = NodePath("Map")
+editorCamera = NodePath("Camera2D")
+
+[node name="Map" parent="." unique_id=1026762445 instance=ExtResource("2_rcuh3")]
+show_behind_parent = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1856114197]
+zoom = Vector2(3.335, 3.335)
+process_callback = 0
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2087216970]
+offset_left = -1.0
+offset_top = -16.0
+offset_right = 1.0
+offset_bottom = 16.0
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect" unique_id=437715274]
+layout_mode = 0
+offset_left = -15.0
+offset_top = 15.0
+offset_right = 17.0
+offset_bottom = 17.0
