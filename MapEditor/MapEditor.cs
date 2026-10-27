@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Godot;
+using Microsoft.VisualBasic;
 
 public partial class MapEditor : Node2D
 {
@@ -20,7 +21,7 @@ public partial class MapEditor : Node2D
 	MapTiles.Tile currentTile;
 	string MapName = "NewUserCreatedMap";
 	// TODO: make it so the collision maker cleans up Fives
-	List<(Vector2 pos, int polygonIdx)> fivesToCleanup = [];
+	List<(Vector2 pos, Vector2I dir, int polyIdx)> fivesToCleanup = [];
 
 	public override void _Ready()
 	{
@@ -126,7 +127,7 @@ public partial class MapEditor : Node2D
 		polygonsForDebug = polygons;
 		StaticBody2D polyParent = currentMap.staticBody;
 		int polygonsCount = polygons.Count;
-		
+
 		int colPolsCount = polyParent.GetChildCount();
 
 		for(int i = 0; i < polygonsCount; i++)
@@ -142,7 +143,7 @@ public partial class MapEditor : Node2D
 		if (polygonsCount < colPolsCount)
 			for(int i = colPolsCount-1; i >= polygonsCount; i--)
 				polyParent.GetChild<CollisionPolygon2D>(i).QueueFree();
-		
+	
 	}
 
 	List<Vector2[]> GenerateCol() {
@@ -156,18 +157,51 @@ public partial class MapEditor : Node2D
 			
 			if (!(num == 4 || num == 5)) continue;
 
-			//points.Add((new Vector2(x, y) - Vector2.One * 32)*16);
+			points.Add((new Vector2(x, y) - Vector2.One * 32)*16);
 			PBO.Add((x, y, num));
 		}}
 		
 		GD.Print($"PBO Count = {PBO.Count}");
 		List<Vector2[]> polygons = [];
-		for(int i = 0; i < PBO.Count; i++){
-			Vector2[] newPoly = DefinePolygon(PBO, i);
+		//for(int i = 0; i < PBO.Count; i++)
+		int currentPolyIdx = 0;
+		while(PBO.Count > 0) {
+			Vector2[] newPoly = DefinePolygon(PBO, 0);
+			  PBO.RemoveAt(0);
+
 			if (newPoly.Length != 0)
 				polygons.Add(newPoly);
+
+			for (int i = fivesToCleanup.Count-1; i > 0; i--)
+			if (fivesToCleanup[i].polyIdx == -1)
+				fivesToCleanup[i] = (fivesToCleanup[i].pos, fivesToCleanup[i].dir, currentPolyIdx);
+
+			currentPolyIdx++;
 		}
+
 		// delete fives here maybe?
+		while(fivesToCleanup.Count > 0){
+			int passedByCount = 0;
+			int currentDir = 0;
+			List<int> fivesToRemove = [];
+			if (fivesToCleanup[0].dir.X == 0)
+				currentDir = fivesToCleanup[0].dir.Y;
+			else currentDir = fivesToCleanup[0].dir.X;
+			for (int i = fivesToCleanup.Count-1; i > 0; i--){
+				if (fivesToCleanup[0].pos != fivesToCleanup[i].pos) continue;
+				passedByCount++;
+				int otherDir = 0;
+				if (fivesToCleanup[i].dir.X == 0)
+					otherDir = fivesToCleanup[i].dir.Y;
+				else otherDir = fivesToCleanup[i].dir.X;
+
+				if (currentDir != otherDir) continue;
+
+				polygons.RemoveAt(i);
+			}
+			fivesToCleanup.RemoveAt(0);
+		}
+
 		return polygons;
 	}
 
@@ -208,6 +242,17 @@ public partial class MapEditor : Node2D
 				}
 				if (currentPos == originalPos) break;
 			}
+            List<(int x, int y, int formatIdx)> idxsToRemove = [];
+            for (int i = 0; i < PBO.Count; i++)
+            {
+                if (idx == i) continue;
+                if (PBO[i].x == currentPos.X && PBO[i].y == currentPos.Y) {
+					int num = GetCrossTilesNum(currentPos.X, currentPos.Y);
+					if (num != 5)
+						idxsToRemove.Add((currentPos.X, currentPos.Y, num));
+					else fivesToCleanup.Add((new Vector2(currentPos.X, currentPos.Y), dir * Vector2I.Up, -1));
+				}
+            }
             if (LR.left == 1 && LR.right == 1){
 				dir = RotateLeft(dir);
                 rotation -= 90;
@@ -218,18 +263,9 @@ public partial class MapEditor : Node2D
             }
             polygon.Add((currentPos - Vector2.One * 32f)*16f);
 
-            List<int> idxsToRemove = [];
-            for (int i = 0; i < PBO.Count; i++)
-            {
-                if (idx == i) continue;
-                if (PBO[i].x == currentPos.X && PBO[i].y == currentPos.Y)
-					if (GetCrossTilesNum(currentPos.X, currentPos.Y) != 5)
-						idxsToRemove.Add(i);
-					else fivesToCleanup.Add((new Vector2(currentPos.X, currentPos.Y)), HUMMMWHEREISTHEPOLYGONIDXBRO);
-            }
-            for (int i = idxsToRemove.Count - 1; i >= 0; i--)
-            {
-                PBO.RemoveAt(idxsToRemove[i]);
+            for (int i = idxsToRemove.Count - 1; i >= 0; i--) {
+                PBO.Remove(idxsToRemove[i]);
+				points.Remove((new Vector2(idxsToRemove[i].x, idxsToRemove[i].y) - Vector2.One * 32)*16);
             }
 			//TODO: make it show PBOs when drawing for debugging
             currentPos += dir;
@@ -275,11 +311,11 @@ public partial class MapEditor : Node2D
 			Vector2I dir = Vector2I.Right;
 			Vector2I currentPos = originalPos + dir;
 			List<Vector2> Hole = [(originalPos - Vector2.One * 32)*16];
-			points.Add((originalPos - Vector2.One * 32)*16);
+			//points.Add((originalPos - Vector2.One * 32)*16);
 			int j = 0;
+			int rotation = 90;
 			while(currentPos != originalPos && j < 100){
 				j++;
-				int rotation = 90;
 				(int left, int right) LR = GetDirIsTiles(currentPos, dir);
 				if (LR.left == 0 && LR.right == 1){
 					while(LR.left == 0 && LR.right == 1){
@@ -290,14 +326,14 @@ public partial class MapEditor : Node2D
 				}
 				if (LR.left == 1 && LR.right == 1){
 					dir = RotateLeft(dir);
-					rotation -= 90;
+					rotation += 90;
 				}
 				else if (LR.right == 0){
 					dir = RotateRight(dir);
-					rotation += 90;
+					rotation -= 90;
 				}
             	Hole.Add((currentPos - Vector2.One * 32f)*16f);
-				points.Add((currentPos - Vector2.One * 32f)*16f);
+				//points.Add((currentPos - Vector2.One * 32f)*16f);
 				
 				List<int> idxsToRemove = [];
 				for (int I = 0; I < HolesPoints.Count; I++){
@@ -310,8 +346,9 @@ public partial class MapEditor : Node2D
 					HolesPoints.RemoveAt(idxsToRemove[I]);
 				}
 			}
-			GD.Print("Hole rotation: " + Rotation);
-			Holes.Add(Hole);
+			GD.Print("Hole rotation: " + rotation);
+			if (rotation != -360)
+				Holes.Add(Hole);
 		}
 		GD.Print($"its actually {Holes.Count}");
 		for (int h = 0; h < Holes.Count; h++){
