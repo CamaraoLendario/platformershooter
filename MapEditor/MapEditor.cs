@@ -59,10 +59,14 @@ public partial class MapEditor : Node2D
 		CurrentTilePos = ((Vector2I)ghost.Position + (new Vector2I(33, 33)*16))/16;
 		if (Input.IsKeyPressed(Key.Ctrl)){
 			if (Input.IsKeyPressed(Key.S)){
-				Stopwatch sw = Stopwatch.StartNew();
+				//Stopwatch sw = Stopwatch.StartNew();
+				foreach (Node node in currentMap.staticBody.GetChildren())
+				{
+					node.QueueFree();
+				}
 				UpdateColision();
-				sw.Stop();
-				GD.Print("generate col elapsed time: " + sw.Elapsed);
+				//sw.Stop();
+				//GD.Print("generate col elapsed time: " + sw.Elapsed);
 			}
 		}
 		else if (Input.IsKeyPressed(Key.Shift)){
@@ -86,10 +90,12 @@ public partial class MapEditor : Node2D
 				updateGhost();
 			}
 			if (Input.IsMouseButtonPressed(MouseButton.Left)){
-				currentMap.PlaceBlock(CurrentTilePos, currentTile);
+				if (currentMap.PlaceBlock(CurrentTilePos, currentTile))
+					UpdateColision();
 			}
 			if (Input.IsMouseButtonPressed(MouseButton.Right)){
-				currentMap.RemoveBlock(CurrentTilePos);
+				if (currentMap.RemoveBlock(CurrentTilePos))
+					UpdateColision();
 			}
 			if (Input.IsMouseButtonPressed(MouseButton.Middle)){
 				editorCamera.Offset -= mouseMovement;
@@ -166,23 +172,31 @@ public partial class MapEditor : Node2D
 		//for(int i = 0; i < PBO.Count; i++)
 		int currentPolyIdx = 0;
 		while(PBO.Count > 0) {
+			GD.Print($"defining polygon {currentPolyIdx}");
 			Vector2[] newPoly = DefinePolygon(PBO, 0);
-			  PBO.RemoveAt(0);
 
 			if (newPoly.Length != 0)
 				polygons.Add(newPoly);
 
-			for (int i = fivesToCleanup.Count-1; i > 0; i--)
-			if (fivesToCleanup[i].polyIdx == -1)
-				fivesToCleanup[i] = (fivesToCleanup[i].pos, fivesToCleanup[i].dir, currentPolyIdx);
-
+			for (int i = fivesToCleanup.Count-1; i >= 0; i--){
+				if (fivesToCleanup[i].polyIdx == -1)
+					fivesToCleanup[i] = (fivesToCleanup[i].pos, fivesToCleanup[i].dir, currentPolyIdx);
+			}
 			currentPolyIdx++;
+			PBO.RemoveAt(0);
 		}
 
+		for(int prnt = 0; prnt < fivesToCleanup.Count; prnt++) {
+			GD.Print($"{prnt} - five to cleanup:");
+			GD.Print($"pos: {fivesToCleanup[prnt].pos}");
+			GD.Print($"dir: {fivesToCleanup[prnt].dir}");
+			GD.Print($"idx: {fivesToCleanup[prnt].polyIdx}");
+			GD.Print("---------------------");
+		}
 		// delete fives here maybe?
 		while(fivesToCleanup.Count > 0){
 			int passedByCount = 0;
-			int currentDir = 0;
+			int currentDir;
 			List<int> fivesToRemove = [];
 			if (fivesToCleanup[0].dir.X == 0)
 				currentDir = fivesToCleanup[0].dir.Y;
@@ -190,14 +204,16 @@ public partial class MapEditor : Node2D
 			for (int i = fivesToCleanup.Count-1; i > 0; i--){
 				if (fivesToCleanup[0].pos != fivesToCleanup[i].pos) continue;
 				passedByCount++;
-				int otherDir = 0;
+				int otherDir;
 				if (fivesToCleanup[i].dir.X == 0)
 					otherDir = fivesToCleanup[i].dir.Y;
 				else otherDir = fivesToCleanup[i].dir.X;
-
+				GD.Print($"currentDir = {currentDir}");
+				GD.Print($"otherDir = {otherDir}");
 				if (currentDir != otherDir) continue;
-
-				polygons.RemoveAt(i);
+				GD.Print("REMOVING");
+				polygons.RemoveAt(fivesToCleanup[i].polyIdx);
+				//fivesToCleanup.RemoveAt(i);
 			}
 			fivesToCleanup.RemoveAt(0);
 		}
@@ -231,6 +247,9 @@ public partial class MapEditor : Node2D
         //points.Add((originalPos - Vector2.One * 32)*16);
         int j = 0;
 		int rotation = 90;
+		GD.Print("current format idx: ", PBO[idx].formatIdx);
+		if (PBO[idx].formatIdx == 5)
+			fivesToCleanup.Add((new Vector2(originalPos.X, originalPos.Y), -dir, -1));
         while(currentPos != originalPos && j < 100){
             j++;
             
@@ -250,7 +269,10 @@ public partial class MapEditor : Node2D
 					int num = GetCrossTilesNum(currentPos.X, currentPos.Y);
 					if (num != 5)
 						idxsToRemove.Add((currentPos.X, currentPos.Y, num));
-					else fivesToCleanup.Add((new Vector2(currentPos.X, currentPos.Y), dir * Vector2I.Up, -1));
+					else {
+						fivesToCleanup.Add((new Vector2(currentPos.X, currentPos.Y), dir, -1));
+						GD.Print("added a five");
+					}
 				}
             }
             if (LR.left == 1 && LR.right == 1){
@@ -347,7 +369,7 @@ public partial class MapEditor : Node2D
 				}
 			}
 			GD.Print("Hole rotation: " + rotation);
-			if (rotation != -360)
+			if (rotation == 360)
 				Holes.Add(Hole);
 		}
 		GD.Print($"its actually {Holes.Count}");

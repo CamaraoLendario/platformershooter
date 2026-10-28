@@ -60,21 +60,25 @@ public partial class MapTiles : Node2D
 		shader.SetShaderParameter("tiles", newArray);
 	}
 
-	public void PlaceBlock(Vector2I pos, Tile tile)
+	public bool PlaceBlock(Vector2I pos, Tile tile)
 	{
 		if (tiles[pos.X + pos.Y*64].tileType == tile.tileType)
-			return;
+			return false;
 
 		SetTile(pos, tile);
-
+		
 		checkAdjacents(pos);
+		return true;
 	}
 
-	public void RemoveBlock(Vector2I pos)
+	public bool RemoveBlock(Vector2I pos)
 	{
+		if (tiles[pos.X + pos.Y*64].tileType == emptyTile.tileType)
+			return false;
 		SetTile(pos, emptyTile);
 
 		checkAdjacents(pos);
+		return true;
 	}
 
 	void updateTileOrientation(Vector2I pos)
